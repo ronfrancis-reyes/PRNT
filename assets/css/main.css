@@ -9,19 +9,6 @@
 	width: 100%;
 }
 @media screen and (max-width: 900px) {
-	.navigation {
-		flex-direction: column;
-		padding: 20px 0px;
-	}
-
-	.login-container {
-		margin-top: 20px;
-		margin-bottom: 10px;
-	}
-
-	.items-container {
-		margin-top: 10px;
-	}
 }
 
 .navigation {
