@@ -7,17 +7,19 @@ a {
 	cursor: pointer;
 }
 
+.body-divider {
+	margin-top: 7rem;
+}
 .catch {
 	display: flex;
 	margin-top: 10%;
 	justify-content: space-between;
-	align-items: baseline;
+	align-items: flex-start;
 	flex-wrap: wrap-reverse;
 }
 .motto {
 	width: 300px;
 	height: 78px;
-	align-items: flex-end;
 	flex-shrink: 0;
 }
 
@@ -82,7 +84,7 @@ a {
 	border-radius: 4%;
 }
 .card-body,
-.card {
+.inner-card {
 	background-color: #eee9e3;
 	border: none;
 	border-radius: 10%;
@@ -93,7 +95,7 @@ a {
 	margin-bottom: 10%;
 }
 
-.card-text {
+.inner-card-text {
 	font-weight: 700;
 	font-size: 18px;
 	margin-bottom: 13%;
@@ -173,7 +175,29 @@ a {
 	font-size: 1.5rem;
 	opacity: 0.8;
 }
-
 .benefits {
-	margin-top: 7rem;
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	align-items: center;
+	font-size: 1rem;
+	margin-top: 2rem;
+	padding: 0 10%;
+	color: red;
+}
+
+.benefits-literal {
+	color: #121212;
+}
+
+.slot {
+	background-color: #121212;
+	border-radius: 1rem;
+}
+
+.benefits-cards {
+	margin: 3rem 0;
+}
+.card-text {
+	color: white;
 }
