@@ -133,4 +133,163 @@ img {
 }
 
 
+.faq-section {
+    background-color: #000;
+    color: #E8E8E8;
+    padding: 50px 0;
+}
+
+.faq-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 80px;
+    gap: 40px;
+}
+
+.faq-title {
+    font-size: 67px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    flex: 1;
+}
+
+.faq-desc-text {
+    flex: 1;
+    max-width: 430px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #cfcfcf;
+    padding-top: 60px;
+}
+
+.faq-body-row {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.faq-accordion-col {
+    flex: 1;
+}
+
+.faq-image-col {
+    flex: 1;
+}
+
+.accordion-item {
+    border-bottom: 1px solid #222;
+    background-color: #111;
+    background-color: transparent;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background-color: #111;
+    padding: 0 20px;
+}
+
+.accordion-item:first-child {
+    border-top: none;
+}
+
+.accordion-header {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 24px 0;
+    text-align: left;
+    color: #E8E8E8;
+    font-size: 18px;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.accordion-header:hover {
+    opacity: 0.8;
+}
+
+.accordion-header .icon {
+    font-size: 24px;
+    font-weight: 400;
+    color: #666;
+    transition: transform 0.3s;
+}
+
+.accordion-item.active .accordion-header .icon {
+    transform: rotate(45deg);
+    color: #E8E8E8;
+}
+
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    color: #E8E8E8;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.accordion-body p {
+    padding-bottom: 24px;
+}
+
+.faq-side-img {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    border-radius: 16px;
+    display: block;
+}
+
+@media (max-width: 900px) {
+    .faq-side-img {
+        height: 300px;
+    }
+}
+
+@media (max-width: 900px) {
+    .faq-header-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .faq-title {
+        font-size: 42px;
+    }
+
+    .faq-body-row {
+        flex-direction: column;
+    }
+
+    .placeholder-box {
+        height: 300px;
+    }
+
+    .section-title {
+        font-size: 36px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .work-grid {
+        grid-template-columns: 1fr;
+        /* When stacked, we don't need complex rows */
+        grid-template-rows: auto;
+    }
+
+    .item-1, .item-2, .item-3, .item-4 {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .hero-banner-placeholder {
+        height: 300px;
+    }
+}
 
