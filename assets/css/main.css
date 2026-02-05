@@ -6,22 +6,8 @@
 .navbar {
 	padding: 0;
 	position: fixed;
+	z-index: 9999999;
 	width: 100%;
-}
-@media screen and (max-width: 900px) {
-	.navigation {
-		flex-direction: column;
-		padding: 20px 0px;
-	}
-
-	.login-container {
-		margin-top: 20px;
-		margin-bottom: 10px;
-	}
-
-	.items-container {
-		margin-top: 10px;
-	}
 }
 
 .navigation {
@@ -29,7 +15,7 @@
 	align-items: center;
 	justify-content: space-evenly;
 	flex-wrap: nowrap;
-	gap: 10px;
+	gap: 2%;
 	background-color: black;
 	width: 100%;
 	padding: 20px 0px;
@@ -77,4 +63,52 @@
 .logo {
 	width: 118px;
 	height: 63px;
+}
+
+.col-1 {
+	width: 8.33%;
+}
+
+.col-2 {
+	width: 16.66%;
+}
+
+.col-3 {
+	width: 25%;
+}
+
+.col-4 {
+	width: 33.33%;
+}
+
+.col-5 {
+	width: 41.66%;
+}
+
+.col-6 {
+	width: 50%;
+}
+
+.col-7 {
+	width: 58.33%;
+}
+
+.col-8 {
+	width: 66.66%;
+}
+
+.col-9 {
+	width: 75%;
+}
+
+.col-10 {
+	width: 83.33%;
+}
+
+.col-11 {
+	width: 91.66%;
+}
+
+.col-12 {
+	width: 100%;
 }

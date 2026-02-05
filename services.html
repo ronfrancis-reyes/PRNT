@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!--Imported Font-->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
@@ -15,7 +16,13 @@
 			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
 			crossorigin="anonymous"
 		/>
+		<!--Bootstrap-->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+		<!--Tab Logo-->
+		<link rel="icon" href="assets/img/PRNT_logo.png" type="image/png">
+		<!--CSS-->
 		<link rel="stylesheet" href="assets\css\main.css" />
+		<link rel="stylesheet" href="assets/css/services.css" />
 		<title>PRNT</title>
 	</head>
 	<body>
@@ -38,13 +45,154 @@
 				</div>
 
 				<div class="login-container">
-					<a class="login">LOG IN</a>
+					<a class="login">LOGIN</a>
+				</div>
+			</div>
+		</nav>
+
+		<!-- start of body-->
+		<div class="services-body">
+			<div class="col-12 prnt-eng-wrapper">
+				<div class="col-6">
+					<div class="services-title">
+						<div class="circle"></div>
+						<p style="margin-top: 16px">SERVICES</p>
+					</div>
+					<p class="prnt-eng"><strong>Printing solutions you’ve been waiting for long.</strong></p>
+				</div>
+				<div class="prnt-eng2">Delivering reliable printing, custom designs, and finishing services that match your requirements every time.</div>
+			</div>
+
+			<div>
+				<div class="card">
+					<div class="card-body">
+						<div class="mid-catchwords">
+							<p>Print Bold</p>
+							<p>Work Together</p>
+							<p>Deliver Excellence</p>
+						</div>
+						<img src="assets/img/img14.jpg" alt="Image 14" class="card-img">
+						<div class="card card-overlay">
+							<div class="card-body">
+								<img decoding="auto" width="24" height="24" src="https://framerusercontent.com/images/9Bae9Ly6Ol7paps9PIYRPVgwo.svg?width=24&amp;height=24" alt="Icon" style="display: block; border-radius: inherit; object-position: center center; object-fit: cover;">
+								We help bring academic and business projects to life through quality printing.
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
-			<!-- start of body-->
+			<div> <!--Accordion-->
+				<div class="accordion" id="accordionPanelsStayOpenExample">
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+						<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
+							[1] Document and Photo Printing
+						</button>
+						</h2>
+						<div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse">
+						<div class="accordion-body">
+							<strong>This is the first item’s accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+						</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+							[2] Photocopying 
+						</button>
+						</h2>
+						<div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+						<div class="accordion-body">
+							<strong>This is the second item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+						</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+							[3] Book Binding
+						</button>
+						</h2>
+						<div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+						<div class="accordion-body">
+							<strong>This is the third item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+						</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+							[4] Poster and Large Format Printing
+						</button>
+						</h2>
+						<div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse">
+						<div class="accordion-body">
+							<strong>This is the third item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-			<!-- footer -->
-		</nav>
+			<div> <!--FAQs section-->
+				<div>
+					<p><strong>Frequently Asked Questions.</strong></p>
+					<p>Get unlimited printing and design support anytime with pricing you can trust. No hidden fees—just quality work that fits your budget.</p>
+				</div> 
+
+				<div> <!--Questions-->
+					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+						How do I submit my files for printing?
+					</button>
+					<div class="collapse" id="collapseExample">
+					<div class="card card-body">
+						Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+					</div>
+					</div>
+
+					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+						Do you offer delivery for prints?
+					</button>
+					<div class="collapse" id="collapseExample">
+					<div class="card card-body">
+						Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+					</div>
+					</div>
+
+					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+						How fast can I get my prints?
+					</button>
+					<div class="collapse" id="collapseExample">
+					<div class="card card-body">
+						Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+					</div>
+					</div>
+
+					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+						Is there a minimum order for printing?
+					</button>
+					<div class="collapse" id="collapseExample">
+					<div class="card card-body">
+						Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+					</div>
+					</div>
+
+					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+						What payment methods do you accept?
+					</button>
+					<div class="collapse" id="collapseExample">
+					<div class="card card-body">
+						Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+					</div>
+					</div>
+
+					<img src="assets/img/img17.jpg" alt="Image 17">
+				</div>
+			</div>
+		</div>
+		<!-- footer -->
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 	</body>
 </html>
