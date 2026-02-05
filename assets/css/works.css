@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: #000000;
+    line-height: 1.5;
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.center {
+    text-align: center;
+}
+
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.page-header {
+    padding: 200px 0 100px;
+    background-color: #ffffff;
+}
+
+.section-header {
+    margin-bottom: 60px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sub-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #767676;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    background-color: #FF4400;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.section-title {
+    font-size: 68px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+    color: #000000;
+}
+
+.section-desc {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.work-masonry-wrapper {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.work-col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+.work-item {
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    width: 100%;
+}
+
+.placeholder-img {
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.item-1 .placeholder-img {
+    height: 800px;
+}
+
+.item-2 .placeholder-img {
+    height: 350px;
+}
+
+.item-3 .placeholder-img {
+    height: 550px;
+}
+
+.item-4 .placeholder-img {
+    height: 1000px;
+}
+
+.item-5-full .hero-banner-placeholder {
+    height: 450px;
+    border-radius: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E8E8E8;
+    color: #666;
+    font-size: 18px;
+    font-weight: 600;
+    border: 2px dashed #E8E8E8;
+}
+
+
