@@ -1,15 +1,4 @@
 
-
-
-
-
-body {
-    padding-top: 96px; 
-}
-body {
-    padding-top: 96px;
-}
-
 .contact-header,
 header.container {
     padding-top: 0;
@@ -54,20 +43,29 @@ body, html {
 }
 
 
+
 .custom-input, .form-control, .form-select {
     background-color: #121212 !important; 
     border: 1px solid #333 !important;
-    color: #333 !important;
+    color: #E8E8E8 !important; 
     padding: 15px !important;
     border-radius: 12px !important;
-}
-
-.custom-input::placeholder {
-    color: #333;
+    box-shadow: none !important; 
 }
 
 
+.custom-input::placeholder,
+.form-control::placeholder {
+    color: #767676 !important; 
+}
 
+
+.form-control:focus {
+    background-color: #121212 !important;
+    color: #E8E8E8 !important;
+    border-color: #FF4400 !important; 
+    outline: 0;
+}
 
 select option {
     background: #000000;
