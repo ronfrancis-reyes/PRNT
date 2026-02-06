@@ -117,7 +117,7 @@
     background-color: transparent;
     border-radius: 4px;
     margin-bottom: 15px;
-    background-color: white;
+    background-color: white !important;
     padding: 0 20px;
 } 
 

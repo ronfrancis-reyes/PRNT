@@ -25,28 +25,15 @@
 	</head>
 	<body>
 		<!-- heading/navigation bar -->
-
-		<nav class="navbar bg-body-tertiary">
-			<div class="navigation">
-				<div class="logo-container">
-					<a class="navbar-brand" href="index.html">
-						<img class="logo" src="assets\img\logo.png" />
-					</a>
-				</div>
-
-				<div class="items-container">
-					<a class="nav-items" href="index.html">Home</a>
-					<a class="nav-items" href="works.html">Works</a>
-					<a class="nav-items" href="about.html">About</a>
-					<a class="nav-items" href="services.html">Service</a>
-					<a class="nav-items" href="contact.html">Contact</a>
-				</div>
-
-				<div class="login-container">
-					<a class="login">LOGIN</a>
-				</div>
-			</div>
-		</nav>
+		<div id="nav"></div>
+		<script>
+				fetch("nav.html")
+				.then(response => response.text())
+				.then(data =>{
+					document.getElementById("nav").innerHTML = data;
+				});
+		</script>
+		
   <!-- start of body-->
   <div class="pages-container">
     <section class="page page-about">
@@ -94,7 +81,6 @@
       </h2>
     </section>
 </div>
-<<<<<<< HEAD
 </div>
   <!--footer-->
   <div id="footer"></div>
@@ -105,8 +91,5 @@
 					document.getElementById("footer").innerHTML = data;
 				});
 		</script>
-=======
-  
->>>>>>> d39bb5b1cb5eeabc53c8980ae9d66e22119c8c91
 </body>
 </html>
