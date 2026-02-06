@@ -1,25 +1,14 @@
 /* Pages Container */
-
-.pages-container {
-  height: calc(100vh - 70px);
-  scroll-snap-type: y mandatory;
-}
-
-.container {
-  height: calc(100vh - 70px);
-  scroll-snap-type: y mandatory;
-  width: 100%;
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  overflow-x: hidden;
 }
 
 .page {
-  scroll-snap-align: start;
-  height: 100vh;
-  padding: 5rem 8rem;
-  display: flex;
-  align-items: center;
-  gap: 8rem;
-  justify-content: space-between;
-  flex-wrap: nowrap;
+  width: 100%;
+  position: relative;
 }
 
 .dot {
@@ -29,223 +18,157 @@
   border-radius: 50%;
   background-color: #ff4400;
   margin-right: 0.5rem;
-  vertical-align: middle;
+}
+
+small {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #ff4400;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
 }
 
 /* Section 1 */
 .page-about {
-  background-color: #fafafa;
-  color: #222833;
-}
-
-.page-about p {
-  text-align: left;
-  text-indent: 35px;
-}
-
-.page-about .text-content {
-  max-width: 60%;
-}
-.page-about .text-content small {
-  font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
-  user-select: none;
-  margin-bottom: 1rem;
+  padding-top: 100px;
+  background-color: white;
 }
 
 .page-about h1 {
-  font-weight: 1000;
-  font-size: 5rem;
+  font-weight: 900;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   line-height: 1.1;
-  margin-bottom: 2.5rem;
-  user-select: none;
+  margin-bottom: 2rem;
+  color: #000;
 }
 
 .print-now {
   font-weight: 700;
-  font-size: 1rem;
   color: #ff4400;
-  user-select: none;
-}
-.print-now:hover {
-  opacity: 0.8;
   text-decoration: none;
 }
 
-.page-about .image-content {
-  max-width: 35%;
+.page-about .image-box {
+  max-width: 320px;
 }
 
-.page-about .image-content img {
-  width: 250px;
-  border-radius: 8px;
-}
-
-.page-about .image-content p {
+.page-about .image-box p {
   margin-top: 1rem;
   font-size: 0.9rem;
+  text-align: left;
+  text-indent: 30px;
   color: black;
-  max-width: 230px;
-  margin-left: auto;
 }
 
 /* Section 2 */
 .page-works {
-  background-color: #ff4400; 
+  background-color: #ff4400;
   color: white;
-  border-radius: 10px;
-  justify-content: flex-start;
-  gap: 6rem;
 }
 
-.page-works .image-content {
-  max-width: 50%;
-}
-
-.page-works .image-content img {
-  width: 75%;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-.page-works .image-content p {
+.works-caption {
   font-size: 1rem;
-  margin-top: 2rem;
+  max-width: 300px;
   color: white;
-  max-width: 280px;
-  
 }
 
-.page-works .text-content {
-  max-width: 50%;
+.works-text {
   font-weight: 800;
-  font-size: 2.8rem;
-  line-height: 1.3;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.25;
+  color: white; 
+  margin-bottom: 1.5rem;
 }
 
-.page-works small {
-  font-weight: 700;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-}
-
-/* Section 3: */
+/* Section 3 */
 .page-vision {
-  flex-direction: column;
-  padding-left: 10rem;
-  padding-right: 10rem;
-  background-color: #fafafa;
+  background-color: white;
+}
+
+.vision-title {
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+  max-width: 950px;
   color: black;
-  justify-content: flex-start;
-  gap: 3rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.page-vision small {
-  font-weight: 700;
-  font-size: 1rem;
-  color: #ff4400;
-  display: flex;
-  align-items: center;
-  letter-spacing: 1px;
-   vertical-align: middle;
-}
-
-.page-vision h2 {
-  font-weight: 900;
-  font-size: 3rem;
-  line-height: 1.15;
-  max-width: 80%;
-}
-
-.vision-images {
-  display: flex;
-  gap: 1.5rem;
+.vision-img {
   width: 100%;
-}
-
-.vision-images img {
-  width: 35%;
-  border-radius: 12px;
-  object-fit: cover;
-  user-select: none;
-  height: 250px;
+  height: 350px; 
+  object-fit: cover; 
+  display: block;
 }
 
 /* Section 4 */
-.page-mission {
+
+.page-mission-wrapper {
+  background-color: white; 
+  padding: 60px 0;
+}
+
+.mission-card {
   background-color: black;
-  border-radius: 10px;
   color: white;
-  padding-left: 10rem;
-  padding-right: 10rem;
-  justify-content: center;
-  flex-direction: column;
+  padding: 80px 40px;
+  border-radius: 40px;
   text-align: center;
-  height: 100vh;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
-.page-mission small {
-  font-weight: 700;
-  user-select: none;
-  color: #ff4400;
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-  display: flex;
+.mission-card small {
+  margin-bottom: 2rem;
   justify-content: center;
-  
-  letter-spacing: 1px;
-  vertical-align: middle;
 }
 
-.page-mission h2 {
+.mission-text {
   font-weight: 900;
-  font-size: 2.5rem;
-  line-height: 1.3;
-  max-width: 900px;
+  font-size: clamp(1.4rem, 3.5vw, 2.6rem); 
+  line-height: 1.4;
+  max-width: 950px;
   margin: 0 auto;
+  color: white;
+  letter-spacing: -0.5px;
 }
 
-/* Responsive */
-@media (max-width: 960px) {
-  .page {
-    flex-direction: column;
-    padding: 4rem 2rem;
-    gap: 2rem;
-  }
+.mission-card .dot {
+  background-color: #ff4400;
+}
 
-  .page-about .text-content,
-  .page-about .image-content,
-  .page-works .text-content,
-  .page-works .image-content {
-    max-width: 100%;
-    text-align: center;
+/* Responsive  */
+@media (max-width: 991px) {
+  .mission-card {
+    padding: 50px 20px;
+    border-radius: 25px;
+    margin: 0 10px;
   }
-
-  .page-about .image-content p {
-    margin: 0 auto;
+  .mission-text {
+    font-size: 1.5rem;
   }
-
-  .vision-images {
-    flex-direction: column;
+}
+@media (max-width: 991px) {
+  .page-about h1, 
+  .works-text, 
+  .vision-title, 
+  .mission-text { 
+    text-align: center; 
   }
-
-  .vision-images img {
-    width: 100%;
-    height: auto;
+  
+  .text-lg-end { 
+    text-align: center !important; 
   }
-
-  .page-vision h2 {
-    max-width: 100%;
+  
+  .image-box { 
+    margin: 30px auto !important; 
   }
-
-  .page-mission {
-    padding-left: 2rem;
-    padding-right: 2rem;
+  
+  small { 
+    justify-content: center; 
+  }
+  
+  .vision-img { 
+    height: 250px; 
   }
 }
