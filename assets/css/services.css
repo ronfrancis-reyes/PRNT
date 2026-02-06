@@ -22,13 +22,13 @@
 }
 
 .prnt-eng{
-    font-size: 80px;
+    font-size: 70px;
     font-weight: bold;
     color: black;
 }
 
 .prnt-eng2{
-    font-size: 25px;
+    font-size: 23px;
     font-weight: bold;
     color: grey;
 }
@@ -38,7 +38,7 @@
     place-content: flex-end space-between;
     align-items: flex-end;
     gap: 200px;
-    padding-top: 100px;
+    padding-top: 150px;
     margin: 0;
 }
 
@@ -67,3 +67,57 @@
     z-index: 10;
     width: 200px;
 }
+
+.accordion-button{
+    font-size: 50px !important;
+    font-weight: bold !important;
+    align-items: center;
+    color: black !important;
+    gap: 100px !important;
+}
+
+.image-container {
+	display: flex;
+	align-items: flex-end;
+	background: url("/assets/img/img14.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	align-self: center;
+	padding: 1.5% 2%;
+	height: 800px;
+	width: 1320px;
+	margin-bottom: 2%;
+	border-radius: 4%;
+}
+
+.inner-card-text {
+	font-weight: 700;
+	font-size: 18px;
+	margin-bottom: 13%;
+    margin-top: 5%;
+}
+
+.card-link {
+	text-decoration: none;
+	color: #f43c00;
+	font-weight: 600;
+	transition: 0.15s;
+}
+
+.card-logo {
+    display: block;
+    height: auto;
+    object-fit: cover;
+    width: 40px !important;
+}
+
+.accordion-item{
+    border-bottom: 1px solid #222;
+    background-color: transparent;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    background-color: white;
+    padding: 0 20px;
+} 
+

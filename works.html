@@ -154,66 +154,14 @@
 			</div>
 		</section>
 		<!-- footer -->
-		 <footer>
-			<div style="background-color: black; padding: 25px; height: 1000px; font-weight: 600; overflow: hidden;">
-				<div class="card footer-card">
-					<div class="card-body footer-cardbody">
-						<div class="row" style="height: 475px; font-size: 28px; padding-top: 30px; padding-left: 20px;">
-							<div class="col-3 div-footer">
-								<p>© Mitchy</p>
-								<p><span style="display: flex; justify-content: center; align-items: flex-end;">Get Started Today</span></p>
-							</div>
-
-							<div class="col-3 div-footer">
-								<p>+263-443-2420</p>
-								<p>PRNT@gmail.com</p>
-								<p>Guinhawa, City of Malolos, Bulacan</p>
-							</div>
-
-							<div class="col-3 div-footer">
-								<a href="index.html" class="footer-links">Home</a>
-								<br>
-								<a href="about.html" class="footer-links">About Us</a>
-								<br>
-								<a href="services.html" class="footer-links">Service</a>
-								<br>
-								<a href="works.html" class="footer-links">Works</a>
-								<br>
-								<a href="contact.html" class="footer-links">Contacts</a>
-							</div>
-
-							<div class="col-3 div-footer">
-								<p>Privacy Policy</p>
-								<p>Terms of Service</p>
-							</div>
-
-						</div>
-
-						<div class="row" style="height: 475px;">
-							<div class="col-9">
-								<p style="font-size: 250px; font-weight: bolder; padding-left: 75px;">PRNT</p>
-							</div>
-							<div class="col-3">
-								<div style="font-size: 30px;">
-									<p>
-										Monday - Friday
-										<br>
-										<span>9AM - 6PM</span>
-								    </p>
-								</div>
-
-								<div style="display: flex; gap: 20px;">
-									<a href="#" class="fa fa-facebook"></a>
-									<a href="#" class="fa fa-twitter"></a>
-									<a href="#" class="fa fa-linkedin"></a>
-									<a href="#" class="fa fa-instagram"></a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>	
-			</div>
-		</footer>
+		<div id="footer"></div>
+		<script>
+				fetch("footer.html")
+				.then(response => response.text())
+				.then(data =>{
+					document.getElementById("footer").innerHTML = data;
+				});
+		</script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 	</body>
 </html>
