@@ -1,0 +1,98 @@
+
+
+
+
+
+body {
+    padding-top: 96px; 
+}
+body {
+    padding-top: 96px;
+}
+
+.contact-header,
+header.container {
+    padding-top: 0;
+}
+
+.header-title {
+    letter-spacing: -6px;
+    font-weight: 950 !important;
+    line-height: 0.95;
+    color: #000;
+}
+
+.description-text {
+    max-width: 350px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+body, html {
+    overflow-x: hidden;
+}
+
+
+.form-panel-container {
+    background-color: #000000;
+    border-radius: 24px !important; 
+    border: 1px solid #1a1a1a;
+}
+
+body, html {
+    overflow-x: hidden;
+}
+
+.form-panel-container {
+    background-color: #000000;
+    border: 1px solid #222;
+}
+
+.orange-card {
+    background-color: #FF4400; 
+    border-radius: 24px;
+}
+
+
+.custom-input, .form-control, .form-select {
+    background-color: #121212 !important; 
+    border: 1px solid #333 !important;
+    color: #333 !important;
+    padding: 15px !important;
+    border-radius: 12px !important;
+}
+
+.custom-input::placeholder {
+    color: #333;
+}
+
+
+
+
+select option {
+    background: #000000;
+    color: #E8E8E8;
+}
+
+
+.submit-btn {
+    background-color: #FF4400;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #e63e00;
+    transform: translateY(-2px);
+}
+
+.back-link {
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid white;
+    width: fit-content;
+    font-size: 0.9rem;
+}
+
+
