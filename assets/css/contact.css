@@ -21,6 +21,15 @@ body, html {
     overflow-x: hidden;
 }
 
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ff4400;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
 
 .form-panel-container {
     background-color: #000000;
