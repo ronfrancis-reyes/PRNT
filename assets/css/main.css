@@ -71,6 +71,7 @@
     border: transparent;
     color: white;
 	height: 950px;
+	border-radius: 3rem;
 }
 
 .footer-card{
