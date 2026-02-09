@@ -1,0 +1,19 @@
+.navbar-toggler {
+	background-color: #eee9e3;
+}
+.navbar,
+.navbar-container-custom {
+	background-color: #000000;
+}
+.navbar-collapse-custom {
+	justify-content: center;
+	margin-right: auto;
+}
+.nav-link {
+	color: white;
+}
+.nav-logo-custom {
+	display: block;
+	width: 16vh;
+	height: 7vh;
+}
