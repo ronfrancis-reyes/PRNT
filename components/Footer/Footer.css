@@ -1,0 +1,62 @@
+.footer-custom {
+	background-color: #000000;
+	padding: 1rem 0.5rem;
+	margin-top: 1rem;
+}
+
+.footer-cardbody-custom {
+	background-color: #ff4400;
+	border-radius: 1rem;
+	padding: 1rem 1rem;
+	color: white;
+}
+
+.row-custom {
+	margin: 0;
+	padding-top: 0;
+}
+
+.address-custom {
+	background-color: #f24101;
+	font-size: 2vh;
+	padding-top: 1rem;
+	border-radius: 1rem;
+}
+
+.links-custom {
+	display: flex;
+	flex-direction: column;
+}
+
+.footer-links {
+	text-decoration: none;
+	margin-bottom: 0.75rem;
+	font-size: 2vh;
+	font-weight: 500;
+	width: 100%;
+	color: white;
+}
+.footer-links:hover {
+	text-decoration: underline;
+}
+
+.terms-custom {
+	font-size: 2vh;
+}
+
+.daydate-custom {
+	margin-top: auto;
+	margin-bottom: auto;
+	font-size: 2vh;
+}
+
+.time-custom {
+	font-weight: 500;
+	font-size: 3vh;
+}
+
+.daydate-text-custom {
+	padding: 1.5rem;
+	background-color: #f24101;
+	border-radius: 1rem;
+}
