@@ -25,22 +25,147 @@
 }
 
 .img1-custom {
-	border-radius: 1rem;
+	border-radius: 2rem;
+	width: 100%;
 }
 
 .black-container {
 	background-color: #121212;
 	display: flex;
-	margin-top: 2rem;
+	margin-top: 5rem;
 	padding: 2% 1.5%;
 	gap: 5%;
 	height: clamp(20px, 100%, 100px);
 	width: 100%;
-	border-radius: 1rem;
+	border-radius: 2rem;
 }
 
 .image2-custom {
 	width: 48%;
 	height: 100%;
+	border-radius: 2rem;
+}
+
+.sample-works-custom {
+	width: 48%;
+	color: #eee9e3;
+	padding: 1rem 1rem 1rem 0;
+}
+.bullet-custom {
+	margin-bottom: 2rem;
+	text-align: center;
+	list-style: none;
+	font-size: clamp(0.6rem, 1.5vw, 1rem);
+}
+
+.sample-custom {
+	font-weight: 900;
+	font-size: clamp(0.8rem, 2vw, 3rem);
+	text-decoration: underline;
+}
+.sample-divider-custom {
+	width: 100%;
+}
+.sample-footer {
+	color: gray;
+	font-size: clamp(0.6rem, 1vw, 2rem);
+}
+
+.sample-link-custom {
+	color: #eee9e3;
+	font-size: clamp(0.6rem, 2vw, 1rem);
+}
+.sample-link-custom:hover {
+	opacity: 0.8;
+}
+.sample-link-custom:active {
+	opacity: 0.6;
+}
+
+@media (max-width: 992px) {
+	.image2-custom {
+		display: none;
+	}
+	.sample-works-custom {
+		padding: 1rem;
+		width: 100%;
+	}
+	.black-container {
+		padding: 2rem;
+		text-align: center;
+	}
+	.bullet-custom {
+		margin-bottom: 1rem;
+	}
+	.sample-custom,
+	.sample-divider-custom {
+		margin: 0;
+	}
+
+	.sample-divider-custom {
+		margin-bottom: 1rem;
+	}
+}
+
+.sidepanel-custom {
+	background-color: #eee9e3;
+	margin-top: 5rem;
+}
+.container-cards-custom {
+	background-color: white;
+	padding-bottom: 5rem;
+}
+
+.benefits-cardbody-custom {
+	background-color: #121212;
+	color: #eee9e3;
 	border-radius: 1rem;
+	padding: 2rem;
+}
+
+.benefits-card-custom {
+	border: none;
+}
+
+.benefits-text {
+	width: 100%;
+}
+
+.benefits-motto {
+	font-size: 4rem;
+	line-height: 1;
+	color: black;
+	font-weight: 700;
+	margin-top: 3rem;
+}
+
+.benefits-subtext {
+	font-size: 1rem;
+	color: #4b4b4b;
+	line-height: 1;
+	margin-top: 1.5rem;
+	margin-bottom: 4rem;
+	font-weight: 400;
+}
+
+.prnt {
+	color: #ff4400;
+}
+
+.benefits-icon {
+	margin-bottom: 1.2rem;
+}
+
+.row-benefits-custom {
+	justify-content: space-evenly;
+	margin-top: 2rem;
+}
+
+.benefits-icon-custom {
+	margin-top: 3rem;
+	margin-bottom: 1rem;
+}
+
+.filler-words {
+	color: #121212;
 }
