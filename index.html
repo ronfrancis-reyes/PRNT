@@ -3,180 +3,172 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
-			rel="stylesheet"
-		/>
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
 			rel="stylesheet"
 			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
 			crossorigin="anonymous"
 		/>
-		<!--Tab Logo-->
-		<link rel="icon" href="assets/img/PRNT_logo.png" type="image/png" />
-		<!--Logo Library -->
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-		/>
-		<link rel="stylesheet" href="styles/index.css" />
-		<link rel="stylesheet" href="styles/global.css" />
-
+		<link rel="stylesheet" href="/components/Navbar/Navbar.css" />
+		<link rel="stylesheet" href="/components/Footer/Footer.css" />
+		<link rel="stylesheet" href="/styles/index.css" />
+		<link rel="stylesheet" href="/styles/global.css" />
 		<title>PRNT</title>
 	</head>
 	<body>
-		<!-- heading/navigation bar -->
+		<!--navigation-->
+		<custom-nav></custom-nav>
 
-		<div id="nav"></div>
-		<script>
-				fetch("nav.html")
-				.then(response => response.text())
-				.then(data =>{
-					document.getElementById("nav").innerHTML = data;
-				});
-		</script>
-
-		<!-- start of body-->
-
-		<div class="container">
-			<div class="catch">
-				<div class="motto">
-					<a class="print"> PRINT NOW ↗ </a>
-					<p class="motto-text">
-						PRNT supports your project with efficient and dependable results.
-					</p>
-				</div>
-				<div>
-					<p class="hook">
-						QUALITY <br /><span class="text-output">OUTPUT.</span>
-					</p>
-				</div>
-			</div>
+		<!--body-->
+		<div class="container text-center">
+			<p class="display-1 promise-custom">
+				QUALITY <br /><span class="output-custom">OUTPUT.</span>
+			</p>
 		</div>
-
-		<hr class="body-divider" />
-
-		<div class="container">
-			<div class="container-text">
+		<hr />
+		<div class="container container-img-custom">
+			<div class="container-text-custom">
 				<p>PRINT BOLD</p>
 				<p>WORK TOGETHER</p>
 				<p>DELIVER EXCELLENCE</p>
 			</div>
-			<div class="image-container">
-				<div class="card mb-3 inner-card" style="max-width: 18rem">
-					<div class="card-body">
-						<img
-							src="https://framerusercontent.com/images/9Bae9Ly6Ol7paps9PIYRPVgwo.svg?width=24&height=24"
-							alt=""
-							class="card-icon"
-						/>
-						<p class="inner-card-text">
-							We help bring academic and business projects to life through
-							quality printing.
-						</p>
-						<a href="#" class="card-link">LATEST PROJECT 2026</a>
-					</div>
-				</div>
+		</div>
+
+		<div class="container">
+			<div class="img-container-custom">
+				<img src="/assets/img/img14.jpg" alt="" class="img-fluid img1-custom" />
 			</div>
 		</div>
 
 		<div class="container">
 			<div class="black-container mb-3">
-				<img src="assets\img\img4.jpg" alt="" class="image2" />
-				<div class="works-example">
-					<li class="example-label">WHAT WE WORK ON</li>
-					<p class="example-items">Academic printing</p>
-					<hr />
-					<p class="example-items">Promotional Materials</p>
-					<hr />
-					<p class="example-items">Custom Print Projects</p>
-					<hr />
-					<p class="example-items">Large Format Outputs</p>
-					<hr />
-					<p class="example-items">Everyday Print Needs</p>
-					<hr />
-					<p class="example-footer">
+				<img src="assets\img\img4.jpg" alt="" class="image2-custom" />
+				<div class="sample-works-custom">
+					<li class="bullet-custom">WHAT WE WORK ON</li>
+					<p class="sample-custom">Academic Printing</p>
+					<hr class="sample-divider-custom" />
+					<p class="sample-custom">Promotional Materials</p>
+					<hr class="sample-divider-custom" />
+					<p class="sample-custom">Custom Print Projects</p>
+					<hr class="sample-divider-custom" />
+					<p class="sample-custom">Large Format Outputs</p>
+					<hr class="sample-divider-custom" />
+					<p class="sample-custom">Everyday Print Needs</p>
+					<hr class="sample-divider-custom" />
+					<p class="sample-footer">
 						Delivering versatile printing solutions that meet academic and
 						professional needs.
 					</p>
-					<a href="#" class="example-link"
-						>LEARN MORE
-						<img
-							src="https://framerusercontent.com/images/brEARh2aJSlzzRS6Zhcn3vJwr0.svg?width=12&height=13"
-							alt=""
-					/></a>
+					<a href="work.html" class="sample-link-custom">LEARN MORE</a>
 				</div>
 			</div>
 		</div>
 
-		<div class="benefits">
-			<li class="benefits-label">
-				<span class="benefits-literal">BENEFITS IF YOU CHOOSE US</span>
-			</li>
+		<div class="sidepanel-custom">
+			<div class="container container-cards-custom">
+				<p class="h6 text-center">BENEFITS IF YOU CHOOSE US</p>
 
-			<div class="benefits-cards">
-				<div class="card card-b">
-					<div class="card-body slot">
-						<p class="card-text">
-							Enjoy affordable, student-budget–friendly printing services with clear pricing. No hidden charges — you only pay for what you print.
-						</p>
-						<h1 class="card-text-title"><img src="https://framerusercontent.com/images/yhQStTSekOeh0c2wN3aZLyPKZQ.svg?width=48&height=48" alt="" class="benefits-icon"><br>Student Pricing</h1>
+				<div class="row row-cols-1 row-cols-md-3 g-4 row-benefits-custom">
+					<div class="col">
+						<div class="card benefits-card-custom">
+							<div class="card-body benefits-cardbody-custom">
+								<p class="card-text">
+									Enjoy affordable, student-budget–friendly printing services
+									with clear pricing. No hidden charges — you only pay for what
+									you print.
+									<span class="filler-words"
+										>aljfajfalkjfaljfasfja;lsfasljfa</span
+									>
+								</p>
+								<img
+									src="https://framerusercontent.com/images/yhQStTSekOeh0c2wN3aZLyPKZQ.svg?width=48&height=48"
+									alt=""
+									class="benefits-icon-custom"
+								/>
+								<h5 class="card-title h2">Student Pricing</h5>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card benefits-card-custom">
+							<div class="card-body benefits-cardbody-custom">
+								<p class="card-text">
+									We understand tight deadlines. Get your documents, banners,
+									and projects printed quickly so you never miss a submission or
+									event.
+								</p>
+								<img
+									src="https://framerusercontent.com/images/5wF4z6sgF5ViQ9iMmy2TRKeKBs.svg?width=48&height=48"
+									alt=""
+									class="benefits-icon-custom"
+								/>
+								<h5 class="card-title h2">Fast Turnaround</h5>
+							</div>
+						</div>
 					</div>
 
-					<div class="card-body slot">
-						<p class="card-text">
-							We understand tight deadlines. Get your documents, banners, and projects printed quickly so you never miss a submission or event.
-						</p>
-						<h1 class="card-text-title"><img src="https://framerusercontent.com/images/5wF4z6sgF5ViQ9iMmy2TRKeKBs.svg?width=48&height=48" alt="" class="benefits-icon"><br>Fast Turnaround</h1>
-					</div>
-				</div>
-
-				<div class="benefits-text">
-					<h1 class="benefits-motto">
-						Smarter printing. <br />
-						Better results. <span class="prnt">PRNT</span>. <br>
+					<div class="benefits-text text-center">
+						<h1 class="benefits-motto">
+							Smarter printing. <br />
+							Better results. <span class="prnt">PRNT</span>. <br />
+						</h1>
 						<p class="benefits-subtext">
 							PRNT delivers reliable printing solutions designed for today’s
 							students, <br />
 							schools, and small businesses.
 						</p>
-				</div>
-
-				<!--next row...................................................-->
-
-				<div class="card card-b">
-					<div class="card-body slot">
-						<p class="card-text">
-							From simple black-and-white documents to full-color tarpaulins, we deliver sharp, professional-quality prints you can trust.
-						</p>
-						<h1 class="card-text-title"><img src="https://framerusercontent.com/images/SiPZJZ58MAQSmENOzUEhOJRZc.svg?width=48&height=48" alt="" class="benefits-icon"><br>Print Quality</h1>
 					</div>
 
-					<div class="card-body slot">
-						<p class="card-text">
-							Print, photocopy, bind, laminate, and more — all in one place for your convenience near your school or campus.
-						</p>
-						<h1 class="card-text-title"><img src="https://framerusercontent.com/images/QDjuMquX4fuUzPT6ef5ki35Kg9U.svg?width=48&height=48" alt="" class="benefits-icon"><br>One-Stop Shop</h1>
+					<div class="col">
+						<div class="card benefits-card-custom">
+							<div class="card-body benefits-cardbody-custom">
+								<p class="card-text">
+									From simple black-and-white documents to full-color
+									tarpaulins, we deliver sharp, professional-quality prints you
+									can trust.
+								</p>
+								<img
+									src="https://framerusercontent.com/images/SiPZJZ58MAQSmENOzUEhOJRZc.svg?width=48&height=48"
+									alt=""
+									class="benefits-icon-custom"
+								/>
+								<h5 class="card-title h2">Print Quality</h5>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="card benefits-card-custom">
+							<div class="card-body benefits-cardbody-custom">
+								<p class="card-text">
+									Print, photocopy, bind, laminate, and more — all in one place
+									for your convenience near your school or campus.
+								</p>
+								<img
+									src="https://framerusercontent.com/images/QDjuMquX4fuUzPT6ef5ki35Kg9U.svg?width=48&height=48"
+									alt=""
+									class="benefits-icon-custom"
+								/>
+								<h5 class="card-title h2">One-Stop Shop</h5>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- footer -->
-		<div id="footer"></div>
-		<script>
-				fetch("footer.html")
-				.then(response => response.text())
-				.then(data =>{
-					document.getElementById("footer").innerHTML = data;
-				});
-		</script>
+		<!--footer-->
+		<custom-footer></custom-footer>
+
+		<!--javascript-->
+		<script type="module" src="main.js"></script>
 		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-			integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+			integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
 			crossorigin="anonymous"
 		></script>
 	</body>
