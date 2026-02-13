@@ -23,7 +23,7 @@
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 		/>
 		<link rel="stylesheet" href="styles/contact.css" />
-		<link rel="stylesheet" href="styles/main.css">
+		<link rel="stylesheet" href="styles/global.css">
 		<title>PRNT</title>
 	</head>
 	<body>
@@ -42,82 +42,80 @@
 </nav>
 
 
-<div class="d-flex flex-column" style="min-height: calc(100vh - 120px);"> 
-    
-    <div style="height: 120px;"></div>
+<div style="height: 120px;"></div>
 
-    <header class="container mb-4 p-0">
-        <div class="d-flex align-items-center mb-2">
-             <small><span class="dot"></span>CONTACT</small>
+<header class="container mb-4 p-0">
+
+    <div class="d-flex align-items-center mb-2">
+         <small><span class="dot"></span>CONTACT</small>
+    </div>
+
+    <div class="row align-items-end g-0">
+        <div class="col-lg-7">
+            <h1 class="display-1 fw-bolder mb-0 header-title">Ready to print?</h1>
         </div>
-
-        <div class="row align-items-end g-0">
-            <div class="col-lg-7">
-                <h1 class="display-1 fw-bolder mb-0 header-title">Ready to print?</h1>
-            </div>
-            <div class="col-lg-5">
-                <p class="text-secondary description-text mb-2">
-                    At the heart of our printing process is a commitment to actively listen & understand your unique challenges & needs.
-                </p>
-            </div>
-        </div>
-    </header>
-
-    <div class="container pb-5 flex-grow-1"> <div class="row g-4 align-items-stretch"> <div class="col-lg-4 d-flex">
-                <div class="orange-card w-100 p-5 d-flex flex-column justify-content-between rounded-4 text-white" style="background-color: #FF4400;">
-                    <div>
-                        <div class="mb-4">
-                            <img src="assets/img/contact-icon.jpg" alt="Icon" style="width: 45px; height: 45px; object-fit: contain;">
-                        </div>
-                        <h2 class="fw-bold display-6">Start to print your project</h2>
-                        <p class="mt-3 opacity-75">Whether your project is fully defined or still taking shape, we're here to support you.</p>
-                    </div>
-                    <a href="index.html" class="back-link mt-5 text-white">BACK TO HOME ↗</a>
-                </div>
-            </div>
-
-            <div class="col-lg-8 d-flex">
-                <div class="form-panel-container w-100 p-5 rounded-4 bg-black text-white border border-secondary">
-                    <form id="contact-form">
-                        <div class="mb-4">
-                            <label class="form-label text-secondary small">Name</label>
-                            <input type="text" class="form-control custom-input" placeholder="Enter your Name">
-                        </div>
-                        
-                        <div class="mb-4">
-                            <label class="form-label text-secondary small">Phone Number</label>
-                            <input type="text" class="form-control custom-input" placeholder="(+63)">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="form-label text-secondary small">Location</label>
-                            <input type="text" class="form-control custom-input" placeholder="Enter your exact location">
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="text-secondary small mb-2">Service</label>
-                            <select class="form-select bg-dark border-secondary text-white p-3 custom-input">
-                                <option selected disabled>Select a service</option>
-                                <option value="1">Document Printing</option>
-                                <option value="2">Photocopying</option>
-                                <option value="3">Book Binding</option>
-                                <option value="4">Poster & Large Format Printing</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label class="text-secondary small mb-2">Is there any other information...</label>
-                            <textarea class="form-control bg-dark border-secondary text-white p-3" rows="3" placeholder="Tell us about your needs..."></textarea>
-                        </div>
-
-                        <button type="submit" class="btn submit-btn px-5 py-2 rounded-pill fw-bold text-white" style="background-color: #FF4400;">Submit</button>
-                    </form>
-                </div>
-            </div>
-
+        <div class="col-lg-5">
+            <p class="text-secondary description-text mb-2">
+                At the heart of our printing process is a commitment to actively listen & understand your unique challenges & needs.
+            </p>
         </div>
     </div>
+</header>
+<div class="container pb-5">
+    <div class="row g-4"> 
+        
+        <div class="col-lg-4">
+            <div class="orange-card h-100 p-5 d-flex flex-column justify-content-between rounded-4 text-white" style="background-color: #FF4400;">
+                <div>
+                    <h2 class="fw-bold display-6">Start to print your project</h2>
+                    <p class="mt-3 opacity-75">Whether your project is fully defined or still taking shape, we're here to support you.</p>
+                </div>
+                <a href="index.html" class="back-link mt-5">BACK TO HOME ↗</a>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div class="form-panel-container h-100 p-5 rounded-4 bg-black text-white border border-secondary">
+                <form id="contact-form">
+                    <div class="mb-4">
+                        <label class="form-label text-secondary small">Name</label>
+                        <input type="text" class="form-control custom-input" placeholder="Enter your Name">
+                    </div>
+                    
+                    <div class="mb-4">
+    <label class="form-label text-secondary small">Phone Number</label>
+    <input type="text" class="form-control custom-input" placeholder="(+63)">
 </div>
+
+<div class="mb-4">
+    <label class="form-label text-secondary small">Location</label>
+    <input type="text" class="form-control custom-input" placeholder="Enter your exact location">
+</div>
+
+                    <div class="mb-4">
+                        <label class="text-secondary small mb-2">Service</label>
+                        <select class="form-select bg-dark border-secondary text-white p-3 custom-input">
+                            <option selected disabled>Select a service</option>
+                            <option value="1">Document Printing</option>
+                            <option value="2">Photocopying</option>
+                            <option value="3">Book Binding</option>
+                            <option value="4">Poster & Large Format Printing</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="text-secondary small mb-2">Is there any other information...</label>
+                        <textarea class="form-control bg-dark border-secondary text-white p-3" rows="3" placeholder="Tell us about your needs..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn submit-btn px-5 py-2 rounded-pill fw-bold text-white" style="background-color: #FF4400;">Submit</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 		<!-- footer -->
 		<div id="footer"></div>
 		<script>
