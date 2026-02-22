@@ -1,0 +1,139 @@
+body {
+	padding: 0;
+}
+
+.container-custom {
+	height: 100%;
+	align-items: center;
+	padding-top: 10%;
+}
+
+.hook {
+	font-weight: 900;
+	letter-spacing: -6px;
+}
+
+.hook span {
+	color: #ff4400;
+}
+
+.card-custom {
+	padding: 1rem clamp(1px, 0.5rem, 50px);
+	border-radius: 1rem;
+	background-color: black;
+}
+
+.card-body-custom {
+	display: flex;
+	justify-content: space-between;
+	gap: 2%;
+}
+
+.logo,
+.inputs {
+	width: 49%;
+}
+
+.image-custom {
+	height: 100%;
+}
+
+.form-control-custom {
+	background-color: #121212;
+	color: #eee9e3;
+	border-color: #616161;
+}
+
+label {
+	color: #616161 !important;
+}
+
+.form-control-custom:focus {
+	background-color: #121212;
+	color: #eee9e3;
+	border-color: #ff4400;
+	box-shadow: none;
+}
+
+.actions {
+	color: #ff4400;
+	margin-top: 1rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: first baseline;
+}
+.register-custom {
+	width: fit-content;
+	cursor: pointer;
+	color: #ff4400;
+	text-decoration: none;
+	transition: all 0.15s;
+}
+.register-custom:hover {
+	text-decoration: underline;
+}
+.register-custom:active {
+	opacity: 0.8;
+}
+
+.login-btn-custom {
+	background-color: #ff4400;
+	border: none;
+	padding: 2% 12%;
+	font-size: 1.2rem;
+	font-weight: 700;
+	border-radius: 2rem;
+	color: #eee9e3;
+	transition: all 0.15s;
+}
+
+.login-btn-custom:hover {
+	background-color: #ff4400;
+	opacity: 0.8;
+}
+
+.login-btn-custom:active {
+	background-color: #ff4400;
+	opacity: 0.6;
+}
+
+@media (max-width: 992px) {
+	.card-body-custom {
+		flex-direction: column;
+		justify-content: center;
+		gap: 2rem;
+	}
+	.logo {
+		display: flex;
+		justify-content: center;
+		object-fit: contain;
+		width: 100%;
+		height: 10%;
+	}
+
+	.image-custom {
+		height: 10%;
+	}
+
+	.inputs {
+		width: 100%;
+	}
+}
+
+@media (max-width: 550px) {
+	.image-custom {
+		height: 6rem;
+	}
+	.actions {
+		flex-direction: column;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.register-custom {
+		order: 1;
+	}
+
+	.login-btn-custom {
+		padding: 3% 25%;
+	}
+}
