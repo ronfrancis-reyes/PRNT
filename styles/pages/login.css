@@ -18,7 +18,7 @@ body {
 }
 
 .card-custom {
-	padding: 1rem clamp(1px, 0.5rem, 50px);
+	padding: 4rem clamp(1px, 1rem, 50px);
 	border-radius: 1rem;
 	background-color: black;
 }
@@ -138,13 +138,13 @@ label {
 	}
 }
 
-.login-btn-custom:disabled{
+.login-btn-custom:disabled {
 	background-color: gray;
 	cursor: not-allowed;
 	opacity: 0.5;
 }
 
-.login-btn-custom:not(:disabled){
+.login-btn-custom:not(:disabled) {
 	background-color: #ff4400;
 	border: none;
 	padding: 2% 12%;
@@ -154,4 +154,3 @@ label {
 	color: #eee9e3;
 	transition: all 0.15s;
 }
-
