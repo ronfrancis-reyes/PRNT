@@ -137,3 +137,21 @@ label {
 		padding: 3% 25%;
 	}
 }
+
+.login-btn-custom:disabled{
+	background-color: gray;
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+.login-btn-custom:not(:disabled){
+	background-color: #ff4400;
+	border: none;
+	padding: 2% 12%;
+	font-size: 1.2rem;
+	font-weight: 700;
+	border-radius: 2rem;
+	color: #eee9e3;
+	transition: all 0.15s;
+}
+
