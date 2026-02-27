@@ -45,7 +45,7 @@
 							/>
 							<label for="floatingInput">Email</label>
 						</div>
-						<div class="form-floating">
+						<div class="form-floating password-custom">
 							<input
 								type="password"
 								class="form-control form-control-custom password-input"
@@ -54,6 +54,14 @@
 							/>
 							<label for="floatingPassword">Password</label>
 						</div>
+						<div class="show-toggle-custom">
+							<input
+								type="checkbox"
+								id="showPasswordToggle"
+								onclick="showPass()"
+							/>Show Password
+						</div>
+
 						<div class="actions">
 							<a class="register-custom" href="/pages/registration.html"
 								>Create an account</a
@@ -78,5 +86,6 @@
 			crossorigin="anonymous"
 		></script>
 		<script src="/validations/login.js"></script>
+		<script src="/scripts/ShowPass.js"></script>
 	</body>
 </html>
