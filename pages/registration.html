@@ -25,9 +25,35 @@
 	<body>
 		<div class="card card-custom">
 			<div class="card-body">
-				<div class="text">asfsadfa</div>
-				<div class="inputs">ahfalshf</div>
+				<div class="text">
+					<img src="/assets/img/PRNT-white.png" alt="PRNT" class="label">
+					<div class="intro">
+						<label style="font-size: 2rem; font-weight: bold;">Create your <br>Account</label>
+						<br>
+						<label>Share your printing needs <br> and get quality prints!</label>
+					</div>
+					<div class="cardfooter">
+						<img src="/assets/img/PRNT_logo.png" alt="PRNT" class="printer">
+						<p>Professional printing services at your fingertips</p>
+					</div>
+				</div>
+				<div class="inputs col-md-6">
+					<p>Sign up</p>
+					<input type="text" placeholder="Full Name" id="name">
+					<input type="email" placeholder="Email address" id="email">
+					<input type="text" placeholder="Contact number" id="contact">
+					<input type="password" placeholder="Password" id="password">
+					<input type="password" placeholder="Re-type Password" id="retype">
+					<div>
+						<input type="checkbox" id="terms">
+						<label for="terms">Accept terms & Condition</label>
+					</div>
+					<button id="signupbtn" class="signup-button" disabled>Join Us -></button>
+					<p>Already have an account?</p>
+					<a href="login.html">Sign in</a>
+				</div>
 			</div>
 		</div>
+		<script src="/validations/registration.js"></script>
 	</body>
 </html>

@@ -26,10 +26,12 @@ body {
 	width: 45%;
 	border-top-right-radius: 2rem;
 	border-bottom-right-radius: 2rem;
+	padding: 10px;
 }
 
 .text {
 	width: 55%;
+	align-items: stretch;
 }
 
 @media (max-width: 992px) {
@@ -52,4 +54,77 @@ body {
 	.text {
 		display: none;
 	}
+}
+
+.label{
+	width: 100px;
+	height: 50px;
+	align-items: flex-end;
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+.intro{
+	margin-left: 20px;
+	color: white;
+	margin-top: 20px;
+}
+
+.cardfooter{
+	color: white;
+	align-items: baseline;
+	flex-direction: row;
+	font-size: 1rem;
+}
+
+.printer{
+	width: 20px;
+	height: 20px;
+	color: white;
+}
+
+input{
+	border-radius: 7px;
+	border-color: #ccc;
+	font-size: 15px;
+	height: 40px;
+	margin: 10px auto;
+}
+
+.signup-button {
+	background-color: #ff4400;
+	border: none;
+	padding: 2% 12%;
+	font-size: 1.2rem;
+	font-weight: 700;
+	border-radius: 2rem;
+	color: #eee9e3;
+	transition: all 0.15s;
+}
+
+.signup-button:hover {
+	background-color: #ff4400;
+	opacity: 0.8;
+}
+
+.signup-button:active {
+	background-color: #ff4400;
+	opacity: 0.6;
+}
+
+.signup-button:disabled {
+	background-color: gray;
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+
+.signup-button:not(:disabled) {
+	background-color: #ff4400;
+	border: none;
+	padding: 2% 12%;
+	font-size: 1.2rem;
+	font-weight: 700;
+	border-radius: 2rem;
+	color: #eee9e3;
+	transition: all 0.15s;
 }
