@@ -18,7 +18,7 @@
 		/>
 
 		<link rel="stylesheet" href="/styles/global.css" />
-		<link rel="stylesheet" href="/styles/pages/login.css" />
+		<link rel="stylesheet" href="styles.css" />
 
 		<title>PRNT</title>
 	</head>
@@ -63,7 +63,7 @@
 						</div>
 
 						<div class="actions">
-							<a class="register-custom" href="/pages/registration.html"
+							<a class="register-custom" href="/pages/registration/"
 								>Create an account</a
 							>
 							<button class="login-btn-custom" id="submitButton" disabled>

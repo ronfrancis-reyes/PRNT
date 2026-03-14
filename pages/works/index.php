@@ -23,7 +23,7 @@
 		<!--CSS-->
 		<link rel="stylesheet" href="/components/Navbar/Navbar.css" />
 		<link rel="stylesheet" href="/components/Footer/Footer.css" />
-		<link rel="stylesheet" href="styles/works.css" />
+		<link rel="stylesheet" href="styles.css" />
 		<link rel="stylesheet" href="styles/global.css" />
 		<title>PRNT</title>
 	</head>
@@ -136,7 +136,7 @@
 		</section>
 		<!-- footer -->
 		<custom-footer></custom-footer>
-		<script type="module" src="main.js"></script>
+		<script type="module" src="global/script.js"></script>
 		<script
 			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
