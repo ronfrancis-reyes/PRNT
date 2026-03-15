@@ -83,7 +83,7 @@
 .image-container {
 	display: flex;
 	align-items: flex-end;
-	background: url("/assets/img/img14.jpg");
+	background: url("/PRNT/assets/img/img14.jpg");
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -123,4 +123,8 @@
 	margin-bottom: 15px;
 	background-color: white !important;
 	padding: 0 20px;
+}
+
+.faq-section {
+	margin-bottom: 10rem;
 }

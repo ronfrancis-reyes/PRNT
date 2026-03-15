@@ -18,7 +18,7 @@
 		/>
 
 		<link rel="stylesheet" href="/styles/global.css" />
-		<link rel="stylesheet" href="/styles/pages/login.css" />
+		<link rel="stylesheet" href="styles.css" />
 
 		<title>PRNT</title>
 	</head>
@@ -30,7 +30,7 @@
 				<div class="card-body card-body-custom">
 					<div class="logo">
 						<img
-							src="/assets/img/logo-name.PNG"
+							src="/PRNT/assets/img/logo-name.PNG"
 							alt=""
 							class="img-fluid image-custom"
 						/>
@@ -63,7 +63,7 @@
 						</div>
 
 						<div class="actions">
-							<a class="register-custom" href="/pages/registration.html"
+							<a class="register-custom" href="../registration/"
 								>Create an account</a
 							>
 							<button class="login-btn-custom" id="submitButton" disabled>
@@ -75,6 +75,7 @@
 			</div>
 		</div>
 
+		<script src="script.js"></script>
 		<script
 			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -85,7 +86,5 @@
 			integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
 			crossorigin="anonymous"
 		></script>
-		<script src="/validations/login.js"></script>
-		<script src="/scripts/ShowPass.js"></script>
 	</body>
 </html>

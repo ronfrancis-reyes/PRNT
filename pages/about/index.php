@@ -22,10 +22,10 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 		/>
-		<link rel="stylesheet" href="/components/Navbar/Navbar.css" />
-		<link rel="stylesheet" href="/components/Footer/Footer.css" />
-		<link rel="stylesheet" href="styles/about.css" />
-		<link rel="stylesheet" href="styles/global.css" />
+		<link rel="stylesheet" href="/PRNT/components/Navbar/Navbar.css" />
+		<link rel="stylesheet" href="/PRNT/components/Footer/Footer.css" />
+		<link rel="stylesheet" href="styles.css" />
+		<link rel="stylesheet" href="../../global/global.css" />
 		<title>PRNT</title>
 	</head>
 	<body>
@@ -40,12 +40,12 @@
 						<div class="col-lg-7">
 							<small><span class="dot"></span>ABOUT US</small>
 							<h1>Bring your ideas to life with PRNT.</h1>
-							<a href="services.html" class="print-now">PRINT NOW ↗</a>
+							<a href="../service/" class="print-now">PRINT NOW ↗</a>
 						</div>
 						<div class="col-lg-5 text-lg-end mt-5 mt-lg-0">
 							<div class="image-box ms-auto">
 								<img
-									src="assets/img/img19.jpg"
+									src="/PRNT/assets/img/img19.jpg"
 									class="img-fluid rounded"
 									alt="Printer"
 								/>
@@ -68,7 +68,7 @@
 								><span class="dot bg-white"></span>WHAT WE DO?</small
 							>
 							<img
-								src="assets/img/img20.jpg"
+								src="/PRNT/assets/img/img20.jpg"
 								class="img-fluid rounded mb-4"
 								alt="Process"
 							/>
@@ -107,21 +107,21 @@
 							<div class="row g-4 mt-5">
 								<div class="col-md-4">
 									<img
-										src="assets/img/img8.jpg"
+										src="/PRNT/assets/img/img8.jpg"
 										class="vision-img rounded"
 										alt="Vision 1"
 									/>
 								</div>
 								<div class="col-md-4">
 									<img
-										src="assets/img/img10.jpg"
+										src="/PRNT/assets/img/img10.jpg"
 										class="vision-img rounded"
 										alt="Vision 2"
 									/>
 								</div>
 								<div class="col-md-4">
 									<img
-										src="assets/img/img3.jpg"
+										src="/PRNT/assets/img/img3.jpg"
 										class="vision-img rounded"
 										alt="Vision 3"
 									/>
@@ -134,7 +134,7 @@
 
 			<section class="page page-mission-wrapper">
 				<div class="container">
-					<div class="row min-vh-100 align-items-center justify-content-center">
+					<div class="row min-vh-100  justify-content-center">
 						<div class="col-lg-11">
 							<div class="mission-card">
 								<small class="justify-content-center"
@@ -157,7 +157,7 @@
 		<!--footer-->
 		<custom-footer></custom-footer>
 
-		<script type="module" src="main.js"></script>
+		<script type="module" src="script.js"></script>
 		<script
 			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

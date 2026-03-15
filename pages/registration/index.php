@@ -18,7 +18,7 @@
 		/>
 
 		<link rel="stylesheet" href="/styles/global.css" />
-		<link rel="stylesheet" href="/styles/pages/registration.css" />
+		<link rel="stylesheet" href="styles.css" />
 
 		<title>PRNT</title>
 	</head>
@@ -50,10 +50,10 @@
 					</div>
 					<button id="signupbtn" class="signup-button" disabled>Join Us -></button>
 					<p>Already have an account?</p>
-					<a href="login.html">Sign in</a>
+					<a href="../login/">Sign in</a>
 				</div>
 			</div>
 		</div>
-		<script src="/validations/registration.js"></script>
+		<script src="script.js"></script>
 	</body>
 </html>

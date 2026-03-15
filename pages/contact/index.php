@@ -22,10 +22,10 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
 		/>
-		<link rel="stylesheet" href="/components/Navbar/Navbar.css" />
-		<link rel="stylesheet" href="/components/Footer/Footer.css" />
-		<link rel="stylesheet" href="styles/contact.css" />
-		<link rel="stylesheet" href="styles/global.css" />
+		<link rel="stylesheet" href="/PRNT/components/Navbar/Navbar.css" />
+		<link rel="stylesheet" href="/PRNT/components/Footer/Footer.css" />
+		<link rel="stylesheet" href="styles.css" />
+		<link rel="stylesheet" href="../../global/global.css" />
 		<title>PRNT</title>
 	</head>
 	<body>
@@ -66,7 +66,7 @@
 								we're here to support you.
 							</p>
 						</div>
-						<a href="index.html" class="back-link mt-5">BACK TO HOME ↗</a>
+						<a href="../" class="back-link mt-5">BACK TO HOME ↗</a>
 					</div>
 				</div>
 
@@ -143,7 +143,8 @@
 
 		<!-- footer -->
 		<custom-footer></custom-footer>
-		<script type="module" src="main.js"></script>
+		
+		<script type="module" src="script.js"></script>
 		<script
 			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

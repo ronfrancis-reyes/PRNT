@@ -21,10 +21,10 @@
 		<!--Logo Library -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<!--CSS-->
-		<link rel="stylesheet" href="/components/Navbar/Navbar.css" />
-		<link rel="stylesheet" href="/components/Footer/Footer.css" />
-		<link rel="stylesheet" href="styles/works.css" />
-		<link rel="stylesheet" href="styles/global.css" />
+		<link rel="stylesheet" href="/PRNT/components/Navbar/Navbar.css" />
+		<link rel="stylesheet" href="/PRNT/components/Footer/Footer.css" />
+		<link rel="stylesheet" href="styles.css" />
+		<link rel="stylesheet" href="../../global/global.css" />
 		<title>PRNT</title>
 	</head>
 	<body>
@@ -46,11 +46,11 @@
 					<div class="work-col">
 
 						<div class="work-item item-1">
-							<img src="assets/img/img5.jpg" alt="Featured Work: Flyer Design" class="placeholder-img">
+							<img src="/PRNT/assets/img/img5.jpg" alt="Featured Work: Flyer Design" class="placeholder-img">
 						</div>
 						
 						<div class="work-item item-3">
-							<img src="assets/img/img11.jpg" alt="Featured Work: Brochure Stack" class="placeholder-img">
+							<img src="/PRNT/assets/img/img11.jpg" alt="Featured Work: Brochure Stack" class="placeholder-img">
 						</div>
 
 					</div>
@@ -58,18 +58,18 @@
 					<div class="work-col">
 						
 						<div class="work-item item-2">
-							<img src="assets/img/img12.jpg" alt="Featured Work: Business Cards" class="placeholder-img">
+							<img src="/PRNT/assets/img/img12.jpg" alt="Featured Work: Business Cards" class="placeholder-img">
 						</div>
 						
 						<div class="work-item item-4">
-							<img src="assets/img/img1.jpg" alt="Featured Work: Roll-up Banner" class="placeholder-img">
+							<img src="/PRNT/assets/img/img1.jpg" alt="Featured Work: Roll-up Banner" class="placeholder-img">
 						</div>
 
 					</div>
 				</div>
 	
 					<div class="work-item item-5-full">
-						<img src="assets/img/img6.jpg" alt="Banner Design" class="hero-banner-img">
+						<img src="/PRNT/assets/img/img6.jpg" alt="Banner Design" class="hero-banner-img">
 					</div>
 	
 				</div>
@@ -129,14 +129,14 @@
 					</div>
 	
 					<div class="faq-image-col">
-						<img src="assets/img/img17.jpg" alt="FAQ Image" class="faq-side-img">
+						<img src="/PRNT/assets/img/img17.jpg" alt="FAQ Image" class="faq-side-img">
 					</div>
 				</div>
 			</div>
 		</section>
 		<!-- footer -->
 		<custom-footer></custom-footer>
-		<script type="module" src="main.js"></script>
+		<script type="module" src="script.js"></script>
 		<script
 			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
