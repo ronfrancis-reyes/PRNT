@@ -54,6 +54,6 @@
 				</div>
 			</div>
 		</div>
-		<script src="/validations/registration.js"></script>
+		<script src="script.js"></script>
 	</body>
 </html>

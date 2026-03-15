@@ -134,7 +134,7 @@
 
 			<section class="page page-mission-wrapper">
 				<div class="container">
-					<div class="row min-vh-100 align-items-center justify-content-center">
+					<div class="row min-vh-100  justify-content-center">
 						<div class="col-lg-11">
 							<div class="mission-card">
 								<small class="justify-content-center"
