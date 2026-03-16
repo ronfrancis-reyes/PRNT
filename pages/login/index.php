@@ -1,90 +1,79 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-			crossorigin="anonymous"
-		/>
-		<!--Tab Logo-->
-		<link rel="icon" href="/assets/img/PRNT_logo.png" type="image/png" />
-		<!--Logo Library -->
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-		/>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>"> 
+    <title>PRNT - Sign In</title>
+</head>
+<body>
+    <div class="dark-overlay"></div> 
+    
+    <div class="main-container">
+            <a href="../../" class="back-link"><i class="fa fa-angle-left"></i> Back</a>
 
-		<link rel="stylesheet" href="/styles/global.css" />
-		<link rel="stylesheet" href="styles.css" />
+        <div class="login-wrapper">
+            <div class="row g-0 h-100">
+                <div class="col-lg-6 col-md-6 col-12 login-side">
+                    <div class="login-content">
+                        <div class="logo-box mb-4">
+                            <img src="../../assets/img/WHITELOGO.jpg" alt="Logo" class="main-logo">
+                        </div>
+                        
+                        <h1 class="title text-center">Sign In</h1>
+                        
+                        <form class="mt-4">
+                            <div class="mb-4">
+                                <label class="custom-label">BulSU Email</label>
+                                <input type="email" class="form-control custom-input" placeholder="example@bulsu.edu.ph">
+                            </div>
+                            <div class="mb-3">
+                                <label class="custom-label">Password</label>
+                                <input type="password" class="form-control custom-input" id="passInput">
+                            </div>
+                            
+                            <div class="d-flex justify-content-between align-items-center mb-5">
+                                <a href="#" class="form-link">Forgot Password?</a>
+                                <div class="show-pass">
+                                    <input type="checkbox" onclick="showPass()" id="check"> 
+                                    <label for="check" class="form-link ms-1" style="cursor:pointer">Show Password</label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-signin w-100">Sign In</button>
+                        </form>
+                    </div>
+                </div>
 
-		<title>PRNT</title>
-	</head>
-
-	<body>
-		<div class="container container-custom">
-			<h1 class="display-1 text-center hook">Ready to <span>PRNT?</span></h1>
-			<div class="card col-10 card-custom mx-auto my-auto">
-				<div class="card-body card-body-custom">
-					<div class="logo">
-						<img
-							src="/PRNT/assets/img/logo-name.PNG"
-							alt=""
-							class="img-fluid image-custom"
-						/>
-					</div>
-					<div class="inputs">
-						<div class="form-floating mb-3">
-							<input
-								type="email"
-								class="form-control form-control-custom email-input"
-								id="floatingInput"
-								placeholder="name@example.com"
-							/>
-							<label for="floatingInput">Email</label>
-						</div>
-						<div class="form-floating password-custom">
-							<input
-								type="password"
-								class="form-control form-control-custom password-input"
-								id="floatingPassword"
-								placeholder="Password"
-							/>
-							<label for="floatingPassword">Password</label>
-						</div>
-						<div class="show-toggle-custom">
-							<input
-								type="checkbox"
-								id="showPasswordToggle"
-								onclick="showPass()"
-							/>Show Password
-						</div>
-
-						<div class="actions">
-							<a class="register-custom" href="../registration/"
-								>Create an account</a
-							>
-							<button class="login-btn-custom" id="submitButton" disabled>
-								Login
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<script src="script.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-			crossorigin="anonymous"
-		></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-			integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-			crossorigin="anonymous"
-		></script>
-	</body>
+                <div class="col-lg-6 col-md-6 d-none d-md-flex welcome-side">
+                    <div class="welcome-content text-center">
+                        <h1 class="welcome-title">Welcome Back!</h1>
+                        <p class="welcome-text px-4">Share your printing needs and get quality prints.</p>
+                        
+                        <div class="action-group mt-5 pt-3">
+                            <a href="../registration/index.php" class="btn btn-signup">Sign Up</a>
+                            <p class="mt-3"><a href="../registration/index.php" class="create-acc">Create an account</a></p>
+                        </div>
+                    </div>
+                    <div class="footer-link">
+                    <a href="../../" class="text-white text-decoration-none small opacity-50">Back to home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+     <script>
+        function showPass() {
+            var x = document.getElementById("passInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+    </script>
+</body>
 </html>

@@ -1,164 +1,142 @@
-body {
-	padding: 0;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: url('../../assets/img/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
 }
 
-.container-custom {
-	height: 100%;
-	align-items: center;
-	padding-top: 10%;
+.dark-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 1;
 }
 
-.hook {
-	font-weight: 900;
-	letter-spacing: -6px;
+.main-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    padding: 20px;
 }
 
-.hook span {
-	color: #ff4400;
+.back-link {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
 }
 
-.card-custom {
-	padding: 4rem clamp(1px, 1rem, 50px);
-	border-radius: 1rem;
-	background-color: black;
+.login-wrapper {
+    background: transparent;
+    border-radius: 50px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1050px;
+    height: 650px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
 }
 
-.card-body-custom {
-	display: flex;
-	justify-content: space-between;
-	gap: 2%;
+/* LEFT SIDE: FORM */
+.login-side {
+    background: white;
+    padding: 60px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.logo,
-.inputs {
-	width: 49%;
+.main-logo { height: 35px; }
+
+.title {
+    color: #ff8c00;
+    font-weight: 800;
+    font-size: 3rem;
+    margin-bottom: 10px;
 }
 
-.image-custom {
-	height: 100%;
+.custom-label { color: #ff8c00; font-weight: 600; }
+
+.custom-input {
+    border: 2px solid #ff8c00 !important;
+    border-radius: 15px !important;
+    padding: 12px !important;
 }
 
-.form-control-custom {
-	background-color: #121212;
-	color: #eee9e3;
-	border-color: #616161;
+.btn-signin {
+    background-color: #ff8c00;
+    color: white;
+    font-weight: 800;
+    font-size: 1.5rem;
+    border-radius: 15px;
+    padding: 12px;
 }
 
-label {
-	color: #616161 !important;
+.form-link { color: #ff8c00; text-decoration: none; font-weight: 600; }
+
+/* RIGHT SIDE: CLEAR GLASS */
+.welcome-side {
+    background: rgba(255, 255, 255, 0.05); 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    position: relative;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.form-control-custom:focus {
-	background-color: #121212;
-	color: #eee9e3;
-	border-color: #ff4400;
-	box-shadow: none;
+.welcome-title { font-size: 3.8rem; font-weight: 800; margin-bottom: 15px; }
+
+.welcome-text { 
+    font-size: 1rem; 
+    opacity: 0.95; 
+    max-width: 450px; 
+    line-height: 1.4;
+    text-align: center;
 }
 
-.actions {
-	color: #ff4400;
-	margin-top: 1rem;
-	display: flex;
-	justify-content: space-between;
-	align-items: first baseline;
-}
-.register-custom {
-	width: fit-content;
-	cursor: pointer;
-	color: #ff4400;
-	text-decoration: none;
-	transition: all 0.15s;
-}
-.register-custom:hover {
-	text-decoration: underline;
-}
-.register-custom:active {
-	opacity: 0.8;
+.action-group {
+    margin-top: 80px !important; 
+    text-align: center;
 }
 
-.login-btn-custom {
-	background-color: #ff4400;
-	border: none;
-	padding: 2% 12%;
-	font-size: 1.2rem;
-	font-weight: 700;
-	border-radius: 2rem;
-	color: #eee9e3;
-	transition: all 0.15s;
+.btn-signup {
+    background: white;
+    color: #ff8c00;
+    font-weight: 800;
+    padding: 12px 60px;
+    border-radius: 15px;
+    text-decoration: none;
+    display: inline-block;
 }
 
-.login-btn-custom:hover {
-	background-color: #ff4400;
-	opacity: 0.8;
+.create-acc, .home-footer-link {
+    color: white;
+    text-decoration: none;
+    opacity: 0.8;
 }
 
-.login-btn-custom:active {
-	background-color: #ff4400;
-	opacity: 0.6;
+/* Pinned to lower right */
+.home-footer-link {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    font-size: 0.9rem;
 }
 
-@media (max-width: 992px) {
-	.card-body-custom {
-		flex-direction: column;
-		justify-content: center;
-		gap: 2rem;
-	}
-	.logo {
-		display: flex;
-		justify-content: center;
-		object-fit: contain;
-		width: 100%;
-		height: 10%;
-	}
-
-	.image-custom {
-		height: 10%;
-	}
-
-	.inputs {
-		width: 100%;
-	}
-}
-
-@media (max-width: 550px) {
-	.image-custom {
-		height: 6rem;
-	}
-	.actions {
-		flex-direction: column;
-		align-items: center;
-		gap: 0.5rem;
-	}
-	.register-custom {
-		order: 1;
-	}
-
-	.login-btn-custom {
-		padding: 3% 25%;
-	}
-}
-
-.login-btn-custom:disabled {
-	background-color: gray;
-	cursor: not-allowed;
-	opacity: 0.5;
-}
-
-.login-btn-custom:not(:disabled) {
-	background-color: #ff4400;
-	border: none;
-	padding: 2% 12%;
-	font-size: 1.2rem;
-	font-weight: 700;
-	border-radius: 2rem;
-	color: #eee9e3;
-	transition: all 0.15s;
-}
-
-.show-toggle-custom {
-	margin-top: 0.3rem;
-	gap: 0.2rem;
-	display: flex;
-	justify-content: flex-end;
-	color: #eee9e3;
+@media (max-width: 768px) {
+    .login-wrapper { height: auto; }
+    .login-side { padding: 40px 20px; border-radius: 50px; }
 }
