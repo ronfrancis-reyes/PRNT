@@ -1,90 +1,81 @@
-const Fullname = document.getElementById("name");
-const email = document.getElementById("email");
-const contact = document.getElementById("contact");
-const password = document.getElementById("password");
-const retype = document.getElementById("retype");
-const terms = document.getElementById("terms");
-const signupbtn = document.getElementById("signupbtn");
+const API = "/PRNT/api/registration.php";
 
-function checkFields() {
-	if (
-		Fullname.value.trim() === "" ||
-		email.value.trim() === "" ||
-		contact.value.trim() === "" ||
-		password.value.trim() === "" ||
-		retype.value.trim() === "" ||
-		!terms.checked
-	) {
-		signupbtn.disabled = true;
-	} else {
-		signupbtn.disabled = false;
+const form = $("#signup-form");
+const fullname = $("#name");
+const email = $("#email");
+const contact = $("#contact");
+const password = $("#password");
+const confirmPassword = $("#confirm-password");
+const terms = $("#terms");
+
+const submit_btn = $("#submit");
+
+//validation of inputs
+function validateForm() {
+	const nameVal = fullname.val().trim();
+	const emailVal = email.val().trim();
+	const contactVal = contact.val().trim();
+	const passwordVal = password.val();
+	const confirmVal = confirmPassword.val();
+	const termsChecked = terms.prop("checked");
+
+	let isValid = true;
+
+	//empty fields validation
+	if (!nameVal || !emailVal || !contactVal || !passwordVal || !confirmVal) {
+		isValid = false;
 	}
-}
-
-function checkInputs() {
-	const checkEmail = email.value.trim();
-	const checkContact = contact.value.trim();
-	const checkpassword = password.value.trim();
-	const checkRetype = retype.value.trim();
-	const passStrength = passwordStrengthCheck(checkpassword);
-
-	if (/^[0-9]+@ms\.bulsu\.edu\.ph$/.test(checkEmail)) {
-		if (/^09[0-9]{9}$/.test(checkContact)) {
-			if (passStrength < 3) {
-				alert("Password weak, create another password!");
-			} else if (passStrength == 3 || passStrength == 4) {
-				let proceed = confirm(
-					"Password strength is medium. Do you want proceed?",
-				);
-				if (proceed) {
-					if (checkpassword === checkRetype) {
-						alert("Account Created!");
-					} else {
-						alert("Password doesn't match!");
-						retype.focus();
-					}
-				} else {
-					password.focus();
-				}
-			} else {
-				if (checkpassword === checkRetype) {
-					alert("Account Created!");
-				} else {
-					alert("Password doesn't match!");
-					retype.focus();
-				}
-			}
-		} else {
-			alert("Please use valid contact number!");
-			contact.focus();
-		}
-	} else {
-		alert("Please use distributed BulSU MS Account!");
-		email.focus();
+	//name validation
+	if (!/^[a-zA-Z ]{3,}$/.test(nameVal)) {
+		isValid = false;
 	}
+	//email validation (ms.bulsu.edu.ph/bulsu.edu.ph)
+	if (!/^.+@(ms\.bulsu\.edu\.ph|bulsu\.edu\.ph)$/.test(emailVal)) {
+		isValid = false;
+	}
+	//contact validation number must start in 09 and 11 digits
+	if (!/^09\d{9}$/.test(contactVal)) {
+		isValid = false;
+	}
+	//password and confirm must be the same
+	if (passwordVal !== confirmVal) {
+		isValid = false;
+	}
+	//terms must be checked
+	if (!termsChecked) {
+		isValid = false;
+	}
+
+	submit_btn.prop("disabled", !isValid);
 }
 
-function passwordStrengthCheck(password) {
-	let strength = 0;
+fullname.on("input", validateForm);
+email.on("input", validateForm);
+contact.on("input", validateForm);
+password.on("input", validateForm);
+confirmPassword.on("input", validateForm);
+terms.on("change", validateForm);
 
-	if (password.length >= 8) strength++;
-	if (/[A-Z]/.test(password)) strength++;
-	if (/[a-z]/.test(password)) strength++;
-	if (/[0-9]/.test(password)) strength++;
-	if (
-		password.includes("@") ||
-		password.includes(".") ||
-		password.includes("_")
-	)
-		strength++;
+//form submit
+form.on("submit", function (e) {
+	e.preventDefault();
 
-	return strength;
-}
+	let payload = {
+		fullname: $("#name"),
+		email: $("#email"),
+		contact: $("#contact"),
+		password: $("#password"),
+	};
 
-signupbtn.addEventListener("click", checkInputs);
-Fullname.addEventListener("input", checkFields);
-email.addEventListener("input", checkFields);
-contact.addEventListener("input", checkFields);
-password.addEventListener("input", checkFields);
-retype.addEventListener("input", checkFields);
-terms.addEventListener("change", checkFields);
+	$.ajax({
+		type: "POST",
+		url: API,
+		data: "action=get&payload=" + JSON.stringify(payload),
+		success: function (response) {
+			let resp = JSON.parse(response); //response ng api
+		},
+		error: function (error) {
+			alert(error);
+		},
+	});
+});
