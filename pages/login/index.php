@@ -27,7 +27,7 @@
                         <form class="mt-4">
                             <div class="mb-4">
                                 <label class="custom-label">BulSU Email</label>
-                                <input type="email" class="form-control custom-input" placeholder="example@bulsu.edu.ph">
+                                <input type="email" class="form-control custom-input" placeholder="example@bulsu.edu.ph" id="emailInput">
                             </div>
                             <div class="mb-3">
                                 <label class="custom-label">Password</label>
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             
-                            <button type="submit" class="btn btn-signin w-100">Sign In</button>
+                            <button type="submit" class="btn btn-signin w-100" id="submitButton">Sign In</button>
                         </form>
                     </div>
                 </div>
@@ -75,5 +75,8 @@
             }
         }
     </script>
+    <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
+    
 </html>
