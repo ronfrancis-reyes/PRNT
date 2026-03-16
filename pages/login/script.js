@@ -1,8 +1,9 @@
 const email = document.getElementById("emailInput");
 const password = document.getElementById("passInput");
 const submitButt = document.getElementById("submitButton");
+const form = $("#login-form");
 
-const API = "/PRNT/api/registration.php";
+const API = "/PRNT/api/login.php";
 
 function checkFields() {
 	if (email.value.trim() === "" || password.value.trim() === "") {
@@ -13,29 +14,34 @@ function checkFields() {
 }
 
 function postOne() {
-	let payload= {
-		email : $("#emailInput").val(),
-		password : $("#passInput").val()
-	}
+	let payload = {
+		email: $("#emailInput").val(),
+		password: $("#passInput").val(),
+	};
 
 	$.ajax({
-		url : API,
-		type : postOne,
-		data : "action=postOne&payload=" + JSON.stringify(payload),
-		success : function(response){
+		url: API,
+		type: "POST",
+		data: "action=postOne&payload=" + JSON.stringify(payload),
+		success: function (response) {
 			let respo = JSON.parse(response);
 			alert(respo.message);
-			if(respo.status == "success"){
+			if (respo.status == "success") {
 				window.location.href = "#";
+			} else {
+				alert(respo.message);
 			}
 		},
-		error : function(error){
+		error: function (error) {
 			alert(error);
-		}
-	})
+		},
+	});
 }
 
-submitButt.addEventListener("click", postOne);
+form.on("submit", function (e) {
+	e.preventDefault();
+	postOne();
+});
 email.addEventListener("input", checkFields);
 password.addEventListener("input", checkFields);
 

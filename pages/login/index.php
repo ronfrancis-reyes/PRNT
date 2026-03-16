@@ -24,7 +24,7 @@
                         
                         <h1 class="title text-center">Sign In</h1>
                         
-                        <form class="mt-4">
+                        <form class="mt-4" id="login-form">
                             <div class="mb-4">
                                 <label class="custom-label">BulSU Email</label>
                                 <input type="email" class="form-control custom-input" placeholder="example@bulsu.edu.ph" id="emailInput">
