@@ -148,3 +148,21 @@ body {
     }
 }
 
+/* Define the animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Apply it to your registration card */
+.glass-card {
+    animation: fadeInUp 0.8s ease-out forwards;
+    /* This ensures the animation only runs once when the page loads */
+}
+

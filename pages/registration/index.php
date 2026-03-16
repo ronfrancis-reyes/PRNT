@@ -71,10 +71,7 @@
                         <input type="password" placeholder="Confirm Password" class="form-control" id="confirm-password">
                     </div>
 
-                    <div class="form-check mb-4">
-                        <input class="form-check-input" type="checkbox" id="terms">
-                        <label class="form-check-label small" for="terms">Accept Terms & Conditions</label>
-                    </div>
+            
 
                     <button type="submit" class="btn join-btn w-100 py-3 text-white fw-bold rounded-3" id="submit" disabled>
                         Join us <i class="fa fa-arrow-right ms-2"></i>

@@ -12,7 +12,6 @@
     <div class="dark-overlay"></div> 
     
     <div class="main-container">
-    
 
         <div class="login-wrapper">
             <div class="row g-0 h-100">
@@ -35,7 +34,6 @@
                             </div>
                             
                             <div class="d-flex justify-content-between align-items-center mb-5">
-                                <a href="#" class="form-link">Forgot Password?</a>
                                 <div class="show-pass">
                                     <input type="checkbox" onclick="showPass()" id="check"> 
                                     <label for="check" class="form-link ms-1" style="cursor:pointer">Show Password</label>
