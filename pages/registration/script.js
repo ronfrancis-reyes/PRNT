@@ -67,6 +67,25 @@ form.on("submit", function (e) {
 		password: $("#password").val(),
 	};
 
+	postOne(payload.email).then((response) => {
+		let reply = JSON.parse(response); //using promises
+		if (reply.status == "success") {
+			store(payload);
+		} else {
+			alert("Account already exist");
+		}
+	});
+});
+
+function postOne(id) {
+	return $.ajax({
+		type: "POST",
+		url: API,
+		data: "action=postOne&email=" + id,
+	});
+}
+
+function store(payload) {
 	$.ajax({
 		type: "POST",
 		url: API,
@@ -76,11 +95,11 @@ form.on("submit", function (e) {
 			alert(reply.status + " " + reply.message);
 
 			if (reply.status == "success") {
-				window.location.href = "/PRNT/";
+				window.location.href = "/PRNT/pages/login/";
 			}
 		},
 		error: function (error) {
-			alert(error);
+			alert(JSON.stringify(error));
 		},
 	});
-});
+}
