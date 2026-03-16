@@ -61,18 +61,23 @@ form.on("submit", function (e) {
 	e.preventDefault();
 
 	let payload = {
-		fullname: $("#name"),
-		email: $("#email"),
-		contact: $("#contact"),
-		password: $("#password"),
+		fullname: $("#name").val(),
+		email: $("#email").val(),
+		contact: $("#contact").val(),
+		password: $("#password").val(),
 	};
 
 	$.ajax({
 		type: "POST",
 		url: API,
-		data: "action=get&payload=" + JSON.stringify(payload),
+		data: "action=store&payload=" + JSON.stringify(payload),
 		success: function (response) {
-			let resp = JSON.parse(response); //response ng api
+			let reply = JSON.parse(response); //response ng api
+			alert(reply.status + " " + reply.message);
+
+			if (reply.status == "success") {
+				window.location.href = "/PRNT/";
+			}
 		},
 		error: function (error) {
 			alert(error);

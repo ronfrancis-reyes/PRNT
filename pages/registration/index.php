@@ -10,13 +10,12 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
         crossorigin="anonymous" />
     <!--Tab Logo-->
-    <link rel="icon" href="/assets/img/PRNT_logo.png" type="image/png" />
+    <link rel="icon" href="/PRNT/assets/img/PRNT_logo.png" type="image/png" />
     <!--Logo Library -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-    <link rel="stylesheet" href="/styles/global.css" />
     <link rel="stylesheet" href="styles.css" />
 
     <title>PRNT</title>
