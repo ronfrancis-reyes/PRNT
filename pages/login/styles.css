@@ -46,6 +46,20 @@ body, html {
     max-width: 1050px;
     height: 650px;
     box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    animation: slideUpFade 0.8s ease-out forwards;
+   
+}
+
+/* Animation for the login wrapper */
+@keyframes slideUpFade {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); 
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);    
+    }
 }
 
 /* LEFT SIDE: FORM */
