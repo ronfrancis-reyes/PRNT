@@ -23,37 +23,67 @@
 		<title>PRNT</title>
 	</head>
 	<body>
-		<div class="card card-custom">
-			<div class="card-body">
-				<div class="text">
-					<img src="/assets/img/PRNT-white.png" alt="PRNT" class="label">
-					<div class="intro">
-						<label style="font-size: 2rem; font-weight: bold;">Create your <br>Account</label>
-						<br>
-						<label>Share your printing needs <br> and get quality prints!</label>
-					</div>
-					<div class="cardfooter">
-						
-						<p>Professional printing services at your fingertips</p>
-					</div>
-				</div>
-				<div class="inputs col-md-6">
-					<p>Sign up</p>
-					<input type="text" placeholder="Full Name" id="name">
-					<input type="email" placeholder="Email address" id="email">
-					<input type="text" placeholder="Contact number" id="contact">
-					<input type="password" placeholder="Password" id="password">
-					<input type="password" placeholder="Re-type Password" id="retype">
-					<div>
-						<input type="checkbox" id="terms">
-						<label for="terms">Accept terms & Condition</label>
-					</div>
-					<button id="signupbtn" class="signup-button" disabled>Join Us -></button>
-					<p>Already have an account?</p>
-					<a href="../login/">Sign in</a>
-				</div>
-			</div>
-		</div>
+		<div class="registration-wrapper d-flex align-items-center justify-content-center">
+    <div class="glass-card row g-0">
+       <div class="col-md-5 welcome-side">
+    <div class="brand">
+        <img src="../../assets/img/PRNT-white.png" alt="PRNT" height="40">
+    </div>
+    
+    <div class="middle-group">
+        <h1 class="fw-bold text-white">Hello, Friend!</h1>
+        <p class="text-white opacity-90">Share your printing needs and get quality prints.</p>
+        
+        <div class="signin-section mt-4">
+            <a href="../login/" class="btn-signin">Sign In</a>
+            <p class="small text-white mt-3 opacity-75">Already have an account?</p>
+        </div>
+    </div>
+
+    <div class="footer-link">
+        <a href="../../" class="text-white text-decoration-none small opacity-50">Back to home</a>
+    </div>
+</div>
+
+        <div class="col-md-7 form-side p-5 bg-white">
+            <h2 class="text-center fw-bold mb-4">Create Account</h2>
+            
+            <form id="signup-form">
+                <div class="custom-input mb-3">
+                    <i class="fa fa-user"></i>
+                    <input type="text" placeholder="Name" class="form-control">
+                </div>
+                
+                <div class="custom-input mb-3">
+                    <i class="fa fa-envelope"></i>
+                    <input type="email" placeholder="BulSU Email" class="form-control">
+                </div>
+
+                <div class="custom-input mb-3">
+                    <i class="fa fa-phone"></i>
+                    <input type="text" placeholder="Contact Number" class="form-control">
+                </div>
+
+                <div class="custom-input mb-3">
+                    <input type="password" placeholder="Password" class="form-control">
+                </div>
+
+                <div class="custom-input mb-3">
+                    <input type="password" placeholder="Confirm Password" class="form-control">
+                </div>
+
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="terms">
+                    <label class="form-check-label small" for="terms">Accept Terms & Conditions</label>
+                </div>
+
+                <button type="submit" class="btn join-btn w-100 py-3 text-white fw-bold rounded-3">
+                    Join us <i class="fa fa-arrow-right ms-2"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 		<script src="script.js"></script>
 	</body>
 </html>
