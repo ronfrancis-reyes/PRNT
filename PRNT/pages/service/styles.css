@@ -1,0 +1,130 @@
+.services-body {
+	padding: 0px 50px;
+	padding-top: 170px;
+	padding-bottom: 80px;
+}
+
+.services-title {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	align-content: center;
+}
+
+.circle {
+	border-radius: 100%;
+	background-color: rgb(255, 68, 0);
+	opacity: 1;
+	aspect-ratio: 1;
+	height: 10px;
+	flex: none;
+	width: 10px;
+}
+
+.prnt-eng {
+	font-size: 70px;
+	font-weight: bold;
+	color: black;
+}
+
+.prnt-eng2 {
+	font-size: 23px;
+	font-weight: bold;
+	color: grey;
+}
+
+.prnt-eng-wrapper {
+	display: flex;
+	place-content: flex-end space-between;
+	align-items: flex-end;
+	gap: 200px;
+	padding-top: 150px;
+	margin: 0;
+}
+
+.mid-catchwords {
+	display: flex;
+	align-items: flex-end;
+	place-content: flex-end space-between;
+	padding: 10px;
+	font-size: 25px;
+	color: rgb(244, 60, 0);
+	font-weight: bold;
+}
+
+.card-img {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+}
+
+.card-overlay {
+	height: 150px;
+	width: 300px;
+	position: absolute;
+	top: -20px;
+	right: 20px;
+	z-index: 10;
+	width: 200px;
+}
+
+.accordion-button {
+	font-size: 50px !important;
+	font-weight: bold !important;
+	align-items: center;
+	color: black !important;
+	gap: 100px !important;
+}
+
+.accordion-header {
+	color: black;
+}
+
+.image-container {
+	display: flex;
+	align-items: flex-end;
+	background: url("/PRNT/assets/img/img14.jpg");
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	align-self: center;
+	padding: 1.5% 2%;
+	height: 800px;
+	width: 1320px;
+	margin-bottom: 2%;
+	border-radius: 4%;
+}
+
+.inner-card-text {
+	font-weight: 700;
+	font-size: 18px;
+	margin-bottom: 13%;
+	margin-top: 5%;
+}
+
+.card-link {
+	text-decoration: none;
+	color: #f43c00;
+	font-weight: 600;
+	transition: 0.15s;
+}
+
+.card-logo {
+	display: block;
+	height: auto;
+	object-fit: cover;
+	width: 40px !important;
+}
+
+.accordion-item {
+	border-bottom: 1px solid #222;
+	background-color: transparent;
+	border-radius: 4px;
+	margin-bottom: 15px;
+	background-color: white !important;
+	padding: 0 20px;
+}
+
+.faq-section {
+	margin-bottom: 10rem;
+}
