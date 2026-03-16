@@ -6,7 +6,6 @@ const email = $("#email");
 const contact = $("#contact");
 const password = $("#password");
 const confirmPassword = $("#confirm-password");
-const terms = $("#terms");
 
 const submit_btn = $("#submit");
 
@@ -39,10 +38,6 @@ function validateForm() {
 	}
 	//password and confirm must be the same
 	if (passwordVal !== confirmVal) {
-		isValid = false;
-	}
-	//terms must be checked
-	if (!termsChecked) {
 		isValid = false;
 	}
 

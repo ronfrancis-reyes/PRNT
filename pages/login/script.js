@@ -25,9 +25,8 @@ function postOne() {
 		data: "action=postOne&payload=" + JSON.stringify(payload),
 		success: function (response) {
 			let respo = JSON.parse(response);
-			alert(respo.message);
 			if (respo.status == "success") {
-				window.location.href = "#";
+				window.location.href = "/PRNT/pages/service-avail/";
 			} else {
 				alert(respo.message);
 			}
