@@ -12,7 +12,7 @@
     <div class="dark-overlay"></div> 
     
     <div class="main-container">
-            <a href="../../" class="back-link"><i class="fa fa-angle-left"></i> Back</a>
+    
 
         <div class="login-wrapper">
             <div class="row g-0 h-100">
