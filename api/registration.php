@@ -1,7 +1,8 @@
 <?php
 include "config.php";
 
-if ($_POST['action'] == "postOne") {
+if(isset($_POST['action'])) {
+    if ($_POST['action'] == "postOne") {
     $id = $_POST['email'];
 
     $sql = $conn->prepare("SELECT email from accounts WHERE email = ?");
@@ -24,21 +25,22 @@ if ($_POST['action'] == "postOne") {
     exit;
 }
 
-if ($_POST['action'] == "store") {
-    $payload = json_decode($_POST['payload']);
-    $hashedPassword = password_hash($payload->password, PASSWORD_DEFAULT);
+    if ($_POST['action'] == "store") {
+        $payload = json_decode($_POST['payload']);
+        $hashedPassword = password_hash($payload->password, PASSWORD_DEFAULT);
 
-    $sql = $conn->prepare("INSERT INTO accounts(name, email, contact_number, password, date_created) VALUES(?, ?, ?, ?, NOW())");
-    $sql->bind_param("ssss", $payload->fullname, $payload->email, $payload->contact, $hashedPassword);
+        $sql = $conn->prepare("INSERT INTO accounts(name, email, contact_number, password, date_created) VALUES(?, ?, ?, ?, NOW())");
+        $sql->bind_param("ssss", $payload->fullname, $payload->email, $payload->contact, $hashedPassword);
 
-    if ($sql->execute()) {
-        echo json_encode([
-            "status" => "success",
-            "message" => "Account created successfully"]);
-    } else {
-        echo json_encode([
-            "status" => "failed",
-            "message" => "Failed to create account"]);
+        if ($sql->execute()) {
+            echo json_encode([
+                "status" => "success",
+                "message" => "Account created successfully"]);
+        } else {
+            echo json_encode([
+                "status" => "failed",
+                "message" => "Failed to create account"]);
+        }
+        exit;
     }
-    exit;
 }

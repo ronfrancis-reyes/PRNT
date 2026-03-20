@@ -16,7 +16,6 @@ function validateForm() {
 	const contactVal = contact.val().trim();
 	const passwordVal = password.val();
 	const confirmVal = confirmPassword.val();
-	const termsChecked = terms.prop("checked");
 
 	let isValid = true;
 
@@ -49,7 +48,6 @@ email.on("input", validateForm);
 contact.on("input", validateForm);
 password.on("input", validateForm);
 confirmPassword.on("input", validateForm);
-terms.on("change", validateForm);
 
 //form submit
 form.on("submit", function (e) {
@@ -87,7 +85,7 @@ function store(payload) {
 		data: "action=store&payload=" + JSON.stringify(payload),
 		success: function (response) {
 			let reply = JSON.parse(response); //response ng api
-			alert(reply.status + " " + reply.message);
+			alert(reply.message);
 
 			if (reply.status == "success") {
 				window.location.href = "/PRNT/pages/login/";

@@ -11,9 +11,8 @@ if(isset($_POST['action'])){
 
         $result = $sql->get_result();
         if($result->num_rows > 0){
-            $student = $result->fetch_assoc();
-            if(password_verify($payload->password, $student["password"])){
-                $_SESSION['student'] = $student;
+            $account = $result->fetch_assoc();
+            if(password_verify($payload->password, $account['password'])){
                 echo json_encode([
                     "status" => "success",
                     "message" => "Logged In!"
