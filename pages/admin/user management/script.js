@@ -1,10 +1,10 @@
-// Close all dropdowns on outside click
+// close all dropdowns 
 document.addEventListener('click', e => {
   if (!e.target.closest('.action-wrap'))
     document.querySelectorAll('.dropdown.show').forEach(d => d.classList.remove('show'));
 });
 
-// Toggle per-row dropdown
+// toggle per row dropdown
 function toggleMenu(btn) {
   const dropdown = btn.nextElementSibling;
   const isOpen   = dropdown.classList.contains('show');
@@ -12,7 +12,7 @@ function toggleMenu(btn) {
   if (!isOpen) dropdown.classList.add('show');
 }
 
-// View user details
+// view user details
 function viewDetails(btn) {
   const cells  = btn.closest('tr').querySelectorAll('td');
   const id     = cells[0]?.innerText.trim();
@@ -25,7 +25,7 @@ function viewDetails(btn) {
   btn.closest('.dropdown').classList.remove('show');
 }
 
-// Suspend or activate user — checks current badge status
+// suspend or activate user
 function toggleSuspend(btn) {
   const row    = btn.closest('tr');
   const badge  = row.querySelector('.badge');
@@ -47,12 +47,12 @@ function toggleSuspend(btn) {
   btn.closest('.dropdown').classList.remove('show');
 }
 
-// Delete single row
+// delete single row
 function deleteRow(btn) {
   if (confirm('Delete this user?')) btn.closest('tr').remove();
 }
 
-// Search and filter
+// search and filter
 function filterTable() {
   const q = document.getElementById('searchInput').value.toLowerCase();
   const s = document.getElementById('statusFilter').value;
@@ -63,7 +63,7 @@ function filterTable() {
   });
 }
 
-// Export visible rows
+// export visible rows
 function exportCSV() {
   const rows = [...document.querySelectorAll('#tableBody tr')].filter(r => r.style.display !== 'none');
   if (!rows.length) return alert('No users to export.');
