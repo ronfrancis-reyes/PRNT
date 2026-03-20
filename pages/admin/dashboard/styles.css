@@ -1,0 +1,41 @@
+/* Pages Container */
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  overflow-x: hidden;
+}
+
+.page {
+  width: 100%;
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ff4400;
+  margin-right: 0.5rem;
+}
+
+small {
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #ff4400;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.1;
+  margin-top: 1rem;
+  color: #000;
+}
