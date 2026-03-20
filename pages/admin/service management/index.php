@@ -1,57 +1,187 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-			crossorigin="anonymous"
-		/>
-		<!--Tab Logo-->
-		<link rel="icon" href="/PRNT/assets/img/PRNT_logo.png" type="image/png" />
-		<!--Logo Library -->
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-		/>
-		<link rel="stylesheet" href="styles.css" />
-		<link rel="stylesheet" href="../../global/global.css" />
-		<title>PRNT - SERVICE MANAGEMENT</title>
-	</head>
-	<body>
-		<!-- start of body-->
-		<main>
-			<section class="page">
-				<div class="container py-5">
-					<div class="row min-vh-100 align-items-center justify-content-center text-center">
-						<div class="col-12">
-							<small class="justify-content-center"><span class="dot"></span>ADMIN</small>
-							<h1 class="display-1 fw-bold">SERVICE MANAGEMENT</h1>
-							<p class="text-secondary mt-3">Welcome to the Service Management page.</p>
-						</div>
-					</div>
-				</div>
-			</section>
-		</main>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Management | PRNT Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-dark-main">
 
-		<script type="module" src="script.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-			crossorigin="anonymous"
-		></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-			integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-			crossorigin="anonymous"
-		></script>
-	</body>
+    <div class="d-flex">
+		
+	  <!-- SIDEBAR: ALFRED-->
+        <div class="sidebar vh-100 p-3 shadow-sm" style="width: 250px; position: fixed; z-index: 1000;">
+            <div class="d-flex align-items-center mb-4 ps-2">
+                <div class="bg-orange text-white rounded p-2 me-2">
+                    </div>
+            </div>
+        </div>
+    <!-- SIDEBAR: ALFRED-->
+        <div class="flex-grow-1" style="margin-left: 250px; min-height: 100vh;">
+
+              <!-- TOPBAR: ALFRED-->
+            <div class="bg-dark-main p-3 d-flex justify-content-between align-items-center border-bottom border-secondary sticky-top" style="height: 70px;">
+                <div class="input-group w-50">
+                    </div>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="d-flex align-items-center gap-2 border-start border-secondary ps-3">
+                        <div class="lh-sm">
+                            </div>
+                        <i class="fas fa-chevron-down small text-muted ms-1"></i>
+                    </div>
+                </div>
+            </div>
+              <!-- TOPBAR: ALFRED-->
+
+               <!--start of body-->
+
+            <div class="container-fluid p-4">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h2 class="fw-bold mb-1 text-white">Service Management</h2>
+                        <p class="text-muted small">Manage your printing service options and pricing.</p>
+                    </div>
+                    <button class="btn btn-orange px-4 py-2 rounded-3 fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+                        <i class="fas fa-plus me-2"></i>Add Service
+                    </button>
+                </div>
+
+                <div class="row g-4" id="servicesContainer">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="service-card shadow-sm h-100">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h5 class="fw-bold mb-0 service-name text-white">Business Cards</h5>
+                                    <p class="text-muted small service-format">Standard (3.5" x 2")</p>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch-green" type="checkbox" checked>
+                                </div>
+                            </div>
+                            <div class="price-section my-4">
+                                <h3 class="fw-bold mb-0 text-orange service-price">$45.00</h3>
+                                <p class="text-muted small">per unit</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="status-pill available">Available</span>
+                                <div class="actions">
+                                    <i class="fas fa-edit text-muted me-3 pointer" data-bs-toggle="modal" data-bs-target="#editServiceModal" onclick="prepareEdit(this)"></i>
+                                    <i class="fas fa-trash text-danger pointer" data-bs-toggle="modal" data-bs-target="#deleteServiceModal" onclick="prepareDelete(this)"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <div class="service-card shadow-sm h-100">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h5 class="fw-bold mb-0 service-name text-white">Flyers</h5>
+                                    <p class="text-muted small service-format">A4 (8.27" x 11.69")</p>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input switch-green" type="checkbox" checked>
+                                </div>
+                            </div>
+                            <div class="price-section my-4">
+                                <h3 class="fw-bold mb-0 text-orange service-price">$120.00</h3>
+                                <p class="text-muted small">per unit</p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="status-pill available">Available</span>
+                                <div class="actions">
+                                    <i class="fas fa-edit text-muted me-3 pointer" data-bs-toggle="modal" data-bs-target="#editServiceModal" onclick="prepareEdit(this)"></i>
+                                    <i class="fas fa-trash text-danger pointer" data-bs-toggle="modal" data-bs-target="#deleteServiceModal" onclick="prepareDelete(this)"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addServiceModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 p-3 shadow">
+                <div class="modal-header border-0 pb-0"><h4 class="fw-bold">Add New Service</h4></div>
+                <div class="modal-body">
+                    <form id="addServiceForm">
+                        <div class="mb-3">
+                            <label class="small text-muted">Service Name</label>
+                            <input type="text" class="form-control" placeholder="Service Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small text-muted">Format Type</label>
+                            <input type="text" class="form-control" placeholder="e.g. A4" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small text-muted">Price</label>
+                            <input type="text" class="form-control" placeholder="$0.00" required>
+                        </div>
+                        <div class="form-check mb-4 mt-3">
+                            <input class="form-check-input custom-check" type="checkbox" id="addAvailCheck" checked>
+                            <label class="form-check-label small fw-medium" for="addAvailCheck">Available for orders</label>
+                        </div>
+                        <button type="submit" class="btn btn-orange w-100 py-2 fw-bold">Add Service</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editServiceModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 p-3 shadow">
+                <div class="modal-header border-0 pb-0"><h4 class="fw-bold mb-0">Edit Service</h4></div>
+                <div class="modal-body">
+                    <form id="editServiceForm">
+                        <div class="mb-3">
+                            <label class="small text-muted mb-1">Service Name</label>
+                            <input type="text" id="editName" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small text-muted mb-1">Format Type</label>
+                            <input type="text" id="editFormat" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="small text-muted mb-1">Price</label>
+                            <input type="text" id="editPrice" class="form-control" required>
+                        </div>
+                        <div class="form-check mb-4 mt-3">
+                            <input class="form-check-input custom-check" type="checkbox" id="editAvailCheck">
+                            <label class="form-check-label small fw-medium" for="editAvailCheck">Available for orders</label>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-secondary flex-grow-1 py-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-orange flex-grow-1 py-2 fw-bold">Update Service</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteServiceModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content border-0 p-3 text-center">
+                <div class="modal-body">
+                    <i class="fas fa-exclamation-triangle text-danger mb-3" style="font-size: 3rem;"></i>
+                    <h5 class="fw-bold">Are you sure?</h5>
+                    <p class="text-muted small">This service will be removed from your view.</p>
+                    <div class="d-flex gap-2 mt-4">
+                        <button type="button" class="btn btn-secondary flex-grow-1" data-bs-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-danger flex-grow-1" id="confirmDelete">Yes, Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
 </html>
