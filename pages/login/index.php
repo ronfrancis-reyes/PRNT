@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             
-                            <button type="submit" class="btn btn-signin w-100" id="submitButton">Sign In</button>
+                            <button type="submit" class="btn btn-signin w-100" id="submitButton" disabled>Sign In</button>
                         </form>
                     </div>
                 </div>
@@ -63,16 +63,6 @@
         </div>
     </div>
     </div>
-     <script>
-        function showPass() {
-            var x = document.getElementById("passInput");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
-            }
-        }
-    </script>
     <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>

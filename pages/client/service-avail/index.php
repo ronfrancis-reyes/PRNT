@@ -1,3 +1,12 @@
+<?php
+include "../../../api/config.php";
+if(!isset($_SESSION['user'])) {
+header("Location: /PRNT/pages/login/");
+} else if ($_SESSION['user'] == 1) {
+header("Location: /PRNT/pages/admin/dashboard/");
+}
+?>
+
 <!doctype html>
 <html lang="en">
 <head>

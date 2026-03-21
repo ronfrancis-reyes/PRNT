@@ -1,3 +1,12 @@
+<?php
+include "../../../api/config.php";
+if(!isset($_SESSION['user'])) {
+header("Location: /PRNT/pages/login/");
+} else if ($_SESSION['user'] != 1) {
+header("Location: /PRNT/pages/client/service-avail/");
+}
+?>
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -29,6 +38,7 @@
 	<body>
 		<!-- start of body-->
 		<main>
+			<a href="../../../api/logout.php">logout</a>
 			<section class="page">
 				<div class="container py-5">
 					<div class="row min-vh-100 align-items-center justify-content-center text-center">

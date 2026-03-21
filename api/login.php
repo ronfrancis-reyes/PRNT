@@ -13,6 +13,7 @@ if(isset($_POST['action'])){
         if($result->num_rows > 0){
             $account = $result->fetch_assoc();
             if(password_verify($payload->password, $account['password'])){
+                $_SESSION['user'] = $account['account_id'];
                 echo json_encode([
                     "status" => "success",
                     "message" => "Logged In!"
