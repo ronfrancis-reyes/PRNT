@@ -18,6 +18,9 @@
 import "/PRNT/components/Navbar/Navbar.js";
 import "/PRNT/components/Footer/Footer.js";
 const API = "../../../api/service-avail.php";
+
+let pageCount;
+let total_price;
 // Wait for the entire HTML page to load before running any code
 document.addEventListener("DOMContentLoaded", () => {
 	// ===========================================================
@@ -222,6 +225,13 @@ document.addEventListener("DOMContentLoaded", () => {
 	continueToStep3.addEventListener("click", () => {
 		showStep(step3Container, step2Container);
 		completeStepper(stepper2, stepper3, line2);
+
+		let reader = new FileReader();
+		reader.readAsBinaryString(fileInput.files[0]);
+		reader.onloadend = function () {
+			let pageCount = reader.result.match(/\/Type[\s]*\/Page[^s]/g).length;
+			storePageCount(pageCount);
+		};
 	});
 
 	// ===========================================================
@@ -234,16 +244,16 @@ document.addEventListener("DOMContentLoaded", () => {
 	 * OR if user picked Delivery AND entered an address.
 	 */
 	function checkStep3Validity() {
-		const isPickup = selectedReceivingOption === "pickup";
+		const isPickup = selectedReceivingOption === "Pickup";
 		const isDelivery =
-			selectedReceivingOption === "delivery" &&
+			selectedReceivingOption === "Delivery" &&
 			deliveryAddress.value.trim() !== "";
 		continueToStep4.disabled = !(isPickup || isDelivery);
 	}
 
 	// When user clicks the "Pick-up" card
 	cardPickup.addEventListener("click", () => {
-		selectedReceivingOption = "pickup";
+		selectedReceivingOption = "Pickup";
 		cardPickup.classList.add("selected");
 		cardDelivery.classList.remove("selected");
 		addressContainer.style.display = "none"; // Hide address field
@@ -252,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// When user clicks the "Delivery" card
 	cardDelivery.addEventListener("click", () => {
-		selectedReceivingOption = "delivery";
+		selectedReceivingOption = "Delivery";
 		cardDelivery.classList.add("selected");
 		cardPickup.classList.remove("selected");
 		addressContainer.style.display = "block"; // Show address field
@@ -307,21 +317,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		// Receiving option (with address if delivery)
 		let receivingText =
-			selectedReceivingOption === "pickup" ? "Store Pick-up" : "Delivery";
-		if (selectedReceivingOption === "delivery") {
+			selectedReceivingOption === "Pickup" ? "Store Pick-up" : "Delivery";
+		if (selectedReceivingOption === "Delivery") {
 			receivingText += ` — ${deliveryAddress.value}`;
 		}
 		summaryReceiving.textContent = receivingText;
 
-		// Estimated total (placeholder calculation: ₱2.50 per copy)
-
-		let total;
 		getServicePrice(parseInt(serviceSelect.value)).done(function (response) {
 			//need gawing promise para magamit ung value outside the function
 			let resp = JSON.parse(response);
-			let pricePerCopy = parseFloat(resp.price);
-			total = (pricePerCopy * parseInt(quantityInput.value)).toFixed(2); //gagawin nalang ung kasama sa computation ung page
-			summaryTotal.textContent = `₱${total}`;
+			let pricePerCopy = parseFloat(resp.price) * pageCount; //resp.price is ung price sa database then multiply by number of pages
+			let total_price = (pricePerCopy * parseInt(quantityInput.value)).toFixed(
+				2,
+			); //price per copy multipy by number of copies
+			summaryTotal.textContent = `₱${total_price}`;
+			storeTotalPrice(parseFloat(total_price));
 		});
 	}
 
@@ -333,13 +343,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// "Place Order" button: final submission
 	placeOrderBtn.addEventListener("click", () => {
-		//unfinished
+		//iuupload lang ung file pag nagplace na ng order
 		const file = fileInput.files[0];
 		const formData = new FormData();
 		formData.append("file", file);
+		formData.append("pageCount", pageCount);
 
 		$.ajax({
-			url: "upload.php",
+			url: API,
 			type: "POST",
 			data: formData,
 			processData: false,
@@ -348,6 +359,16 @@ document.addEventListener("DOMContentLoaded", () => {
 				const res = JSON.parse(response);
 				if (res.status === "success") {
 					const file_id = res.file_id;
+					placeOrder(
+						parseInt(serviceSelect.value),
+						file_id,
+						$("#formatSize").val(),
+						selectedReceivingOption,
+						$("#deliveryAddress").val(),
+						parseInt(quantityInput.value),
+						$("additionalNotes").val(),
+						total_price,
+					);
 				} else {
 					console.log("Upload failed:", res.message);
 				}
@@ -405,7 +426,7 @@ function placeOrder( //unfinished
 		file_id: fileId,
 		format: format,
 		deliveryOption: deliveryOption,
-		address: address,
+		deliveryAddress: address,
 		copies: copies,
 		note: note,
 		total_price: total_price,
@@ -415,7 +436,21 @@ function placeOrder( //unfinished
 		type: "POST",
 		url: API,
 		data: "action=store&payload=" + JSON.stringify(payload),
-		dataType: "dataType",
-		success: function (response) {},
+		success: function (response) {
+			let resp = JSON.parse(response);
+			if (resp.status == "success") {
+			}
+		},
+		error: function (response) {
+			console.log(response);
+		},
 	});
+}
+
+function storePageCount(count) {
+	pageCount = count;
+}
+
+function storeTotalPrice(price) {
+	total_price = price;
 }
