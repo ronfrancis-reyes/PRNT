@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Show or hide the Format/Size field based on which service is chosen
 	serviceSelect.addEventListener("change", () => {
-		if (serviceSelect.value !== "") {
+		if (serviceSelect.value !== "" && !serviceSelect.value.includes("Photo")) {
 			formatContainer.style.display = "block";
 		} else {
 			formatContainer.style.display = "none";
