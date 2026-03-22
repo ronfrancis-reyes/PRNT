@@ -1,58 +1,58 @@
-// Close all dropdowns on outside click
+// close dropdown on outside click
 document.addEventListener('click', e => {
   if (!e.target.closest('.action-wrap'))
     document.querySelectorAll('.dropdown.show').forEach(d => d.classList.remove('show'));
 });
 
-// Toggle per-row dropdown
+//toggle per row dropdown
 function toggleMenu(btn) {
-  const dropdown = btn.nextElementSibling;
-  const isOpen   = dropdown.classList.contains('show');
+  const dd = btn.nextElementSibling;
+  const isOpen = dd.classList.contains('show');
   document.querySelectorAll('.dropdown.show').forEach(d => d.classList.remove('show'));
-  if (!isOpen) dropdown.classList.add('show');
+  if (!isOpen) dd.classList.add('show');
+  event.stopPropagation();
 }
 
-// View user details
+//view user details
 function viewDetails(btn) {
-  const cells  = btn.closest('tr').querySelectorAll('td');
-  const id     = cells[0]?.innerText.trim();
-  const name   = cells[1]?.innerText.trim();
-  const email  = cells[2]?.innerText.trim();
-  const status = cells[3]?.innerText.trim();
-  const last   = cells[4]?.innerText.trim();
-  const order  = cells[5]?.innerText.trim();
+  event.stopPropagation();
+  const cells = btn.closest('tr').querySelectorAll('td');
+  const id    = cells[0]?.innerText.trim();
+  const name  = cells[1]?.innerText.trim();
+  const email = cells[2]?.innerText.trim();
+  const status= cells[3]?.innerText.trim();
+  const last  = cells[4]?.innerText.trim();
+  const order = cells[5]?.innerText.trim();
   alert(`User Details\n\nID: ${id}\nName: ${name}\nEmail: ${email}\nStatus: ${status}\nLast Active: ${last}\nLast Order: ${order}`);
-  btn.closest('.dropdown').classList.remove('show');
+  btn.closest('tr').querySelector('.dropdown').classList.remove('show');
 }
 
-// Suspend or activate user — checks current badge status
+// suspend or activate toggle
 function toggleSuspend(btn) {
+  event.stopPropagation();
   const row    = btn.closest('tr');
   const badge  = row.querySelector('.badge');
 
   if (badge.classList.contains('badge-suspended')) {
-
-    //  suspended to activate
     badge.textContent = 'Active';
     badge.className   = 'badge badge-active';
     btn.innerHTML     = '<i class="bi bi-slash-circle"></i> Suspend User';
   } else {
-
-    //  active to suspend
     badge.textContent = 'Suspended';
     badge.className   = 'badge badge-suspended';
     btn.innerHTML     = '<i class="bi bi-person-check"></i> Activate User';
   }
 
-  btn.closest('.dropdown').classList.remove('show');
+  row.querySelector('.dropdown').classList.remove('show');
 }
 
-// Delete single row
+// delete single row
 function deleteRow(btn) {
+  event.stopPropagation();
   if (confirm('Delete this user?')) btn.closest('tr').remove();
 }
 
-// Search and filter
+// search and filter
 function filterTable() {
   const q = document.getElementById('searchInput').value.toLowerCase();
   const s = document.getElementById('statusFilter').value;
@@ -63,7 +63,7 @@ function filterTable() {
   });
 }
 
-// Export visible rows
+// export visible rows
 function exportCSV() {
   const rows = [...document.querySelectorAll('#tableBody tr')].filter(r => r.style.display !== 'none');
   if (!rows.length) return alert('No users to export.');

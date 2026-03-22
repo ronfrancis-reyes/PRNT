@@ -21,12 +21,12 @@ header("Location: /PRNT/pages/client/service-avail/");
 
 <div class="app-shell">
 
-  <!-- SIDEBAR: ALFRED-->
+  <!-- SIDEBAR: ALFRED -->
   <div class="sidebar-placeholder" id="sidebar-slot"></div>
 
   <div class="main-area">
 
-    <!-- TOPBAR: ALFRED -->
+    <!-- TOPBAR: ALFRED-->
     <div class="topbar-placeholder" id="topbar-slot"></div>
 
     <div class="page-content">
@@ -66,7 +66,7 @@ header("Location: /PRNT/pages/client/service-avail/");
           </thead>
           <tbody id="tableBody">
 
-            <!-- FOR TESTING ONLY -->
+            <!-- SAMPLE DATA:-->
             <tr>
               <td class="user-id">USR-001</td>
               <td><div class="user-name-cell"><div class="avatar">JS</div> John Smith</div></td>
@@ -162,7 +162,7 @@ header("Location: /PRNT/pages/client/service-avail/");
                 </div>
               </td>
             </tr>
-            <!-- FOR TESTING ONLY -->
+            <!-- SAMPLE DATA -->
 
           </tbody>
         </table>
