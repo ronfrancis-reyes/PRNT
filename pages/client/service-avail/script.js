@@ -17,6 +17,7 @@
 // ===============================================================
 import "/PRNT/components/Navbar/Navbar.js";
 import "/PRNT/components/Footer/Footer.js";
+const API = "../../../api/service-avail.php";
 // Wait for the entire HTML page to load before running any code
 document.addEventListener("DOMContentLoaded", () => {
 	// ===========================================================
@@ -313,9 +314,13 @@ document.addEventListener("DOMContentLoaded", () => {
 		summaryReceiving.textContent = receivingText;
 
 		// Estimated total (placeholder calculation: ₱2.50 per copy)
-		const pricePerCopy = 2.5;
-		const total = (pricePerCopy * parseInt(quantityInput.value)).toFixed(2);
-		summaryTotal.textContent = `$${total}`;
+
+		getServicePrice(parseInt(serviceSelect.value)).done(function (response) {
+			let resp = JSON.parse(response);
+			let pricePerCopy = parseFloat(resp.price);
+			const total = (pricePerCopy * parseInt(quantityInput.value)).toFixed(2);
+			summaryTotal.textContent = `₱${total}`;
+		});
 	}
 
 	// "Back" button: go from Step 4 → Step 3
@@ -326,35 +331,88 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// "Place Order" button: final submission
 	placeOrderBtn.addEventListener("click", () => {
-		alert(
-			"Your order has been placed successfully!\nThank you for choosing PRNT.",
-		);
-		// In a real project, this would send data to the server using AJAX or a form submit.
-		// Example: window.location.href = "success.php";
+		const file = fileInput.files[0];
+		const formData = new FormData();
+		formData.append("file", file);
+
+		$.ajax({
+			url: "upload.php",
+			type: "POST",
+			data: formData,
+			processData: false,
+			contentType: false,
+			success: function (response) {
+				const res = JSON.parse(response);
+				if (res.status === "success") {
+					const file_id = res.file_id;
+				} else {
+					console.log("Upload failed:", res.message);
+				}
+			},
+			error: function (xhr, status, error) {
+				console.log("AJAX error:", error);
+			},
+		});
 	});
 }); // End of DOMContentLoaded
 
 $(document).ready(function () {
-	getServices();
+	showServices();
 });
 
-function getServices() {
+function showServices() {
 	$.ajax({
 		type: "GET",
-		url: "../../../api/service-avail.php",
+		url: API,
 		data: "action=get",
 		success: function (response) {
 			let data = JSON.parse(response);
-
 			let select = $("#printingService");
-
 			data.forEach((service) => {
 				select.append(
-					`<option value="${service.service_name}">
+					`<option value="${service.service_id}">
                         ${service.service_name}
                     </option>`,
 				);
 			});
 		},
+	});
+}
+
+function getServicePrice(service_id) {
+	return $.ajax({
+		type: "GET",
+		url: API,
+		data: "action=getOne&id=" + service_id,
+	});
+}
+
+function placeOrder(
+	service,
+	fileId,
+	format,
+	deliveryOption,
+	address,
+	copies,
+	note,
+	total_price,
+) {
+	let payload = {
+		service_id: service,
+		file_id: fileId,
+		format: format,
+		deliveryOption: deliveryOption,
+		address: address,
+		copies: copies,
+		note: note,
+		total_price: total_price,
+	};
+
+	$.ajax({
+		type: "POST",
+		url: API,
+		data: "action=store&payload=" + JSON.stringify(payload),
+		dataType: "dataType",
+		success: function (response) {},
 	});
 }
