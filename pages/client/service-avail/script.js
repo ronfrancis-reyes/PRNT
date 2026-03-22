@@ -315,10 +315,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		// Estimated total (placeholder calculation: ₱2.50 per copy)
 
+		let total;
 		getServicePrice(parseInt(serviceSelect.value)).done(function (response) {
+			//need gawing promise para magamit ung value outside the function
 			let resp = JSON.parse(response);
 			let pricePerCopy = parseFloat(resp.price);
-			const total = (pricePerCopy * parseInt(quantityInput.value)).toFixed(2);
+			total = (pricePerCopy * parseInt(quantityInput.value)).toFixed(2); //gagawin nalang ung kasama sa computation ung page
 			summaryTotal.textContent = `₱${total}`;
 		});
 	}
@@ -331,6 +333,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// "Place Order" button: final submission
 	placeOrderBtn.addEventListener("click", () => {
+		//unfinished
 		const file = fileInput.files[0];
 		const formData = new FormData();
 		formData.append("file", file);
@@ -387,7 +390,7 @@ function getServicePrice(service_id) {
 	});
 }
 
-function placeOrder(
+function placeOrder( //unfinished
 	service,
 	fileId,
 	format,

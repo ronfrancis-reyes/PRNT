@@ -33,7 +33,7 @@ if (isset($_GET['action'])) {
 
 $uploadDir = __DIR__ . "/../uploads/";
 
-if(isset($_FILES['file'])){
+if(isset($_FILES['file'])){ //unfinished
     $file = $_FILES['file'];
     $filename = $_SESSION['user'] . "_" . time() . "_" . basename($file['name']); // avoid collisions
     $targetFile = $uploadDir . $filename;
