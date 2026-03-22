@@ -99,10 +99,6 @@ header("Location: /PRNT/pages/admin/dashboard/");
                     <label for="printingService" class="form-label text-muted small fw-bold">Printing Service</label>
                     <select class="form-select custom-select" id="printingService">
                         <option value="" selected disabled>Select a service</option>
-                        <option value="Document Printing">Document Printing</option>
-                        <option value="Photo Printing">Photo Printing</option>
-                        <option value="Poster and Large Format Printing">Poster and Large Format Printing</option>
-                        <option value="Book Binding">Book Binding</option>
                     </select>
                 </div>
 
@@ -297,6 +293,7 @@ header("Location: /PRNT/pages/admin/dashboard/");
     <!-- Bootstrap JS (required for dropdowns, collapse, etc.) -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
 
     <!-- Page Script (type="module" allows us to use import/export inside it) -->
     <script type="module" src="script.js"></script>
