@@ -17,7 +17,7 @@
 
   <div class="main-area">
 
-    <!-- TOPBAR: ALFRED-->
+    <!-- TOPBAR: ALFRED -->
     <div class="topbar-placeholder" id="topbar-slot"></div>
 
     <div class="page-content">
@@ -50,20 +50,18 @@
               <th>User Name</th>
               <th>Email</th>
               <th>Status</th>
-              <th>Last Active</th>
               <th>Last Order</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody id="tableBody">
 
-            <!-- SAMPLE DATA:-->
+            <!-- FOR TESTING -->
             <tr>
               <td class="user-id">USR-001</td>
               <td><div class="user-name-cell"><div class="avatar">JS</div> John Smith</div></td>
               <td class="email">john.smith@email.com</td>
               <td><span class="badge badge-active">Active</span></td>
-              <td class="muted">2 min ago</td>
               <td class="user-order-id">ORD-1234</td>
               <td>
                 <div class="action-wrap">
@@ -82,7 +80,6 @@
               <td><div class="user-name-cell"><div class="avatar">SJ</div> Sarah Johnson</div></td>
               <td class="email">sarah.j@email.com</td>
               <td><span class="badge badge-active">Active</span></td>
-              <td class="muted">15 min ago</td>
               <td class="user-order-id">ORD-1235</td>
               <td>
                 <div class="action-wrap">
@@ -101,7 +98,6 @@
               <td><div class="user-name-cell"><div class="avatar">MB</div> Mike Brown</div></td>
               <td class="email">mike.brown@email.com</td>
               <td><span class="badge badge-active">Active</span></td>
-              <td class="muted">1 hour ago</td>
               <td class="user-order-id">ORD-1236</td>
               <td>
                 <div class="action-wrap">
@@ -120,7 +116,6 @@
               <td><div class="user-name-cell"><div class="avatar">ED</div> Emma Davis</div></td>
               <td class="email">emma.davis@email.com</td>
               <td><span class="badge badge-active">Active</span></td>
-              <td class="muted">2 hours ago</td>
               <td class="user-order-id">ORD-1237</td>
               <td>
                 <div class="action-wrap">
@@ -139,7 +134,6 @@
               <td><div class="user-name-cell"><div class="avatar">JW</div> James Wilson</div></td>
               <td class="email">james.w@email.com</td>
               <td><span class="badge badge-suspended">Suspended</span></td>
-              <td class="muted">1 day ago</td>
               <td class="user-order-id">ORD-1238</td>
               <td>
                 <div class="action-wrap">
@@ -153,7 +147,7 @@
                 </div>
               </td>
             </tr>
-            <!-- SAMPLE DATA -->
+            <!-- FOR TESTING -->
 
           </tbody>
         </table>
