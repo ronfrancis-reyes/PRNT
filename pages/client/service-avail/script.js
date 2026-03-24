@@ -439,6 +439,7 @@ function placeOrder( //unfinished
 		success: function (response) {
 			let resp = JSON.parse(response);
 			if (resp.status == "success") {
+				alert(resp.message);
 			}
 		},
 		error: function (response) {
