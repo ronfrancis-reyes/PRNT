@@ -57,11 +57,11 @@ $uploadDir = __DIR__ . "/../uploads/";
 if(isset($_FILES['file'])){
     $file = $_FILES['file'];
     $filename = $_SESSION['user'] . "_" . time() . "_" . basename($file['name']); // avoid collisions
-    $targetFile = $uploadDir . $filename;
-
+    $targetFile = $uploadDir . $filename; //para mapunta sa server ung file (server path)
+    $webPath = "/PRNT/uploads/" . $filename; //para pag id-download na ng admin (webpath)
     if(move_uploaded_file($file['tmp_name'], $targetFile)){
         $sql = $conn->prepare("INSERT INTO files (file_name, pages, filepath) VALUES (?, ?, ?)");
-        $sql->bind_param("sis", $file['name'], $_POST['pageCount'], $targetFile);
+        $sql->bind_param("sis", $file['name'], $_POST['pageCount'], $webPath);
         $sql->execute();
 
         $file_id = $conn->insert_id;
