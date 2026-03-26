@@ -12,7 +12,7 @@
 
 <div class="app-shell">
 
-  <!-- sidebar: alfred -->
+    <!-- sidebar: alfred -->  
   <div class="sidebar-placeholder" id="sidebar-slot"></div>
 
   <div class="main-area">
@@ -25,7 +25,7 @@
       <h1 class="page-title">Order Management</h1>
       <p class="page-subtitle">Manage and track all printing orders.</p>
 
-      <!-- toolbar -->
+        <!-- toolbar -->
       <div class="toolbar">
         <div class="search-wrap">
           <i class="bi bi-search"></i>
@@ -40,12 +40,14 @@
         <button class="btn-export" onclick="exportCSV()">
           <i class="bi bi-download"></i> Export
         </button>
-        <button class="btn-delete-completed" onclick="deleteCompleted()">
+
+            <!-- for delete completed -->
+        <button class="btn-delete-completed" onclick="confirmDeleteCompleted()">
           <i class="bi bi-trash3"></i> Delete Completed
         </button>
       </div>
 
-      <!-- table -->
+            <!-- table -->
       <div class="table-card">
         <table>
           <thead>
@@ -63,7 +65,7 @@
           </thead>
           <tbody id="tableBody">
 
-            <!-- for testing -->
+              <!-- for testing -->
             <tr data-order-id="ORD-1234" data-date="Mar 24, 2026" data-customer="John Smith" data-email="john.smith@email.com" data-phone="09171234567" data-service="Business Cards" data-file="business_card.pdf" data-print-type="Colored" data-paper-size="A4" data-copies="50" data-receiving="Delivery" data-address="Activity Center" data-notes="Please use glossy finish." data-amount="₱45.00" data-status="Completed">
               <td class="order-id">ORD-1234</td>
               <td>John Smith</td>
@@ -175,7 +177,7 @@
             </tr>
             <!-- end for testing -->
 
-          </tbody>
+            </tbody>
         </table>
       </div>
 
@@ -183,18 +185,18 @@
   </div>
 </div>
 
-<!-- view details modal -->
+          <!-- view details modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
   <div class="modal-box" onclick="event.stopPropagation()">
     <div class="modal-header">
-      <div class="modal-title"><i class="bi bi-receipt"></i> Order Details</div>
+      <div class="modal-title"><i class="bi bi-receipt"></i> View Details</div>
       <button class="modal-close" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
     </div>
     <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
 
-<!-- delete confirm modal -->
+        <!-- delete confirm modal -->
 <div class="modal-overlay" id="deleteOverlay" onclick="closeDeleteModal()">
   <div class="modal-box modal-box-sm" onclick="event.stopPropagation()">
     <div class="delete-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
@@ -207,7 +209,7 @@
   </div>
 </div>
 
-<!-- status toast notification -->
+      <!-- status toast notification -->
 <div class="toast" id="toast">
   <i class="bi bi-check-circle-fill"></i>
   <span id="toastMsg"></span>

@@ -12,8 +12,7 @@ function toggleMenu(btn) {
   if (!isOpen) dd.classList.add('show');
 }
 
-//  view details modal 
-
+// view details modal
 function viewDetails(btn) {
   btn.closest('.dropdown').classList.remove('show');
   var tr = btn.closest('tr');
@@ -26,7 +25,6 @@ function viewDetails(btn) {
     '<div class="m-section-title"><i class="bi bi-person"></i> User Details</div>' +
     row3(field('customer', d.customer), field('email', d.email), field('phone', d.phone)) +
     '<div class="m-card m-full"><div class="m-label">' + addressLabel + '</div><div class="m-val">' + (d.address || '—') + '</div></div>' +
-
     // section: order details
     '<div class="m-section-title"><i class="bi bi-receipt"></i> Order Details</div>' +
     row2(field('order id', d.orderId), field('date', d.date)) +
@@ -49,8 +47,7 @@ function closeModal() {
   overlay.style.display = 'none';
 }
 
-//  delete confirm modal 
-
+// delete single order modal
 var rowToDelete = null;
 
 function confirmDelete(btn) {
@@ -58,6 +55,29 @@ function confirmDelete(btn) {
   rowToDelete = btn.closest('tr');
   var orderId = rowToDelete.dataset.orderId || 'this order';
   document.getElementById('deleteMsg').textContent = 'Are you sure you want to delete order ' + orderId + '? This action cannot be undone.';
+  openDeleteModal();
+}
+
+// delete completed orders modal
+function confirmDeleteCompleted() {
+  var rows = Array.from(document.querySelectorAll('#tableBody tr'))
+    .filter(function(r) { return r.dataset.status === 'Completed'; });
+
+  if (!rows.length) {
+    // no completed orders — show modal as info instead
+    document.getElementById('deleteMsg').textContent = 'There are no completed orders to delete.';
+    document.getElementById('btnConfirmDelete').style.display = 'none';
+    openDeleteModal();
+    return;
+  }
+
+  rowToDelete = null; 
+  document.getElementById('deleteMsg').textContent = 'Are you sure you want to delete all ' + rows.length + ' completed order(s)? This action cannot be undone.';
+  document.getElementById('btnConfirmDelete').style.display = '';
+  openDeleteModal();
+}
+
+function openDeleteModal() {
   var overlay = document.getElementById('deleteOverlay');
   overlay.style.display = 'flex';
   overlay.classList.add('show');
@@ -67,19 +87,23 @@ function closeDeleteModal() {
   var overlay = document.getElementById('deleteOverlay');
   overlay.classList.remove('show');
   overlay.style.display = 'none';
+  // reset button visibility in case it was hidden
+  document.getElementById('btnConfirmDelete').style.display = '';
   rowToDelete = null;
 }
 
 document.getElementById('btnConfirmDelete').addEventListener('click', function() {
   if (rowToDelete) {
     rowToDelete.remove();
-    rowToDelete = null;
+  } else {
+    Array.from(document.querySelectorAll('#tableBody tr'))
+      .filter(function(r) { return r.dataset.status === 'Completed'; })
+      .forEach(function(r) { r.remove(); });
   }
   closeDeleteModal();
 });
 
-// status update + toast notification 
-
+// status update and toast notification
 function setStatus(btn, status) {
   var tr = btn.closest('tr');
   var badge = tr.cells[7].querySelector('.badge');
@@ -87,8 +111,6 @@ function setStatus(btn, status) {
   badge.className = 'badge badge-' + status.toLowerCase();
   tr.dataset.status = status;
   btn.closest('.dropdown').classList.remove('show');
-
-  // show toast only when marked as completed
   if (status === 'Completed') {
     showToast('Order ' + tr.dataset.orderId + ' status updated to "Completed"');
   }
@@ -101,19 +123,7 @@ function showToast(msg) {
   setTimeout(function() { toast.classList.remove('show'); }, 3500);
 }
 
-// delete all completed 
-
-function deleteCompleted() {
-  var rows = Array.from(document.querySelectorAll('#tableBody tr'))
-    .filter(function(r) { return r.dataset.status === 'Completed'; });
-  if (!rows.length) { alert('No completed orders.'); return; }
-  if (confirm('Delete ' + rows.length + ' completed order(s)?')) {
-    rows.forEach(function(r) { r.remove(); });
-  }
-}
-
-// filter table 
-
+// filter table
 function filterTable() {
   var q = document.getElementById('searchInput').value.toLowerCase();
   var s = document.getElementById('statusFilter').value;
@@ -124,8 +134,7 @@ function filterTable() {
   });
 }
 
-// export csv 
-
+// export csv
 function exportCSV() {
   var rows = Array.from(document.querySelectorAll('#tableBody tr'))
     .filter(function(r) { return r.style.display !== 'none'; });
@@ -145,8 +154,7 @@ function exportCSV() {
   document.body.removeChild(a);
 }
 
-// helpers 
-
+// helpers
 function field(label, val) {
   if (!val || val === 'undefined') val = '—';
   return '<div class="m-card"><div class="m-label">' + label + '</div><div class="m-val">' + val + '</div></div>';
