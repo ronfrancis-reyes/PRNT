@@ -12,12 +12,12 @@
 
 <div class="app-shell">
 
-  <!-- SIDEBAR: ALFRED -->
+  <!-- sidebar: alfred -->
   <div class="sidebar-placeholder" id="sidebar-slot"></div>
 
   <div class="main-area">
 
-    <!-- TOPBAR: ALFRED -->
+    <!-- topbar: alfred -->
     <div class="topbar-placeholder" id="topbar-slot"></div>
 
     <div class="page-content">
@@ -25,7 +25,7 @@
       <h1 class="page-title">Order Management</h1>
       <p class="page-subtitle">Manage and track all printing orders.</p>
 
-      <!-- Toolbar -->
+      <!-- toolbar -->
       <div class="toolbar">
         <div class="search-wrap">
           <i class="bi bi-search"></i>
@@ -45,7 +45,7 @@
         </button>
       </div>
 
-      <!-- Table -->
+      <!-- table -->
       <div class="table-card">
         <table>
           <thead>
@@ -63,23 +63,8 @@
           </thead>
           <tbody id="tableBody">
 
-            <!-- FOR TESTING -->
-            <tr
-              data-order-id="ORD-1234"
-              data-date="Mar 24, 2026"
-              data-customer="John Smith"
-              data-email="john.smith@email.com"
-              data-phone="09171234567"
-              data-service="Business Cards"
-              data-file="business_card.pdf"
-              data-print-type="Colored"
-              data-paper-size="A4"
-              data-copies="50"
-              data-receiving="Delivery"
-              data-address="Activity Center"
-              data-notes="Enter Additional Notes Here."
-              data-amount="₱45.00"
-              data-status="Completed">
+            <!-- for testing -->
+            <tr data-order-id="ORD-1234" data-date="Mar 24, 2026" data-customer="John Smith" data-email="john.smith@email.com" data-phone="09171234567" data-service="Business Cards" data-file="business_card.pdf" data-print-type="Colored" data-paper-size="A4" data-copies="50" data-receiving="Delivery" data-address="Activity Center" data-notes="Please use glossy finish." data-amount="₱45.00" data-status="Completed">
               <td class="order-id">ORD-1234</td>
               <td>John Smith</td>
               <td>10:30 AM</td>
@@ -88,36 +73,20 @@
               <td class="amount">₱45.00</td>
               <td>Delivery</td>
               <td><span class="badge badge-completed">Completed</span></td>
-              <td>
-                <div class="action-wrap">
-                  <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                  <div class="dropdown">
-                    <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                    <button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
-                    <button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
-                    <button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
-                    <hr/>
-                    <button class="danger" onclick="deleteRow(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
-                  </div>
+              <td><div class="action-wrap">
+                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
+                <div class="dropdown">
+                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
+                  <button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
+                  <button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
+                  <button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
+                  <hr/>
+                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
                 </div>
-              </td>
+              </div></td>
             </tr>
-            <tr
-              data-order-id="ORD-1235"
-              data-date="Mar 24, 2026"
-              data-customer="Sarah Johnson"
-              data-email="sarah.j@email.com"
-              data-phone="09281234567"
-              data-service="Flyers (A4)"
-              data-file="flyer_design.pdf"
-              data-print-type="Colored"
-              data-paper-size="A4"
-              data-copies="100"
-              data-receiving="Pick-up"
-              data-address="E-Library"
-              data-notes="Double sided printing please."
-              data-amount="₱120.00"
-              data-status="Processing">
+
+            <tr data-order-id="ORD-1235" data-date="Mar 24, 2026" data-customer="Sarah Johnson" data-email="sarah.j@email.com" data-phone="09281234567" data-service="Flyers (A4)" data-file="flyer_design.pdf" data-print-type="Colored" data-paper-size="A4" data-copies="100" data-receiving="Pick-up" data-address="E-Library" data-notes="Double sided printing please." data-amount="₱120.00" data-status="Processing">
               <td class="order-id">ORD-1235</td>
               <td>Sarah Johnson</td>
               <td>11:15 AM</td>
@@ -126,36 +95,20 @@
               <td class="amount">₱120.00</td>
               <td>Pick-up</td>
               <td><span class="badge badge-processing">Processing</span></td>
-              <td>
-                <div class="action-wrap">
-                  <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                  <div class="dropdown">
-                    <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                    <button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
-                    <button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
-                    <button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
-                    <hr/>
-                    <button class="danger" onclick="deleteRow(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
-                  </div>
+              <td><div class="action-wrap">
+                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
+                <div class="dropdown">
+                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
+                  <button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
+                  <button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
+                  <button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
+                  <hr/>
+                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
                 </div>
-              </td>
+              </div></td>
             </tr>
-            <tr
-              data-order-id="ORD-1236"
-              data-date="Mar 24, 2026"
-              data-customer="Mike Brown"
-              data-email="mike.brown@email.com"
-              data-phone="09391234567"
-              data-service="Posters (A2)"
-              data-file="poster.pdf"
-              data-print-type="Colored"
-              data-paper-size="A2"
-              data-copies="10"
-              data-receiving="Delivery"
-              data-address="Pimentel Hall"
-              data-notes="None"
-              data-amount="₱85.00"
-              data-status="Pending">
+
+            <tr data-order-id="ORD-1236" data-date="Mar 24, 2026" data-customer="Mike Brown" data-email="mike.brown@email.com" data-phone="09391234567" data-service="Posters (A2)" data-file="poster.pdf" data-print-type="Colored" data-paper-size="A2" data-copies="10" data-receiving="Delivery" data-address="Pimentel Hall" data-notes="None" data-amount="₱85.00" data-status="Pending">
               <td class="order-id">ORD-1236</td>
               <td>Mike Brown</td>
               <td>12:45 PM</td>
@@ -164,36 +117,20 @@
               <td class="amount">₱85.00</td>
               <td>Delivery</td>
               <td><span class="badge badge-pending">Pending</span></td>
-              <td>
-                <div class="action-wrap">
-                  <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                  <div class="dropdown">
-                    <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                    <button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
-                    <button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
-                    <button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
-                    <hr/>
-                    <button class="danger" onclick="deleteRow(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
-                  </div>
+              <td><div class="action-wrap">
+                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
+                <div class="dropdown">
+                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
+                  <button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
+                  <button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
+                  <button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
+                  <hr/>
+                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
                 </div>
-              </td>
+              </div></td>
             </tr>
-            <tr
-              data-order-id="ORD-1237"
-              data-date="Mar 24, 2026"
-              data-customer="Emma Davis"
-              data-email="emma.davis@email.com"
-              data-phone="09501234567"
-              data-service="Brochures"
-              data-file="brochure.pdf"
-              data-print-type="Colored"
-              data-paper-size="A4"
-              data-copies="200"
-              data-receiving="Pick-up"
-              data-address="CoED"
-              data-notes="Tri-fold layout."
-              data-amount="₱200.00"
-              data-status="Completed">
+
+            <tr data-order-id="ORD-1237" data-date="Mar 24, 2026" data-customer="Emma Davis" data-email="emma.davis@email.com" data-phone="09501234567" data-service="Brochures" data-file="brochure.pdf" data-print-type="Colored" data-paper-size="A4" data-copies="200" data-receiving="Pick-up" data-address="CoED" data-notes="Tri-fold layout." data-amount="₱200.00" data-status="Completed">
               <td class="order-id">ORD-1237</td>
               <td>Emma Davis</td>
               <td>01:20 PM</td>
@@ -202,36 +139,20 @@
               <td class="amount">₱200.00</td>
               <td>Pick-up</td>
               <td><span class="badge badge-completed">Completed</span></td>
-              <td>
-                <div class="action-wrap">
-                  <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                  <div class="dropdown">
-                    <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                    <button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
-                    <button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
-                    <button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
-                    <hr/>
-                    <button class="danger" onclick="deleteRow(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
-                  </div>
+              <td><div class="action-wrap">
+                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
+                <div class="dropdown">
+                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
+                  <button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
+                  <button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
+                  <button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
+                  <hr/>
+                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
                 </div>
-              </td>
+              </div></td>
             </tr>
-            <tr
-              data-order-id="ORD-1238"
-              data-date="Mar 24, 2026"
-              data-customer="James Wilson"
-              data-email="james.w@email.com"
-              data-phone="09611234567"
-              data-service="Banners"
-              data-file="banner_design.pdf"
-              data-print-type="Colored"
-              data-paper-size="A1"
-              data-copies="5"
-              data-receiving="Delivery"
-              data-address="Carpio Hall"
-              data-notes="Please use tarpaulin material."
-              data-amount="₱350.00"
-              data-status="Processing">
+
+            <tr data-order-id="ORD-1238" data-date="Mar 24, 2026" data-customer="James Wilson" data-email="james.w@email.com" data-phone="09611234567" data-service="Banners" data-file="banner_design.pdf" data-print-type="Colored" data-paper-size="A1" data-copies="5" data-receiving="Delivery" data-address="Carpio Hall" data-notes="Please use tarpaulin material." data-amount="₱350.00" data-status="Processing">
               <td class="order-id">ORD-1238</td>
               <td>James Wilson</td>
               <td>02:10 PM</td>
@@ -240,21 +161,19 @@
               <td class="amount">₱350.00</td>
               <td>Delivery</td>
               <td><span class="badge badge-processing">Processing</span></td>
-              <td>
-                <div class="action-wrap">
-                  <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                  <div class="dropdown">
-                    <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                    <button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
-                    <button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
-                    <button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
-                    <hr/>
-                    <button class="danger" onclick="deleteRow(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
-                  </div>
+              <td><div class="action-wrap">
+                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
+                <div class="dropdown">
+                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
+                  <button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
+                  <button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
+                  <button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
+                  <hr/>
+                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
                 </div>
-              </td>
+              </div></td>
             </tr>
-            <!-- FOR TESTING -->
+            <!-- end for testing -->
 
           </tbody>
         </table>
@@ -264,7 +183,7 @@
   </div>
 </div>
 
-<!-- Order Details Modal -->
+<!-- view details modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
   <div class="modal-box" onclick="event.stopPropagation()">
     <div class="modal-header">
@@ -273,6 +192,25 @@
     </div>
     <div class="modal-body" id="modalBody"></div>
   </div>
+</div>
+
+<!-- delete confirm modal -->
+<div class="modal-overlay" id="deleteOverlay" onclick="closeDeleteModal()">
+  <div class="modal-box modal-box-sm" onclick="event.stopPropagation()">
+    <div class="delete-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+    <div class="delete-title">Confirm Delete</div>
+    <div class="delete-msg" id="deleteMsg"></div>
+    <div class="delete-actions">
+      <button class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn-confirm-delete" id="btnConfirmDelete"><i class="bi bi-trash3"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- status toast notification -->
+<div class="toast" id="toast">
+  <i class="bi bi-check-circle-fill"></i>
+  <span id="toastMsg"></span>
 </div>
 
 <script src="script.js"></script>

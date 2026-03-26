@@ -25,7 +25,7 @@
       <h1 class="page-title">User Management</h1>
       <p class="page-subtitle">Manage and monitor all registered users.</p>
 
-      <!-- Toolbar -->
+      <!-- toolbar -->
       <div class="toolbar">
         <div class="search-wrap">
           <i class="bi bi-search"></i>
@@ -41,7 +41,7 @@
         </button>
       </div>
 
-      <!-- Table -->
+      <!-- table -->
       <div class="table-card">
         <table>
           <thead>
@@ -57,7 +57,14 @@
           <tbody id="tableBody">
 
             <!-- FOR TESTING -->
-            <tr>
+            <tr
+              data-user-id="USR-001"
+              data-name="John Smith"
+              data-email="john.smith@email.com"
+              data-phone="09171234567"
+              data-address="Activity Center"
+              data-last-order="ORD-1234"
+              data-status="Active">
               <td class="user-id">USR-001</td>
               <td><div class="user-name-cell"><div class="avatar">JS</div> John Smith</div></td>
               <td class="email">john.smith@email.com</td>
@@ -75,7 +82,15 @@
                 </div>
               </td>
             </tr>
-            <tr>
+
+            <tr
+              data-user-id="USR-002"
+              data-name="Sarah Johnson"
+              data-email="sarah.j@email.com"
+              data-phone="09281234567"
+              data-address="E-Library"
+              data-last-order="ORD-1235"
+              data-status="Active">
               <td class="user-id">USR-002</td>
               <td><div class="user-name-cell"><div class="avatar">SJ</div> Sarah Johnson</div></td>
               <td class="email">sarah.j@email.com</td>
@@ -93,7 +108,15 @@
                 </div>
               </td>
             </tr>
-            <tr>
+
+            <tr
+              data-user-id="USR-003"
+              data-name="Mike Brown"
+              data-email="mike.brown@email.com"
+              data-phone="09391234567"
+              data-address="Pimentel Hall"
+              data-last-order="ORD-1236"
+              data-status="Active">
               <td class="user-id">USR-003</td>
               <td><div class="user-name-cell"><div class="avatar">MB</div> Mike Brown</div></td>
               <td class="email">mike.brown@email.com</td>
@@ -111,7 +134,15 @@
                 </div>
               </td>
             </tr>
-            <tr>
+
+            <tr
+              data-user-id="USR-004"
+              data-name="Emma Davis"
+              data-email="emma.davis@email.com"
+              data-phone="09501234567"
+              data-address="CoED"
+              data-last-order="ORD-1237"
+              data-status="Active">
               <td class="user-id">USR-004</td>
               <td><div class="user-name-cell"><div class="avatar">ED</div> Emma Davis</div></td>
               <td class="email">emma.davis@email.com</td>
@@ -129,7 +160,15 @@
                 </div>
               </td>
             </tr>
-            <tr>
+
+            <tr
+              data-user-id="USR-005"
+              data-name="James Wilson"
+              data-email="james.w@email.com"
+              data-phone="09611234567"
+              data-address="Carpio Hall"
+              data-last-order="ORD-1238"
+              data-status="Suspended">
               <td class="user-id">USR-005</td>
               <td><div class="user-name-cell"><div class="avatar">JW</div> James Wilson</div></td>
               <td class="email">james.w@email.com</td>
@@ -154,6 +193,17 @@
       </div>
 
     </div>
+  </div>
+</div>
+
+<!-- user details modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title"><i class="bi bi-person-lines-fill"></i> User Details</div>
+      <button class="modal-close" onclick="closeModal()"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
 
