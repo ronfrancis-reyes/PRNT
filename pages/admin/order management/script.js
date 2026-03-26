@@ -260,9 +260,9 @@ function showOrders() {
               <td>${orders.time_place}</td>
               <td>${orders.service_name}</td>
               <td><span class="file-cell"><i class="bi bi-file-earmark-text"></i><a href="${orders.filepath}">${orders.file_name}</a></span></td>
-              <td class="amount">${orders.total_price}</td>
+              <td class="amount">₱${orders.total_price}</td>
               <td>${orders.delivery_option}</td>
-              <td><span class="badge badge-completed">${orders}</span></td>
+              <td><span class="badge badge-completed">${orders.status}</span></td>
               <td><div class="action-wrap">
                 <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
                 <div class="dropdown">
