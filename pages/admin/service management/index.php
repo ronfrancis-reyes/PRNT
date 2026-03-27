@@ -72,11 +72,11 @@ header("Location: /PRNT/pages/client/service-avail/");
                     <form id="addServiceForm">
                         <div class="mb-3">
                             <label class="small text-muted">Service Name</label>
-                            <input type="text" class="form-control" placeholder="Service Name" required>
+                            <input type="text" class="form-control" placeholder="Service Name" id="addName" required>
                         </div>
                         <div class="mb-3">
                             <label class="small text-muted">Price</label>
-                            <input type="text" class="form-control" placeholder="$0.00" required>
+                            <input type="text" class="form-control" placeholder="0.00" id="addPrice" required>
                         </div>
                         <button type="submit" class="btn btn-orange w-100 py-2 fw-bold">Add Service</button>
                     </form>
