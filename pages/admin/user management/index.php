@@ -41,7 +41,7 @@
         </button>
       </div>
 
-      <!-- table -->
+      <!-- table  -->
       <div class="table-card">
         <table>
           <thead>
@@ -63,15 +63,7 @@
               <td class="email">john.smith@email.com</td>
               <td><span class="badge badge-active">Active</span></td>
               <td class="user-order-id">ORD-1234</td>
-              <td><div class="action-wrap">
-                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                <div class="dropdown">
-                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                  <button onclick="confirmSuspend(this)"><i class="bi bi-slash-circle"></i> Suspend User</button>
-                  <hr/>
-                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete User</button>
-                </div>
-              </div></td>
+              <td><div class="action-wrap"><button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button></div></td>
             </tr>
 
             <tr data-user-id="USR-002" data-name="Sarah Johnson" data-email="sarah.j@email.com" data-phone="09281234567" data-address="E-Library" data-last-order="ORD-1235" data-status="Active">
@@ -80,15 +72,7 @@
               <td class="email">sarah.j@email.com</td>
               <td><span class="badge badge-active">Active</span></td>
               <td class="user-order-id">ORD-1235</td>
-              <td><div class="action-wrap">
-                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                <div class="dropdown">
-                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                  <button onclick="confirmSuspend(this)"><i class="bi bi-slash-circle"></i> Suspend User</button>
-                  <hr/>
-                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete User</button>
-                </div>
-              </div></td>
+              <td><div class="action-wrap"><button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button></div></td>
             </tr>
 
             <tr data-user-id="USR-003" data-name="Mike Brown" data-email="mike.brown@email.com" data-phone="09391234567" data-address="Pimentel Hall" data-last-order="ORD-1236" data-status="Active">
@@ -97,15 +81,7 @@
               <td class="email">mike.brown@email.com</td>
               <td><span class="badge badge-active">Active</span></td>
               <td class="user-order-id">ORD-1236</td>
-              <td><div class="action-wrap">
-                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                <div class="dropdown">
-                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                  <button onclick="confirmSuspend(this)"><i class="bi bi-slash-circle"></i> Suspend User</button>
-                  <hr/>
-                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete User</button>
-                </div>
-              </div></td>
+              <td><div class="action-wrap"><button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button></div></td>
             </tr>
 
             <tr data-user-id="USR-004" data-name="Emma Davis" data-email="emma.davis@email.com" data-phone="09501234567" data-address="CoED" data-last-order="ORD-1237" data-status="Active">
@@ -114,33 +90,16 @@
               <td class="email">emma.davis@email.com</td>
               <td><span class="badge badge-active">Active</span></td>
               <td class="user-order-id">ORD-1237</td>
-              <td><div class="action-wrap">
-                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                <div class="dropdown">
-                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                  <button onclick="confirmSuspend(this)"><i class="bi bi-slash-circle"></i> Suspend User</button>
-                  <hr/>
-                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete User</button>
-                </div>
-              </div></td>
+              <td><div class="action-wrap"><button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button></div></td>
             </tr>
 
-            <!-- james is already suspended — activate user directly -->
             <tr data-user-id="USR-005" data-name="James Wilson" data-email="james.w@email.com" data-phone="09611234567" data-address="Carpio Hall" data-last-order="ORD-1238" data-status="Suspended">
               <td class="user-id">USR-005</td>
               <td><div class="user-name-cell"><div class="avatar">JW</div> James Wilson</div></td>
               <td class="email">james.w@email.com</td>
               <td><span class="badge badge-suspended">Suspended</span></td>
               <td class="user-order-id">ORD-1238</td>
-              <td><div class="action-wrap">
-                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                <div class="dropdown">
-                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                  <button onclick="activateUser(this)"><i class="bi bi-person-check"></i> Activate User</button>
-                  <hr/>
-                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete User</button>
-                </div>
-              </div></td>
+              <td><div class="action-wrap"><button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button></div></td>
             </tr>
             <!-- end for testing -->
 
@@ -151,6 +110,9 @@
     </div>
   </div>
 </div>
+
+<!-- action panel -->
+<div id="actionPanel"></div>
 
 <!-- user details modal -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">

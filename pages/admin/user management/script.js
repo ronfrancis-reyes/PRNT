@@ -1,29 +1,60 @@
-// close dropdown on outside click
+var activeRow   = null;
+var rowToDelete = null;
+var rowToSuspend = null;
+
+//  action panel 
 document.addEventListener('click', function(e) {
-  if (!e.target.closest('.action-wrap'))
-    document.querySelectorAll('.dropdown.show').forEach(function(d) { d.classList.remove('show'); });
+  if (!e.target.closest('.btn-actions') && !e.target.closest('#actionPanel')) {
+    closeActionPanel();
+  }
 });
 
-// toggle per row dropdown
 function toggleMenu(btn) {
-  var dd = btn.nextElementSibling;
-  var isOpen = dd.classList.contains('show');
-  document.querySelectorAll('.dropdown.show').forEach(function(d) { d.classList.remove('show'); });
-  if (!isOpen) dd.classList.add('show');
-  event.stopPropagation();
+  var panel  = document.getElementById('actionPanel');
+  var row    = btn.closest('tr');
+
+  // clicking same button closes it
+  if (activeRow === row && panel.classList.contains('show')) {
+    closeActionPanel();
+    return;
+  }
+
+  activeRow = row;
+  var status = row.dataset.status;
+
+  //  suspend or activate button 
+  var suspendBtn = status === 'Suspended'
+    ? '<button onclick="panelActivate()"><i class="bi bi-person-check"></i> Activate User</button>'
+    : '<button onclick="panelSuspend()"><i class="bi bi-slash-circle"></i> Suspend User</button>';
+
+  panel.innerHTML =
+    '<div class="ap-header">Actions</div>' +
+    '<button onclick="panelViewDetails()"><i class="bi bi-eye"></i> View Details</button>' +
+    suspendBtn +
+    '<div class="ap-divider"></div>' +
+    '<button class="danger" onclick="panelDelete()"><i class="bi bi-trash3"></i> Delete User</button>';
+
+  // position beside the button
+  var rect = btn.getBoundingClientRect();
+  var left = rect.left - 208;
+  if (left < 8) left = rect.right + 8;
+  panel.style.top  = rect.top + 'px';
+  panel.style.left = left + 'px';
+  panel.classList.add('show');
 }
 
-// view details modal
-function viewDetails(btn) {
-  event.stopPropagation();
-  var dropdown = btn.closest('.dropdown');
-  if (dropdown) dropdown.classList.remove('show');
+function closeActionPanel() {
+  document.getElementById('actionPanel').classList.remove('show');
+  activeRow = null;
+}
 
-  var tr = btn.closest('tr');
-  if (!tr) return;
-  var d = tr.dataset;
+//  panel actions 
+function panelViewDetails() {
+  if (!activeRow) return;
+  var d = activeRow.dataset;
+  closeActionPanel();
+
   var statusClass = 'badge-' + (d.status || '').toLowerCase();
-
   var html =
     '<div class="m-section-title"><i class="bi bi-person"></i> User Details</div>' +
     row2(field('user id', d.userId), field('status', '<span class="badge ' + statusClass + '">' + (d.status || '—') + '</span>')) +
@@ -37,22 +68,55 @@ function viewDetails(btn) {
   overlay.classList.add('show');
 }
 
-function closeModal() {
-  var overlay = document.getElementById('modalOverlay');
-  overlay.classList.remove('show');
-  overlay.style.display = 'none';
+function panelSuspend() {
+  if (!activeRow) return;
+  var name = activeRow.dataset.name || 'this user';
+  rowToSuspend = activeRow;
+  closeActionPanel();
+  document.getElementById('suspendMsg').textContent = 'Are you sure you want to suspend ' + name + '? They will no longer be able to access the system.';
+  openOverlay('suspendOverlay');
 }
 
-// delete confirm modal
-var rowToDelete = null;
+function panelActivate() {
+  if (!activeRow) return;
+  var row   = activeRow;
+  var name  = row.dataset.name || '';
+  closeActionPanel();
+  var badge = row.querySelector('.badge');
+  badge.textContent  = 'Active';
+  badge.className    = 'badge badge-active';
+  row.dataset.status = 'Active';
+  showToast('User ' + name + ' has been activated');
+}
 
-function confirmDelete(btn) {
-  event.stopPropagation();
-  btn.closest('.dropdown').classList.remove('show');
-  rowToDelete = btn.closest('tr');
-  var name = rowToDelete.dataset.name || 'this user';
+function panelDelete() {
+  if (!activeRow) return;
+  var name = activeRow.dataset.name || 'this user';
+  rowToDelete = activeRow;
+  closeActionPanel();
   document.getElementById('deleteMsg').textContent = 'Are you sure you want to delete ' + name + '? This action cannot be undone.';
   openOverlay('deleteOverlay');
+}
+
+//  confirm buttons 
+document.getElementById('btnConfirmDelete').addEventListener('click', function() {
+  if (rowToDelete) rowToDelete.remove();
+  closeDeleteModal();
+});
+
+document.getElementById('btnConfirmSuspend').addEventListener('click', function() {
+  if (rowToSuspend) {
+    var badge = rowToSuspend.querySelector('.badge');
+    badge.textContent        = 'Suspended';
+    badge.className          = 'badge badge-suspended';
+    rowToSuspend.dataset.status = 'Suspended';
+  }
+  closeSuspendModal();
+});
+
+//  modal overlays
+function closeModal() {
+  closeOverlay('modalOverlay');
 }
 
 function closeDeleteModal() {
@@ -60,62 +124,11 @@ function closeDeleteModal() {
   rowToDelete = null;
 }
 
-document.getElementById('btnConfirmDelete').addEventListener('click', function() {
-  if (rowToDelete) rowToDelete.remove();
-  closeDeleteModal();
-});
-
-// suspend confirm modal
-var rowToSuspend = null;
-
-function confirmSuspend(btn) {
-  event.stopPropagation();
-  btn.closest('.dropdown').classList.remove('show');
-  rowToSuspend = btn;
-  var tr = btn.closest('tr');
-  var name = tr.dataset.name || 'this user';
-  document.getElementById('suspendMsg').textContent = 'Are you sure you want to suspend ' + name + '? They will no longer be able to access the system.';
-  openOverlay('suspendOverlay');
-}
-
 function closeSuspendModal() {
   closeOverlay('suspendOverlay');
   rowToSuspend = null;
 }
 
-document.getElementById('btnConfirmSuspend').addEventListener('click', function() {
-  if (rowToSuspend) doSuspend(rowToSuspend);
-  closeSuspendModal();
-});
-
-// perform the actual suspend action
-function doSuspend(btn) {
-  var row      = btn.closest('tr');
-  var badge    = row.querySelector('.badge');
-  var dropdown = row.querySelector('.dropdown');
-  badge.textContent  = 'Suspended';
-  badge.className    = 'badge badge-suspended';
-  btn.innerHTML      = '<i class="bi bi-person-check"></i> Activate User';
-  btn.setAttribute('onclick', 'activateUser(this)');
-  row.dataset.status = 'Suspended';
-  if (dropdown) dropdown.classList.remove('show');
-}
-
-// activate user
-function activateUser(btn) {
-  event.stopPropagation();
-  btn.closest('.dropdown').classList.remove('show');
-  var row   = btn.closest('tr');
-  var badge = row.querySelector('.badge');
-  badge.textContent  = 'Active';
-  badge.className    = 'badge badge-active';
-  btn.innerHTML      = '<i class="bi bi-slash-circle"></i> Suspend User';
-  btn.setAttribute('onclick', 'confirmSuspend(this)');
-  row.dataset.status = 'Active';
-  showToast('User ' + (row.dataset.name || '') + ' has been activated');
-}
-
-// shared overlay helpers
 function openOverlay(id) {
   var o = document.getElementById(id);
   o.style.display = 'flex';
@@ -128,7 +141,7 @@ function closeOverlay(id) {
   o.style.display = 'none';
 }
 
-// toast notification
+//  toast 
 function showToast(msg) {
   var toast = document.getElementById('toast');
   document.getElementById('toastMsg').textContent = msg;
@@ -136,21 +149,7 @@ function showToast(msg) {
   setTimeout(function() { toast.classList.remove('show'); }, 3500);
 }
 
-// close modals on escape
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { closeModal(); closeDeleteModal(); closeSuspendModal(); }
-});
-
-// helpers
-function field(label, val) {
-  if (!val || val === 'undefined') val = '—';
-  return '<div class="m-card"><div class="m-label">' + label + '</div><div class="m-val">' + val + '</div></div>';
-}
-
-function row2(a, b)    { return '<div class="m-grid2">' + a + b + '</div>'; }
-function row3(a, b, c) { return '<div class="m-grid3">' + a + b + c + '</div>'; }
-
-// search and status filter
+//  filter and export 
 function filterTable() {
   var q = document.getElementById('searchInput').value.toLowerCase();
   var s = document.getElementById('statusFilter').value;
@@ -161,7 +160,6 @@ function filterTable() {
   });
 }
 
-// export visible rows as csv
 function exportCSV() {
   var rows = Array.from(document.querySelectorAll('#tableBody tr'))
     .filter(function(r) { return r.style.display !== 'none'; });
@@ -180,3 +178,16 @@ function exportCSV() {
   a.click();
   document.body.removeChild(a);
 }
+
+// helpers 
+function field(label, val) {
+  if (!val || val === 'undefined') val = '—';
+  return '<div class="m-card"><div class="m-label">' + label + '</div><div class="m-val">' + val + '</div></div>';
+}
+
+function row2(a, b)    { return '<div class="m-grid2">' + a + b + '</div>'; }
+function row3(a, b, c) { return '<div class="m-grid3">' + a + b + c + '</div>'; }
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') { closeModal(); closeDeleteModal(); closeSuspendModal(); closeActionPanel(); }
+});
