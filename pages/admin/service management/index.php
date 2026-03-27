@@ -59,55 +59,6 @@ header("Location: /PRNT/pages/client/service-avail/");
                 </div>
 
                 <div class="row g-4" id="servicesContainer">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="service-card shadow-sm h-100">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div>
-                                    <h5 class="fw-bold mb-0 service-name text-white">Business Cards</h5>
-                                    <p class="text-muted small service-format">Standard (3.5" x 2")</p>
-                                </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input switch-green" type="checkbox" checked>
-                                </div>
-                            </div>
-                            <div class="price-section my-4">
-                                <h3 class="fw-bold mb-0 text-orange service-price">$45.00</h3>
-                                <p class="text-muted small">per unit</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <span class="status-pill available">Available</span>
-                                <div class="actions">
-                                    <i class="fas fa-edit text-muted me-3 pointer" data-bs-toggle="modal" data-bs-target="#editServiceModal" onclick="prepareEdit(this)"></i>
-                                    <i class="fas fa-trash text-danger pointer" data-bs-toggle="modal" data-bs-target="#deleteServiceModal" onclick="prepareDelete(this)"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="service-card shadow-sm h-100">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div>
-                                    <h5 class="fw-bold mb-0 service-name text-white">Flyers</h5>
-                                    <p class="text-muted small service-format">A4 (8.27" x 11.69")</p>
-                                </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input switch-green" type="checkbox" checked>
-                                </div>
-                            </div>
-                            <div class="price-section my-4">
-                                <h3 class="fw-bold mb-0 text-orange service-price">$120.00</h3>
-                                <p class="text-muted small">per unit</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <span class="status-pill available">Available</span>
-                                <div class="actions">
-                                    <i class="fas fa-edit text-muted me-3 pointer" data-bs-toggle="modal" data-bs-target="#editServiceModal" onclick="prepareEdit(this)"></i>
-                                    <i class="fas fa-trash text-danger pointer" data-bs-toggle="modal" data-bs-target="#deleteServiceModal" onclick="prepareDelete(this)"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -124,16 +75,8 @@ header("Location: /PRNT/pages/client/service-avail/");
                             <input type="text" class="form-control" placeholder="Service Name" required>
                         </div>
                         <div class="mb-3">
-                            <label class="small text-muted">Format Type</label>
-                            <input type="text" class="form-control" placeholder="e.g. A4" required>
-                        </div>
-                        <div class="mb-3">
                             <label class="small text-muted">Price</label>
                             <input type="text" class="form-control" placeholder="$0.00" required>
-                        </div>
-                        <div class="form-check mb-4 mt-3">
-                            <input class="form-check-input custom-check" type="checkbox" id="addAvailCheck" checked>
-                            <label class="form-check-label small fw-medium" for="addAvailCheck">Available for orders</label>
                         </div>
                         <button type="submit" class="btn btn-orange w-100 py-2 fw-bold">Add Service</button>
                     </form>
@@ -153,16 +96,8 @@ header("Location: /PRNT/pages/client/service-avail/");
                             <input type="text" id="editName" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label class="small text-muted mb-1">Format Type</label>
-                            <input type="text" id="editFormat" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
                             <label class="small text-muted mb-1">Price</label>
                             <input type="text" id="editPrice" class="form-control" required>
-                        </div>
-                        <div class="form-check mb-4 mt-3">
-                            <input class="form-check-input custom-check" type="checkbox" id="editAvailCheck">
-                            <label class="form-check-label small fw-medium" for="editAvailCheck">Available for orders</label>
                         </div>
                         <div class="d-flex gap-2">
                             <button type="button" class="btn btn-secondary flex-grow-1 py-2" data-bs-dismiss="modal">Cancel</button>
@@ -191,6 +126,7 @@ header("Location: /PRNT/pages/client/service-avail/");
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>
 </html>

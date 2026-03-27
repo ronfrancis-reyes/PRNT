@@ -256,26 +256,26 @@ function showOrders() {
 				data.forEach((orders) => {
 					table.append(
 						`<tr data-order-id="${orders.order_id}" data-date="${orders.time_placed}" data-customer="${orders.name}" data-email="${orders.email}" data-phone="${orders.contact_number}" data-service="${orders.service_name}" data-file="${orders.file_name}" data-print-type="NA" data-paper-size="${orders.format}" data-copies="${orders.copies}" data-receiving="${orders.delivery_option}" data-address="${orders.address}" data-notes="${orders.note}" data-amount="${orders.total_price}" data-status="${orders.status}">
-              <td class="order-id">${orders.order_id}</td>
-              <td>${orders.name}</td>
-              <td>${orders.time_placed}</td>
-              <td>${orders.service_name}</td>
-              <td><span class="file-cell"><i class="bi bi-file-earmark-text"></i><a href="${orders.filepath}">${orders.file_name}</a></span></td>
-              <td class="amount">₱${orders.total_price}</td>
-              <td>${orders.delivery_option}</td>
-              <td><span class="badge badge-completed">${orders.status}</span></td>
-              <td><div class="action-wrap">
-                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                <div class="dropdown">
-                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                  <button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
-                  <button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
-                  <button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
-                  <hr/>
-                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
-                </div>
-              </div></td>
-            </tr>`,
+							<td class="order-id">${orders.order_id}</td>
+							<td>${orders.name}</td>
+							<td>${orders.time_placed}</td>
+							<td>${orders.service_name}</td>
+							<td><span class="file-cell"><i class="bi bi-file-earmark-text"></i><a href="${orders.filepath}">${orders.file_name}</a></span></td>
+							<td class="amount">₱${orders.total_price}</td>
+							<td>${orders.delivery_option}</td>
+							<td><span class="badge badge-completed">${orders.status}</span></td>
+							<td><div class="action-wrap">
+								<button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
+								<div class="dropdown">
+								<button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
+								<button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
+								<button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
+								<button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
+								<hr/>
+								<button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
+								</div>
+							</div></td>
+						</tr>`,
 					);
 				});
 			}

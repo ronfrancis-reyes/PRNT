@@ -26,5 +26,6 @@ ON o.file_id = f.file_id");
         } else {
             echo json_encode($data);
         }
+        exit;
     }
 }
