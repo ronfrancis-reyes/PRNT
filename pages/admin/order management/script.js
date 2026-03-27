@@ -252,9 +252,10 @@ function showOrders() {
 			let data = JSON.parse(response);
 			let table = $("#tableBody");
 
-			data.forEach((orders) => {
-				table.append(
-					`<tr data-order-id="${orders.order_id}" data-date="${orders.time_placed}" data-customer="${orders.name}" data-email="${orders.email}" data-phone="${orders.contact_number}" data-service="${orders.service_name}" data-file="${orders.file_name}" data-print-type="NA" data-paper-size="${orders.format}" data-copies="${orders.copies}" data-receiving="${orders.delivery_option}" data-address="${orders.address}" data-notes="${orders.note}" data-amount="${orders.total_price}" data-status="${orders.status}">
+			if (data.status != "error") {
+				data.forEach((orders) => {
+					table.append(
+						`<tr data-order-id="${orders.order_id}" data-date="${orders.time_placed}" data-customer="${orders.name}" data-email="${orders.email}" data-phone="${orders.contact_number}" data-service="${orders.service_name}" data-file="${orders.file_name}" data-print-type="NA" data-paper-size="${orders.format}" data-copies="${orders.copies}" data-receiving="${orders.delivery_option}" data-address="${orders.address}" data-notes="${orders.note}" data-amount="${orders.total_price}" data-status="${orders.status}">
               <td class="order-id">${orders.order_id}</td>
               <td>${orders.name}</td>
               <td>${orders.time_place}</td>
@@ -275,8 +276,9 @@ function showOrders() {
                 </div>
               </div></td>
             </tr>`,
-				);
-			});
+					);
+				});
+			}
 		},
 	});
 }
