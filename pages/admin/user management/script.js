@@ -1,3 +1,4 @@
+const API = "../../../api/user-management.php";
 // close dropdown on outside click
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.action-wrap'))
@@ -98,6 +99,7 @@ function doSuspend(btn) {
   btn.innerHTML      = '<i class="bi bi-person-check"></i> Activate User';
   btn.setAttribute('onclick', 'activateUser(this)');
   row.dataset.status = 'Suspended';
+  updateAccountStatus(row.dataset.userId, 'Suspended');
   if (dropdown) dropdown.classList.remove('show');
 }
 
@@ -112,6 +114,7 @@ function activateUser(btn) {
   btn.innerHTML      = '<i class="bi bi-slash-circle"></i> Suspend User';
   btn.setAttribute('onclick', 'confirmSuspend(this)');
   row.dataset.status = 'Active';
+  updateAccountStatus(row.dataset.userId, 'Active');
   showToast('User ' + (row.dataset.name || '') + ' has been activated');
 }
 
@@ -179,4 +182,68 @@ function exportCSV() {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+}
+
+$(document).ready(function () {
+	showUsers();
+});
+
+function showUsers(){
+  $.ajax({
+    url: API,
+    type: "POST",
+    data: "action=get",
+    success: function(response) {
+      let data = JSON.parse(response);
+      let table = $("#tableBody");
+
+      if(data.status != "error"){
+        data.forEach((accounts)=>{
+          let isSuspended = (accounts.account_status || '').toLowerCase() === 'suspended';
+
+          let action = isSuspended
+            ? `<button onclick="activateUser(this)">
+                <i class="bi bi-person-check"></i> Activate User
+              </button>`
+            : `<button onclick="confirmSuspend(this)">
+                <i class="bi bi-slash-circle"></i> Suspend User
+              </button>`;
+          table.append(`<tr data-user-id="${accounts.account_id}" data-name="${accounts.name}" data-email="${accounts.email}" data-status="${accounts.account_status}" data-last-order="${accounts.order_id || '—'}">
+            <td>${accounts.account_id}</td>
+            <td>${accounts.name}</td>
+            <td>${accounts.email}</td>
+            <td><span class="badge badge-${(accounts.account_status || '').toLowerCase()}">${accounts.account_status || '—'}</span></td>
+            <td>${accounts.order_id || '—'}</td>
+            <td>
+              <div class="action-wrap">
+                <button class="action-btn" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
+                <div class="dropdown">
+                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
+                  ${action}
+                  <hr/>
+                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete User</button>
+                </div>
+              </div>
+            </td>
+            </tr>
+          `)
+        })
+      }
+    }
+  });
+}
+
+function updateAccountStatus(id, status){
+	$.ajax({
+		type: "POST",
+		url: API,
+		data: "action=update&id=" + id + "&status=" + status,
+		success: function (response) {
+			let reply = JSON.parse(response);
+			alert(reply.message);
+			location.reload();
+		},
+		error: function () {
+		}
+	});
 }

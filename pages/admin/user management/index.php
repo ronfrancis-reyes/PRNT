@@ -66,91 +66,7 @@ header("Location: /PRNT/pages/client/service-avail/");
           <tbody id="tableBody">
 
             <!-- for testing -->
-            <tr data-user-id="USR-001" data-name="John Smith" data-email="john.smith@email.com" data-phone="09171234567" data-address="Activity Center" data-last-order="ORD-1234" data-status="Active">
-              <td class="user-id">USR-001</td>
-              <td><div class="user-name-cell"><div class="avatar">JS</div> John Smith</div></td>
-              <td class="email">john.smith@email.com</td>
-              <td><span class="badge badge-active">Active</span></td>
-              <td class="user-order-id">ORD-1234</td>
-              <td><div class="action-wrap">
-                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                <div class="dropdown">
-                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                  <button onclick="confirmSuspend(this)"><i class="bi bi-slash-circle"></i> Suspend User</button>
-                  <hr/>
-                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete User</button>
-                </div>
-              </div></td>
-            </tr>
-
-            <tr data-user-id="USR-002" data-name="Sarah Johnson" data-email="sarah.j@email.com" data-phone="09281234567" data-address="E-Library" data-last-order="ORD-1235" data-status="Active">
-              <td class="user-id">USR-002</td>
-              <td><div class="user-name-cell"><div class="avatar">SJ</div> Sarah Johnson</div></td>
-              <td class="email">sarah.j@email.com</td>
-              <td><span class="badge badge-active">Active</span></td>
-              <td class="user-order-id">ORD-1235</td>
-              <td><div class="action-wrap">
-                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                <div class="dropdown">
-                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                  <button onclick="confirmSuspend(this)"><i class="bi bi-slash-circle"></i> Suspend User</button>
-                  <hr/>
-                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete User</button>
-                </div>
-              </div></td>
-            </tr>
-
-            <tr data-user-id="USR-003" data-name="Mike Brown" data-email="mike.brown@email.com" data-phone="09391234567" data-address="Pimentel Hall" data-last-order="ORD-1236" data-status="Active">
-              <td class="user-id">USR-003</td>
-              <td><div class="user-name-cell"><div class="avatar">MB</div> Mike Brown</div></td>
-              <td class="email">mike.brown@email.com</td>
-              <td><span class="badge badge-active">Active</span></td>
-              <td class="user-order-id">ORD-1236</td>
-              <td><div class="action-wrap">
-                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                <div class="dropdown">
-                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                  <button onclick="confirmSuspend(this)"><i class="bi bi-slash-circle"></i> Suspend User</button>
-                  <hr/>
-                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete User</button>
-                </div>
-              </div></td>
-            </tr>
-
-            <tr data-user-id="USR-004" data-name="Emma Davis" data-email="emma.davis@email.com" data-phone="09501234567" data-address="CoED" data-last-order="ORD-1237" data-status="Active">
-              <td class="user-id">USR-004</td>
-              <td><div class="user-name-cell"><div class="avatar">ED</div> Emma Davis</div></td>
-              <td class="email">emma.davis@email.com</td>
-              <td><span class="badge badge-active">Active</span></td>
-              <td class="user-order-id">ORD-1237</td>
-              <td><div class="action-wrap">
-                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                <div class="dropdown">
-                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                  <button onclick="confirmSuspend(this)"><i class="bi bi-slash-circle"></i> Suspend User</button>
-                  <hr/>
-                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete User</button>
-                </div>
-              </div></td>
-            </tr>
-
-            <!-- james is already suspended — activate user directly -->
-            <tr data-user-id="USR-005" data-name="James Wilson" data-email="james.w@email.com" data-phone="09611234567" data-address="Carpio Hall" data-last-order="ORD-1238" data-status="Suspended">
-              <td class="user-id">USR-005</td>
-              <td><div class="user-name-cell"><div class="avatar">JW</div> James Wilson</div></td>
-              <td class="email">james.w@email.com</td>
-              <td><span class="badge badge-suspended">Suspended</span></td>
-              <td class="user-order-id">ORD-1238</td>
-              <td><div class="action-wrap">
-                <button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-                <div class="dropdown">
-                  <button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-                  <button onclick="activateUser(this)"><i class="bi bi-person-check"></i> Activate User</button>
-                  <hr/>
-                  <button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete User</button>
-                </div>
-              </div></td>
-            </tr>
+            
             <!-- end for testing -->
 
           </tbody>
@@ -193,7 +109,7 @@ header("Location: /PRNT/pages/client/service-avail/");
     <div class="delete-msg" id="suspendMsg"></div>
     <div class="delete-actions">
       <button class="btn-cancel" onclick="closeSuspendModal()">Cancel</button>
-      <button class="btn-confirm-suspend" id="btnConfirmSuspend"><i class="bi bi-slash-circle"></i> Suspend</button>
+      <button class="btn-confirm-suspend" id="btnConfirmSuspend"><i class="bi bi-slash-circle" ></i> Suspend</button>
     </div>
   </div>
 </div>
@@ -203,7 +119,7 @@ header("Location: /PRNT/pages/client/service-avail/");
   <i class="bi bi-check-circle-fill"></i>
   <span id="toastMsg"></span>
 </div>
-
+<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
 <script src="script.js"></script>
 </body>
 </html>
