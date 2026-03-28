@@ -252,6 +252,10 @@ tbody td {
 	background: #fef9c3;
 	color: #a16207;
 }
+.badge-rejected {
+	background: #fecfc3;
+	color: #a13307;
+}
 
 /* three-dot action button */
 .action-wrap {

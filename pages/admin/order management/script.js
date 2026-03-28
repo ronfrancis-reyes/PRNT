@@ -256,11 +256,15 @@ function showOrders() {
 			if (data.status != "error") {
 				data.forEach((orders) => {
 					let statusButtons = "";
+					let badge = "";
 
 					if (orders.status !== "Reviewing") {
 						statusButtons += `<button onclick="setStatus(this,'Reviewing')">
 							<i class="bi bi-gear"></i> Mark as Reviewing
 						</button>`;
+					}
+					if (orders.status == "Reviewing") {
+						badge += `<td><span class="badge badge-pending">${orders.status}</span></td>`;
 					}
 
 					if (orders.status !== "Printing") {
@@ -268,11 +272,17 @@ function showOrders() {
 							<i class="bi bi-gear"></i> Mark as Printing
 						</button>`;
 					}
+					if (orders.status == "Printing") {
+						badge += `<td><span class="badge badge-processing">${orders.status}</span></td>`;
+					}
 
 					if (orders.status !== "Out for delivery") {
 						statusButtons += `<button onclick="setStatus(this,'Out for delivery')">
 							<i class="bi bi-check-circle"></i> Out for Delivery
 						</button>`;
+					}
+					if (orders.status == "Out for delivery") {
+						badge += `<td><span class="badge badge-completed">${orders.status}</span></td>`;
 					}
 
 					if (orders.status !== "For pickup") {
@@ -280,9 +290,15 @@ function showOrders() {
 							<i class="bi bi-check-circle"></i> For Pickup
 						</button>`;
 					}
+					if (orders.status == "For pickup") {
+						badge += `<td><span class="badge badge-completed">${orders.status}</span></td>`;
+					}
 
-					if(orders.status !== "Rejected"){
+					if (orders.status !== "Rejected") {
 						statusButtons += `<button onclick="setStatus(this,'Rejected')"><i class="bi bi-x-circle"></i> Mark as Rejected</button>`;
+					}
+					if (orders.status == "Rejected") {
+						badge += `<td><span class="badge badge-rejected">${orders.status}</span></td>`;
 					}
 					table.append(
 						`<tr data-order-id="${orders.order_id}" data-date="${orders.time_placed}" data-customer="${orders.name}" data-email="${orders.email}" data-phone="${orders.contact_number}" data-service="${orders.service_name}" data-file="${orders.file_name}" data-print-type="NA" data-paper-size="${orders.format}" data-copies="${orders.copies}" data-receiving="${orders.delivery_option}" data-address="${orders.address}" data-notes="${orders.note}" data-amount="${orders.total_price}" data-status="${orders.status}">
@@ -293,7 +309,7 @@ function showOrders() {
 							<td><span class="file-cell"><i class="bi bi-file-earmark-text"></i><a href="${orders.filepath}">${orders.file_name}</a></span></td>
 							<td class="amount">₱${orders.total_price}</td>
 							<td>${orders.delivery_option}</td>
-							<td><span class="badge badge-completed">${orders.status}</span></td>
+							${badge}
 							<td><div class="action-wrap">
 								<button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
 								<div class="dropdown">
@@ -305,24 +321,23 @@ function showOrders() {
 							</div></td>
 						</tr>`,
 					);
-
 				});
 			}
 		},
 	});
 }
 
-function updatedStatus(id, status){
+function updatedStatus(id, status) {
 	$.ajax({
 		type: "POST",
 		url: API,
 		data: "action=update&id=" + id + "&status=" + status,
 		success: function (response) {
 			let reply = JSON.parse(response);
-			alert(reply.message);
 			location.reload();
 		},
-		error: function () {
-		}
+		error: function () {},
 	});
 }
+
+function actionButtons(status) {}
