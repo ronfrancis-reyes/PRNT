@@ -149,9 +149,10 @@ function setStatus(btn, status) {
 	badge.className = "badge badge-" + status.toLowerCase();
 	tr.dataset.status = status;
 	btn.closest(".dropdown").classList.remove("show");
-	if (status === "Completed") {
+	if (status === "Out for delivery" || status === "For pickup") {
 		showToast("Order " + tr.dataset.orderId + ' status updated to "Completed"');
 	}
+	updatedStatus(tr.dataset.orderId, status);
 }
 
 function showToast(msg) {
@@ -254,6 +255,35 @@ function showOrders() {
 
 			if (data.status != "error") {
 				data.forEach((orders) => {
+					let statusButtons = "";
+
+					if (orders.status !== "Reviewing") {
+						statusButtons += `<button onclick="setStatus(this,'Reviewing')">
+							<i class="bi bi-gear"></i> Mark as Reviewing
+						</button>`;
+					}
+
+					if (orders.status !== "Printing") {
+						statusButtons += `<button onclick="setStatus(this,'Printing')">
+							<i class="bi bi-gear"></i> Mark as Printing
+						</button>`;
+					}
+
+					if (orders.status !== "Out for delivery") {
+						statusButtons += `<button onclick="setStatus(this,'Out for delivery')">
+							<i class="bi bi-check-circle"></i> Out for Delivery
+						</button>`;
+					}
+
+					if (orders.status !== "For pickup") {
+						statusButtons += `<button onclick="setStatus(this,'For pickup')">
+							<i class="bi bi-check-circle"></i> For Pickup
+						</button>`;
+					}
+
+					if(orders.status !== "Rejected"){
+						statusButtons += `<button onclick="setStatus(this,'Rejected')"><i class="bi bi-x-circle"></i> Mark as Rejected</button>`;
+					}
 					table.append(
 						`<tr data-order-id="${orders.order_id}" data-date="${orders.time_placed}" data-customer="${orders.name}" data-email="${orders.email}" data-phone="${orders.contact_number}" data-service="${orders.service_name}" data-file="${orders.file_name}" data-print-type="NA" data-paper-size="${orders.format}" data-copies="${orders.copies}" data-receiving="${orders.delivery_option}" data-address="${orders.address}" data-notes="${orders.note}" data-amount="${orders.total_price}" data-status="${orders.status}">
 							<td class="order-id">${orders.order_id}</td>
@@ -268,17 +298,31 @@ function showOrders() {
 								<button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
 								<div class="dropdown">
 								<button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-								<button onclick="setStatus(this,'Completed')"><i class="bi bi-check-circle"></i> Mark as Completed</button>
-								<button onclick="setStatus(this,'Processing')"><i class="bi bi-gear"></i> Mark as Processing</button>
-								<button onclick="setStatus(this,'Pending')"><i class="bi bi-clock"></i> Mark as Pending</button>
+								${statusButtons}
 								<hr/>
 								<button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
 								</div>
 							</div></td>
 						</tr>`,
 					);
+
 				});
 			}
 		},
+	});
+}
+
+function updatedStatus(id, status){
+	$.ajax({
+		type: "POST",
+		url: API,
+		data: "action=update&id=" + id + "&status=" + status,
+		success: function (response) {
+			let reply = JSON.parse(response);
+			alert(reply.message);
+			location.reload();
+		},
+		error: function () {
+		}
 	});
 }
