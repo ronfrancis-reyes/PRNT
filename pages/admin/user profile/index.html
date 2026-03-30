@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile — PRNT Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../../../global/styles.css">
+  <link rel="stylesheet" href="../../../assets/css/admin.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="admin-page">
+  <div class="admin-layout">
+    <div id="sidebar-placeholder"></div>
+    <div class="admin-main">
+      <div id="header-placeholder"></div>
+      <div class="admin-body">
+        
+        <div class="profile-container animate-fade">
+          <div class="profile-header">
+             <div class="profile-avatar-lg">A</div>
+             <div>
+                <h2 style="color:var(--text-dark);">Alfred G.</h2>
+                <p style="color:var(--text-muted); margin-bottom:0.5rem;">System Administrator</p>
+                <div style="display:flex; gap:1.5rem; font-size:0.9rem;">
+                  <span style="display:flex; align-items:center; gap:0.5rem;"><i class="fas fa-envelope" style="color:var(--primary);"></i> admin@prnt.ph</span>
+                  <span style="display:flex; align-items:center; gap:0.5rem;"><i class="fas fa-phone" style="color:var(--primary);"></i> +63 912 345 6789</span>
+                </div>
+             </div>
+             <button class="btn btn-outline" style="margin-left:auto; border-radius:12px;">Edit Profile</button>
+          </div>
+
+          <div class="profile-grid">
+            <div class="card">
+               <h3 style="margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px solid var(--border);">Account Security</h3>
+               <div class="form-group" style="margin-bottom:1.25rem;">
+                 <label>Username</label>
+                 <input type="text" value="admin_prnt" readonly>
+               </div>
+               <div class="form-group" style="margin-bottom:1.5rem;">
+                 <label>Email Address</label>
+                 <input type="email" value="admin@prnt.ph" readonly>
+               </div>
+               <button class="btn btn-primary" style="width:100%; justify-content:center;">Change Password</button>
+            </div>
+
+            <div class="card">
+               <h3 style="margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px solid var(--border);">Administrative Access</h3>
+               <div class="access-item">
+                  <i class="fas fa-check-circle" style="color:var(--primary);"></i>
+                  <div>
+                    <div style="font-weight:600;">Full System Control</div>
+                    <small style="color:var(--text-muted);">Manage all orders, users, and global settings.</small>
+                  </div>
+               </div>
+               <div class="access-item" style="margin-top:1.25rem;">
+                  <i class="fas fa-check-circle" style="color:var(--primary);"></i>
+                  <div>
+                    <div style="font-weight:600;">Financial Reporting</div>
+                    <small style="color:var(--text-muted);">View revenue trends and export accounting data.</small>
+                  </div>
+               </div>
+               <div class="access-item" style="margin-top:1.25rem;">
+                  <i class="fas fa-check-circle" style="color:var(--primary);"></i>
+                  <div>
+                    <div style="font-weight:600;">Order Processing</div>
+                    <small style="color:var(--text-muted);">Update order statuses and process printing files.</small>
+                  </div>
+               </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../../../global/script.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

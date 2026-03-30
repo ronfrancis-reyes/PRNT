@@ -1,0 +1,37 @@
+<!-- PRNT Reusable Navbar -->
+<div class="mobile-menu-overlay" id="mobileOverlay" onclick="toggleMobileMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" onclick="toggleMobileMenu()"><i class="fas fa-times"></i></button>
+  <a href="/" data-nav="root">Home</a>
+  <a href="/pages/about/" data-nav="about">About</a>
+  <a href="/pages/works/" data-nav="works">Work</a>
+  <a href="/pages/service/" data-nav="service">Services</a>
+  <a href="/pages/contact/" data-nav="contact">Contact</a>
+  <a href="/pages/client/service-avail/" data-nav="order">Order Now</a>
+  <a href="/pages/login/" data-nav="login">Login</a>
+</div>
+
+<nav class="navbar" id="navbar">
+  <div class="container flex align-center justify-between" style="width:100%;">
+    <a href="/" class="logo">
+      <i class="fas fa-print"></i> PRNT
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/" data-nav="home">Home</a></li>
+      <li><a href="/pages/about/" data-nav="about">About</a></li>
+      <li><a href="/pages/works/" data-nav="works">Work</a></li>
+      <li><a href="/pages/service/" data-nav="service">Services</a></li>
+      <li><a href="/pages/contact/" data-nav="contact">Contact</a></li>
+    </ul>
+    <div class="flex align-center" style="gap:1rem;">
+      <a href="/pages/client/service-avail/" class="btn" style="background:white;color:var(--primary);font-weight:700;" id="orderNowBtn">
+        <i class="fas fa-shopping-cart"></i> Order Now
+      </a>
+      <a href="/pages/login/" class="btn" style="border:2px solid white;color:white;" id="loginBtn">Login</a>
+      <div class="user-nav-profile" id="userNavProfile" style="display:none; cursor:pointer;" onclick="window.location.href='/pages/registration/'">
+        <div style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;" id="navAvatar">JD</div>
+      </div>
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Receipt — PRNT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../../../global/styles.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body style="background:var(--background);">
+  <div id="navbar-placeholder"></div>
+
+  <div class="container" style="padding: 2rem 0;">
+    <div class="receipt-container animate-slide">
+      <div class="receipt-header">
+        <i class="fas fa-receipt" style="font-size:3rem;margin-bottom:1.5rem;"></i>
+        <h2 id="receiptTitle">Order Receipt</h2>
+        <p id="receiptSub">Please review your order details before final placement.</p>
+      </div>
+
+      <div class="receipt-body">
+        <!-- Print Details -->
+        <div class="receipt-section">
+          <h3><i class="fas fa-print"></i> Print Details</h3>
+          <div id="receiptItems"></div>
+        </div>
+
+        <!-- Logistics & Payment -->
+        <div class="receipt-section">
+          <h3><i class="fas fa-truck"></i> Logistics & Payment</h3>
+          <div class="receipt-grid">
+            <span class="receipt-label">Receiving Method</span>
+            <span class="receipt-value" id="receiptReceiving">-</span>
+            
+            <span class="receipt-label">Location/Spot</span>
+            <span class="receipt-value" id="receiptLocation">-</span>
+            
+            <span class="receipt-label">Payment Method</span>
+            <span class="receipt-value" id="receiptPayment">-</span>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="receipt-section" id="remarksSection" style="display:none;">
+          <h3>Additional Notes</h3>
+          <p id="receiptNotes" class="notes-box"></p>
+        </div>
+
+        <!-- Grand Total -->
+        <div class="receipt-total">
+          <span class="total-label">Grand Total</span>
+          <span class="total-value" id="receiptTotal">₱0.00</span>
+        </div>
+
+        <div class="receipt-actions">
+          <button class="btn btn-outline" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button class="btn btn-primary" id="finalOrderBtn" onclick="submitFinalOrder()">
+            Place Order <i class="fas fa-check-circle" style="margin-left:0.5rem;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="../../../global/script.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

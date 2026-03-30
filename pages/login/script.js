@@ -1,73 +1,28 @@
-const email = document.getElementById("emailInput");
-const password = document.getElementById("passInput");
-const submitButt = document.getElementById("submitButton");
-const show = document.getElementById("check");
-const form = $("#login-form");
-
-const API = "/PRNT/api/login.php";
-
-//show pass
-document.getElementById("check").addEventListener("change", function () {
-  const password = document.getElementById("passInput");
-  password.type = this.checked ? "text" : "password";
+// Login Page Specific Script
+document.addEventListener('DOMContentLoaded', () => {
+  // Load reusable components
+  loadComponent('navbar-placeholder', '../../components/Navbar/index.html');
+  loadComponent('footer-placeholder', '../../components/Footer/index.html');
 });
 
-function checkFields() {
-  if (email.value.trim() == "" || password.value.trim() == "") {
-    submitButt.disabled = true;
-  } else {
-    submitButt.disabled = false;
-  }
-}
-
-function postOne() {
-  let payload = {
-    email: $("#emailInput").val(),
-    password: $("#passInput").val(),
-  };
-
-  $.ajax({
-    url: API,
-    type: "POST",
-    data: "action=postOne&payload=" + JSON.stringify(payload),
-    success: function (response) {
-      let respo = JSON.parse(response);
-      if (respo.status == "success") {
-        checkAccountType($("#emailInput").val());
-      } else {
-        alert(respo.message);
-      }
-    },
-    error: function (error) {
-      alert(error);
-    },
-  });
-}
-
-form.on("submit", function (e) {
+function handleAuthLogin(e) {
   e.preventDefault();
-  postOne();
-});
-email.addEventListener("input", checkFields);
-password.addEventListener("input", checkFields);
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value.trim();
 
-function showPass() {
-  const passwordInput = document.getElementById("floatingPassword");
-  const toggle = document.getElementById("showPasswordToggle");
+  // Basic validation
+  if (!email || !pass) return alert('Please fill in all fields.');
 
-  toggle.addEventListener("change", function () {
-    if (this.checked) {
-      passwordInput.type = "text";
-    } else {
-      passwordInput.type = "password";
-    }
-  });
-}
-
-function checkAccountType(email) {
-  if (email == "admin1@admin.com") {
-    window.location.href = "/PRNT/pages/admin/dashboard/";
-  } else {
-    window.location.href = "/PRNT/pages/client/service-avail/";
+  // Check for admin
+  if (email === 'admin@prnt.com' && pass === 'admin123') {
+    localStorage.setItem('prnt_user', JSON.stringify({ name: 'Admin', email, role: 'admin' }));
+    window.location.href = '/pages/admin/dashboard/';
+    return;
   }
+
+  // Simulate success
+  const user = { name: 'Juan Dela Cruz', email, role: 'client' };
+  localStorage.setItem('prnt_user', JSON.stringify(user));
+  alert('Welcome back, ' + user.name + '!');
+  window.location.href = '/';
 }

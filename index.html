@@ -1,183 +1,168 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-			crossorigin="anonymous"
-		/>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRNT — Online Printing Service</title>
+  <meta name="description" content="PRNT is a modern online printing service for students and businesses. Upload files, select services, and track orders.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
 
-		<!--Tab Logo-->
-		<link rel="icon" href="assets/img/PRNT_logo.png" type="image/png" />
-		<!--Logo Library -->
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-		/>
+<!-- ===== TOAST CONTAINER ===== -->
+<div class="toast-container" id="toastContainer"></div>
 
-		<link rel="stylesheet" href="components/Navbar/Navbar.css" />
-		<link rel="stylesheet" href="components/Footer/Footer.css" />
-		<link rel="stylesheet" href="styles.css" />
-		<link rel="stylesheet" href="global/global.css" />
-		<title>PRNT</title>
-	</head>
-	<body>
-		<!--navigation-->
-		<custom-nav></custom-nav>
+<!-- ===== MOBILE MENU OVERLAY ===== -->
+<div class="mobile-menu-overlay" id="mobileOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" onclick="toggleMobileMenu()"><i class="fas fa-times"></i></button>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="work.html">Work</a>
+  <a href="services.html">Services</a>
+  <a href="contact.html">Contact</a>
+  <a href="order.html">Order Now</a>
+  <a href="#" onclick="showAuthModal('login')">Login</a>
+</div>
 
-		<!--body-->
-		<div class="container text-center">
-			<p class="display-1 promise-custom">
-				QUALITY <br /><span class="output-custom">OUTPUT.</span>
-			</p>
-		</div>
-		<hr />
-		<div class="container container-img-custom">
-			<div class="container-text-custom">
-				<p>PRINT BOLD</p>
-				<p>WORK TOGETHER</p>
-				<p>DELIVER EXCELLENCE</p>
-			</div>
-		</div>
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="container flex align-center justify-between" style="width:100%;">
+    <a href="index.html" class="logo">
+      <i class="fas fa-print"></i> PRNT
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active" data-page="home">Home</a></li>
+      <li><a href="about.html" data-page="about">About</a></li>
+      <li><a href="work.html" data-page="work">Work</a></li>
+      <li><a href="services.html" data-page="services">Services</a></li>
+      <li><a href="contact.html" data-page="contact">Contact</a></li>
+    </ul>
+    <div class="flex align-center" style="gap:1rem;">
+      <button class="btn btn-primary" onclick="navigateTo('order')" id="orderNowBtn">
+        <i class="fas fa-shopping-cart"></i> Order Now
+      </button>
+      <button class="btn btn-outline" onclick="showAuthModal('login')" id="loginBtn">Login</button>
+      <div class="user-nav-profile" id="userNavProfile" style="display:none; cursor:pointer;" onclick="navigateTo('profile')">
+        <div style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;" id="navAvatar">JD</div>
+      </div>
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
 
-		<div class="container">
-			<div class="img-container-custom">
-				<img src="/assets/img/img14.jpg" alt="" class="img-fluid img1-custom" />
-			</div>
-		</div>
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container animate-slide">
+    <h1>Your Prints, <span style="color:var(--accent);">Delivered.</span></h1>
+    <p>Upload, customize, and order high-quality prints online. Fast, affordable, and designed for BulSU students and local businesses.</p>
+    <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap;">
+      <a href="order.html" class="btn btn-primary" style="padding:1.25rem 2.5rem; font-size:1.1rem;">
+        <i class="fas fa-shopping-cart"></i> Get Started
+      </a>
+      <a href="services.html" class="btn btn-outline" style="padding:1.25rem 2.5rem; font-size:1.1rem;">
+        Our Services
+      </a>
+    </div>
+  </div>
+</section>
 
-		<div class="container">
-			<div class="black-container mb-3">
-				<img src="assets\img\img4.jpg" alt="" class="image2-custom" />
-				<div class="sample-works-custom">
-					<li class="bullet-custom">WHAT WE WORK ON</li>
-					<p class="sample-custom">Academic Printing</p>
-					<hr class="sample-divider-custom" />
-					<p class="sample-custom">Promotional Materials</p>
-					<hr class="sample-divider-custom" />
-					<p class="sample-custom">Custom Print Projects</p>
-					<hr class="sample-divider-custom" />
-					<p class="sample-custom">Large Format Outputs</p>
-					<hr class="sample-divider-custom" />
-					<p class="sample-custom">Everyday Print Needs</p>
-					<hr class="sample-divider-custom" />
-					<p class="sample-footer">
-						Delivering versatile printing solutions that meet academic and
-						professional needs.
-					</p>
-					<a href="pages/works/" class="sample-link-custom">LEARN MORE</a>
-				</div>
-			</div>
-		</div>
+<!-- ===== STATS ===== -->
+<div class="container">
+  <div class="home-stats flex justify-between align-center animate-fade" style="background:white; padding:2.5rem; border-radius:12px; margin-top:-3rem; box-shadow:0 10px 30px rgba(0,0,0,0.1); text-align:center;">
+    <div class="stat-item" style="flex:1;">
+      <h2 style="font-size:2.5rem; color:var(--primary);">12k+</h2>
+      <p style="color:var(--text-muted); font-weight:600;">Orders Printed</p>
+    </div>
+    <div class="stat-item" style="flex:1; border-left:1px solid #eee; border-right:1px solid #eee;">
+      <h2 style="font-size:2.5rem; color:var(--primary);">5k+</h2>
+      <p style="color:var(--text-muted); font-weight:600;">Happy Users</p>
+    </div>
+    <div class="stat-item" style="flex:1;">
+      <h2 style="font-size:2.5rem; color:var(--primary);">15+</h2>
+      <p style="color:var(--text-muted); font-weight:600;">Years Experience</p>
+    </div>
+  </div>
+</div>
 
-		<div class="sidepanel-custom">
-			<div class="container container-cards-custom">
-				<p class="h6 text-center">BENEFITS IF YOU CHOOSE US</p>
+<!-- ===== FEATURES ===== -->
+<section style="padding: 8rem 0; text-align:center;">
+  <div class="container animate-fade">
+    <h2 style="font-size:2.5rem; margin-bottom:2rem; color:var(--text-dark);">Ready for Next-Gen Printing?</h2>
+    <p style="color:var(--text-muted); max-width:600px; margin: 0 auto 3rem;">Join thousands of students and businesses who trust PRNT for their most important documents and creative works.</p>
+    <a href="order.html" class="btn btn-primary" style="padding:1rem 2rem;">Order Now <i class="fas fa-arrow-right" style="margin-left:0.5rem;"></i></a>
+  </div>
+</section>
 
-				<div class="row row-cols-1 row-cols-md-3 g-4 row-benefits-custom">
-					<div class="col">
-						<div class="card benefits-card-custom">
-							<div class="card-body benefits-cardbody-custom">
-								<p class="card-text">
-									Enjoy affordable, student-budget–friendly printing services
-									with clear pricing and no hidden charges.
-									<span class="filler-words"
-										>aljfajfalkjfaljfasfja;lsfasljfa</span
-									>
-								</p>
-								<img
-									src="https://framerusercontent.com/images/yhQStTSekOeh0c2wN3aZLyPKZQ.svg?width=48&height=48"
-									alt=""
-									class="benefits-icon-custom"
-								/>
-								<h5 class="card-title h2">Student Pricing</h5>
-							</div>
-						</div>
-					</div>
-					<div class="col">
-						<div class="card benefits-card-custom">
-							<div class="card-body benefits-cardbody-custom">
-								<p class="card-text">
-									We understand tight deadlines. Get your documents, banners,
-									and projects printed quickly so you never miss a submission or
-									event.
-								</p>
-								<img
-									src="https://framerusercontent.com/images/5wF4z6sgF5ViQ9iMmy2TRKeKBs.svg?width=48&height=48"
-									alt=""
-									class="benefits-icon-custom"
-								/>
-								<h5 class="card-title h2">Fast Turnaround</h5>
-							</div>
-						</div>
-					</div>
+<!-- ===== AUTH MODALS (HIDDEN BY DEFAULT) ===== -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Welcome Back</h3>
+      <button class="modal-close" onclick="closeModal('loginModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="juan@bulsu.edu.ph" required>
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </button>
+    </form>
+    <div class="auth-footer">
+      Don't have an account? <a href="#" onclick="switchAuthModal('register')">Register</a>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="registerModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Create Account</h3>
+      <button class="modal-close" onclick="closeModal('registerModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <form onsubmit="handleRegister(event)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label for="regFirstName">First Name</label>
+          <input type="text" id="regFirstName" placeholder="Juan" required>
+        </div>
+        <div class="form-group">
+          <label for="regLastName">Last Name</label>
+          <input type="text" id="regLastName" placeholder="Dela Cruz" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="regEmail">BulSU Email</label>
+        <input type="email" id="regEmail" placeholder="juan@bulsu.edu.ph" required>
+      </div>
+      <div class="form-group">
+        <label for="regPhone">Phone Number</label>
+        <input type="tel" id="regPhone" placeholder="09XX XXX XXXX" required>
+      </div>
+      <div class="form-group">
+        <label for="regPassword">Password</label>
+        <input type="password" id="regPassword" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+        <i class="fas fa-user-plus"></i> Create Account
+      </button>
+    </form>
+    <div class="auth-footer">
+      Already have an account? <a href="#" onclick="switchAuthModal('login')">Login</a>
+    </div>
+  </div>
+</div>
 
-					<div class="benefits-text text-center">
-						<h1 class="benefits-motto">
-							Smarter printing. <br />
-							Better results. <span class="prnt">PRNT</span>. <br />
-						</h1>
-						<p class="benefits-subtext">
-							PRNT delivers reliable printing solutions designed for today’s
-							students, <br />
-							schools, and small businesses.
-						</p>
-					</div>
+<!-- ===== FOOTER (Placeholder for JS injection) ===== -->
+<footer class="footer" id="mainFooter"></footer>
 
-					<div class="col">
-						<div class="card benefits-card-custom">
-							<div class="card-body benefits-cardbody-custom">
-								<p class="card-text">
-									From simple black-and-white documents to full-color
-									tarpaulins, we deliver sharp, professional-quality prints you
-									can trust.
-								</p>
-								<img
-									src="https://framerusercontent.com/images/SiPZJZ58MAQSmENOzUEhOJRZc.svg?width=48&height=48"
-									alt=""
-									class="benefits-icon-custom"
-								/>
-								<h5 class="card-title h2">Print Quality</h5>
-							</div>
-						</div>
-					</div>
-					<div class="col">
-						<div class="card benefits-card-custom">
-							<div class="card-body benefits-cardbody-custom">
-								<p class="card-text">
-									Print, photocopy, bind, laminate, and more — all in one place
-									for your convenience near your school or campus.
-								</p>
-								<img
-									src="https://framerusercontent.com/images/QDjuMquX4fuUzPT6ef5ki35Kg9U.svg?width=48&height=48"
-									alt=""
-									class="benefits-icon-custom"
-								/>
-								<h5 class="card-title h2">One-Stop Shop</h5>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!--footer-->
-		<custom-footer></custom-footer>
-
-		<!--javascript-->
-		<script type="module" src="script.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-			crossorigin="anonymous"
-		></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-			integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-			crossorigin="anonymous"
-		></script>
-	</body>
+<script src="assets/js/app.js"></script>
+</body>
 </html>

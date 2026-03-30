@@ -1,105 +1,22 @@
-
-.contact-header,
-header.container {
-    padding-top: 0;
+/* Contact Page Styles */
+.contact-section {
+  padding: 6rem 0;
 }
 
-.header-title {
-    letter-spacing: -6px;
-    font-weight: 950 !important;
-    line-height: 0.95;
-    color: #000;
+.contact-form {
+  padding: 3rem;
+  background: white !important;
+  border-radius: var(--radius) !important;
 }
 
-.description-text {
-    max-width: 350px;
-    font-size: 0.95rem;
-    line-height: 1.4;
+.contact-form input:focus, .contact-form textarea:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1) !important;
 }
 
-body, html {
-    overflow-x: hidden;
+@media (max-width: 992px) {
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+  }
 }
-
-.dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #ff4400;
-  margin-right: 0.5rem;
-  vertical-align: middle;
-}
-
-.form-panel-container {
-    background-color: #000000;
-    border-radius: 24px !important; 
-    border: 1px solid #1a1a1a;
-}
-
-body, html {
-    overflow-x: hidden;
-}
-
-.form-panel-container {
-    background-color: #000000;
-    border: 1px solid #222;
-}
-
-.orange-card {
-    background-color: #FF4400; 
-    border-radius: 24px;
-}
-
-
-
-.custom-input, .form-control, .form-select {
-    background-color: #121212 !important; 
-    border: 1px solid #333 !important;
-    color: #E8E8E8 !important; 
-    padding: 15px !important;
-    border-radius: 12px !important;
-    box-shadow: none !important; 
-}
-
-
-.custom-input::placeholder,
-.form-control::placeholder {
-    color: #767676 !important; 
-}
-
-
-.form-control:focus {
-    background-color: #121212 !important;
-    color: #E8E8E8 !important;
-    border-color: #FF4400 !important; 
-    outline: 0;
-}
-
-select option {
-    background: #000000;
-    color: #E8E8E8;
-}
-
-
-.submit-btn {
-    background-color: #FF4400;
-    color: white;
-    border: none;
-    transition: all 0.3s ease;
-}
-
-.submit-btn:hover {
-    background-color: #e63e00;
-    transform: translateY(-2px);
-}
-
-.back-link {
-    color: white;
-    text-decoration: none;
-    border-bottom: 1px solid white;
-    width: fit-content;
-    font-size: 0.9rem;
-}
-
-

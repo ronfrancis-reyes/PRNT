@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Service Management — PRNT Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../../../global/styles.css">
+  <link rel="stylesheet" href="../../../assets/css/admin.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="admin-page">
+  <div class="admin-layout">
+    <div id="sidebar-placeholder"></div>
+    <div class="admin-main">
+      <div id="header-placeholder"></div>
+      <div class="admin-body">
+        
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem;">
+          <h3>Product & Service Configuration</h3>
+          <button class="btn btn-primary" onclick="showAddServiceModal()"><i class="fas fa-plus"></i> Add New Service</button>
+        </div>
+
+        <div class="service-management-grid animate-fade" id="serviceManageGrid">
+          <!-- Populated via script.js -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../../../global/script.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

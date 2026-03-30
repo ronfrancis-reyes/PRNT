@@ -1,0 +1,409 @@
+/* ==========================================================================
+   MAIN CORE STYLES (LEGACY)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Core Palette (Orange & Dark Theme) */
+  --primary: #FF6B00;
+  --primary-light: #FF8E4D;
+  --primary-dark: #E65A00;
+  --accent: #FFD93D;
+  --accent-soft: #FFF9E6;
+  --success: #198754;
+  --danger: #DC3545;
+  --warning: #F59E0B;
+  
+  /* Text Colors */
+  --text-dark: #1A1A1A;
+  --text-body: #333333;
+  --text-muted: #666666;
+  --text-light: #999999;
+  
+  /* Backgrounds */
+  --background: #FFFFFF;
+  --surface: #F8F9FA;
+  --border: #E5E7EB;
+  --border-light: #F3F4F6;
+  
+  /* UI Tokens */
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 20px;
+  --nav-height: 80px;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.12);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   BASE TAGS
+   -------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--background);
+  color: var(--text-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+  padding-top: var(--nav-height); /* Prevent navbar overlap */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  transition: var(--transition);
+}
+
+ul {
+  list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+   UTILITY CLASSES (Compact formatting)
+   -------------------------------------------------------------------------- */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.grid {
+  display: grid;
+}
+
+.gap-1 {
+  gap: 1rem;
+}
+
+.gap-2 {
+  gap: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   COMPONENTS
+   -------------------------------------------------------------------------- */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  border: 2px solid var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: transparent;
+  color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 107, 0, 0.2);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.btn-outline {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background-color: var(--primary);
+  color: white;
+  transform: translateY(-3px);
+}
+
+/* Interactive Cards */
+.card {
+  background-color: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg), 0 0 20px rgba(238, 77, 45, 0.1);
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--primary-light);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   ANIMATIONS
+   -------------------------------------------------------------------------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes neonPulse {
+  0% {
+    box-shadow: 0 0 5px rgba(238, 77, 45, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(238, 77, 45, 0.6);
+  }
+
+  100% {
+    box-shadow: 0 0 5px rgba(238, 77, 45, 0.2);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-fade {
+  animation: fadeIn 0.8s ease-out;
+}
+
+.animate-slide {
+  animation: slideUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.neon-glow:hover {
+  animation: neonPulse 1.5s infinite;
+}
+
+.logo i {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   NAVIGATION (Glassmorphism & High-Fi)
+   -------------------------------------------------------------------------- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  transition: all 0.4s ease;
+}
+
+.navbar.scrolled {
+  height: 64px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: var(--shadow-md);
+}
+
+.navbar .logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.navbar .logo i {
+  background: var(--primary);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  margin: 0 3rem;
+}
+
+.nav-links a {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-body);
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
+}
+
+.nav-links a.active {
+  color: var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   HERO SECTION (Light & Minimal)
+   -------------------------------------------------------------------------- */
+.hero {
+  padding: 10rem 0 6rem;
+  text-align: center;
+  background: radial-gradient(circle at top right, var(--accent-soft), transparent),
+              radial-gradient(circle at bottom left, rgba(79, 70, 229, 0.05), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero h1 {
+  font-size: 4rem;
+  font-weight: 850;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.hero h1 span {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+  font-size: 1.35rem;
+  color: var(--text-body);
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  font-weight: 450;
+}
+
+.hero .btn-primary {
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+}
+
+.hero .btn-outline {
+  border-color: var(--border);
+  color: var(--text-dark);
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+}
+
+.hero .btn-outline:hover {
+  background: white;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE OVERRIDES
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+}

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Receipt — PRNT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+  <style>
+    .receipt-container {
+      max-width: 700px;
+      margin: 4rem auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .receipt-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .receipt-header::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: white;
+      clip-path: polygon(0% 100%, 5% 0%, 10% 100%, 15% 0%, 20% 100%, 25% 0%, 30% 100%, 35% 0%, 40% 100%, 45% 0%, 50% 100%, 55% 0%, 60% 100%, 65% 0%, 70% 100%, 75% 0%, 80% 100%, 85% 0%, 90% 100%, 95% 0%, 100% 100%);
+    }
+
+    .receipt-body {
+      padding: 3rem 2.5rem;
+    }
+
+    .receipt-section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-dark);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-title i {
+      color: var(--primary);
+      width: 20px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      background: var(--background);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .info-item label {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .info-item span {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .items-list {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .item-row:last-child {
+      border-bottom: none;
+    }
+
+    .item-main {
+      flex: 1;
+    }
+
+    .item-name {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.2rem;
+    }
+
+    .item-details {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .item-price {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .totals-area {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--text-dark);
+      color: white;
+      border-radius: 12px;
+      border-left: 5px solid var(--primary);
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      opacity: 0.8;
+      font-size: 0.95rem;
+    }
+
+    .total-row.grand-total {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 1;
+      font-size: 1.5rem;
+      font-weight: 800;
+    }
+
+    .receipt-actions {
+      display: flex;
+      gap: 1.25rem;
+      margin-top: 2.5rem;
+    }
+
+    .receipt-actions .btn {
+      flex: 1;
+      justify-content: center;
+      padding: 1rem;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body style="background:var(--background);">
+
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="container flex align-center justify-between" style="width:100%;">
+      <a href="index.html" class="logo"><i class="fas fa-print"></i> PRNT</a>
+      <div class="flex align-center" style="gap:1rem;">
+        <button class="btn btn-outline" style="border-color:white; color:white;" onclick="navigateTo('order')">Back to
+          Order</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="receipt-container reveal">
+      <div class="receipt-header">
+        <div
+          style="width:60px;height:60px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
+          <i class="fas fa-check" style="font-size:1.5rem;color:white;"></i>
+        </div>
+        <h2 style="margin:0;font-size:2rem;" id="receiptTitle">Review Your Order</h2>
+        <p style="opacity:0.9;margin-top:0.5rem;" id="receiptSub">Confirm all details before final placement.</p>
+      </div>
+      <div class="receipt-body">
+
+        <!-- Personal & Logistics -->
+        <div class="receipt-section">
+          <h3 class="section-title"><i class="fas fa-info-circle"></i> Personal & Logistics</h3>
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Customer</label>
+              <span id="receiptCustomer">Juan Dela Cruz</span>
+            </div>
+            <div class="info-item">
+              <label>Phone Number</label>
+              <span id="receiptPhone">09123456789</span>
+            </div>
+            <div class="info-item">
+              <label>Receiving Method</label>
+              <span id="receiptReceiving">Pick-up</span>
+            </div>
+            <div class="info-item">
+              <label>Location/Spot</label>
+              <span id="receiptLocation">N/A</span>
+            </div>
+            <div class="info-item">
+              <label>Payment Method</label>
+              <span id="receiptPayment">Cash on Delivery</span>
+            </div>
+            <div class="info-item">
+              <label>Order Date</label>
+              <span id="receiptDate">Mar 24, 2026</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Items Section -->
+        <div class="receipt-section">
+          <h3 class="section-title"><i class="fas fa-print"></i> Order Summary</h3>
+          <div id="receiptItems" class="items-list"></div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="receipt-section" id="remarksSection" style="display:none;">
+          <h3 class="section-title"><i class="fas fa-sticky-note"></i> Additional Notes</h3>
+          <div id="receiptNotes"
+            style="font-style:italic;color:var(--text-dark);font-size:0.95rem;background:var(--background);padding:1.5rem;border-radius:12px;border:1px dashed var(--border);">
+          </div>
+        </div>
+
+        <!-- Totals -->
+        <div class="totals-area">
+          <div class="total-row"><span>Subtotal</span><span id="receiptSubtotal">₱0.00</span></div>
+          <div class="total-row" id="deliveryRow"><span>Delivery Fee</span><span id="receiptDelivery">₱0.00</span></div>
+          <div class="total-row grand-total"><span>Total</span><span id="receiptTotal">₱0.00</span></div>
+        </div>
+
+        <div class="receipt-actions" id="receiptActions">
+          <button class="btn btn-outline" id="backBtn" onclick="window.history.back()">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+          <button class="btn btn-primary" id="finalOrderBtn" onclick="submitOrder()">
+            Place Order Now <i class="fas fa-arrow-right" style="margin-left:0.75rem;"></i>
+          </button>
+          <button class="btn btn-primary" id="proceedToTrackingBtn" style="display:none;"
+            onclick="window.location.href = 'tracking.html' + window.location.search">
+            Proceed to Tracking <i class="fas fa-search-location" style="margin-left:0.75rem;"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" id="mainFooter">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4><i class="fas fa-print" style="margin-right:0.5rem;"></i> PRNT</h4>
+          <p>Your trusted online printing partner. Quality prints delivered fast to BulSU students and the local
+            community.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="services.html">Document Printing</a></li>
+            <li><a href="services.html">Photo Printing</a></li>
+            <li><a href="services.html">Tarpaulin Printing</a></li>
+            <li><a href="services.html">Booklet Binding</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="contact.html"><i class="fas fa-envelope" style="width:16px;"></i> prnt@bulsu.edu.ph</a></li>
+            <li><a href="contact.html"><i class="fas fa-phone" style="width:16px;"></i> +63 912 345 6789</a></li>
+            <li><a href="contact.html"><i class="fas fa-map-marker-alt" style="width:16px;"></i> Malolos, Bulacan</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 PRNT — All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const orderIdFromUrl = urlParams.get('id');
+
+      let orderData;
+
+      if (orderIdFromUrl) {
+        const allOrders = JSON.parse(localStorage.getItem('prnt_orders') || '[]');
+        orderData = allOrders.find(o => o.id === orderIdFromUrl);
+      } else {
+        orderData = JSON.parse(sessionStorage.getItem('pendingOrder'));
+      }
+
+      if (!orderData) {
+        showToast('Order not found!', 'error');
+        setTimeout(() => window.location.href = 'order.html', 1500);
+        return;
+      }
+
+      // Populate Info
+      document.getElementById('receiptCustomer').textContent = "Juan Dela Cruz";
+      document.getElementById('receiptPhone').textContent = orderData.customerPhone || '0912-345-6789';
+      document.getElementById('receiptReceiving').textContent = orderData.receiving === 'delivery' ? 'Delivery' : 'Pick-up';
+      document.getElementById('receiptLocation').textContent = orderData.receiving === 'delivery' ? (orderData.deliveryLocation || 'Selected Point') : 'Main Shop / Pick-up Point';
+      document.getElementById('receiptPayment').textContent = orderData.payment || 'Cash on Delivery';
+      document.getElementById('receiptDate').textContent = orderData.date;
+
+      // Populate Items
+      const itemsContainer = document.getElementById('receiptItems');
+      itemsContainer.innerHTML = orderData.items.map(item => {
+        const name = item.file ? item.file.name : (item.fileName || 'Untitled File');
+        const price = item.price || (item.amount / item.copies) || 0;
+        const subtotal = price * (item.copies || 1);
+        return `
+          <div class="item-row">
+            <div class="item-main">
+              <div class="item-name">${name}</div>
+              <div class="item-details">${item.service || item.format} · ${item.details || item.size} · x${item.copies}</div>
+            </div>
+            <div class="item-price">₱${subtotal.toFixed(2)}</div>
+          </div>
+        `;
+      }).join('');
+
+      // Notes
+      if (orderData.notes) {
+        document.getElementById('remarksSection').style.display = 'block';
+        document.getElementById('receiptNotes').textContent = orderData.notes;
+      }
+
+      // Totals
+      document.getElementById('receiptSubtotal').textContent = `₱${(orderData.subtotal || orderData.total).toFixed(2)}`;
+      const deliveryFee = orderData.receiving === 'delivery' ? 50 : 0;
+      if (deliveryFee > 0) {
+        document.getElementById('receiptDelivery').textContent = `₱${deliveryFee.toFixed(2)}`;
+        document.getElementById('deliveryRow').style.display = 'flex';
+      } else {
+        document.getElementById('deliveryRow').style.display = 'none';
+      }
+      document.getElementById('receiptTotal').textContent = `₱${(orderData.total || (orderData.subtotal + deliveryFee)).toFixed(2)}`;
+
+      // Check if this is a historical view
+      if (orderIdFromUrl || (orderData && orderData.id)) {
+        document.getElementById('receiptTitle').textContent = `Order Receipt: ${orderIdFromUrl || orderData.id}`;
+        document.getElementById('receiptSub').textContent = `Status: ${orderData.status || 'Success'}`;
+        document.getElementById('finalOrderBtn').style.display = 'none';
+        document.getElementById('proceedToTrackingBtn').style.display = 'flex';
+        document.getElementById('backBtn').innerHTML = '<i class="fas fa-arrow-left"></i> Back';
+      }
+    });
+
+    function submitOrder() {
+      const orderData = JSON.parse(sessionStorage.getItem('pendingOrder'));
+      if (!orderData) return;
+      const orderId = finalPlaceOrder(orderData);
+      showToast(`Success! Your order ${orderId} has been placed.`);
+      setTimeout(() => window.location.href = `tracking.html?id=${orderId}`, 1500);
+    }
+  </script>
+</body>
+
+</html>

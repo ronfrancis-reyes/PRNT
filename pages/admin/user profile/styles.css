@@ -1,240 +1,71 @@
-:root {
-    --orange-main: #ff5722;
-    --orange-soft: rgba(255, 87, 34, 0.1);
-    --bg-dark: #0f111a;        /* Deep background */
-    --card-dark: #1a1d27;      /* Darker navy for cards */
-    --input-dark: #242835;     /* Lighter navy for input boxes */
-    --text-white: #ffffff;
-    --text-muted: #8a8d97;
-    --success-green: #24d164;
+/* Admin Profile Specific Styles */
+.profile-container {
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-body {
-    background-color: var(--bg-dark);
-    font-family: 'Inter', sans-serif;
-    color: var(--text-white);
+.profile-header {
+  background: white;
+  padding: 3rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
 }
 
-/* --- THE TOGGLE LOGIC --- */
-.save-btn-ui { display: none !important; }
-.edit-btn-ui { display: inline-flex !important; }
-
-/* Default "Locked" State */
-.edit-input {
-    pointer-events: none;
-    background-color: var(--input-dark) !important;
-    border: 1px solid transparent !important;
-    border-radius: 10px;
-    padding: 0.75rem 1rem;
-    color: var(--text-white);
-    transition: all 0.2s ease;
+.profile-avatar-lg {
+  width: 100px;
+  height: 100px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  box-shadow: 0 10px 25px rgba(238, 77, 45, 0.2);
 }
 
-/* ADDED: Active "Unlocked" State for JS */
-.edit-input.editable {
-    pointer-events: auto !important;
-    border: 1px solid var(--orange-main) !important;
-    box-shadow: 0 0 10px rgba(255, 87, 34, 0.2);
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
 }
 
-/* nav bar */
-.top-navbar {
-    height: 70px;
-    background-color: var(--card-black);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
 }
 
-.main-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+.access-item {
+  display: flex;
+  gap: 1.25rem;
 }
 
-/* ACTIVE STATE (When checkbox is checked - keeping for compatibility) */
-#profileToggle:checked ~ .d-flex .save-btn-ui { display: inline-flex !important; }
-#profileToggle:checked ~ .d-flex .edit-btn-ui { display: none !important; }
-#profileToggle:checked ~ .d-flex .edit-input {
-    pointer-events: auto;
-    background-color: var(--input-dark) !important;
-    border: 1px solid var(--orange-main) !important;
-    box-shadow: 0 0 10px rgba(255, 87, 34, 0.2);
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--text-dark);
 }
 
-/* --- DARK CARD STYLING --- */
-.card-white {
-    background: var(--card-dark);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+.form-group input {
+  width: 100%;
+  padding: 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fcfcfc;
 }
 
-.profile-avatar-circle {
-    width: 110px;
-    height: 110px;
-    background-color: var(--orange-main);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-    font-weight: 700;
-}
-
-.info-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    display: block;
-}
-
-/* --- TEXT VISIBILITY FIXES --- */
-h2, h4, h5, h6, .fw-bold {
-    color: var(--text-white) !important;
-}
-
-.text-secondary, .text-muted {
-    color: var(--text-muted) !important;
-}
-
-/* --- RECENT ACTIVITY VISIBILITY FIX --- */
-.recent-activity-item p {
-    color: var(--text-white) !important; 
-    margin-bottom: 0;
-}
-
-.recent-activity-item .text-muted, 
-.recent-activity-item .smallest,
-.recent-activity-item div > p + p {
-    color: var(--text-muted) !important;
-}
-
-/* --- BUTTONS --- */
-.btn-orange-main {
-    background-color: var(--orange-main);
-    color: white;
-    border: none;
-    padding: 0.8rem;
-    border-radius: 10px;
-    transition: 0.2s;
-}
-
-.btn-orange-main:hover {
-    background-color: #e64a19;
-    color: white;
-}
-
-.btn-success {
-    background-color: var(--success-green);
-    border: none;
-    border-radius: 10px;
-}
-
-.btn-outline-light {
-    color: var(--text-white);
-    border-color: rgba(255, 255, 255, 0.2);
-    background-color: transparent;
-}
-
-.btn-outline-light:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: var(--text-white);
-}
-
-/* --- ACTIVITY OVERVIEW STYLES --- */
-.stat-card {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 10px;
-}
-
-.stat-card h5 {
-    color: var(--text-white) !important;
-    margin-bottom: 0;
-}
-
-.icon-box {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-}
-
-.recent-activity-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.recent-activity-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    padding-bottom: 20px;
-    position: relative;
-}
-
-.recent-activity-item:not(:last-child):after {
-    content: '';
-    position: absolute;
-    left: 4px;
-    top: 15px;
-    bottom: 0;
-    width: 1px;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.dot {
-    height: 10px;
-    width: 10px;
-    background-color: var(--orange-main);
-    border-radius: 50%;
-    margin-top: 6px;
-    flex-shrink: 0;
-    box-shadow: 0 0 8px var(--orange-main);
-}
-
-/* Helper Colors */
-.bg-orange-soft { background-color: var(--orange-soft); }
-.bg-success-soft { background-color: rgba(36, 209, 100, 0.1); }
-.bg-blue-soft { background-color: rgba(13, 110, 253, 0.1); }
-.bg-purple-soft { background-color: rgba(111, 66, 193, 0.1); }
-
-.text-orange-main { color: var(--orange-main) !important; }
-.text-success { color: #24d164 !important; }
-.text-primary { color: #0d6efd !important; }
-.text-purple { color: #6f42c1 !important; }
-.border-top { border-top: 1px solid rgba(255, 255, 255, 0.1) !important; }
-.smallest { font-size: 0.75rem; }
-
-/* Force text to stay white and background dark during edit/focus */
-.edit-input:focus, 
-.edit-input.editable, 
-.edit-input:not(:disabled) {
-    color: var(--text-white) !important;
-    background-color: var(--input-dark) !important;
-    outline: none; /* Removes the default blue/white browser glow */
-}
-
-/* Fix for Change Password/other standard inputs if they turn white */
-input.form-control {
-    color: var(--text-white) !important;
-    background-color: var(--input-dark) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Prevents the browser from flashing white when you click inside */
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus {
-    -webkit-text-fill-color: var(--text-white) !important;
-    -webkit-box-shadow: 0 0 0px 1000px var(--input-dark) inset !important;
-    transition: background-color 5000s ease-in-out 0s;
+@media (max-width: 768px) {
+  .profile-header { flex-direction: column; text-align: center; gap: 1.5rem; }
+  .profile-header button { margin-left: 0 !important; }
+  .profile-grid { grid-template-columns: 1fr; }
 }

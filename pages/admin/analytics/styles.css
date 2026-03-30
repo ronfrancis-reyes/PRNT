@@ -1,41 +1,34 @@
-/* Pages Container */
-html, body {
-  margin: 0;
-  padding: 0;
-  background-color: white;
-  overflow-x: hidden;
+/* Analytics Page Specific Styles */
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
 }
 
-.page {
-  width: 100%;
-  position: relative;
-  min-height: 80vh;
-  display: flex;
-  align-items: center;
+.chart-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
 }
 
-.dot {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: #ff4400;
-  margin-right: 0.5rem;
+.chart-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
 }
 
-small {
-  font-weight: 800;
-  font-size: 0.9rem;
-  color: #ff4400;
-  letter-spacing: 1px;
-  display: flex;
-  align-items: center;
+.export-btn {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
 }
 
-h1 {
-  font-weight: 900;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1.1;
-  margin-top: 1rem;
-  color: #000;
+.export-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
 }

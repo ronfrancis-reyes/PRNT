@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management — PRNT Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../../../global/styles.css">
+  <link rel="stylesheet" href="../../../assets/css/admin.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="admin-page">
+  <div class="admin-layout">
+    <div id="sidebar-placeholder"></div>
+    <div class="admin-main">
+      <div id="header-placeholder"></div>
+      <div class="admin-body">
+        
+        <div class="table-panel animate-fade">
+          <div class="table-toolbar" style="padding:1.5rem; display:flex; gap:1.5rem; align-items:center;">
+            <h3>All Users</h3>
+            <div class="search-input" style="flex:1;">
+               <i class="fas fa-search" style="position:absolute; margin-left:1rem; margin-top:0.8rem; color:var(--text-muted);"></i>
+               <input type="text" placeholder="Search users by name or email..." id="userSearch" style="width:100%; border:1px solid var(--border); padding:0.75rem 1rem 0.75rem 2.5rem; border-radius:12px; outline:none;">
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="admin-table">
+               <thead><tr><th>User</th><th>Contact</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
+               <tbody id="adminUsersBody">
+                  <!-- JS Render -->
+               </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="../../../global/script.js"></script>
+  <script src="./script.js"></script>
+</body>
+</html>

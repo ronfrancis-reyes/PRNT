@@ -1,2 +1,6 @@
-import "/PRNT/components/Navbar/Navbar.js";
-import "/PRNT/components/Footer/Footer.js";
+// Service Page Specific JavaScript
+document.addEventListener('DOMContentLoaded', () => {
+  // Load Global Components
+  loadComponent('navbar-placeholder', '/components/Navbar/index.html');
+  loadComponent('footer-placeholder', '/components/Footer/index.html');
+});

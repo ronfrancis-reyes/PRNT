@@ -1,98 +1,30 @@
-const API = "/PRNT/api/registration.php";
-
-const form = $("#signup-form");
-const fullname = $("#name");
-const email = $("#email");
-const contact = $("#contact");
-const password = $("#password");
-const confirmPassword = $("#confirm-password");
-
-const submit_btn = $("#submit");
-
-//validation of inputs
-function validateForm() {
-	const nameVal = fullname.val().trim();
-	const emailVal = email.val().trim();
-	const contactVal = contact.val().trim();
-	const passwordVal = password.val();
-	const confirmVal = confirmPassword.val();
-
-	let isValid = true;
-
-	//empty fields validation
-	if (!nameVal || !emailVal || !contactVal || !passwordVal || !confirmVal) {
-		isValid = false;
-	}
-	//name validation
-	if (!/^[a-zA-Z ]{3,}$/.test(nameVal)) {
-		isValid = false;
-	}
-	//email validation (ms.bulsu.edu.ph/bulsu.edu.ph)
-	if (!/^.+@(ms\.bulsu\.edu\.ph|bulsu\.edu\.ph)$/.test(emailVal)) {
-		isValid = false;
-	}
-	//contact validation number must start in 09 and 11 digits
-	if (!/^09\d{9}$/.test(contactVal)) {
-		isValid = false;
-	}
-	//password and confirm must be the same
-	if (passwordVal !== confirmVal) {
-		isValid = false;
-	}
-
-	submit_btn.prop("disabled", !isValid);
-}
-
-fullname.on("input", validateForm);
-email.on("input", validateForm);
-contact.on("input", validateForm);
-password.on("input", validateForm);
-confirmPassword.on("input", validateForm);
-
-//form submit
-form.on("submit", function (e) {
-	e.preventDefault();
-
-	let payload = {
-		fullname: $("#name").val(),
-		email: $("#email").val(),
-		contact: $("#contact").val(),
-		password: $("#password").val(),
-	};
-
-	postOne(payload.email).then((response) => {
-		let reply = JSON.parse(response); //using promises
-		if (reply.status == "success") {
-			store(payload);
-		} else {
-			alert("Account already exist");
-		}
-	});
+// Registration Page Specific Script
+document.addEventListener('DOMContentLoaded', () => {
+  // Load reusable components
+  loadComponent('navbar-placeholder', '../../components/Navbar/index.html');
+  loadComponent('footer-placeholder', '../../components/Footer/index.html');
 });
 
-function postOne(id) {
-	return $.ajax({
-		type: "POST",
-		url: API,
-		data: "action=postOne&email=" + id,
-	});
-}
+function handleAuthRegister(e) {
+  e.preventDefault();
+  const fName = document.getElementById('regFirstName').value.trim();
+  const lName = document.getElementById('regLastName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const phone = document.getElementById('regPhone').value.trim();
+  const pass = document.getElementById('regPassword').value.trim();
 
-function store(payload) {
-	$.ajax({
-		type: "POST",
-		url: API,
-		data: "action=store&payload=" + JSON.stringify(payload),
-		success: function (response) {
-			let reply = JSON.parse(response); //response ng api
-			alert(reply.message);
+  // Basic validation
+  if (!fName || !lName || !email || !phone || !pass) return alert('Please fill in all fields.');
 
-			if (reply.status == "success") {
-				window.location.href = "/PRNT/pages/login/";
-			}
-		},
-		error: function (error) {
-			alert(JSON.stringify(error));
-		},
-	});
+  // Simulate success
+  const user = { name: `${fName} ${lName}`, email, phone, role: 'client' };
+  localStorage.setItem('prnt_user', JSON.stringify(user));
+  
+  // Save to all users for mockup
+  const users = JSON.parse(localStorage.getItem('prnt_all_users') || '[]');
+  users.push(user);
+  localStorage.setItem('prnt_all_users', JSON.stringify(users));
+
+  alert(`Account created successfully! Welcome to PRNT, ${fName}!`);
+  window.location.href = '/';
 }
