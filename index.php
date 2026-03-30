@@ -43,7 +43,7 @@
 		<a href="./pages/works/">Work</a>
 		<a href="./pages/service/">Services</a>
 		<a href="./pages/contact/">Contact</a>
-		<a href="./pages/client/service-avail/">Order Now</a>
+		<a href="./pages/client/dashboard/">Order Now</a>
 		<a href="#" onclick="showAuthModal('login')">Login</a>
 	</div>
 
@@ -59,7 +59,7 @@
 			</ul>
 			<div class="flex align-center" style="gap: 1rem">
 				<a
-					href="./pages/client/service-avail/"
+					href="./pages/client/dashboard/"
 					class="btn btn-primary"
 					id="orderNowBtn">
 					<i class="fas fa-shopping-cart"></i> Order Now
@@ -166,7 +166,7 @@
 				Join thousands of students and businesses who trust PRNT for their
 				most important documents and creative works.
 			</p>
-			<a href="./pages/client/service-avail/" class="btn btn-primary" style="padding: 1rem 2rem">Order Now
+			<a href="./pages/client/dashboard/" class="btn btn-primary" style="padding: 1rem 2rem">Order Now
 				<i class="fas fa-arrow-right" style="margin-left: 0.5rem"></i></a>
 		</div>
 	</section>
@@ -274,7 +274,7 @@
 			if (email == "admin1@admin.com") {
 				window.location.href = "./pages/admin/dashboard/";
 			} else {
-				window.location.href = "./pages/client/service-avail/";
+				window.location.href = "./pages/client/dashboard/";
 			}
 		}
 	</script>

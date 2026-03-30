@@ -14,6 +14,7 @@ if(isset($_POST['action'])){
             $account = $result->fetch_assoc();
             if(password_verify($payload->password, $account['password'])){
                 $_SESSION['user'] = $account['account_id'];
+                $_SESSION['username'] = $account['name'];
                 echo json_encode([
                     "status" => "success",
                     "message" => "Logged In!"
