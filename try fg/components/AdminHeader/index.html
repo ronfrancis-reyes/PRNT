@@ -1,0 +1,40 @@
+<!-- PRNT Reusable Admin Header -->
+<header class="admin-header">
+  <div class="flex align-center" style="gap:1rem;">
+    <button class="sidebar-toggle" onclick="toggleAdminSidebar()"><i class="fas fa-bars"></i></button>
+    <h1 class="page-title" id="adminPageTitle">Admin Dashboard</h1>
+  </div>
+  <div class="admin-header-right">
+    <button class="header-icon-btn" onclick="toggleNotifPanel()">
+      <i class="fas fa-bell"></i>
+      <span class="notif-badge" id="notifBadge"></span>
+    </button>
+    
+    <!-- Notification Dropdown -->
+    <div class="notif-dropdown" id="notifDropdown">
+      <div class="notif-dropdown-header">
+        <h4>Notifications</h4>
+        <button onclick="clearNotifications()">Clear All</button>
+      </div>
+      <div class="notif-list" id="notifList">
+        <div class="notif-empty">No new notifications</div>
+      </div>
+    </div>
+    
+    <div class="admin-avatar" id="headerAvatar" onclick="toggleAdminProfileMenu()">A</div>
+    
+    <!-- Admin Profile Dropdown -->
+    <div class="admin-profile-dropdown" id="adminProfileDropdown">
+      <div class="dropdown-header">
+        <div class="profile-avatar-sm" style="width:42px;height:42px;font-size:1rem;">A</div>
+        <div>
+          <div style="font-weight:600;" id="profileFull">Admin Name</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);" id="profileEmail">admin@prnt.ph</div>
+        </div>
+      </div>
+      <a href="/pages/admin/user%20profile/"><i class="fas fa-user"></i> My Profile</a>
+      <a href="/"><i class="fas fa-home"></i> Open Site</a>
+      <a href="/" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+  </div>
+</header>

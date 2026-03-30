@@ -1,0 +1,22 @@
+/* Contact Page Styles */
+.contact-section {
+  padding: 6rem 0;
+}
+
+.contact-form {
+  padding: 3rem;
+  background: white !important;
+  border-radius: var(--radius) !important;
+}
+
+.contact-form input:focus, .contact-form textarea:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1) !important;
+}
+
+@media (max-width: 992px) {
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+  }
+}

@@ -1,151 +1,105 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<!--Imported Font-->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-			crossorigin="anonymous"
-		/>
-		<!--Tab Logo-->
-		<link rel="icon" href="assets/img/PRNT_logo.png" type="image/png">
-		<!--Logo Library -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<!--CSS-->
-		<link rel="stylesheet" href="/PRNT/components/Navbar/Navbar.css" />
-		<link rel="stylesheet" href="/PRNT/components/Footer/Footer.css" />
-		<link rel="stylesheet" href="styles.css" />
-		<link rel="stylesheet" href="../../global/global.css" />
-		<title>PRNT</title>
-	</head>
-	<body>
-		<!-- heading/navigation bar -->
-		 <custom-nav></custom-nav>
 
-		<!-- start of body-->
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!--Imported Font-->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+		rel="stylesheet" />
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+		crossorigin="anonymous" />
+	<!--Tab Logo-->
+	<link rel="icon" href="assets/img/PRNT_logo.png" type="image/png">
+	<!--Logo Library -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!--CSS-->
+	<link rel="stylesheet" href="../../components/Navbar/Navbar.css" />
+	<link rel="stylesheet" href="../../components/Footer/Footer.css" />
+	<link rel="stylesheet" href="../../global/global.css" />
+	<link rel="stylesheet" href="styles.css" />
+
+	<title>PRNT</title>
+</head>
+
+<body>
+	<!-- heading/navigation bar -->
+	<?php include '../../components/Navbar/Navbar.php' ?>
+
+	<!-- start of body-->
 	<!-- Works Section -->
-		<section class="page-header">
-			<div class="container">
-				<div class="section-header center">
-					<h5 class="sub-label"><span class=dot></span> WORK</h5>
-					<h2 class="section-title">Featured Work</h2>
-					<p class="section-desc">Providing professional printing and custom solutions designed to meet your exact
-						project needs.</p>
-				</div>
-	
-				<div class="work-masonry-wrapper">
-					<div class="work-col">
+	<section class="hero" style="padding: 4rem 0;">
+		<div class="container animate-slide">
+			<h1 style="font-size:2.5rem;margin-bottom:0.5rem;">Our Work</h1>
+			<p style="margin-bottom:0;">Take a look at some of our recent print projects.</p>
+		</div>
+	</section>
 
-						<div class="work-item item-1">
-							<img src="/PRNT/assets/img/img5.jpg" alt="Featured Work: Flyer Design" class="placeholder-img">
-						</div>
-						
-						<div class="work-item item-3">
-							<img src="/PRNT/assets/img/img11.jpg" alt="Featured Work: Brochure Stack" class="placeholder-img">
-						</div>
-
-					</div>
-					
-					<div class="work-col">
-						
-						<div class="work-item item-2">
-							<img src="/PRNT/assets/img/img12.jpg" alt="Featured Work: Business Cards" class="placeholder-img">
-						</div>
-						
-						<div class="work-item item-4">
-							<img src="/PRNT/assets/img/img1.jpg" alt="Featured Work: Roll-up Banner" class="placeholder-img">
-						</div>
-
+	<!-- ===== WORK MAIN ===== -->
+	<section class="work-section">
+		<div class="container">
+			<div class="work-grid">
+				<div class="work-item reveal">
+					<div class="overlay">
+						<h4>Business Cards</h4>
+						<p>Premium Matte Finish</p>
 					</div>
 				</div>
-	
-					<div class="work-item item-5-full">
-						<img src="/PRNT/assets/img/img6.jpg" alt="Banner Design" class="hero-banner-img">
+				<div class="work-item reveal">
+					<div class="overlay">
+						<h4>Event Tarpaulin</h4>
+						<p>High-resolution 5x8ft</p>
 					</div>
-	
 				</div>
-			</div>
-		</section>
-
-
-	<!-- FAQ Section -->
-		<section class="faq-section">
-			<div class="container">
-				<div class="faq-header-row">
-					<h2 class="faq-title">Frequently Asked<br>Questions.</h2>
-					<p class="faq-desc-text">Get unlimited printing and design support anytime with pricing you can trust.
-						No hidden fees—just quality work that fits your budget.</p>
-				</div>
-	
-				<div class="faq-body-row">
-					<div class="faq-accordion-col">
-						<div class="accordion">
-
-							<div class="accordion-item">
-								<button class="accordion-header">
-									How do I submit my files for printing?
-									<span class="icon">+</span>
-								</button>
-							</div>
-
-							<div class="accordion-item">
-								<button class="accordion-header">
-									Do you offer delivery for prints?
-									<span class="icon">+</span>
-								</button>
-							</div>
-
-							<div class="accordion-item">
-								<button class="accordion-header">
-									How fast can I get my prints?
-									<span class="icon">+</span>
-								</button>
-							</div>
-
-							<div class="accordion-item">
-								<button class="accordion-header">
-									Is there a minimum order for printing?
-									<span class="icon">+</span>
-								</button>
-							</div>
-
-							<div class="accordion-item">
-								<button class="accordion-header">
-									What payment methods do you accept?
-									<span class="icon">+</span>
-								</button>
-							</div>
-
-						</div>
+				<div class="work-item reveal">
+					<div class="overlay">
+						<h4>Thesis Hardbound</h4>
+						<p>Gold Stamped Lettering</p>
 					</div>
-	
-					<div class="faq-image-col">
-						<img src="/PRNT/assets/img/img17.jpg" alt="FAQ Image" class="faq-side-img">
+				</div>
+				<div class="work-item reveal">
+					<div class="overlay">
+						<h4>Custom Stickers</h4>
+						<p>Die-cut Vinyl</p>
+					</div>
+				</div>
+				<div class="work-item reveal">
+					<div class="overlay">
+						<h4>Corporate Booklet</h4>
+						<p>Saddle-Stitched Annual Report</p>
+					</div>
+				</div>
+				<div class="work-item reveal">
+					<div class="overlay">
+						<h4>Photo Prints</h4>
+						<p>Glossy 8x10</p>
 					</div>
 				</div>
 			</div>
-		</section>
-		<!-- footer -->
-		<custom-footer></custom-footer>
-		<script type="module" src="script.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-			crossorigin="anonymous"
-		></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-			integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-			crossorigin="anonymous"
-		></script>
-	</body>
+		</div>
+	</section>
+	<?php include '../../components/Modal/login.php' ?>
+	<?php include '../../components/Modal/register.php' ?>
+	<!-- footer -->
+	<?php include "../../components/Footer/Footer.php"; ?>
+
+	<script type="module" src="script.js"></script>
+	<script src="../../global/global.js"></script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+		integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+		crossorigin="anonymous"></script>
+</body>
+
 </html>

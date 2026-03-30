@@ -1,0 +1,32 @@
+/* User Management Specific Styles */
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar-sm {
+  width: 32px;
+  height: 32px;
+  background: var(--secondary);
+  color: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.status-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.active-user { background: #E8F8EE; color: #2DC258; }
+.suspended-user { background: #FFF0ED; color: #EE4D2D; }
+@media (max-width: 768px) {
+  .table-toolbar { flex-direction: column; align-items: flex-start; }
+}

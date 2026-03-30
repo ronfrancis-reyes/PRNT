@@ -1,159 +1,116 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-			crossorigin="anonymous"
-		/>
-		<!--Tab Logo-->
-		<link rel="icon" href="assets/img/PRNT_logo.png" type="image/png" />
-		<!--Logo Library -->
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-		/>
-		<link rel="stylesheet" href="/PRNT/components/Navbar/Navbar.css" />
-		<link rel="stylesheet" href="/PRNT/components/Footer/Footer.css" />
-		<link rel="stylesheet" href="styles.css" />
-		<link rel="stylesheet" href="../../global/global.css" />
-		<title>PRNT</title>
-	</head>
-	<body>
-		<!-- heading/navigation bar -->
-		<custom-nav></custom-nav>
-		<!-- start of body-->
 
-		<div style="height: 120px"></div>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
+		rel="stylesheet" />
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+		crossorigin="anonymous" />
+	<!--Tab Logo-->
+	<link rel="icon" href="assets/img/PRNT_logo.png" type="image/png" />
+	<!--Logo Library -->
+	<link
+		rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../components/Navbar/Navbar.css" />
+	<link rel="stylesheet" href="../../components/Footer/Footer.css" />
+	<link rel="stylesheet" href="styles.css" />
+	<link rel="stylesheet" href="../../global/global.css" />
+	<title>PRNT</title>
+</head>
 
-		<header class="container mb-4 p-0">
-			<div class="d-flex align-items-center mb-2">
-				<small><span class="dot"></span>CONTACT</small>
-			</div>
+<body>
+	<!-- heading/navigation bar -->
+	<?php include '../../components/Navbar/Navbar.php' ?>
+	<!-- start of body-->
 
-			<div class="row align-items-end g-0">
-				<div class="col-lg-7">
-					<h1 class="display-1 fw-bolder mb-0 header-title">Ready to print?</h1>
-				</div>
-				<div class="col-lg-5">
-					<p class="text-secondary description-text mb-2">
-						At the heart of our printing process is a commitment to actively
-						listen & understand your unique challenges & needs.
-					</p>
-				</div>
-			</div>
-		</header>
-		<div class="container pb-5">
-			<div class="row g-4">
-				<div class="col-lg-4">
-					<div
-						class="orange-card h-100 p-5 d-flex flex-column justify-content-between rounded-4 text-white"
-						style="background-color: #ff4400"
-					>
+	<!-- ===== HERO ===== -->
+	<section class="hero" style="padding: 4rem 0;">
+		<div class="container animate-slide">
+			<h1 style="font-size:2.5rem;margin-bottom:0.5rem;">Get in Touch</h1>
+			<p style="margin-bottom:0;">We'd love to hear from you. Send us a message.</p>
+		</div>
+	</section>
+
+	<!-- ===== CONTACT MAIN ===== -->
+	<section class="contact-section">
+		<div class="container">
+			<div class="contact-grid">
+				<div class="contact-info reveal">
+					<h2>Contact Information</h2>
+					<p>Have questions about bulk orders or custom prints? Drop us a line.</p>
+					<div class="contact-detail">
+						<i class="fas fa-map-marker-alt"></i>
 						<div>
-							<h2 class="fw-bold display-6">Start to print your project</h2>
-							<p class="mt-3 opacity-75">
-								Whether your project is fully defined or still taking shape,
-								we're here to support you.
-							</p>
+							<div style="font-weight:600;color:var(--text-dark);">Address</div>
+							<span>MacArthur Highway, Malolos, Bulacan (Near BulSU Gate 1)</span>
 						</div>
-						<a href="../" class="back-link mt-5">BACK TO HOME ↗</a>
+					</div>
+					<div class="contact-detail">
+						<i class="fas fa-envelope"></i>
+						<div>
+							<div style="font-weight:600;color:var(--text-dark);">Email</div>
+							<span>prnt@bulsu.edu.ph</span>
+						</div>
+					</div>
+					<div class="contact-detail">
+						<i class="fas fa-phone"></i>
+						<div>
+							<div style="font-weight:600;color:var(--text-dark);">Phone</div>
+							<span>+63 912 345 6789</span>
+						</div>
 					</div>
 				</div>
-
-				<div class="col-lg-8">
-					<div
-						class="form-panel-container h-100 p-5 rounded-4 bg-black text-white border border-secondary"
-					>
-						<form id="contact-form">
-							<div class="mb-4">
-								<label class="form-label text-secondary small">Name</label>
-								<input
-									type="text"
-									class="form-control custom-input"
-									placeholder="Enter your Name"
-								/>
+				<div class="contact-form card reveal">
+					<form onsubmit="handleContactSubmit(event)">
+						<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+							<div class="form-group">
+								<label for="cName">Your Name</label>
+								<input type="text" id="cName" required>
 							</div>
-
-							<div class="mb-4">
-								<label class="form-label text-secondary small"
-									>Phone Number</label
-								>
-								<input
-									type="text"
-									class="form-control custom-input"
-									placeholder="(+63)"
-								/>
+							<div class="form-group">
+								<label for="cEmail">Your Email</label>
+								<input type="email" id="cEmail" required>
 							</div>
-
-							<div class="mb-4">
-								<label class="form-label text-secondary small">Location</label>
-								<input
-									type="text"
-									class="form-control custom-input"
-									placeholder="Enter your exact location"
-								/>
-							</div>
-
-							<div class="mb-4">
-								<label class="text-secondary small mb-2">Service</label>
-								<select
-									class="form-select bg-dark border-secondary text-white p-3 custom-input"
-								>
-									<option selected disabled>Select a service</option>
-									<option value="1">Document Printing</option>
-									<option value="2">Photocopying</option>
-									<option value="3">Book Binding</option>
-									<option value="4">Poster & Large Format Printing</option>
-								</select>
-							</div>
-
-							<div class="mb-4">
-								<label class="text-secondary small mb-2"
-									>Is there any other information...</label
-								>
-								<textarea
-									class="form-control bg-dark border-secondary text-white p-3"
-									rows="3"
-									placeholder="Tell us about your needs..."
-								></textarea>
-							</div>
-
-							<button
-								type="submit"
-								class="btn submit-btn px-5 py-2 rounded-pill fw-bold text-white"
-								style="background-color: #ff4400"
-							>
-								Submit
-							</button>
-						</form>
-					</div>
+						</div>
+						<div class="form-group">
+							<label for="cSubject">Subject</label>
+							<input type="text" id="cSubject" required>
+						</div>
+						<div class="form-group">
+							<label for="cMessage">Message</label>
+							<textarea id="cMessage" rows="5" required></textarea>
+						</div>
+						<button type="submit" class="btn btn-primary" style="font-size:1.05rem;"><i class="fas fa-paper-plane"></i> Send Message</button>
+					</form>
 				</div>
 			</div>
 		</div>
+	</section>
+	<?php include '../../components/Modal/login.php' ?>
+	<?php include '../../components/Modal/register.php' ?>
+	<!-- footer -->
+	<?php include "../../components/Footer/Footer.php"; ?>
 
-		<!-- footer -->
-		<custom-footer></custom-footer>
-		
-		<script type="module" src="script.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-			crossorigin="anonymous"
-		></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-			integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-			crossorigin="anonymous"
-		></script>
-	</body>
+	<script type="module" src="script.js"></script>
+	<script src="../../global/global.js"></script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+		integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+		crossorigin="anonymous"></script>
+</body>
+
 </html>

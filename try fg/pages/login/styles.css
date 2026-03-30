@@ -1,0 +1,16 @@
+/* Login Page Specific Styles */
+.auth-page {
+  background: linear-gradient(135deg, var(--secondary), #FFF7E6);
+  min-height: 100vh;
+}
+
+.auth-card {
+  background: white;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 40px rgba(238,77,45,0.15) !important;
+}
+
+.auth-card input:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1) !important;
+}

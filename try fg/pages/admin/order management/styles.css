@@ -1,0 +1,41 @@
+/* Order Management Specific Styles */
+.table-panel {
+  background: white;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th, .admin-table td {
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.admin-table th {
+  background: var(--background);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.status-badge {
+  padding: 0.4rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+@media (max-width: 992px) {
+  .table-toolbar {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}

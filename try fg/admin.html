@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRNT Admin — Dashboard</title>
+  <meta name="description"
+    content="Admin dashboard for PRNT online printing service. Manage orders, users, services, and more.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css?v=1.2">
+  <link rel="stylesheet" href="assets/css/pages.css?v=1.2">
+  <link rel="stylesheet" href="assets/css/admin.css?v=1.2">
+  <!-- Chart.js and Plugins -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+</head>
+
+<body>
+
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="admin-layout">
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="sidebar-header">
+        <a href="index.html" class="logo"><i class="fas fa-print"></i> PRNT Admin</a>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <a href="#" class="active" data-section="dashboard" onclick="switchAdminPage('dashboard', this)">
+          <i class="fas fa-th-large"></i> Dashboard
+        </a>
+        <a href="#" data-section="analytics" onclick="switchAdminPage('analytics', this)">
+          <i class="fas fa-chart-line"></i> Analytics
+        </a>
+        <div class="nav-label">Management</div>
+        <a href="#" data-section="orders" onclick="switchAdminPage('orders', this)">
+          <i class="fas fa-shopping-bag"></i> Order Management
+          <span class="sidebar-badge" id="pendingOrdersBadge">3</span>
+        </a>
+        <a href="#" data-section="services" onclick="switchAdminPage('services', this)">
+          <i class="fas fa-cogs"></i> Service Management
+        </a>
+        <a href="#" data-section="users" onclick="switchAdminPage('users', this)">
+          <i class="fas fa-users"></i> User Management
+        </a>
+        <div class="nav-label">Reports</div>
+        <a href="#" data-section="reports" onclick="switchAdminPage('reports', this)">
+          <i class="fas fa-file-alt"></i> Reports
+        </a>
+      </nav>
+      <div class="sidebar-profile">
+        <div class="profile-avatar-sm">A</div>
+        <div class="profile-info">
+          <span>Admin</span>
+          <small>Administrator</small>
+        </div>
+        <button class="sidebar-logout" onclick="window.location.href='index.html'" title="Logout">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ===== SIDEBAR OVERLAY (Mobile) ===== -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleAdminSidebar()"></div>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div class="admin-main">
+      <!-- Header -->
+      <header class="admin-header">
+        <div class="header-left">
+          <h1 class="page-title" id="adminPageTitle">Dashboard</h1>
+        </div>
+
+        <div class="header-right">
+          <div class="admin-header-actions">
+            <button class="header-btn" onclick="toggleNotifPanel()" title="Notifications">
+              <i class="fas fa-bell"></i>
+              <span class="notif-badge" id="notifBadge"></span>
+            </button>
+          </div>
+
+          <div class="admin-profile-trigger" onclick="toggleAdminProfileMenu()">
+            <div class="admin-avatar-box">A</div>
+          </div>
+
+          <!-- Notification Dropdown -->
+          <div class="notif-dropdown" id="notifDropdown">
+            <div class="notif-dropdown-header">
+              <h4>Notifications</h4>
+              <button onclick="clearNotifications()">Clear All</button>
+            </div>
+            <div class="notif-list" id="notifList"></div>
+          </div>
+
+          <!-- Admin Profile Dropdown -->
+          <div class="admin-profile-dropdown" id="adminProfileDropdown">
+            <div class="dropdown-header">
+              <div class="admin-avatar-box" style="width:42px;height:42px;">A</div>
+              <div>
+                <div style="font-weight:700; color:#1E293B;">Admin Account</div>
+                <div style="font-size:0.8rem; color:#64748B;">admin@prnt.ph</div>
+                <div style="font-size:0.75rem; color:var(--primary); font-weight:600;">System Administrator</div>
+              </div>
+            </div>
+            <a href="index.html"><i class="fas fa-eye"></i> View Public Site</a>
+            <a href="#" class="logout-link" onclick="window.location.href='index.html'"><i
+                class="fas fa-sign-out-alt"></i> Logout</a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Body -->
+      <div class="admin-body">
+
+        <!-- ========== DASHBOARD ========== -->
+        <section class="admin-page-section active" id="section-dashboard">
+
+          <!-- Stat Cards -->
+          <div class="stat-cards">
+            <div class="stat-card">
+              <div class="stat-icon" style="background: rgba(238, 77, 45, 0.1); color: var(--primary);"><i
+                  class="fas fa-shopping-bag"></i></div>
+              <div class="stat-info">
+                <h4>Total Orders</h4>
+                <div class="stat-value" id="dashTotalOrders">1,248</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10B981;"><i
+                  class="fas fa-peso-sign"></i></div>
+              <div class="stat-info">
+                <h4>Total Sales</h4>
+                <div class="stat-value" id="dashTotalSales">₱128,450</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3B82F6;"><i
+                  class="fas fa-users"></i></div>
+              <div class="stat-info">
+                <h4>Total Users</h4>
+                <div class="stat-value" id="dashTotalUsers">3,892</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #F59E0B;"><i
+                  class="fas fa-star"></i></div>
+              <div class="stat-info">
+                <h4>Avg. Rating</h4>
+                <div class="stat-value">4.8</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts -->
+          <div class="chart-row">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3>Revenue Overview</h3>
+                <select id="revenueFilter" onchange="updateRevenueChart()">
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly" selected>Monthly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
+              </div>
+              <div class="chart-placeholder">
+                <canvas id="revenueChart" class="chart-canvas"></canvas>
+              </div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3>Top Products (Monthly)</h3>
+              </div>
+              <div class="donut-chart-container" style="display:flex; flex-direction:column; align-items:center;">
+                <div class="donut-placeholder" style="width:100% !important; height:200px !important;">
+                  <canvas id="donutChart" class="chart-canvas"></canvas>
+                </div>
+                <div id="pieLegend" class="custom-chart-legend"
+                  style="margin-top:1rem; width:100%; display:flex; flex-direction:column; gap:0.5rem; padding-left:1.5rem;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Orders -->
+          <div class="recent-orders">
+            <div class="widget-header">
+              <h3>Recent Orders</h3>
+              <a href="#" onclick="switchAdminPage('orders', document.querySelector('[data-section=orders]'))">View All
+                →</a>
+            </div>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Service</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="recentOrdersBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ========== ANALYTICS ========== -->
+        <section class="admin-page-section" id="section-analytics">
+          <div class="stat-cards">
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-chart-bar"></i></div>
+              <div class="stat-info">
+                <h4>Monthly Orders</h4>
+                <div class="stat-value">342</div>
+                <div class="stat-change up">↑ 15%</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-wallet"></i></div>
+              <div class="stat-info">
+                <h4>Monthly Revenue</h4>
+                <div class="stat-value">₱45,230</div>
+                <div class="stat-change up">↑ 10%</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-user-plus"></i></div>
+              <div class="stat-info">
+                <h4>New Users</h4>
+                <div class="stat-value">128</div>
+                <div class="stat-change up">↑ 22%</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-redo"></i></div>
+              <div class="stat-info">
+                <h4>Repeat Orders</h4>
+                <div class="stat-value">67%</div>
+                <div class="stat-change up">↑ 3%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chart-row">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3>Sales Trend</h3>
+                <select id="salesTrendFilter" onchange="updateSalesTrendChart()">
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly" selected>Monthly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
+              </div>
+              <div class="chart-placeholder"><canvas id="salesTrendChart" class="chart-canvas"></canvas></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-header">
+                <h3 id="userGrowthTitle">Users Growth (Q1)</h3>
+                <div class="chart-nav" style="display:flex; gap:0.5rem;">
+                  <button class="nav-btn" onclick="changeUserGrowthQuarter(-1)" title="Previous Quarter"><i class="fas fa-chevron-left"></i></button>
+                  <button class="nav-btn" onclick="changeUserGrowthQuarter(1)" title="Next Quarter"><i class="fas fa-chevron-right"></i></button>
+                </div>
+              </div>
+              <div class="chart-placeholder"><canvas id="usersGrowthChart" class="chart-canvas"></canvas></div>
+            </div>
+          </div>
+
+          <!-- Top Products Table -->
+          <div class="table-panel">
+            <div class="table-toolbar" style="justify-content: flex-start; gap: 2rem;">
+              <h3>Top Products</h3>
+              <select class="filter-select" id="topProductsFilter" onchange="renderTopProducts()">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly" selected>Monthly</option>
+                <option value="yearly">Yearly</option>
+              </select>
+              <button class="export-btn" onclick="exportData('products')" style="margin-left:auto;"><i
+                  class="fas fa-download"></i> Export</button>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Service Name</th>
+                    <th>Format/Paper Size</th>
+                    <th>Units Sold</th>
+                    <th>Revenue</th>
+                  </tr>
+                </thead>
+                <tbody id="topProductsBody">
+                  <!-- Will be rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Top Customers Table -->
+          <div class="table-panel">
+            <div class="table-toolbar">
+              <h3>Top Customers This Month</h3>
+            </div>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Customer</th>
+                  <th>Orders</th>
+                  <th>Total Spent</th>
+                  <th>Favorite Service</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="avatar-sm">MC</div>Maria Clara
+                    </div>
+                  </td>
+                  <td>12</td>
+                  <td style="font-weight:600;">₱3,480</td>
+                  <td>Document Printing</td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="avatar-sm">JR</div>Jose Rizal
+                    </div>
+                  </td>
+                  <td>9</td>
+                  <td style="font-weight:600;">₱2,160</td>
+                  <td>Tarpaulin</td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="avatar-sm">AB</div>Andres B.
+                    </div>
+                  </td>
+                  <td>7</td>
+                  <td style="font-weight:600;">₱1,750</td>
+                  <td>Photo Printing</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="avatar-sm">GD</div>Gabriela D.
+                    </div>
+                  </td>
+                  <td>6</td>
+                  <td style="font-weight:600;">₱1,350</td>
+                  <td>Booklet Binding</td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>
+                    <div class="user-cell">
+                      <div class="avatar-sm">EA</div>Emilio A.
+                    </div>
+                  </td>
+                  <td>5</td>
+                  <td style="font-weight:600;">₱890</td>
+                  <td>Sticker Printing</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ========== ORDER MANAGEMENT ========== -->
+        <section class="admin-page-section" id="section-orders">
+          <div class="table-panel">
+            <div class="table-toolbar">
+              <div class="toolbar-left" style="display:flex; align-items:center; gap:1.5rem;">
+                <div class="search-input">
+                  <i class="fas fa-search"></i>
+                  <input type="text" placeholder="Search orders..." id="orderSearch" oninput="filterAdminOrders()">
+                </div>
+                <select class="filter-select" id="orderStatusFilter" onchange="filterAdminOrders()">
+                  <option value="">All Status</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Processing">Processing</option>
+                  <option value="Completed">Completed</option>
+                </select>
+                <button class="export-btn" onclick="exportData('orders')" style="margin-left:auto;"><i
+                    class="fas fa-download"></i> Export</button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date / Time</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th style="text-align:center;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminOrdersBody"></tbody>
+              </table>
+            </div>
+            <div class="table-pagination" id="ordersPagination">
+              <span class="showing-text" id="ordersShowingText">Showing all orders</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== SERVICE MANAGEMENT ========== -->
+        <section class="admin-page-section" id="section-services">
+          <div style="display:flex; justify-content:flex-end; margin-bottom:1.5rem;">
+            <button class="btn btn-primary" onclick="showAddServiceModal()">
+              <i class="fas fa-plus"></i> Add New Service
+            </button>
+          </div>
+          <div class="service-management-grid" id="serviceManageGrid"></div>
+        </section>
+
+        <!-- ========== USER MANAGEMENT ========== -->
+        <section class="admin-page-section" id="section-users">
+          <div class="table-panel">
+            <div class="table-toolbar">
+              <div class="toolbar-left" style="display:flex; align-items:center; gap:1.5rem;">
+                <div class="search-input">
+                  <i class="fas fa-search"></i>
+                  <input type="text" placeholder="Search users..." id="userSearch" oninput="filterAdminUsers()">
+                </div>
+                <select class="filter-select" id="userStatusFilter" onchange="filterAdminUsers()">
+                  <option value="">All Status</option>
+                  <option value="Active">Active</option>
+                  <option value="Suspended">Suspended</option>
+                </select>
+                <button class="export-btn" onclick="exportData('users')"><i class="fas fa-download"></i> Export</button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>Email Address</th>
+                    <th>Contact</th>
+                    <th>Status</th>
+                    <th>Last Active</th>
+                    <th style="text-align:center;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminUsersBody"></tbody>
+              </table>
+            </div>
+            <div class="table-pagination">
+              <span class="showing-text" id="usersShowingText">Showing all users</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ========== REPORTS ========== -->
+        <section class="admin-page-section" id="section-reports">
+          <div class="report-cards">
+            <div class="report-card">
+              <div class="report-icon" style="background:#FFF0ED;color:#EE4D2D;"><i class="fas fa-user-check"></i></div>
+              <h4>Active Users</h4>
+              <div class="report-value">2,841</div>
+            </div>
+            <div class="report-card">
+              <div class="report-icon" style="background:#E8F8EE;color:#2DC258;"><i class="fas fa-user-plus"></i></div>
+              <h4>New Users (This Month)</h4>
+              <div class="report-value">128</div>
+            </div>
+            <div class="report-card">
+              <div class="report-icon" style="background:#FEF3C7;color:#F59E0B;"><i class="fas fa-shopping-cart"></i>
+              </div>
+              <h4>Orders Placed</h4>
+              <div class="report-value">1,248</div>
+            </div>
+            <div class="report-card">
+              <div class="report-icon" style="background:#FFF0ED;color:#FF6533;"><i class="fas fa-star"></i></div>
+              <h4>Average Rating</h4>
+              <div class="report-value">4.8 / 5</div>
+            </div>
+          </div>
+          <div class="table-panel">
+            <div class="table-toolbar">
+              <h3>All Customer Messages</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminMessagesBody">
+                  <!-- Will be rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Settings section removed from sidebar, but keeping minimal components for logic if needed -->
+
+      </div><!-- end admin-body -->
+    </div><!-- end admin-main -->
+  </div><!-- end admin-layout -->
+
+  <!-- ===== SETTINGS MODALS ===== -->
+  <div class="modal-overlay" id="addLocationModal">
+    <div class="modal" style="max-width:400px;">
+      <div class="modal-header">
+        <h3>Add Delivery Location</h3>
+        <button class="modal-close" onclick="closeAdminModal('addLocationModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form onsubmit="handleAddLocation(event)">
+        <div class="form-group">
+          <label for="newLocationName">Location Name</label>
+          <input type="text" id="newLocationName" required placeholder="e.g. Activity Center">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Save Location</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addPaymentModal">
+    <div class="modal" style="max-width:400px;">
+      <div class="modal-header">
+        <h3>Add Payment Method</h3>
+        <button class="modal-close" onclick="closeAdminModal('addPaymentModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form onsubmit="handleAddPayment(event)">
+        <div class="form-group">
+          <label for="newPaymentName">Method Name</label>
+          <input type="text" id="newPaymentName" required placeholder="e.g. Cash On Delivery">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Save Payment</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== ORDER DETAIL MODAL ===== -->
+  <div class="modal-overlay" id="orderDetailModal">
+    <div class="modal" style="max-width:480px;">
+      <div class="modal-header">
+        <h3><i class="fas fa-receipt" style="color:var(--primary);margin-right:0.5rem;"></i> Order Details</h3>
+        <button class="modal-close" onclick="closeAdminModal('orderDetailModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="orderDetailContent" style="max-height: 75vh; overflow-y: auto; padding-right: 5px;"></div>
+    </div>
+  </div>
+
+  <!-- ===== UPDATE STATUS MODAL ===== -->
+  <div class="modal-overlay" id="updateStatusModal">
+    <div class="modal" style="max-width:400px;">
+      <div class="modal-header">
+        <h3>Update Order Status</h3>
+        <button class="modal-close" onclick="closeAdminModal('updateStatusModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="form-group">
+        <label for="statusSelect">New Status</label>
+        <select id="statusSelect">
+          <option value="Pending">Pending</option>
+          <option value="Processing">Processing</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+      <input type="hidden" id="statusOrderId">
+      <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="confirmStatusUpdate()">
+        <i class="fas fa-check"></i> Update Status
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== ADD/EDIT SERVICE MODAL ===== -->
+  <div class="modal-overlay" id="serviceModal">
+    <div class="modal" style="max-width:500px;">
+      <div class="modal-header">
+        <h3 id="serviceModalTitle">Add New Service</h3>
+        <button class="modal-close" onclick="closeAdminModal('serviceModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <form onsubmit="handleServiceSubmit(event)">
+        <div class="form-group">
+          <label for="svcName">Service Name</label>
+          <input type="text" id="svcName" placeholder="e.g. Document Printing (B&W)" required>
+        </div>
+        <div class="form-group">
+          <label for="svcPrice">Price</label>
+          <input type="text" id="svcPrice" placeholder="e.g. ₱3.00/page" required>
+        </div>
+        <div class="form-group">
+          <label for="svcDesc">Description</label>
+          <input type="text" id="svcDesc" placeholder="Short description of the service">
+        </div>
+        <div class="form-group">
+          <label for="svcIcon">Icon (FontAwesome name)</label>
+          <select id="svcIcon">
+            <option value="file-alt">📄 file-alt (Documents)</option>
+            <option value="image">🖼️ image (Photos)</option>
+            <option value="scroll">🎯 scroll (Tarpaulin)</option>
+            <option value="id-card">💳 id-card (Cards)</option>
+            <option value="book">📖 book (Booklet)</option>
+            <option value="sticky-note">🏷️ sticky-note (Sticker)</option>
+            <option value="palette">🎨 palette (Design)</option>
+            <option value="print">🖨️ print (General)</option>
+          </select>
+        </div>
+        <input type="hidden" id="svcEditIndex" value="-1">
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+          <i class="fas fa-save"></i> Save Service
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== DELETE CONFIRMATION MODAL ===== -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal" style="max-width:400px;text-align:center;">
+      <div style="font-size:3rem;color:var(--danger);margin-bottom:1rem;"><i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h3 style="margin-bottom:0.5rem;">Confirm Delete</h3>
+      <p style="color:var(--text-muted);margin-bottom:1.5rem;" id="deleteMessage">Are you sure you want to delete this
+        item?</p>
+      <div style="display:flex;gap:1rem;justify-content:center;">
+        <button class="btn btn-outline" onclick="closeAdminModal('deleteModal')">Cancel</button>
+        <button class="btn btn-primary" style="background:var(--danger);" onclick="confirmDelete()">
+          <i class="fas fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== VIEW USER MODAL ===== -->
+  <div class="modal-overlay" id="viewUserModal">
+    <div class="modal" style="max-width:460px;">
+      <div class="modal-header">
+        <h3><i class="fas fa-user" style="color:var(--primary);margin-right:0.5rem;"></i> User Details</h3>
+        <button class="modal-close" onclick="closeAdminModal('viewUserModal')"><i class="fas fa-times"></i></button>
+      </div>
+      <div id="viewUserContent" style="max-height: 75vh; overflow-y: auto;"></div>
+    </div>
+  </div>
+
+  <script src="assets/js/admin.js?v=1.2"></script>
+</body>
+
+</html>

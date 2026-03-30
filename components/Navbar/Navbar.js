@@ -1,6 +1,6 @@
 class Navbar extends HTMLElement {
 	async connectedCallback() {
-		const response = await fetch("/PRNT/components/Navbar/Navbar.html");
+		const response = await fetch("./Navbar.html");
 		const html = await response.text();
 
 		this.innerHTML = html;

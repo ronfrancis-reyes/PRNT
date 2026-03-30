@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — PRNT</title>
+  <meta name="description" content="Get in touch with PRNT. Located near BulSU, Malolos.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/pages.css">
+</head>
+<body>
+
+<!-- ===== TOAST CONTAINER ===== -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ===== MOBILE MENU OVERLAY ===== -->
+<div class="mobile-menu-overlay" id="mobileOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" onclick="toggleMobileMenu()"><i class="fas fa-times"></i></button>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="work.html">Work</a>
+  <a href="services.html">Services</a>
+  <a href="contact.html">Contact</a>
+  <a href="order.html">Order Now</a>
+  <a href="#" onclick="showAuthModal('login')">Login</a>
+</div>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="container flex align-center justify-between" style="width:100%;">
+    <a href="index.html" class="logo">
+      <i class="fas fa-print"></i> PRNT
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" data-page="home">Home</a></li>
+      <li><a href="about.html" data-page="about">About</a></li>
+      <li><a href="work.html" data-page="work">Work</a></li>
+      <li><a href="services.html" data-page="services">Services</a></li>
+      <li><a href="contact.html" data-page="contact">Contact</a></li>
+    </ul>
+    <div class="flex align-center" style="gap:1rem;">
+      <button class="btn btn-primary" onclick="navigateTo('order')" id="orderNowBtn">
+        <i class="fas fa-shopping-cart"></i> Order Now
+      </button>
+      <button class="btn btn-outline" onclick="showAuthModal('login')" id="loginBtn">Login</button>
+      <div class="user-nav-profile" id="userNavProfile" style="display:none; cursor:pointer;" onclick="navigateTo('profile')">
+        <div style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;" id="navAvatar">JD</div>
+      </div>
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" style="padding: 4rem 0;">
+  <div class="container animate-slide">
+    <h1 style="font-size:2.5rem;margin-bottom:0.5rem;">Get in Touch</h1>
+    <p style="margin-bottom:0;">We'd love to hear from you. Send us a message.</p>
+  </div>
+</section>
+
+<!-- ===== CONTACT MAIN ===== -->
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h2>Contact Information</h2>
+        <p>Have questions about bulk orders or custom prints? Drop us a line.</p>
+        <div class="contact-detail">
+          <i class="fas fa-map-marker-alt"></i>
+          <div>
+            <div style="font-weight:600;color:var(--text-dark);">Address</div>
+            <span>MacArthur Highway, Malolos, Bulacan (Near BulSU Gate 1)</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <div style="font-weight:600;color:var(--text-dark);">Email</div>
+            <span>prnt@bulsu.edu.ph</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <i class="fas fa-phone"></i>
+          <div>
+            <div style="font-weight:600;color:var(--text-dark);">Phone</div>
+            <span>+63 912 345 6789</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form card reveal">
+        <form onsubmit="handleContactSubmit(event)">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+            <div class="form-group">
+              <label for="cName">Your Name</label>
+              <input type="text" id="cName" required>
+            </div>
+            <div class="form-group">
+              <label for="cEmail">Your Email</label>
+              <input type="email" id="cEmail" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cSubject">Subject</label>
+            <input type="text" id="cSubject" required>
+          </div>
+          <div class="form-group">
+            <label for="cMessage">Message</label>
+            <textarea id="cMessage" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="font-size:1.05rem;"><i class="fas fa-paper-plane"></i> Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AUTH MODALS (HIDDEN BY DEFAULT) ===== -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Welcome Back</h3>
+      <button class="modal-close" onclick="closeModal('loginModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="juan@bulsu.edu.ph" required>
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </button>
+    </form>
+    <div class="auth-footer">
+      Don't have an account? <a href="#" onclick="switchAuthModal('register')">Register</a>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="registerModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Create Account</h3>
+      <button class="modal-close" onclick="closeModal('registerModal')"><i class="fas fa-times"></i></button>
+    </div>
+    <form onsubmit="handleRegister(event)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div class="form-group">
+          <label for="regFirstName">First Name</label>
+          <input type="text" id="regFirstName" placeholder="Juan" required>
+        </div>
+        <div class="form-group">
+          <label for="regLastName">Last Name</label>
+          <input type="text" id="regLastName" placeholder="Dela Cruz" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="regEmail">BulSU Email</label>
+        <input type="email" id="regEmail" placeholder="juan@bulsu.edu.ph" required>
+      </div>
+      <div class="form-group">
+        <label for="regPhone">Phone Number</label>
+        <input type="tel" id="regPhone" placeholder="09XX XXX XXXX" required>
+      </div>
+      <div class="form-group">
+        <label for="regPassword">Password</label>
+        <input type="password" id="regPassword" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+        <i class="fas fa-user-plus"></i> Create Account
+      </button>
+    </form>
+    <div class="auth-footer">
+      Already have an account? <a href="#" onclick="switchAuthModal('login')">Login</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer" id="mainFooter">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4><i class="fas fa-print" style="margin-right:0.5rem;"></i> PRNT</h4>
+        <p>Your trusted online printing partner. Quality prints delivered fast to BulSU students and the local community.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Document Printing</a></li>
+          <li><a href="services.html">Photo Printing</a></li>
+          <li><a href="services.html">Tarpaulin Printing</a></li>
+          <li><a href="services.html">Booklet Binding</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="contact.html"><i class="fas fa-envelope" style="width:16px;"></i> prnt@bulsu.edu.ph</a></li>
+          <li><a href="contact.html"><i class="fas fa-phone" style="width:16px;"></i> +63 912 345 6789</a></li>
+          <li><a href="contact.html"><i class="fas fa-map-marker-alt" style="width:16px;"></i> Malolos, Bulacan</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 PRNT — All rights reserved. Built with ❤️ for BulSU.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
