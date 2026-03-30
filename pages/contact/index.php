@@ -102,6 +102,7 @@
 
 	<script type="module" src="script.js"></script>
 	<script src="../../global/global.js"></script>
+	<script src="../login/script.js"></script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

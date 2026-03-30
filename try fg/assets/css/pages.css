@@ -161,36 +161,6 @@
 }
 
 /* Service Selection */
-.form-group {
-	margin-bottom: 1.25rem;
-}
-
-.form-group label {
-	font-weight: 500;
-	font-size: 0.9rem;
-	display: block;
-	margin-bottom: 0.4rem;
-	color: var(--text-dark);
-}
-
-.form-group select,
-.form-group input {
-	width: 100%;
-	padding: 0.8rem 1rem;
-	border: 1.5px solid var(--border);
-	border-radius: var(--radius);
-	font-family: inherit;
-	font-size: 0.95rem;
-	transition: var(--transition);
-	background: var(--surface);
-}
-
-.form-group select:focus,
-.form-group input:focus {
-	outline: none;
-	border-color: var(--primary);
-	box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1);
-}
 
 .price-preview {
 	background: var(--secondary);
@@ -532,81 +502,7 @@
 }
 
 /* ========== AUTH PAGES ========== */
-.auth-page {
-	min-height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: linear-gradient(135deg, var(--secondary), #fff7e6);
-}
 
-.auth-card {
-	background: var(--surface);
-	border-radius: 20px;
-	padding: 3rem;
-	width: 100%;
-	max-width: 440px;
-	box-shadow: var(--shadow-lg);
-}
-
-.auth-card h2 {
-	font-size: 1.8rem;
-	text-align: center;
-	margin-bottom: 0.25rem;
-	color: var(--text-dark);
-}
-
-.auth-card .subtitle {
-	text-align: center;
-	color: var(--text-muted);
-	margin-bottom: 2rem;
-}
-
-.auth-card .form-group {
-	margin-bottom: 1.25rem;
-}
-
-.auth-card .form-group label {
-	font-weight: 500;
-	font-size: 0.9rem;
-	margin-bottom: 0.4rem;
-	display: block;
-}
-
-.auth-card .form-group input {
-	width: 100%;
-	padding: 0.85rem 1rem;
-	border: 1.5px solid var(--border);
-	border-radius: var(--radius);
-	font-family: inherit;
-	font-size: 0.95rem;
-	transition: var(--transition);
-}
-
-.auth-card .form-group input:focus {
-	border-color: var(--primary);
-	box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1);
-	outline: none;
-}
-
-.auth-card .btn-primary {
-	width: 100%;
-	padding: 1rem;
-	font-size: 1rem;
-	justify-content: center;
-}
-
-.auth-footer {
-	text-align: center;
-	margin-top: 1.5rem;
-	color: var(--text-muted);
-	font-size: 0.9rem;
-}
-
-.auth-footer a {
-	color: var(--primary);
-	font-weight: 600;
-}
 
 /* ========== PROFILE / HISTORY ========== */
 .profile-section {

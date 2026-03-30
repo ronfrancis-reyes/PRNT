@@ -4,16 +4,16 @@
             <h3>Welcome Back</h3>
             <button class="modal-close" onclick="closeModal('loginModal')"><i class="fas fa-times"></i></button>
         </div>
-        <form onsubmit="handleLogin(event)">
+        <form id="login-form">
             <div class="form-group">
-                <label for="loginEmail">Email</label>
-                <input type="email" id="loginEmail" placeholder="juan@bulsu.edu.ph" required>
+                <label for="emailInput">Email</label>
+                <input type="email" id="emailInput" placeholder="juan@ms.bulsu.edu.ph" required>
             </div>
             <div class="form-group">
-                <label for="loginPassword">Password</label>
-                <input type="password" id="loginPassword" placeholder="••••••••" required>
+                <label for="passInput">Password</label>
+                <input type="password" id="passInput" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+            <button type="submit" class="btn btn-primary" id="submitButton" style="width:100%;justify-content:center;">
                 <i class="fas fa-sign-in-alt"></i> Login
             </button>
         </form>
@@ -22,3 +22,4 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>

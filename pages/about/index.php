@@ -15,7 +15,6 @@
 		integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
 		crossorigin="anonymous" />
 	<!--Tab Logo-->
-	<link rel="icon" href="assets/img/PRNT_logo.png" type="image/png" />
 	<!--Logo Library -->
 	<link
 		rel="stylesheet"
@@ -78,6 +77,7 @@
 
 	<script type="module" src="script.js"></script>
 	<script src="../../global/global.js"></script>
+	<script src="../login/script.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
 		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
