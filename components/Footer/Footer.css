@@ -1,0 +1,74 @@
+.footer-custom {
+	background-color: #121212;
+	padding: 1rem 0.5rem;
+}
+
+.footer-cardbody-custom {
+	background-color: #ff4400;
+	border-radius: 1rem;
+	padding: 1rem 1rem;
+	color: #eee9e3;
+}
+
+.row-custom {
+	margin: 0;
+	padding-top: 0;
+}
+
+.address-custom {
+	background-color: #f24101;
+	font-size: clamp(1rem, 1vw, 2rem);
+	padding-top: 1rem;
+	border-radius: 1rem;
+}
+
+.links-custom {
+	display: flex;
+	flex-direction: column;
+}
+
+.footer-links {
+	text-decoration: none;
+	margin-bottom: 0.75rem;
+	font-size: clamp(1rem, 1vw, 2rem);
+	font-weight: 500;
+	width: 100%;
+	color: #eee9e3;
+}
+.footer-links:hover {
+	text-decoration: underline;
+}
+
+.terms-custom {
+	font-size: clamp(1rem, 1vw, 2rem);
+}
+
+.daydate-custom {
+	margin-top: auto;
+	margin-bottom: auto;
+	font-size: clamp(1rem, 1vw, 3rem);
+}
+
+.time-custom {
+	font-weight: 500;
+	font-size: clamp(1rem, 2vw, 4rem);
+}
+
+.daydate-text-custom {
+	background-color: #f24101;
+	padding: 2rem 1.5rem;
+	border-radius: 1rem;
+}
+
+@media (max-width: 515px) {
+	.row1-custom,
+	.row-divider-custom {
+		display: none;
+	}
+	.daydate-custom {
+		font-size: clamp(0.7rem, 0.7vw, 3rem);
+	}
+	.time-custom {
+		font-size: clamp(0.7rem, 0.7vw, 3rem);
+	}
+}
