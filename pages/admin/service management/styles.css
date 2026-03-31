@@ -1,42 +1,164 @@
-/* Service Management Specific Styles */
-.service-management-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.5rem;
+:root {
+    /* Updated Lighter Orange for better Dark Mode contrast */
+    --prnt-orange: #ff5722; 
+    --prnt-orange-hover: #ff7043;
+    --success-green: #28a745;
+    
+    /* Dark Theme Palette */
+    --bg-dark-main: #0f111a;    /* Main background */
+    --bg-dark-card: #161824;    /* Sidebar and Card background */
+    --bg-dark-input: #1f212e;   /* Input background */
+    --border-subtle: rgba(255,255,255,0.05);
+
+    /* Contrast Fixes for Visibility */
+    --text-muted-light: #a0aec0;
+    --text-format-light: #cbd5e0;
 }
 
-.service-card-admin {
-  background: white;
-  padding: 2rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  transition: var(--transition);
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
+/* Global Styles */
+body { 
+    font-family: 'Inter', -apple-system, sans-serif; 
+    background-color: transparent !important; 
+    color: #ffffff;
+    padding: 0.5rem 1rem;
 }
 
-.service-card-admin:hover {
-  border-color: var(--primary);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
+.text-orange { color: var(--prnt-orange) !important; }
+.pointer { cursor: pointer; }
+
+/* Visibility Fixes for Muted/Secondary Text & Icons */
+.text-muted {
+    color: var(--text-muted-light) !important;
 }
 
-.svc-icon-box {
-  width: 50px;
-  height: 50px;
-  background: var(--secondary);
-  color: var(--primary);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
+.service-format {
+    color: var(--text-format-light) !important;
 }
 
-.svc-actions {
-  margin-left: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.fa-edit.text-muted, .fa-trash.text-muted {
+    color: var(--text-format-light) !important;
+    transition: color 0.2s;
+}
+
+.fa-edit.text-muted:hover { color: var(--prnt-orange) !important; }
+.fa-trash.text-danger:hover { color: #FF6B00 !important; }
+
+
+/* Service Cards */
+.service-card {
+    background: var(--bg-dark-card);
+    border-radius: 20px;
+    padding: 30px;
+    border: 1px solid var(--border-subtle);
+    transition: all 0.3s ease;
+}
+
+.service-card:hover { 
+    transform: translateY(-5px); 
+    border-color: var(--prnt-orange);
+}
+
+/* Status Badges */
+.status-pill {
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.available { background: rgba(40, 167, 69, 0.15); color: #4ade80; }
+.unavailable { background: rgba(255, 255, 255, 0.05); color: #94a3b8; }
+
+/* Buttons */
+.btn-orange {
+    background-color: var(--prnt-orange);
+    color: white;
+    border: none;
+    transition: 0.2s ease;
+}
+
+.btn-orange:hover {
+    background-color: var(--prnt-orange-hover);
+    color: white;
+}
+
+/* Modal Header Close Button - Standardized Path */
+.btn-modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted-light);
+    font-size: 1.1rem;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.btn-modal-close:hover {
+    color: #FF6B00;
+    background: rgba(255, 255, 255, 0.05);
+    transform: rotate(90deg);
+}
+
+.btn-modal-close:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Custom Inputs & Modals */
+.modal-content {
+    background-color: var(--bg-dark-card) !important;
+    color: white !important;
+    border-radius: 20px !important;
+    border: 1px solid var(--border-subtle) !important;
+}
+
+.form-control {
+    background-color: var(--bg-dark-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    font-size: 0.9rem;
+    color: white !important;
+}
+
+.form-control:focus {
+    background-color: var(--bg-dark-input);
+    box-shadow: 0 0 0 0.2rem rgba(255, 87, 34, 0.2);
+    border-color: var(--prnt-orange);
+    color: white;
+}
+
+.switch-green:checked {
+    background-color: var(--success-green) !important;
+    border-color: var(--success-green) !important;
+}
+
+.custom-check:checked {
+    background-color: #fff !important; 
+    border-color: #fff !important;
+}
+
+.modal-backdrop.show {
+    opacity: 0.85; 
+}
+
+/* Custom styling for the "Available" checkbox */
+.custom-check {
+    background-color: transparent;
+    border: 2px solid #555; /* Visible border against dark background */
+    cursor: pointer;
+}
+
+.custom-check:checked {
+    background-color: #ff5722 !important; /* Your theme orange */
+    border-color: #ff5722 !important;
+}
+
+.custom-check:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 87, 34, 0.25); /* Orange glow on focus */
+    border-color: #ff5722;
 }
