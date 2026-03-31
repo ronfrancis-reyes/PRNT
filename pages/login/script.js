@@ -2,9 +2,6 @@ const email = document.getElementById("emailInput");
 const password = document.getElementById("passInput");
 const submitButt = document.getElementById("submitButton");
 const form = $("#login-form");
-
-const API = "../../api/login.php";
-
 //show pass
 
 function checkFields() {
@@ -15,14 +12,14 @@ function checkFields() {
 	}
 }
 
-function postOne() {
+function login() {
 	let payload = {
 		email: $("#emailInput").val(),
 		password: $("#passInput").val(),
 	};
 
 	$.ajax({
-		url: API,
+		url: "../../api/login.php",
 		type: "POST",
 		data: "action=postOne&payload=" + JSON.stringify(payload),
 		success: function (response) {
@@ -41,7 +38,7 @@ function postOne() {
 
 form.on("submit", function (e) {
 	e.preventDefault();
-	postOne();
+	login();
 });
 email.addEventListener("input", checkFields);
 password.addEventListener("input", checkFields);

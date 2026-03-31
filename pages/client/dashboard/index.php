@@ -2,7 +2,7 @@
 include "../../../api/config.php";
 if (!isset($_SESSION['user'])) {
 	header("Location: ../../../index.php");
-} else if ($_SESSION['user'] == 1) {
+} else if ($_SESSION['role'] == 'Admin') {
 	header("Location: ../../admin/dashboard/");
 }
 ?>
@@ -13,6 +13,14 @@ if (!isset($_SESSION['user'])) {
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+		crossorigin="anonymous" />
+
+	<!--Tab Logo-->
+	<link rel="icon" href="../../../assets/img/PRNT_logo.png" type="image/png" />
 	<title>My Orders — PRNT</title>
 	<link
 		rel="stylesheet"
@@ -36,31 +44,6 @@ if (!isset($_SESSION['user'])) {
 		<a href="../../works/">Work</a>
 		<a href="../../service/">Services</a>
 		<a href="../../contact/">Contact</a>
-		<a href="../../client/service-avail/">Order Now</a>
-		<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
-			<div
-				style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
-				id="navAvatar"><?php
-								$fullname = explode(' ', $_SESSION['username']);
-								$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
-								echo $initials;
-								?></div>
-		</div>
-	</div>
-	<div
-		class="mobile-menu-overlay"
-		id="mobileOverlay"
-		onclick="toggleMobileMenu()"></div>
-	<div class="mobile-menu" id="mobileMenu">
-		<button class="close-menu" onclick="toggleMobileMenu()">
-			<i class="fas fa-times"></i>
-		</button>
-		<a href="../../../index.php" data-nav="root">Home</a>
-		<a href="../../about/" data-nav="about">About</a>
-		<a href="../../works/" data-nav="works">Work</a>
-		<a href="../../service/" data-nav="service">Services</a>
-		<a href="../../contact/" data-nav="contact">Contact</a>
-		<a href="../service-avail/" data-nav="order">Order Now</a>
 		<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
 			<div
 				style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
@@ -83,12 +66,6 @@ if (!isset($_SESSION['user'])) {
 				<li><a href="../contact/">Contact</a></li>
 			</ul>
 			<div class="flex align-center" style="gap: 1rem">
-				<a
-					href="../client/service-avail/"
-					class="btn btn-primary"
-					id="orderNowBtn">
-					<i class="fas fa-shopping-cart"></i> Order Now
-				</a>
 				<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
 					<div
 						style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
@@ -156,7 +133,6 @@ if (!isset($_SESSION['user'])) {
 	<div id="footer-placeholder"></div>
 
 	<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
-	<script src="../../../global/global.js"></script>
 	<script src="script.js"></script>
 </body>
 

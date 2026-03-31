@@ -1,30 +1,31 @@
-const API = "/PRNT/api/registration.php";
+const regForm = $("#registration-form");
+const regFirstName = $("#regFirstName");
+const regLastName = $("#regLastName");
+const regEmail = $("#regEmail");
+const regPhone = $("#regPhone");
+const regPassword = $("#regPassword");
 
-const form = $("#signup-form");
-const fullname = $("#name");
-const email = $("#email");
-const contact = $("#contact");
-const password = $("#password");
-const confirmPassword = $("#confirm-password");
-
-const submit_btn = $("#submit");
+const regSubmitBtn = $("#regSubmitBtn");
 
 //validation of inputs
 function validateForm() {
-	const nameVal = fullname.val().trim();
-	const emailVal = email.val().trim();
-	const contactVal = contact.val().trim();
-	const passwordVal = password.val();
-	const confirmVal = confirmPassword.val();
+	const firstNameVal = regFirstName.val().trim();
+	const lastNameVal = regLastName.val().trim();
+	const emailVal = regEmail.val().trim();
+	const phoneVal = regPhone.val().trim();
+	const passwordVal = regPassword.val();
 
 	let isValid = true;
 
 	//empty fields validation
-	if (!nameVal || !emailVal || !contactVal || !passwordVal || !confirmVal) {
+	if (!firstNameVal || !lastNameVal || !emailVal || !phoneVal || !passwordVal) {
 		isValid = false;
 	}
 	//name validation
-	if (!/^[a-zA-Z ]{3,}$/.test(nameVal)) {
+	if (!/^[a-zA-Z ]{3,}$/.test(firstNameVal)) {
+		isValid = false;
+	}
+	if (!/^[a-zA-Z ]{3,}$/.test(lastNameVal)) {
 		isValid = false;
 	}
 	//email validation (ms.bulsu.edu.ph/bulsu.edu.ph)
@@ -32,32 +33,28 @@ function validateForm() {
 		isValid = false;
 	}
 	//contact validation number must start in 09 and 11 digits
-	if (!/^09\d{9}$/.test(contactVal)) {
-		isValid = false;
-	}
-	//password and confirm must be the same
-	if (passwordVal !== confirmVal) {
+	if (!/^09\d{9}$/.test(phoneVal)) {
 		isValid = false;
 	}
 
-	submit_btn.prop("disabled", !isValid);
+	regSubmitBtn.prop("disabled", !isValid);
 }
 
-fullname.on("input", validateForm);
-email.on("input", validateForm);
-contact.on("input", validateForm);
-password.on("input", validateForm);
-confirmPassword.on("input", validateForm);
+regFirstName.on("input", validateForm);
+regLastName.on("input", validateForm);
+regEmail.on("input", validateForm);
+regPhone.on("input", validateForm);
+regPassword.on("input", validateForm);
 
 //form submit
-form.on("submit", function (e) {
+regForm.on("submit", function (e) {
 	e.preventDefault();
 
 	let payload = {
-		fullname: $("#name").val(),
-		email: $("#email").val(),
-		contact: $("#contact").val(),
-		password: $("#password").val(),
+		fullname: $("#regFirstName").val() + " " + $("#regLastName").val(),
+		email: $("#regEmail").val(),
+		contact: $("#regPhone").val(),
+		password: $("#regPassword").val(),
 	};
 
 	postOne(payload.email).then((response) => {
@@ -73,7 +70,7 @@ form.on("submit", function (e) {
 function postOne(id) {
 	return $.ajax({
 		type: "POST",
-		url: API,
+		url: "../../api/registration.php",
 		data: "action=postOne&email=" + id,
 	});
 }
@@ -81,7 +78,7 @@ function postOne(id) {
 function store(payload) {
 	$.ajax({
 		type: "POST",
-		url: API,
+		url: "../../api/registration.php",
 		data: "action=store&payload=" + JSON.stringify(payload),
 		success: function (response) {
 			let reply = JSON.parse(response); //response ng api

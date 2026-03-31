@@ -15,6 +15,7 @@ if(isset($_POST['action'])){
             if(password_verify($payload->password, $account['password'])){
                 $_SESSION['user'] = $account['account_id'];
                 $_SESSION['username'] = $account['name'];
+                $_SESSION['role'] = $account['role'];
                 echo json_encode([
                     "status" => "success",
                     "message" => "Logged In!"

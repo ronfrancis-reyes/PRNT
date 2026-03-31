@@ -29,7 +29,7 @@ if(isset($_POST['action'])) {
         $payload = json_decode($_POST['payload']);
         $hashedPassword = password_hash($payload->password, PASSWORD_DEFAULT);
 
-        $sql = $conn->prepare("INSERT INTO accounts(name, email, contact_number, password, date_created) VALUES(?, ?, ?, ?, NOW())");
+        $sql = $conn->prepare("INSERT INTO accounts (name, email, contact_number, password, status, role, date_created) VALUES(?, ?, ?, ?, 'Active', 'Customer', current_timestamp())");
         $sql->bind_param("ssss", $payload->fullname, $payload->email, $payload->contact, $hashedPassword);
 
         if ($sql->execute()) {

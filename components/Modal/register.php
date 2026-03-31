@@ -4,7 +4,7 @@
             <h3>Create Account</h3>
             <button class="modal-close" onclick="closeModal('registerModal')"><i class="fas fa-times"></i></button>
         </div>
-        <form onsubmit="handleRegister(event)">
+        <form id="registration-form">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
                 <div class="form-group">
                     <label for="regFirstName">First Name</label>
@@ -27,7 +27,7 @@
                 <label for="regPassword">Password</label>
                 <input type="password" id="regPassword" placeholder="••••••••" required>
             </div>
-            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+            <button type="submit" class="btn btn-primary" id="regSubmitBtn" style="width:100%;justify-content:center;">
                 <i class="fas fa-user-plus"></i> Create Account
             </button>
         </form>
@@ -36,3 +36,4 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
