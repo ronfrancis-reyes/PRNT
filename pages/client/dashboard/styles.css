@@ -1,39 +1,63 @@
 /* Client Dash Specific Styles */
 .client-dashboard {
-  min-height: 80vh;
+	min-height: 80vh;
 }
 
 .order-card-client {
-  background: white;
-  padding: 2.5rem;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  margin-bottom: 2rem;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 2.5rem;
-  align-items: center;
+	background: white;
+	padding: 2.5rem;
+	border-radius: var(--radius);
+	border: 1px solid var(--border);
+	box-shadow: var(--shadow-sm);
+	margin-bottom: 2rem;
+	display: grid;
+	grid-template-columns: auto 1fr auto;
+	gap: 2.5rem;
+	align-items: center;
 }
 
 .order-card-client:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary);
-  box-shadow: var(--shadow-md);
+	transform: translateY(-4px);
+	border-color: var(--primary);
+	box-shadow: var(--shadow-md);
 }
 
 .order-status-pill {
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-transform: uppercase;
+	padding: 0.5rem 1rem;
+	border-radius: 50px;
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-transform: uppercase;
 }
 
-.status-pending { background: #FEF3C7; color: #F59E0B; }
-.status-completed { background: #E8F8EE; color: #2DC258; }
+.status-rejected {
+	background: #fee2e2;
+	color: #dc2626;
+}
+.status-printing {
+	background: #fef3c7;
+	color: #f59e0b;
+}
+.status-reviewing {
+	background: #c7f3fe;
+	color: #0bc6f5;
+}
+.status-ready {
+	background: #eac7fe;
+	color: #840bf5;
+}
+.status-completed {
+	background: #e8f8ee;
+	color: #2dc258;
+}
 
 @media (max-width: 992px) {
-  .order-card-client { grid-template-columns: 1fr; text-align: center; gap: 1.5rem; }
-  .order-card-client button { margin: 0 auto; }
+	.order-card-client {
+		grid-template-columns: 1fr;
+		text-align: center;
+		gap: 1.5rem;
+	}
+	.order-card-client button {
+		margin: 0 auto;
+	}
 }
