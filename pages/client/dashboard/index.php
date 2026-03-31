@@ -1,14 +1,15 @@
 <?php
 include "../../../api/config.php";
-if(!isset($_SESSION['user'])) {
-header("Location: ../../../index.php");
+if (!isset($_SESSION['user'])) {
+	header("Location: ../../../index.php");
 } else if ($_SESSION['user'] == 1) {
-header("Location: ../../admin/dashboard/");
+	header("Location: ../../admin/dashboard/");
 }
 ?>
 <!doctype html>
 
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -36,7 +37,15 @@ header("Location: ../../admin/dashboard/");
 		<a href="../../service/">Services</a>
 		<a href="../../contact/">Contact</a>
 		<a href="../../client/service-avail/">Order Now</a>
-		<a href="#" onclick="showAuthModal('login')">Login</a>
+		<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
+			<div
+				style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
+				id="navAvatar"><?php
+								$fullname = explode(' ', $_SESSION['username']);
+								$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+								echo $initials;
+								?></div>
+		</div>
 	</div>
 	<div
 		class="mobile-menu-overlay"
@@ -52,7 +61,15 @@ header("Location: ../../admin/dashboard/");
 		<a href="../../service/" data-nav="service">Services</a>
 		<a href="../../contact/" data-nav="contact">Contact</a>
 		<a href="../service-avail/" data-nav="order">Order Now</a>
-		<a onclick="showAuthModal('login')">Login</a>
+		<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
+			<div
+				style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
+				id="navAvatar"><?php
+								$fullname = explode(' ', $_SESSION['username']);
+								$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+								echo $initials;
+								?></div>
+		</div>
 	</div>
 
 	<nav class="navbar" id="navbar">
@@ -72,10 +89,15 @@ header("Location: ../../admin/dashboard/");
 					id="orderNowBtn">
 					<i class="fas fa-shopping-cart"></i> Order Now
 				</a>
-				<a
-					onclick="showAuthModal('login')"
-					class="btn btn-outline"
-					id="loginBtn">Login</a>
+				<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
+					<div
+						style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
+						id="navAvatar"><?php
+										$fullname = explode(' ', $_SESSION['username']);
+										$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+										echo $initials;
+										?></div>
+				</div>
 				<button class="mobile-menu-btn" onclick="toggleMobileMenu()">
 					<i class="fas fa-bars"></i>
 				</button>
@@ -102,12 +124,14 @@ header("Location: ../../admin/dashboard/");
 			<div id="orderList" class="animate-fade">
 				<!-- JS Render -->
 				<!--placeholder for orders-->
+<!--if no orders-->
 				<div style="text-align:center; padding:5rem; color:var(--text-muted);">
 					<i class="fas fa-shopping-cart" style="font-size:4rem; margin-bottom:2rem; opacity:0.1;"></i>
 					<h3 style="margin-bottom:1rem;">You haven't placed any orders yet.</h3>
 					<p style="margin-bottom:2rem;">Start your first printing order today.</p>
 					<a href="/pages/client/service-avail/" class="btn btn-primary">Place Your First Order</a>
 				</div>
+<!--if may orders--> 
 				<div class="order-card-client animate-fade">
 					<div style="background:var(--secondary); width:64px; height:64px; border-radius:16px; display:flex; align-items:center; justify-content:center; color:var(--primary); font-size:1.5rem;">
 						<i class="fas fa-receipt"></i>

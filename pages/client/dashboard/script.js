@@ -3,6 +3,7 @@ const API = "../../../api/dashboard.php";
 $(document).ready(function () {
 	getOrders();
 });
+//if no orders, show empty state.
 function renderClientOrders() {
 	const orders = JSON.parse(localStorage.getItem("prnt_orders") || "[]");
 	const list = document.getElementById("orderList");
@@ -19,7 +20,7 @@ function renderClientOrders() {
     `;
 		return;
 	}
-
+	// if there are orders, show them in a list.
 	list.innerHTML = orders
 		.reverse()
 		.map(
