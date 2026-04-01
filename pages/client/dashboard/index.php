@@ -100,7 +100,6 @@ if (!isset($_SESSION['user'])) {
 
 			<div id="orderList" class="animate-fade">
 				<!-- JS Render -->
-				<!--placeholder for orders-->
 			</div>
 		</div>
 	</section>

@@ -188,7 +188,8 @@
 					<ul>
 						<li><a href="./">Home</a></li>
 						<li><a href="./pages/about/">About</a></li>
-						<li><a href="./pages/services/">Services</a></li>
+          				<li><a href="./pages/works/">Works</a></li>
+						<li><a href="./pages/service/">Services</a></li>
 						<li><a href="./pages/contact/">Contact</a></li>
 					</ul>
 				</div>

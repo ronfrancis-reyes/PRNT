@@ -2,33 +2,53 @@
 include "config.php";
 
 if (isset($_GET['action'])) {
-    if ($_GET['action'] == 'get') {
+    if ($_GET['action'] == 'getServices') {
         $sql = $conn->prepare("SELECT service_id, service_name FROM services");
-        $sql->execute();
+        if ($sql->execute()) {
+            $result = $sql->get_result();
+            $data = [];
 
-        $result = $sql->get_result();
-
-        $data = [];
-
-        while ($row = $result->fetch_assoc()) {
-            $data[] = $row;
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'query successful',
+                'data' => $data
+            ]);
+            exit;
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'query failed'
+            ]);
+            exit;
         }
-
-        echo json_encode($data);
-        exit;
     }
+    if ($_GET['action'] == 'getColors') {
+        $sql = $conn->prepare("SELECT * FROM color");
+        if ($sql->execute()) {
+            $result = $sql->get_result();
+            $data = [];
 
-    if ($_GET["action"] == "getOne") {
-        $sql = $conn->prepare("SELECT price FROM services WHERE service_id = ?");
-        $sql->bind_param("i", $_GET['id']);
-        $sql->execute();
-
-        $result = $sql->get_result();
-        $data = $result->fetch_assoc();
-
-        echo json_encode($data);
-        exit;
+            while($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'query successful',
+                'data' => $data
+            ]);
+            exit;
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'query failed'
+            ]);
+            exit;
+        }
     }
+    exit;
 }
 
 if (isset($_POST['action'])) {
@@ -50,41 +70,41 @@ if (isset($_POST['action'])) {
         }
         exit;
     }
-}
+    exit;
 
-$uploadDir = __DIR__ . "/../uploads/";
+    $uploadDir = __DIR__ . "/../uploads/";
 
-if(isset($_FILES['file'])){
-    $file = $_FILES['file'];
-    $filename = $_SESSION['user'] . "_" . time() . "_" . basename($file['name']); // avoid collisions
-    $targetFile = $uploadDir . $filename; //para mapunta sa server ung file (server path)
-    $webPath = "/PRNT/uploads/" . $filename; //para pag id-download na ng admin (webpath)
-    if(move_uploaded_file($file['tmp_name'], $targetFile)){
-        $sql = $conn->prepare("INSERT INTO files (file_name, pages, filepath) VALUES (?, ?, ?)");
-        $sql->bind_param("sis", $file['name'], $_POST['pageCount'], $webPath);
-        $sql->execute();
+    if (isset($_FILES['file'])) {
+        $file = $_FILES['file'];
+        $filename = $_SESSION['user'] . "_" . time() . "_" . basename($file['name']); // avoid collisions
+        $targetFile = $uploadDir . $filename; //para mapunta sa server ung file (server path)
+        $webPath = "/PRNT/uploads/" . $filename; //para pag id-download na ng admin (webpath)
+        if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+            $sql = $conn->prepare("INSERT INTO files (file_name, pages, filepath) VALUES (?, ?, ?)");
+            $sql->bind_param("sis", $file['name'], $_POST['pageCount'], $webPath);
+            $sql->execute();
 
-        $file_id = $conn->insert_id;
+            $file_id = $conn->insert_id;
 
-        echo json_encode([
-            "status" => "success",
-            "path" => $targetFile,
-            "file_id" => $file_id
-        ]);
-        exit;
+            echo json_encode([
+                "status" => "success",
+                "path" => $targetFile,
+                "file_id" => $file_id
+            ]);
+            exit;
+        } else {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Failed to move uploaded file."
+            ]);
+            exit;
+        }
     } else {
         echo json_encode([
             "status" => "error",
-            "message" => "Failed to move uploaded file."
+            "message" => "No file uploaded."
         ]);
         exit;
     }
-} else {
-    echo json_encode([
-        "status" => "error",
-        "message" => "No file uploaded."
-    ]);
     exit;
 }
-
-
