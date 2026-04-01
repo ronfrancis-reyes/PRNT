@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PrintHub – Order Management</title>
+  <title>PRNT - Order Management</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="styles.css?v=2"/>
@@ -16,10 +16,12 @@
           <i class="fas fa-search"></i>
           <input type="text" id="searchInput" placeholder="Search orders..." oninput="filterTable()"/>
         </div>
+        <!-- REFACTORED: 'Delivering' status renamed to 'Receiving' and added to filter -->
         <select id="statusFilter" class="filter-select" onchange="filterTable()">
           <option value="">All Status</option>
           <option value="Pending">Pending</option>
           <option value="Processing">Processing</option>
+          <option value="Receiving">Receiving</option>
           <option value="Completed">Completed</option>
         </select>
         <button class="btn-export" onclick="exportCSV()">

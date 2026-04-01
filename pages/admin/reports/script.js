@@ -400,6 +400,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const subject = row.querySelector('.col-subject');
         if (subject) subject.classList.remove('fw-600');
+
+        // REFACTORED: Notify parent of updated unread Reports count
+        syncSidebarBadge();
     }
 
     function markRowAsUnread(row) {
@@ -414,6 +417,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const subject = row.querySelector('.col-subject');
         if (subject) subject.classList.add('fw-600');
+
+        // REFACTORED: Notify parent of updated unread Reports count
+        syncSidebarBadge();
     }
 
     // =========================================================
@@ -429,7 +435,9 @@ document.addEventListener('DOMContentLoaded', () => {
         row.style.transform  = 'translateX(20px)';
         setTimeout(() => {
             row.remove();
-            applyFilters(); // refresh empty state
+            applyFilters();
+            // REFACTORED: Sync sidebar badge after deletion
+            syncSidebarBadge();
         }, 320);
         showToast('Message Deleted', 'The message has been removed.', 'danger');
     }
@@ -607,10 +615,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // =========================================================
-    // SECTION: INITIAL STATE
-    // =========================================================
-    renderTable(SAMPLE_DATA.messages);
-    applyFilters(); // run once to set empty-state correctly
+    // REFACTORED: Global badge sync for Reports
+    function syncSidebarBadge() {
+        const unreadCount = getAllRows().filter(r => r.dataset.status === 'unread').length;
+        if (window.parent && typeof window.parent.syncSidebarReportsBadge === 'function') {
+            window.parent.syncSidebarReportsBadge(unreadCount);
+        }
+    }
 
+    // Initial state
+    renderTable(SAMPLE_DATA.messages);
+    applyFilters(); 
+    syncSidebarBadge(); // Sync on load
 });

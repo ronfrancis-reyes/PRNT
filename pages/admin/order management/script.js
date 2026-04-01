@@ -29,14 +29,15 @@ function toggleMenu(btn) {
   activeRow = row;
 
   // build panel buttons
+  // REFACTORED: Removed "Mark as Pending" manual action per requirements. If the customer order, it will automatically be marked as "Pending". If Admin marked it as "Processing", it means the admin accept the order and now processing it.
+  // REFACTORED: Changed "Delivering" to "Receiving".
   panel.innerHTML =
     '<div class="ap-header">Actions</div>' +
     '<button onclick="panelViewDetails()"><i class="bi bi-eye"></i> View Details</button>' +
     '<div class="ap-divider"></div>' +
     '<button onclick="panelSetStatus(\'Completed\')"><i class="bi bi-check-circle"></i> Mark as Completed</button>' +
-    '<button onclick="panelSetStatus(\'Delivering\')"><i class="bi bi-truck"></i> Mark as Delivering</button>' +
+    '<button onclick="panelSetStatus(\'Receiving\')"><i class="bi bi-truck"></i> Mark as Receiving</button>' +
     '<button onclick="panelSetStatus(\'Processing\')"><i class="bi bi-gear"></i> Mark as Processing</button>' +
-    '<button onclick="panelSetStatus(\'Pending\')"><i class="bi bi-clock"></i> Mark as Pending</button>' +
     '<div class="ap-divider"></div>' +
     '<button class="danger" onclick="panelDelete()"><i class="bi bi-trash3"></i> Delete this Order</button>';
 
@@ -100,12 +101,23 @@ function panelSetStatus(status) {
   var orderId = tr.dataset.orderId;
   closeActionPanel();
   
-  // BACKEND INTEGRATION POINT
-  // Endpoint: /api/admin/orders
-  // Method: PATCH
-  
-  if (status === 'Completed') showToast('Order ' + orderId + ' status updated to "Completed"');
+  // REFACTORED: Notify parent if an order becomes completed (sync sidebar badge)
+  if (status === 'Completed') {
+      showToast('Order ' + orderId + ' status updated to "Completed"');
+      syncSidebarBadge();
+  }
 }
+
+// REFACTORED: Sync Orders count with Sidebar
+function syncSidebarBadge() {
+    const activeOrders = document.querySelectorAll('tr.order-row:not(.status-completed)').length;
+    if (window.parent && typeof window.parent.syncSidebarOrdersBadge === 'function') {
+        window.parent.syncSidebarOrdersBadge(activeOrders);
+    }
+}
+
+// Sync on load
+document.addEventListener('DOMContentLoaded', syncSidebarBadge);
 
 // ACTION HANDLER
 function panelDelete() {

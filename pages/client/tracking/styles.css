@@ -1,0 +1,474 @@
+/* ============================================================================
+   PRNT — TRACKING PAGE STYLES
+   ============================================================================
+   Design System: Premium Client UI
+   Primary: #F47820  |  Background: Warm Gradient  |  Font: Inter
+   ========================================================================== */
+
+/* ── CSS VARIABLES ─────────────────────────────────────────────────────────── */
+:root {
+  --primary:        #FF6B00;
+  --primary-dark:   #DE5D00;
+  --primary-light:  rgba(255, 107, 0, 0.12);
+  --primary-glow:   rgba(255, 107, 0, 0.30);
+  
+  --text-dark:      #1A1D26;
+  --text-muted:     #6B7280;
+  --text-light:     #9CA3AF;
+  
+  --bg-panel:       #FFFFFF;
+  --bg-surface:     #F9FAFB;
+  
+  --border:         #E5E7EB;
+  --border-light:   #2a2f42;
+  --border-focus:   rgba(255, 107, 0, 0.5);
+
+  --success:        #10B981;
+  --warning:        #F59E0B;
+  --error:          #EF4444;
+  --info:           #3B82F6;
+
+  --radius:         16px;
+  --radius-sm:      8px;
+
+  --shadow-sm:      0 1px 3px rgba(0,0,0,0.25);
+  --shadow-md:      0 4px 12px rgba(0,0,0,0.35);
+  --shadow-lg:      0 8px 32px rgba(0,0,0,0.45);
+  --shadow-premium: 0 20px 60px rgba(0,0,0,0.6);
+
+  --transition:     all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── SPACER HEIGHTS ────────────────────────────────────────────────────── */
+  --navbar-h: 64px;
+  --footer-h: 40px;
+}
+
+/* ── RESET ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(160deg, #FFFEF9 0%, #F7F8FA 60%, #FFF9F3 100%);
+  background-attachment: fixed;
+  color: var(--text-dark);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SPACERS ──────────────────────────────────────────────────────────────── */
+.navbar-spacer { height: var(--navbar-h); width: 100%; pointer-events: none; }
+.footer-spacer { height: var(--footer-h); width: 100%; pointer-events: none; }
+
+/* ── LAYOUT ──────────────────────────────────────────────────────────────── */
+.main-wrapper {
+  min-height: calc(100vh - var(--navbar-h) - var(--footer-h));
+  display: flex;
+  flex-direction: column;
+}
+
+.page-content {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 2.5rem;
+  width: 100%;
+}
+
+.tracking-container { display: flex; flex-direction: column; gap: 2rem; }
+
+/* ── PAGE HEADER ─────────────────────────────────────────────────────────── */
+.section-title {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.section-title h1 {
+  font-size: clamp(1.75rem, 3vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  line-height: 1.1;
+}
+.section-title h1 i { color: var(--primary); font-size: 88%; }
+.panel-subtitle { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.35rem; }
+
+/* ── RECEIPT SUMMARY CARD ────────────────────────────────────────────────────
+   Top orange border accent + hover elevation
+   ─────────────────────────────────────────────────────────────────────────── */
+.receipt-summary-card {
+  background: var(--bg-panel);
+  border: 1.5px solid var(--primary);
+  border-top: 5px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.75rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  transition: var(--transition);
+}
+.receipt-summary-card:hover { 
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-focus);
+}
+
+.receipt-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 1rem;
+  align-items: start;
+  justify-items: center;
+  text-align: center;
+}
+
+.summary-btn-wrap {
+  grid-column: 1 / -1;
+  display: flex;
+  margin-top: 0.4rem;
+}
+
+.summary-btn-wrap .btn-text {
+  width: 100%;
+  justify-content: center;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  padding: 0.65rem;
+  font-size: 0.78rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-dark);
+}
+.summary-btn-wrap .btn-text i { color: var(--primary); }
+.summary-btn-wrap .btn-text:hover {
+  background: white;
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.summary-info label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.15rem;
+}
+
+.summary-info span {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--text-dark);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+/* Status badge — color-coded per status */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.9rem;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1.5px solid transparent;
+  transition: var(--transition);
+}
+.status-pending    { background: var(--primary);  color: white;  border-color: var(--primary-dark); box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3); }
+.status-processing { background: rgba(59,130,246,0.1);  color: #2563EB;  border-color: rgba(59,130,246,0.25); }
+.status-delivering { background: rgba(14,165,233,0.1);  color: #0284C7;  border-color: rgba(14,165,233,0.25); }
+.status-completed  { background: rgba(16,185,129,0.1);  color: #059669;  border-color: rgba(16,185,129,0.25); }
+
+.btn-text {
+  background: none; border: none; cursor: pointer;
+  font-family: inherit; font-size: 0.82rem; font-weight: 700; color: var(--primary);
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.4rem 0.75rem; border-radius: var(--radius-sm);
+  transition: var(--transition); white-space: nowrap;
+}
+.btn-text:hover { background: var(--primary-light); transform: translateX(3px); }
+
+/* ── PROGRESS BAR ────────────────────────────────────────────────────────────
+   Horizontal animated fill bar — width driven by JS updateProgressBar()
+   ─────────────────────────────────────────────────────────────────────────── */
+.progress-section {
+  background: var(--bg-panel);
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem 1.75rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.progress-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.progress-pct {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.progress-bar-track {
+  height: 8px;
+  background: #F1F3F5;
+  border-radius: 100px;
+  border: 1px solid rgba(0,0,0,0.03);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--primary) 0%, #FFB175 100%);
+  border-radius: 100px;
+  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.5);
+}
+
+/* Animated shimmer on progress fill */
+.progress-bar-fill::after {
+  content: '';
+  position: absolute; top: 0; left: -60%;
+  width: 40%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  animation: progressShimmer 2s ease-in-out infinite;
+}
+@keyframes progressShimmer {
+  0%   { left: -60%; }
+  100% { left: 120%; }
+}
+
+/* ── TRACKING PANEL ──────────────────────────────────────────────────────── */
+.tracking-panel {
+  background: var(--bg-panel);
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 3rem 3.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── TIMELINE ────────────────────────────────────────────────────────────────
+   Vertical line has two layers: grey base + animated orange fill overlay
+   ─────────────────────────────────────────────────────────────────────────── */
+.timeline-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  position: relative;
+}
+
+/* Base grey line */
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  top: 24px; left: 23px;
+  width: 4px;
+  height: calc(100% - 48px);
+  background: var(--border);
+  border-radius: 4px;
+}
+
+/* Animated orange fill overlay — height controlled via JS CSS variable */
+.timeline-container::after {
+  content: '';
+  position: absolute;
+  top: 24px; left: 23px;
+  width: 4px;
+  height: var(--timeline-fill, 0%);
+  background: linear-gradient(180deg, var(--primary) 0%, #FFB175 100%);
+  border-radius: 4px;
+  transition: height 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-step {
+  display: flex;
+  gap: 2rem;
+  position: relative;
+  align-items: flex-start;
+}
+
+/* ── STEP ICONS ──────────────────────────────────────────────────────────── */
+.step-icon {
+  width: 50px; height: 50px;
+  background: var(--bg-panel);
+  border: 3px solid var(--border);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem;
+  color: var(--text-light);
+  z-index: 10;
+  box-shadow: 0 0 0 8px var(--bg-panel);
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  opacity: 0.38;
+  transition: var(--transition);
+  padding-top: 0.6rem;
+}
+
+.step-content h3 { font-size: 1.1rem; font-weight: 800; }
+.step-content p  { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
+
+.step-time {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.15rem;
+}
+
+/* ── STEP STATE CLASSES ──────────────────────────────────────────────────── */
+@keyframes stepCompletedScale {
+  0%   { transform: scale(0.6); }
+  60%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.timeline-step.completed .step-icon {
+  background: #10B981;
+  border-color: #10B981;
+  color: white;
+  animation: stepCompletedScale 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.timeline-step.completed .step-content { opacity: 0.75; }
+
+@keyframes stepPulse {
+  0%   { box-shadow: 0 0 0 0   rgba(244, 120, 32, 0.5), 0 0 0 8px var(--bg-panel); }
+  70%  { box-shadow: 0 0 0 16px rgba(244, 120, 32, 0),   0 0 0 8px var(--bg-panel); }
+  100% { box-shadow: 0 0 0 0   rgba(244, 120, 32, 0),   0 0 0 8px var(--bg-panel); }
+}
+
+.timeline-step.current .step-icon {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  animation: stepPulse 2s ease-out infinite;
+  transform: scale(1.15);
+  box-shadow: 0 0 24px rgba(255, 107, 0, 0.5), 0 0 0 8px var(--bg-panel);
+}
+.timeline-step.current .step-content { opacity: 1; }
+.timeline-step.current .step-content h3 { color: var(--primary); font-weight: 800; }
+.timeline-step.current .step-time { color: var(--primary); font-weight: 800; }
+
+/* ── FOOTER ACTIONS ──────────────────────────────────────────────────────── */
+.footer-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 1.1rem 1.75rem;
+  width: 100%;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  transition: var(--transition);
+  border: none;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-outline {
+  background: white;
+  color: var(--text-dark);
+  border: 1.5px solid var(--border);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+.btn-outline:hover { 
+  border-color: var(--primary); 
+  color: var(--primary); 
+  background: white; 
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Refresh button — icon spins on click via .spinning class */
+.btn-refresh {
+  background: linear-gradient(135deg, var(--primary) 0%, #FF9A3C 100%);
+  color: white;
+  box-shadow: 0 6px 15px rgba(244, 120, 32, 0.2);
+}
+.btn-refresh:hover { 
+  transform: translateY(-3px); 
+  box-shadow: var(--shadow-lg); 
+}
+
+@keyframes spin360 { to { transform: rotate(360deg); } }
+.btn-refresh .spinning { animation: spin360 0.7s linear; }
+
+/* ── TOAST ───────────────────────────────────────────────────────────────── */
+.toast-container {
+  position: fixed; top: 1.5rem; right: 1.5rem; z-index: 10000;
+  display: flex; flex-direction: column; gap: 0.65rem;
+}
+.toast-msg {
+  background: #111827; color: white;
+  padding: 0.8rem 1.4rem;
+  border-radius: 100px;
+  display: flex; align-items: center; gap: 0.7rem;
+  font-weight: 700; font-size: 0.86rem;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+  animation: toastIn 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(60%) scale(0.9); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .page-content { padding: 1.5rem 1rem 2.5rem; }
+  .receipt-summary-card { padding: 1.5rem; }
+  .receipt-summary-grid { grid-template-columns: 1fr 1fr; gap: 1.25rem 1rem; }
+  .btn-text { grid-column: span 2; justify-content: center; }
+  .tracking-panel { padding: 2.5rem 1.5rem; }
+  .timeline-container::before,
+  .timeline-container::after { left: 20px; }
+  .step-icon { width: 44px; height: 44px; font-size: 1.1rem; }
+  .footer-actions { flex-direction: column; }
+  .footer-actions .btn { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .section-title h1 { font-size: 1.6rem; }
+  .timeline-container { gap: 2.5rem; }
+}

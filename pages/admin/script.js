@@ -47,7 +47,7 @@ const SAMPLE_DATA = {
     ],
     dashboard: {
         todayOrders:   48,
-        pendingOrders: 14,
+        pendingOrders: 3, // REFACTORED: Match initial non-completed orders in sample data
         todayRevenue:  8640,
         services: [
             { name: "Calling Cards", orders: 14 },
@@ -422,6 +422,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function _refreshBadge() {
+        // TOPBAR NOTIFICATIONS
         const unread  = _notifications.filter(n => !n.read).length;
         const badge   = document.getElementById('ntBadge');
         const label   = document.getElementById('ntCountLabel');
@@ -433,7 +434,37 @@ document.addEventListener('DOMContentLoaded', () => {
         if (label) {
             label.textContent = unread > 0 ? `(${unread} unread)` : '';
         }
+
+        // REFACTORED: We now use updateSidebarReportsCount() for the sidebar badge
+        // to maintain consistency with the Reports module's specific state.
     }
+
+    // REFACTORED: Sidebar Badge Synchronization System
+    // This allows iframes to report their status counts to the parent shell.
+    
+    // Updates the "Orders" badge in the sidebar
+    window.syncSidebarOrdersBadge = function (count) {
+        const orderBadge = document.getElementById('pendingOrdersBadge');
+        if (orderBadge) {
+            orderBadge.style.display = count > 0 ? 'inline-block' : 'none';
+            orderBadge.textContent = count;
+        }
+        // Also update the dashboard KPI card if it exists
+        const kpiOrders = document.getElementById('kpi-pending-orders');
+        if (kpiOrders) kpiOrders.textContent = count;
+    };
+
+    // Updates the "Reports" badge in the sidebar
+    window.syncSidebarReportsBadge = function (count) {
+        const reportsBadge = document.getElementById('unreadMessagesBadge');
+        if (reportsBadge) {
+            reportsBadge.style.display = count > 0 ? 'inline-block' : 'none';
+            reportsBadge.textContent = count;
+        }
+    };
+
+    // Initial load: Badge counts will be reported by individual modules (Order Mgt / Reports)
+    // when they load into the iframe.
 
     // ── Mark one as read (stamps readAt for 8-hr expiry) ────────
     function _markOneAsRead(id, el) {
