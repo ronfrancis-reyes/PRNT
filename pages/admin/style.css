@@ -53,12 +53,28 @@ body {
   overflow-x: hidden;
 }
 
-/* ── ADMIN APP SHELL ────────────────────────────────────────────────────── */
 .admin-wrapper {
   display: flex;
   height: 100vh;
   overflow: hidden;
   background: var(--bg-main);
+}
+
+.sidebar-placeholder {
+  width: 72px; /* Matches --sidebar-mini */
+  min-width: 72px;
+  flex-shrink: 0;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--bg-main);
+  border-right: 1px solid var(--border-light);
+  overflow: visible;
+  z-index: 100;
+}
+
+/* Expansion sync — expands placeholder area for flex layout stability */
+.sidebar-placeholder:has(.admin-sidebar:hover) {
+  width: 200px; /* Matches --sidebar-full */
+  min-width: 200px;
 }
 
 .admin-main {
@@ -435,8 +451,6 @@ body {
 .font-mono  { font-family: 'Courier New', monospace; font-weight: 600; }
 
 /* Responsive hide helpers */
-.hide-xs { }
-.hide-sm { }
 
 /* Customer cell with avatar */
 .customer-cell {
@@ -739,6 +753,23 @@ body {
 #dynamic-content iframe {
   border: none !important; outline: none !important;
   background: transparent !important; width: 100% !important; height: 100% !important;
+}
+
+/* ── RESPONSIVE: SHELL ADAPTATION ─────────────────────────────────────────── */
+
+@media (max-width: 992px) {
+  .sidebar-placeholder {
+    display: none;
+  }
+  
+  .admin-header {
+    left: 0 !important; /* Topbar fills screen width */
+    width: 100% !important;
+  }
+
+  .admin-body {
+    padding: 1.25rem 1rem 3rem; /* Tighter padding for mobile */
+  }
 }
 
 /* ── RESPONSIVE — Container Queries ────────────────────────────────────── */

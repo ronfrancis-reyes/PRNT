@@ -8,7 +8,7 @@
     <!-- UI Core -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="styles.css?v=2.0">
+    <link rel="stylesheet" href="styles.css?v=2.2">
 
     <!-- PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -86,6 +86,6 @@
 
     </div><!-- /page-content -->
 
-    <script src="script.js?v=2.0"></script>
+    <script src="script.js?v=2.2"></script>
 </body>
 </html>

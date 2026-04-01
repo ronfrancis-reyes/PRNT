@@ -85,16 +85,8 @@ async function viewUserDetails(target) {
   const row = target.tagName === 'TR' ? target : target.closest('tr');
   if (!row) return;
 
-  // 2. Extract data BEFORE closing any panels (which might nullify globals)
-  const d = row.dataset;
-  const user = {
-    id:        d.userId     || '—',
-    name:      d.name       || '—',
-    email:     d.email      || '—',
-    status:    d.status     || 'Active',
-    phone:     d.phone      || '—',
-    lastOrder: d.lastOrder || 'None'
-  };
+  // 2. Extract data BEFORE closing any panels
+  const user = getFullUserData(row);
 
   // 3. Clear transient UI elements
   closeActionPanel(); 
@@ -108,23 +100,24 @@ async function viewUserDetails(target) {
     if (dots) dots.classList.remove('active');
   }
 
-  // 4. Update the high-fidelity modal placeholders
-  const populate = (id, val) => {
-    const el = document.getElementById(id);
+  // 4. Update placeholders using new class structure
+  const set = (sel, val) => {
+    const el = document.querySelector(sel);
     if (el) el.textContent = val;
   };
 
-  populate('v-user-id',    user.id);
-  populate('v-name',       user.name);
-  populate('v-email',      user.email);
-  populate('v-phone',      user.phone);
-  populate('v-last-order', user.lastOrder);
+  set('.m-user-id',      user.id);
+  set('.m-name',         user.name);
+  set('.m-total-orders', user.totalOrders);
+  set('.m-email',        user.email);
+  set('.m-contact',      user.contact);
+  set('.m-last-order',   user.lastOrder);
 
   // 5. Specialized status badge update
-  const statusEl = document.getElementById('v-status');
+  const statusEl = document.querySelector('.m-status');
   if (statusEl) {
     statusEl.textContent = user.status;
-    statusEl.className   = `badge badge-${user.status.toLowerCase()}`;
+    statusEl.className   = `badge m-status badge-${user.status.toLowerCase()}`;
   }
 
   // 6. Final display
@@ -286,20 +279,50 @@ function filterTable() {
   });
 }
 
+// BACKEND INTEGRATION POINT
+function getFullUserData(row) {
+  const d = row.dataset;
+  return {
+    id:          d.userId      || '—',
+    name:        d.name        || '—',
+    email:       d.email       || '—',
+    contact:     d.contact     || '—',
+    totalOrders: d.totalOrders || '0',
+    lastOrder:   d.lastOrder   || 'None',
+    status:      d.status      || 'Active',
+    address:     d.address     || 'No address provided'
+  };
+}
+
+// ACTION HANDLER
 function exportCSV() {
   var rows = Array.from(document.querySelectorAll('#tableBody tr'))
     .filter(function(r) { return r.style.display !== 'none'; });
   if (!rows.length) { alert('No users to export.'); return; }
-  var headers = ['User ID', 'User Name', 'Email', 'Status', 'Last Order'];
-  var data = rows.map(function(r) {
-    return Array.from(r.querySelectorAll('td')).slice(0, 5)
-      .map(function(td) { return '"' + td.innerText.trim().replace(/"/g, '""') + '"'; })
-      .join(',');
+
+  // BACKEND INTEGRATION POINT
+  // ACTION HANDLER
+  const exportData = rows.map(row => getFullUserData(row));
+
+  const headers = ['User ID', 'Name', 'Email', 'Contact Number', 'Total Orders', 'Last Order', 'Status', 'Address'];
+  
+  const data = exportData.map(user => {
+    return [
+      user.id,
+      user.name,
+      user.email,
+      user.contact,
+      user.totalOrders,
+      user.lastOrder,
+      user.status,
+      user.address
+    ].map(val => '"' + String(val).replace(/"/g, '""') + '"').join(',');
   });
+
   var blob = new Blob([[headers.join(',')].concat(data).join('\n')], { type: 'text/csv' });
   var a    = document.createElement('a');
   a.href   = URL.createObjectURL(blob);
-  a.download = 'users_' + Date.now() + '.csv';
+  a.download = 'users_export_' + new Date().toISOString().split('T')[0] + '.csv';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);

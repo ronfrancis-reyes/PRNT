@@ -155,9 +155,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Build iframe — NOTE: targetFolder must be a safe, server-validated path
                 dynamicContent.innerHTML = `
-                    <div style="width:100%;height:calc(100vh - 58px);overflow:hidden;position:relative;background:var(--bg-main);">
+                    <div style="width:100%;height:calc(100vh - 80px);overflow:hidden;position:relative;background:var(--bg-main);">
                         <iframe
-                            src="${encodeURI(targetFolder)}/index.php"
+                            src="${encodeURI(targetFolder)}/index.php?v=1.6"
                             style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
                             title="${targetFolder} module"
                             onload="this.contentWindow.focus()">

@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Method: GET
     const SAMPLE_DATA = {
         messages: [
-            { id: "1234", status: "unread", name: "John Smith", email: "john.smith@email.com", subject: "Issue with my recent print job (ORD-1234)", message: "Hello, I received my order ORD-1234 yesterday but the colors look washed out compared to the file I submitted. Could you please look into this? I need this resolved before Friday as it is for an event.", date: "Mar 24, 2026", time: "10:30 AM" },
-            { id: "1235", status: "read", name: "Sarah Johnson", email: "sarah.j@email.com", subject: "Inquiry about bulk tarpaulin discount", message: "Hi, we are planning a company event and need around 50 tarpaulins printed (4x8 ft each). Do you offer bulk pricing or discounts for large orders? We would also like to know the lead time for this quantity.", date: "Mar 23, 2026", time: "11:15 AM" },
-            { id: "1236", status: "read", name: "Mike Brown", email: "mike.b@email.com", subject: "Do you accept rush orders for tomorrow?", message: "Good afternoon! I need 100 copies of a 2-page document printed in colored, both sides. Can this be done by tomorrow morning? Please let me know ASAP so I can place the order today.", date: "Mar 21, 2026", time: "12:45 PM" },
-            { id: "1237", status: "unread", name: "Lena Cruz", email: "lena.cruz@email.com", subject: "Request for wedding invitation samples", message: "Hi! I am getting married in June and would like to inquire about your wedding invitation packages. Do you have sample designs we can choose from? Also, what paper stock do you recommend for a premium feel?", date: "Mar 20, 2026", time: "01:20 PM" },
-            { id: "1238", status: "read", name: "Carlos Dela Cruz", email: "carlos.dc@email.com", subject: "Lost receipt for order ORD-1190", message: "Good day! I misplaced the receipt for my order ORD-1190 placed last week. Could you send me a copy via email? My email on file is carlos.dc@email.com. Thank you very much.", date: "Mar 18, 2026", time: "02:10 PM" }
+            { id: "1234", status: "unread", name: "John Smith", contact: "0917-123-4567", email: "john.smith@email.com", subject: "Issue with my recent print job (ORD-1234)", message: "Hello, I received my order ORD-1234 yesterday but the colors look washed out compared to the file I submitted. Could you please look into this? I need this resolved before Friday as it is for an event.", date: "Mar 24, 2026", time: "10:30 AM" },
+            { id: "1235", status: "read", name: "Sarah Johnson", contact: "0921-555-8899", email: "sarah.j@email.com", subject: "Inquiry about bulk tarpaulin discount", message: "Hi, we are planning a company event and need around 50 tarpaulins printed (4x8 ft each). Do you offer bulk pricing or discounts for large orders? We would also like to know the lead time for this quantity.", date: "Mar 23, 2026", time: "11:15 AM" },
+            { id: "1236", status: "read", name: "Mike Brown", contact: "0934-222-1111", email: "mike.b@email.com", subject: "Do you accept rush orders for tomorrow?", message: "Good afternoon! I need 100 copies of a 2-page document printed in colored, both sides. Can this be done by tomorrow morning? Please let me know ASAP so I can place the order today.", date: "Mar 21, 2026", time: "12:45 PM" },
+            { id: "1237", status: "unread", name: "Lena Cruz", contact: "0915-777-6655", email: "lena.cruz@email.com", subject: "Request for wedding invitation samples", message: "Hi! I am getting married in June and would like to inquire about your wedding invitation packages. Do you have sample designs we can choose from? Also, what paper stock do you recommend for a premium feel?", date: "Mar 20, 2026", time: "01:20 PM" },
+            { id: "1238", status: "read", name: "Carlos Dela Cruz", contact: "0908-444-3322", email: "carlos.dc@email.com", subject: "Lost receipt for order ORD-1190", message: "Good day! I misplaced the receipt for my order ORD-1190 placed last week. Could you send me a copy via email? My email on file is carlos.dc@email.com. Thank you very much.", date: "Mar 18, 2026", time: "02:10 PM" }
         ]
     };
 
@@ -245,13 +245,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================
     function buildViewModal(row) {
         const name    = row.dataset.name    || '—';
+        const contact = row.dataset.contact || '—';
         const email   = row.dataset.email   || '—';
-        const subject = row.dataset.subject || '—';
         const message = row.dataset.message || '—';
         const date    = row.dataset.date    || '—';
         const id      = row.dataset.id      || '?';
-        const status  = row.dataset.status  || 'read';
-        const isUnread = status === 'unread';
 
         return `
             <div class="modal-header">
@@ -269,15 +267,19 @@ document.addEventListener('DOMContentLoaded', () => {
                             <div class="item-value">${name}</div>
                         </div>
                         <div class="detail-item">
-                            <span class="item-label">Email</span>
-                            <div class="item-value" style="word-break:break-all;">${email}</div>
+                            <span class="item-label">Contact Number</span>
+                            <div class="item-value">${contact}</div>
                         </div>
+                    </div>
+                    <div class="detail-item" style="margin-top: 10px;">
+                        <span class="item-label">Bulsu Email</span>
+                        <div class="item-value" style="word-break:break-all;">${email}</div>
                     </div>
                 </div>
                 <hr style="border: none; border-top: 1px dashed var(--border); margin: 0;">
                 <div class="detail-section">
                     <h4 class="section-tag" style="color: var(--orange);">MESSAGE DETAILS</h4>
-                    <div class="detail-grid grid-3">
+                    <div class="detail-grid grid-2">
                         <div class="detail-item">
                             <span class="item-label">Message ID</span>
                             <div class="item-value">#MSG-${id}</div>
@@ -285,18 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="detail-item">
                             <span class="item-label">Date/Time</span>
                             <div class="item-value">${date}</div>
-                        </div>
-                        <div class="detail-item">
-                            <span class="item-label">Status</span>
-                            <div class="item-value" style="color:${isUnread ? 'var(--orange)' : 'var(--muted)'}">
-                                ${isUnread ? 'Unread' : 'Read'}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="detail-grid" style="margin-top: 10px;">
-                        <div class="detail-item">
-                            <span class="item-label">Subject</span>
-                            <div class="item-value">${subject}</div>
                         </div>
                     </div>
                 </div>
@@ -520,10 +510,11 @@ document.addEventListener('DOMContentLoaded', () => {
             <table>
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Customer</th>
-                        <th>Subject</th>
-                        <th>Status</th>
+                        <th style="width: 15%;">Date</th>
+                        <th style="width: 15%;">Customer</th>
+                        <th style="width: 20%;">Subject</th>
+                        <th style="width: 40%;">Message</th>
+                        <th style="width: 10%;">Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -532,6 +523,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <td>${r.dataset.date    || ''}</td>
                             <td>${r.dataset.name    || ''}</td>
                             <td>${r.dataset.subject || ''}</td>
+                            <td style="white-space: normal; line-height: 1.4;">${r.dataset.message || ''}</td>
                             <td><span class="badge ${r.dataset.status === 'unread' ? 'u' : 'r'}">${r.dataset.status === 'unread' ? 'Unread' : 'Read'}</span></td>
                         </tr>`).join('')}
                 </tbody>
@@ -579,6 +571,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.dataset.id = item.id;
             tr.dataset.status = item.status;
             tr.dataset.name = item.name;
+            tr.dataset.contact = item.contact || '—';
             tr.dataset.email = item.email;
             tr.dataset.subject = item.subject;
             tr.dataset.message = item.message;

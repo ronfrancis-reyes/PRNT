@@ -34,6 +34,7 @@ function toggleMenu(btn) {
     '<button onclick="panelViewDetails()"><i class="bi bi-eye"></i> View Details</button>' +
     '<div class="ap-divider"></div>' +
     '<button onclick="panelSetStatus(\'Completed\')"><i class="bi bi-check-circle"></i> Mark as Completed</button>' +
+    '<button onclick="panelSetStatus(\'Delivering\')"><i class="bi bi-truck"></i> Mark as Delivering</button>' +
     '<button onclick="panelSetStatus(\'Processing\')"><i class="bi bi-gear"></i> Mark as Processing</button>' +
     '<button onclick="panelSetStatus(\'Pending\')"><i class="bi bi-clock"></i> Mark as Pending</button>' +
     '<div class="ap-divider"></div>' +
@@ -61,17 +62,21 @@ function panelViewDetails() {
   var d = activeRow.dataset;
   closeActionPanel();
 
-  var addressLabel = (d.receiving === 'Pick-up') ? 'pick-up location' : 'address';
+  // SAMPLE DATA
+  const orderDetails = {
+    pages: d.pages || 10, // BACKEND INTEGRATION POINT
+    location: d.location || d.address || "Sample Address"
+  };
 
   var html =
     '<div class="m-section-title"><i class="bi bi-person"></i> User Details</div>' +
     row3(field('customer', d.customer), field('email', d.email), field('phone', d.phone)) +
-    '<div class="m-card m-full"><div class="m-label">' + addressLabel + '</div><div class="m-val">' + (d.address || '—') + '</div></div>' +
     '<div class="m-section-title"><i class="bi bi-receipt"></i> Order Details</div>' +
     row2(field('order id', d.orderId), field('date', d.date)) +
     row2(field('service', d.service), field('file', d.file)) +
     row2(field('print type', d.printType), field('paper size', d.paperSize)) +
-    row2(field('copies', d.copies), field('receiving', d.receiving)) +
+    row2(field('number of pages', orderDetails.pages), field('copies', d.copies)) +
+    row2(field('receiving', d.receiving), field('location', orderDetails.location)) +
     '<div class="m-notes"><div class="m-label">additional notes</div><div class="m-val italic">' + (d.notes || 'None') + '</div></div>' +
     '<div class="m-total">' +
       '<div><div class="m-label">total amount</div><div class="m-amount">' + (d.amount || '—') + '</div></div>' +
@@ -196,17 +201,48 @@ function filterTable() {
   });
 }
 
+// BACKEND INTEGRATION POINT
+function getFullOrderData(orderId, orderElements) {
+  var row = orderElements.find(r => r.dataset.orderId === orderId);
+  var d = row ? row.dataset : {};
+  return {
+    orderId: d.orderId || orderId,
+    customer: d.customer || '',
+    service: d.service || '',
+    printType: d.printType || '',
+    paperSize: d.paperSize || '',
+    pages: d.pages || 10,
+    copies: d.copies || '',
+    receiving: d.receiving || '',
+    location: d.location || d.address || "Sample Location",
+    notes: d.notes || "Sample note",
+    amount: d.amount || '',
+    date: d.date || '',
+    file: d.file || '',
+    status: d.status || ''
+  };
+}
+
+// ACTION HANDLER
 function exportCSV() {
   var rows = Array.from(document.querySelectorAll('#tableBody tr'))
     .filter(function(r) { return r.style.display !== 'none'; });
   if (!rows.length) return;
-  var headers = ['Order ID', 'Customer', 'Time', 'Service', 'File', 'Amount', 'Option', 'Status'];
+  
+  // ACTION HANDLER
+  // BACKEND INTEGRATION POINT
+  const exportData = rows.map(order => getFullOrderData(order.dataset.orderId, rows));
+
+  var headers = ['Order ID', 'Customer', 'File', 'Service', 'Print Type', 'Paper Size', 'Number of Pages', 'Copies', 'Receiving Option', 'Location', 'Notes', 'Total', 'Date'];
+  
   var csv = [headers.join(',')].concat(
-    rows.map(function(r) {
-      return Array.from(r.cells).slice(0, 8)
-        .map(function(td) { return '"' + td.innerText.trim() + '"'; }).join(',');
+    exportData.map(function(d) {
+      return [
+        d.orderId, d.customer, d.file, d.service, d.printType, d.paperSize, d.pages, d.copies, d.receiving, d.location, d.notes, d.amount, d.date
+      ].map(function(val) { return '"' + String(val).replace(/"/g, '""') + '"'; }).join(',');
     })
   ).join('\n');
+  
   var a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
   a.download = 'orders.csv';
