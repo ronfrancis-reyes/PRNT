@@ -237,14 +237,4 @@ function calculateEstimatedPrice(id) {
 	updatePrice(estimatedPrice);
 }
 
-function addToCart() {
-	const selectedColor = $("#colorType option:selected");
-	const markup = selectedColor.data("markup"); // jQuery reads data-* from the option
-
-	const selectedSize = $("#paperSize option:selected");
-	const sizePrice = selectedSize.data("price"); // Assuming price is stored as data-price in the option
-
-	console.log("copies " + parseInt($("#copies").val()));
-	console.log("markup " + markup);
-	console.log("price " + sizePrice);
-}
+function addToCart() {}
