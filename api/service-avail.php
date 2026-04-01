@@ -48,6 +48,32 @@ if (isset($_GET['action'])) {
             exit;
         }
     }
+    if ($_GET['action'] == 'getSizes') {
+        $id = $_GET['id'];
+        $sql = $conn->prepare("SELECT size_id, size, price FROM sizes WHERE service_id = ?");
+        $sql->bind_param("i", $id);
+        
+        if ($sql->execute()) {
+            $result = $sql->get_result();
+            $data = [];
+
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'query successful',
+                'data' => $data
+            ]);
+            exit;
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'query failed'
+            ]);
+            exit;
+        }
+    }
     exit;
 }
 

@@ -95,7 +95,7 @@ if (!isset($_SESSION['user'])) {
                 <!-- 1. Upload Section -->
                 <div class="card flow-step animate-fade">
                     <h3><span class="step-num">1</span> Upload Files</h3>
-                    <input type="file" id="fileInput" multiple style="display:none;" onchange="handleFileUpload(event)">
+                    <input type="file" id="fileInput" multiple style="display:none;" onchange="handleFileUpload(event)" accept="application/pdf,image/*">
                     <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <h4>Click or drag files here</h4>
@@ -122,8 +122,10 @@ if (!isset($_SESSION['user'])) {
                         <div style="display:flex;align-items:center;gap:1rem;">
                             <i class="fas fa-file-pdf" style="font-size:2rem;color:var(--primary);"></i>
                             <div>
-                                <div style="font-weight:700; color:var(--primary-dark);" id="previewFileName">filename.pdf</div>
-                                <div style="font-size:0.85rem;color:var(--text-muted);" id="previewFileSize">2.4 MB</div>
+                                <!-- container for file info -->
+                                <div style="font-weight:700; color:var(--primary-dark);" id="previewFileName"></div>
+                                <div style="font-size:0.85rem;color:var(--text-muted);" id="previewPageCount"></div>
+                                <div style="font-size:0.85rem;color:var(--text-muted);" id="previewFileSize"></div>
                             </div>
                         </div>
                     </div>
@@ -131,7 +133,7 @@ if (!isset($_SESSION['user'])) {
                     <div class="form-group" style="margin-bottom:1.25rem;">
                         <label for="serviceFormat"
                             style="display:block;margin-bottom:0.5rem;font-weight:600;font-size:0.9rem;">Service / Format</label>
-                        <select id="serviceFormat" onchange="handleFormatChange()"
+                        <select id="serviceFormat" onchange="getSizes(this.value)"
                             style="width:100%;padding:0.85rem;border:1px solid var(--border);border-radius:var(--radius);outline:none;background:white;">
                             <option value="">Select a service...</option>
                         </select>
@@ -141,27 +143,27 @@ if (!isset($_SESSION['user'])) {
                         <div class="form-group">
                             <label for="colorType" style="display:block;margin-bottom:0.5rem;font-weight:600;font-size:0.9rem;">Color
                                 Type</label>
-                            <select id="colorType" onchange="updatePrice()"
-                                style="width:100%;padding:0.85rem;border:1px solid var(--border);border-radius:var(--radius);outline:none;background:white;">
-                            <option value="">Select a color type...</option>
+                            <select id="colorType"
+                                style="width:100%;padding:0.85rem;border:1px solid var(--border);border-radius:var(--radius);outline:none;background:white;"
+                                onchange="calculateEstimatedPrice()">
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="paperSize" style="display:block;margin-bottom:0.5rem;font-weight:600;font-size:0.9rem;">Paper
                                 Size</label>
-                            <select id="paperSize" onchange="handleSizeChange()"
+                            <select id="paperSize" onchange="showCustomSizeInput(this); calculateEstimatedPrice()"
                                 style="width:100%;padding:0.85rem;border:1px solid var(--border);border-radius:var(--radius);outline:none;background:white;">
                                 <option value="">Select service first</option>
                             </select>
-                            <input type="text" id="customSizeInput" placeholder="e.g. 10x15 inches"
-                                style="display:none; margin-top:0.5rem; width:100%; padding:0.85rem; border:1px solid var(--border); border-radius:var(--radius);">
+                            <div id="customSizeInput" style="display:none; margin-top:0.5rem; width:100%; display:flex; align-items:center; gap:0.5rem;">
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group" style="margin-bottom:1.5rem;">
                         <label for="copies"
                             style="display:block;margin-bottom:0.5rem;font-weight:600;font-size:0.9rem;">Copies</label>
-                        <input type="number" id="copies" min="1" value="1" onchange="updatePrice()" onkeyup="updatePrice()"
+                        <input type="number" id="copies" min="1" value="1" onchange="calculateEstimatedPrice()"
                             style="width:100%;padding:0.85rem;border:1px solid var(--border);border-radius:var(--radius);outline:none;background:white;">
                     </div>
 
@@ -169,7 +171,7 @@ if (!isset($_SESSION['user'])) {
                         style="display:flex; justify-content:space-between; align-items:center; background:var(--background); padding:1.25rem; border-radius:var(--radius); border-left:4px solid var(--primary);">
                         <div><span style="font-weight:700; color:var(--text-dark);">Estimated Price</span><br><small
                                 style="color:var(--text-muted);">per item</small></div>
-                        <div style="font-size:1.5rem; font-weight:800; color:var(--primary);" id="priceDisplay">₱0.00</div>
+                        <div style="font-size:1.5rem; font-weight:800; color:var(--primary);" id="priceDisplay">₱----</div>
                     </div>
 
                     <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:2rem; padding:1.25rem;"
