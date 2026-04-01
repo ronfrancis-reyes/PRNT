@@ -203,7 +203,9 @@ if (!isset($_SESSION['user'])) {
                             </th>
                         </tr>
                     </thead>
-                    <tbody id="cartBody"></tbody>
+                    <tbody id="cartBody">
+                        <!--container of cart items-->
+                    </tbody>
                 </table>
 
                 <div
@@ -221,15 +223,16 @@ if (!isset($_SESSION['user'])) {
                                 style="flex:1; padding:1.5rem; border:2px solid var(--border); border-radius:var(--radius); cursor:pointer; text-align:center; transition:var(--transition);">
                                 <i class="fas fa-truck" style="font-size:2rem; margin-bottom:0.75rem; color:var(--primary);"></i>
                                 <div style="font-weight:700;">Delivery</div>
-                                <div style="font-size:0.85rem; color:var(--text-muted);">+₱50.00</div>
+                                <div style="font-size:0.85rem; color:var(--text-muted);">+₱10.00</div>
                             </div>
                         </div>
 
-                        <div id="deliveryLocationBlock" style="margin-bottom:2rem; display:none;">
+                        <div id="deliveryLocationBlock" style="margin-bottom:2rem; display:none; overflow: visible;">
                             <label for="deliveryLocation" style="display:block; margin-bottom:0.75rem; font-weight:600;">Delivery
                                 Destination</label>
                             <select id="deliveryLocation"
-                                style="width:100%; padding:1rem; border:1px solid var(--border); border-radius:var(--radius); outline:none; background:white; font-size:1rem;">
+                                style="width:100%; padding:1rem; border:1px solid var(--border); border-radius:var(--radius); outline:none; background:white; font-size:1rem;    position: relative;
+    z-index: 10;">
                             </select>
                         </div>
 
@@ -238,6 +241,7 @@ if (!isset($_SESSION['user'])) {
                                 Method</label>
                             <select id="paymentMethod"
                                 style="width:100%; padding:1rem; border:1px solid var(--border); border-radius:var(--radius); outline:none; background:white; font-size:1rem;">
+                                
                             </select>
                         </div>
 

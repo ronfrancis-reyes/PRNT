@@ -74,7 +74,54 @@ if (isset($_GET['action'])) {
             exit;
         }
     }
-    exit;
+    if ($_GET['action'] == 'getPaymentMethods') {
+        $sql = $conn->prepare("SELECT * FROM payments");
+        if ($sql->execute()) {
+            $result = $sql->get_result();
+            $data = [];
+
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'query successful',
+                'data' => $data
+            ]);
+            exit;
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'query failed'
+            ]);
+            exit;
+        }
+    }
+    if ($_GET['action'] == 'getLocations') {
+        $sql = $conn->prepare("SELECT * FROM addresses ORDER BY building ASC");
+
+        if ($sql->execute()) {
+            $result = $sql->get_result();
+            $data = [];
+
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+
+            echo json_encode([
+                'status' => 'successful',
+                'message' => 'query successful',
+                'data' => $data
+            ]);
+            exit;
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'query failed'
+            ]);
+            exit;
+        }
+    }
 }
 
 if (isset($_POST['action'])) {
@@ -88,6 +135,7 @@ if (isset($_POST['action'])) {
                 "status" => "success",
                 "message" => "Order placed successfully"
             ]);
+            exit;
         } else {
             echo json_encode([
                 "status" => "error",
@@ -96,7 +144,6 @@ if (isset($_POST['action'])) {
         }
         exit;
     }
-    exit;
 
     $uploadDir = __DIR__ . "/../uploads/";
 
@@ -132,5 +179,4 @@ if (isset($_POST['action'])) {
         ]);
         exit;
     }
-    exit;
 }

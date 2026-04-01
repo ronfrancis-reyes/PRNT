@@ -9,6 +9,8 @@ let pageCount = 0;
 $(document).ready(function () {
 	getServices();
 	getColorType();
+	getPaymentMethods();
+	getLocations();
 });
 
 function handleFileUpload(e) {
@@ -172,6 +174,32 @@ function getSizes(id) {
 	});
 }
 
+function getPaymentMethods() {
+	$.ajax({
+		type: "GET",
+		url: API,
+		data: "action=getPaymentMethods",
+		success: function (response) {
+			let reply = JSON.parse(response);
+			let payments = reply.data;
+			displayPaymentMethods(payments);
+		},
+	});
+}
+
+function getLocations() {
+	$.ajax({
+		type: "GET",
+		url: API,
+		data: "action=getLocations",
+		success: function (response) {
+			let reply = JSON.parse(response);
+			let locations = reply.data;
+			displayLocations(locations);
+		},
+	});
+}
+
 //display functions
 function displayServiceOptions(services) {
 	const container = $("#serviceFormat");
@@ -205,6 +233,24 @@ function displaySizeOptions(sizes) {
 	container.html(sizeHtml);
 }
 
+function displayPaymentMethods(payments) {
+	const container = $("#paymentMethod");
+	payments.forEach((payment) => {
+		container.append(`
+				<option value="${payment.payment_id}">${payment.payment_type}</option>
+			`);
+	});
+}
+
+function displayLocations(locations) {
+	locations.forEach((location) => {
+		$("#deliveryLocation").append(`
+			<option value="${location.address_id}">${location.building}</option>
+			`);
+	});
+}
+
+//logics
 function updatePrice(estimatedPrice) {
 	$("#priceDisplay").text(
 		estimatedPrice.toLocaleString("en-PH", {
@@ -237,4 +283,136 @@ function calculateEstimatedPrice(id) {
 	updatePrice(estimatedPrice);
 }
 
-function addToCart() {}
+function addToCart() {
+	if (!selectedFileId) {
+		alert("Please select a file from your library first.");
+		return;
+	}
+
+	const file = currentFiles.find((file) => file.id === selectedFileId);
+	const formatEl = $("#serviceFormat");
+	const sizeEl = $("#paperSize");
+	const typeEl = $("#colorType");
+	const copiesEl = $("#copies");
+	const priceEl = $("#priceDisplay");
+
+	if (!formatEl.val()) {
+		alert("Please select a service type.");
+		return;
+	}
+	if (!sizeEl.val()) {
+		alert("Select paper size.");
+		return;
+	}
+
+	const item = {
+		id: "ITEM-" + Math.random().toString(36).substr(2, 6).toUpperCase(), //id only for cart
+
+		fileName: file.name,
+		fileSize: file.size,
+
+		service: $("#serviceFormat option:selected").text(),
+		service_id: formatEl.val(),
+
+		color: $("#colorType option:selected").text(),
+		color_id: typeEl.val(),
+
+		size: $("#paperSize option:selected").text(),
+		size_id: sizeEl.val(),
+
+		copies: parseInt(copiesEl.val()),
+		amount: parseFloat(priceEl.text().replace("₱", "")),
+	};
+
+	cart.push(item);
+
+	const cartSection = document.getElementById("cartSection");
+	if (cartSection) {
+		cartSection.style.display = "block";
+		setTimeout(() => cartSection.scrollIntoView({ behavior: "smooth" }), 200);
+	}
+	removeFile(selectedFileId);
+	selectedFileId = null;
+	renderCart();
+}
+
+function renderCart() {
+	const body = document.getElementById("cartBody");
+	if (!body) return;
+
+	if (cart.length === 0) {
+		body.innerHTML =
+			'<tr><td colspan="6" style="text-align:center;padding:3rem;color:#94A3B8;">No items in your order yet.</td></tr>';
+		return;
+	}
+
+	body.innerHTML = cart
+		.map(
+			(item, idx) => `
+				<tr style="border-bottom: 1px solid var(--border); background: #FFFFFF;">
+				<td style="padding:1.25rem;">
+					<div style="display:flex; align-items:center; gap:0.75rem;">
+					<div style="width:38px;height:38px;background:#FFF0ED;color:#EE4D2D;border-radius:8px;display:flex;align-items:center;justify-content:center; flex-shrink:0;">
+						<i class="fas fa-file-alt"></i>
+					</div>
+					<div style="min-width:0;">
+						<div style="font-weight:700; font-size:0.88rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:160px;">${item.fileName}</div>
+						<div style="font-size:0.75rem; color:var(--text-muted);">${item.fileSize}</div>
+					</div>
+					</div>
+				</td>
+				<td style="padding:1.25rem; font-weight:600; font-size:0.9rem;">${item.service}</td>
+				<td style="padding:1.25rem;">
+					<div style="font-size:0.88rem;">${item.size}</div>
+					<div style="font-size:0.75rem; color:#94A3B8; font-weight:600; text-transform:uppercase;">${item.color}</div>
+				</td>
+				<td style="padding:1.25rem; font-weight:700;">×${item.copies}</td>
+				<td style="padding:1.25rem; font-weight:800; color:#EE4D2D; font-size:1.1rem;">₱${item.amount.toFixed(2)}</td>
+				<td style="padding:1.25rem; text-align:right;">
+					<button onclick="removeFromCart(${idx})" style="width:34px;height:34px;border-radius:50%;border:none;background:#FFF0ED;color:#EE4D2D;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;" title="Remove">
+					<i class="fas fa-trash-alt" style="font-size:0.85rem;"></i>
+					</button>
+				</td>
+				</tr>
+			`,
+		)
+		.join("");
+	updateTotals();
+}
+
+function removeFromCart(cartIndex) {
+	cart.splice(cartIndex, 1);
+	if (cart.length === 0) {
+		document.getElementById("cartSection").style.display = "none";
+	} else {
+		updateTotals();
+		renderCart();
+	}
+}
+
+function selectReceiving(receivingChoice) {
+	selectedReceiving = receivingChoice;
+	document
+		.querySelectorAll(".radio-option")
+		.forEach((el) => el.classList.remove("selected"));
+	document.getElementById(`opt-${receivingChoice}`)?.classList.add("selected");
+	const locBlock = document.getElementById("deliveryLocationBlock");
+	const feeRow = document.getElementById("feeLabelRow");
+	if (locBlock) {
+		getLocations();
+		locBlock.style.display = receivingChoice === "delivery" ? "block" : "none";
+	}
+	if (feeRow)
+		feeRow.style.display = receivingChoice === "delivery" ? "flex" : "none";
+	updateTotals();
+}
+
+function updateTotals() {
+	const subtotal = cart.reduce((sum, item) => sum + (item.amount || 0), 0);
+	const delivery = selectedReceiving === "delivery" ? 10 : 0;
+	const total = subtotal + delivery;
+
+	$("#subtotal").text(`₱${subtotal.toFixed(2)}`);
+	$("#deliveryFee").text(`₱${delivery.toFixed(2)}`);
+	$("#totalAmount").text(`₱${total.toFixed(2)}`);
+}
