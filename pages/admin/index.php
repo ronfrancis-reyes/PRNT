@@ -185,6 +185,6 @@ $compPath = "../../components/";
 <!-- ══ GLOBAL TOAST CONTAINER ══════════════════════════════ -->
 <div id="toastContainer" aria-live="polite"></div>
 
-<script src="script.js?v=1.6"></script>
+<script src="script.js?v=2.0"></script>
 </body>
 </html>

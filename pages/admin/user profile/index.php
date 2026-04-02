@@ -5,27 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Profile | PRNT Admin</title>
 
-    <!-- ── Shared system assets (loaded by every admin page) ── -->
+    <!-- UI Core -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- ── System-level global CSS (variables, sidebar, topbar) ── -->
-    <!-- Adjust paths to match your project root -->
+    <!-- Global Variables & Sidebar -->
     <link rel="stylesheet" href="../../global/variables.css">
     <link rel="stylesheet" href="../../components/Admin Sidebar/sidebar.css">
     <link rel="stylesheet" href="../../components/Admin Topbar/topbar.css">
-
-    <!-- ── This module's styles ── -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=1.4">
 </head>
 <body>
 
 <div class="page-content">
             <div class="profile-grid">
 
-                <!-- ─────────────────────────────────────────────
-                     LEFT: Identity Card
-                     ───────────────────────────────────────────── -->
                 <div class="profile-sidebar-col">
                     <div class="profile-card text-center">
 
@@ -72,9 +66,6 @@
                     </div>
                 </div>
 
-                <!-- ─────────────────────────────────────────────
-                     RIGHT: Content panels
-                     ───────────────────────────────────────────── -->
                 <div class="profile-main-col">
 
                     <!-- Personal Information -->
@@ -106,14 +97,9 @@
                         </div>
                     </div>
 
-                    <!-- ──────────────────────────────────────────
-                         Change Password
-                         Collapsible panel — NO overlay, NO modal.
-                         Toggled inline by clicking the card header.
-                         ────────────────────────────────────────── -->
+                    <!-- Change Password -->
                     <div class="profile-card profile-card-gap">
 
-                        <!-- Header row — click to expand/collapse -->
                         <div class="profile-card-hd pw-toggle-hd" id="pwToggle" role="button" aria-expanded="false" aria-controls="passwordPanel" tabindex="0">
                             <h5 class="profile-card-title">Change Password</h5>
                             <button class="profile-btn profile-btn-ghost profile-btn-sm" type="button" tabindex="-1">
@@ -121,10 +107,8 @@
                             </button>
                         </div>
 
-                        <!-- Collapsible body — expands below header, no overlay -->
                         <div class="pw-panel" id="passwordPanel" aria-hidden="true">
 
-                            <!-- Sub-header row inside panel: "Update Your Password" + Cancel -->
                             <div class="pw-inner-hd">
                                 <h6 class="pw-inner-title">Update Your Password</h6>
                                 <button class="profile-btn profile-btn-ghost profile-btn-sm" id="cancelPwBtn" type="button">
@@ -232,11 +216,10 @@
                         </ul>
                     </div>
 
-                </div><!-- /profile-main-col -->
-            </div><!-- /profile-grid -->
-</div><!-- /page-content -->
+                </div>
+            </div>
+</div>
 
-<!-- ── This module's script ── -->
 <script src="script.js"></script>
 
 </body>

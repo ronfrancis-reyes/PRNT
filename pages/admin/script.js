@@ -47,7 +47,7 @@ const SAMPLE_DATA = {
     ],
     dashboard: {
         todayOrders:   48,
-        pendingOrders: 3, // REFACTORED: Match initial non-completed orders in sample data
+        pendingOrders: 7, // REFACTORED: Matches active orders in order management mock dataset
         todayRevenue:  8640,
         services: [
             { name: "Calling Cards", orders: 14 },
@@ -81,6 +81,28 @@ document.addEventListener('DOMContentLoaded', () => {
             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
         });
     }
+
+    // ============================================================
+    // SECTION: SIDEBAR BADGES
+    // ============================================================
+    window.updateSidebarBadge = function(section, count) {
+        let badgeEl;
+        if (section === 'orders') {
+            badgeEl = document.getElementById('pendingOrdersBadge');
+        } else if (section === 'reports' || section === 'messages') {
+            badgeEl = document.getElementById('unreadMessagesBadge');
+        }
+
+        if (badgeEl) {
+            badgeEl.textContent = count;
+            badgeEl.style.display = count > 0 ? 'inline-flex' : 'none';
+        }
+    };
+
+    // Initialize immediately so sidebar numbers display on page load
+    // (In production, populate these from a single /api/admin/metrics call)
+    window.updateSidebarBadge('orders', SAMPLE_DATA.dashboard.pendingOrders || 7);
+    window.updateSidebarBadge('reports', 5); // Accurate mock unread messages from reports dataset
 
     // ── Selectors used across multiple sections ───────────────────────────────
     const navLinks       = document.querySelectorAll('[data-section]');
@@ -134,8 +156,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     || this.textContent.trim();
             }
 
-            // Close sidebar on mobile after navigation
+            // Close sidebar on mobile and clear open dropdowns after navigation
             _closeMobileSidebar();
+            if (typeof window.closeAllDropdowns === 'function') {
+                window.closeAllDropdowns();
+            }
 
             if (builtInViews.includes(targetSection)) {
                 // Built-in view (Dashboard)
@@ -157,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 dynamicContent.innerHTML = `
                     <div style="width:100%;height:calc(100vh - 80px);overflow:hidden;position:relative;background:var(--bg-main);">
                         <iframe
-                            src="${encodeURI(targetFolder)}/index.php?v=1.6"
+                            src="${encodeURI(targetFolder)}/index.php?v=1.7"
                             style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
                             title="${targetFolder} module"
                             onload="this.contentWindow.focus()">

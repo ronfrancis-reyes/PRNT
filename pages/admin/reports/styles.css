@@ -1,5 +1,5 @@
 /* ==========================================================================
-   DESIGN TOKENS — unchanged from original
+   DESIGN TOKENS
    ========================================================================== */
 :root {
   --orange:       #F47820;
@@ -25,24 +25,23 @@
    ========================================================================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* OBJECTIVE 1 — body padding: 0, content wrapper handles spacing */
 body.module-body {
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  background: transparent;
+  background: var(--bg);
   color: var(--text);
-  padding: 0;                   /* ← removed the 0.5rem 1rem */
+  padding: 0;
   -webkit-font-smoothing: antialiased;
 }
 
 /* ==========================================================================
-   OBJECTIVE 1 — PAGE-CONTENT WRAPPER
+   PAGE LAYOUT
    ========================================================================== */
 .page-content {
   padding: 1rem 1.25rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 0;                       /* toolbar/table share seamless border */
+  gap: 0;
 }
 
 /* ==========================================================================
@@ -91,7 +90,6 @@ body.module-body {
   border-radius: 0 0 10px 10px;
 }
 
-/* OBJECTIVE 9 — scroll wrapper for mobile */
 .table-scroll-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -103,10 +101,9 @@ table {
   min-width: 680px;
 }
 
-/* OBJECTIVE 6 — table title row / header */
 thead th {
   padding: 12px 16px;
-  text-align: left;
+  text-align: center;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -117,7 +114,6 @@ thead th {
   white-space: nowrap;
 }
 
-/* OBJECTIVE 6 — improved td spacing */
 tbody tr {
   border-bottom: 1px solid var(--border);
   transition: background 0.15s;
@@ -129,11 +125,12 @@ tbody td {
   padding: 15px 16px;
   font-size: 14px;
   vertical-align: middle;
+  text-align: center;
 }
 
 .msg-id { font-weight: 600; color: var(--orange); }
 
-/* Column widths */
+/* Column Layouts */
 .col-msg-id  { width: 100px; white-space: nowrap; }
 .col-date    { width: 120px; white-space: nowrap; }
 .col-customer{ min-width: 150px; }
@@ -169,7 +166,7 @@ tbody td {
 .badge-read   { background: rgba(107,114,128,0.12); color: #6b7280; }
 
 /* ==========================================================================
-   OBJECTIVE 8 — ACTION DROPDOWN (3-dot, click-based)
+   ACTION DROPDOWN
    ========================================================================== */
 .action-wrap {
   position: relative;
@@ -181,7 +178,6 @@ tbody td {
 .btn-actions:hover,
 .btn-actions.open { background: var(--bg-input); color: var(--orange); }
 
-/* Dropdown — click-driven (not hover) */
 .action-dropdown {
   display: none;
   position: absolute;
@@ -199,7 +195,6 @@ tbody td {
 
 .action-dropdown.open { display: block; }
 
-/* Flip upward when near bottom — toggled by JS */
 .action-dropdown.flip-up {
   top: auto;
   bottom: calc(100% + 6px);
@@ -254,7 +249,7 @@ tbody td {
 .empty-state span { font-size: 12.5px; opacity: 0.7; }
 
 /* ==========================================================================
-   OBJECTIVE 4 — TOAST NOTIFICATIONS (high z-index, top-right, no clip)
+   TOAST NOTIFICATIONS
    ========================================================================== */
 #toastContainer {
   position: fixed;
@@ -300,7 +295,7 @@ tbody td {
 .toast span { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1; }
 
 /* ==========================================================================
-   OBJECTIVE 5 — MODAL
+   MODAL
    ========================================================================== */
 .modal-overlay {
   position: fixed;
@@ -342,11 +337,9 @@ tbody td {
   opacity: 1;
 }
 
-/* Modal scrollbar */
 .modal-card::-webkit-scrollbar { width: 4px; }
 .modal-card::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-/* Modal inner layout */
 .modal-header {
   display: flex;
   align-items: center;
@@ -379,7 +372,6 @@ tbody td {
 
 .modal-body-inner { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
 
-/* Detail grid */
 .detail-section { display: flex; flex-direction: column; gap: 10px; }
 .section-tag {
   font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.9px;
@@ -400,7 +392,6 @@ tbody td {
 .item-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--muted); display: block; margin-bottom: 4px; }
 .item-value { font-size: 13.5px; font-weight: 600; color: var(--text); word-break: break-word; }
 
-/* Message box */
 .accent-box {
   background: var(--orange-soft);
   border: 1px solid rgba(244,120,32,0.2);
@@ -411,7 +402,6 @@ tbody td {
 .accent-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; color: var(--orange); display: block; margin-bottom: 8px; }
 .accent-content { font-size: 13.5px; color: var(--text); line-height: 1.65; }
 
-/* Modal footer */
 .modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -420,19 +410,8 @@ tbody td {
   border-top: 1px solid var(--border);
 }
 
-/* Standardized Delete Modal Styles (Matching Order Management) */
-.delete-modal-content {
-  padding: 2.5rem 2rem;
-  text-align: center;
-}
-.delete-icon {
-  font-size: 2.8rem;
-  color: var(--danger);
-  margin-bottom: 1.25rem;
-  filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.25));
-}
 /* ==========================================================================
-   STANDARD DELETE MODAL — OBJECTIVE: PARITY WITH ORDER MANAGEMENT (Objective 1)
+   STANDARD DELETE MODAL
    ========================================================================== */
 .modal-card.modal-box-sm {
     max-width: 400px;
@@ -444,7 +423,6 @@ tbody td {
     gap: 0 !important;
 }
 
-/* Remove default header for delete variant */
 .modal-card.modal-box-sm .modal-header {
     display: none !important;
 }
@@ -519,15 +497,14 @@ tbody td {
 }
 
 /* ==========================================================================
-   RESPONSIVE — OBJECTIVE 9
+   RESPONSIVE DESIGN
    ========================================================================== */
 @media (max-width: 768px) {
   .section-header { flex-direction: column; align-items: flex-start; }
   .section-header-right { width: 100%; }
-  .btn-export span { display: none; }  /* icon only on mobile */
+  .btn-export span { display: none; }
   .detail-grid.grid-3 { grid-template-columns: 1fr 1fr; }
 
-  /* Hide less critical columns */
   .col-date    { display: none; }
   thead .col-date { display: none; }
 }

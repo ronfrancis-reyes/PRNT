@@ -1,20 +1,13 @@
 /* ==========================================================================
-   GLOBAL RESET — Objective: Layout Safety
-   Ensures all elements (especially inputs with width: 100%) are measured 
-   correctly to prevent overflows and overlapping issues.
+   GLOBAL RESET
    ========================================================================== */
 *, *::before, *::after {
     box-sizing: border-box;
 }
 
 /* ==========================================================================
-   USER PROFILE MODULE — styles.css v3.0
-   Scope: profile-* classes only. Does NOT override sidebar/topbar/global.
-   Variables are inherited from ../../global/variables.css via the shell.
-   Fallbacks defined below only activate when run standalone (preview/dev).
+   USER PROFILE MODULE
    ========================================================================== */
-
-/* ── Dev-only fallback tokens — shell's variables.css wins in production ── */
 :root {
     --primary:          #FF6B00;
     --primary-soft:     rgba(255, 107, 0, 0.10);
@@ -38,8 +31,7 @@
 }
 
 /* ==========================================================================
-   GLOBAL RESET — Objective: Font Consistency
-   Ensures the profile module typography matches the rest of the dashboard.
+   TYPOGRAPHY
    ========================================================================== */
 body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -50,7 +42,6 @@ body {
 
 /* ==========================================================================
    PAGE HEADER
-   Sits inside .admin-body — matches dashboard heading style.
    ========================================================================== */
 .profile-page-header {
     margin-bottom: 1.75rem;
@@ -71,7 +62,7 @@ body {
 }
 
 /* ==========================================================================
-   PROFILE GRID — 2-column, collapses to 1 below 900 px
+   PROFILE GRID
    ========================================================================== */
 .profile-grid {
     display: grid;
@@ -85,7 +76,7 @@ body {
 }
 
 /* ==========================================================================
-   PROFILE CARD — uses system surface / border tokens
+   PROFILE CARD
    ========================================================================== */
 .profile-card {
     background: var(--surface);
@@ -124,7 +115,7 @@ body {
 }
 
 /* ==========================================================================
-   LEFT COLUMN — Identity card
+   LEFT COLUMN - Identity Card
    ========================================================================== */
 .profile-sidebar-col .profile-card {
     text-align: center;
@@ -241,8 +232,7 @@ body {
 }
 
 /* ==========================================================================
-   BUTTONS — scoped with .profile-btn prefix
-   Mirrors global .btn-primary / .btn-success pattern exactly.
+   BUTTONS
    ========================================================================== */
 .profile-btn {
     display: inline-flex;
@@ -321,7 +311,7 @@ body {
 }
 
 /* ==========================================================================
-   FORM — inputs, labels, grid
+   FORM
    ========================================================================== */
 .profile-form-grid {
     display: grid;
@@ -469,8 +459,7 @@ body {
 }
 
 /* ==========================================================================
-   CHANGE PASSWORD — collapsible panel
-   NO overlay. NO modal. Expands inline below the card header.
+   CHANGE PASSWORD
    ========================================================================== */
 
 /* Cursor + hover on the clickable header */
@@ -530,7 +519,7 @@ body {
     .activity-stats-grid { grid-template-columns: 1fr 1fr; }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
     .activity-stats-grid { grid-template-columns: 1fr; }
 }
 
@@ -634,9 +623,70 @@ body {
 }
 
 /* ==========================================================================
-   RESPONSIVE EXTRAS
+   RESPONSIVE
    ========================================================================== */
-@media (max-width: 640px) {
-    .profile-card { padding: 1.1rem; }
-    .profile-page-title { font-size: 1.2rem; }
+@media (max-width: 992px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-sidebar-col {
+        position: static;
+        margin-bottom: 0;
+    }
+
+    .profile-info-list {
+        align-items: center;
+    }
+
+    .profile-info-row {
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-card {
+        padding: 1.25rem;
+    }
+
+    .profile-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .activity-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-btn-primary,
+    .profile-btn-ghost,
+    .profile-btn-success {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-card {
+        padding: 1.1rem;
+    }
+
+    .profile-page-title {
+        font-size: 1.2rem;
+    }
+
+    .profile-avatar {
+        width: 74px;
+        height: 74px;
+        font-size: 1.5rem;
+    }
+
+    .avatar-container {
+        width: 74px;
+        height: 74px;
+    }
+
+    .profile-card-hd {
+        flex-wrap: wrap;
+    }
 }

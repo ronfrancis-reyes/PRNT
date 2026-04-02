@@ -1,339 +1,392 @@
-// SAMPLE DATA (FRONTEND TESTING ONLY)
+// ===============================
+// SAMPLE DATA
+// ===============================
+// SAMPLE DATA
 // BACKEND INTEGRATION POINT
-// Endpoint: /api/admin/users
-// Method: GET
 const SAMPLE_DATA = {
-    users: [] // Note: Initial mock data is populated via HTML data attributes
+    users: [] // Initial mock data populated via HTML data attributes
 };
 
-// ==========================================================================
-// SECTION: ACTION DROPDOWN TOGGLE (IFRAME LOCAL)
-// ==========================================================================
-document.addEventListener('click', function (e) {
-  const dotBtn = e.target.closest('.btn-action-dots');
-  if (dotBtn) {
-    e.stopPropagation();
-    const dropdown = dotBtn.nextElementSibling;
-    
-    // Close other dropdowns
-    document.querySelectorAll('.action-dropdown.open').forEach(d => {
-      if (d !== dropdown) d.classList.remove('open');
+// ===============================
+// STATE MANAGEMENT
+// ===============================
+// STATE MANAGEMENT
+let activeRow = null;
+let rowToDelete = null;
+let rowToSuspend = null;
+
+// ===============================
+// DOM REFERENCES
+// ===============================
+let searchInput;
+let statusFilter;
+let tableBody;
+let actionPanel;
+let modalOverlay;
+let deleteOverlay;
+let suspendOverlay;
+let toast;
+let toastMsg;
+
+// ===============================
+// EVENT LISTENERS
+// ===============================
+function setupEventListeners() {
+    // Action Dropdown Toggle
+    document.addEventListener('click', (e) => {
+        const dotBtn = e.target.closest('.btn-action-dots');
+        if (dotBtn) {
+            e.stopPropagation();
+            const dropdown = dotBtn.nextElementSibling;
+            
+            document.querySelectorAll('.action-dropdown.open').forEach(d => {
+                if (d !== dropdown) d.classList.remove('open');
+            });
+            
+            dotBtn.classList.toggle('active');
+            dropdown.classList.toggle('open');
+            return;
+        }
+        document.querySelectorAll('.action-dropdown.open').forEach(d => d.classList.remove('open'));
     });
-    
-    dotBtn.classList.toggle('active');
-    dropdown.classList.toggle('open');
-    return;
-  }
-  // Close on outside click
-  document.querySelectorAll('.action-dropdown.open').forEach(d => d.classList.remove('open'));
-});
 
-var activeRow   = null;
-var rowToDelete = null;
-var rowToSuspend = null;
+    // Action Panel Close
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.btn-actions') && !e.target.closest('#actionPanel')) {
+            closeActionPanel();
+        }
+    });
 
-//  action panel 
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.btn-actions') && !e.target.closest('#actionPanel')) {
-    closeActionPanel();
-  }
-});
+    // ESC Key Support
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { 
+            closeModal(); 
+            closeDeleteModal(); 
+            closeSuspendModal(); 
+            closeActionPanel(); 
+        }
+    });
+
+    // Confirmation Buttons
+    document.getElementById('btnConfirmDelete').addEventListener('click', handleConfirmDelete);
+    document.getElementById('btnConfirmSuspend').addEventListener('click', handleConfirmSuspend);
+}
+
+// ===============================
+// CORE FUNCTIONS / LOGIC
+// ===============================
+
+function showToast(title, message = '', type = 'success') {
+    if (window.parent && window.parent !== window && typeof window.parent.showGlobalToast === 'function') {
+        window.parent.showGlobalToast(title, message, type);
+    } else {
+        console.log(`[Toast Fallback] ${type.toUpperCase()}: ${title} - ${message}`);
+    }
+}
+
+function getFullUserData(row) {
+    const d = row.dataset;
+    return {
+        id:          d.userId      || '—',
+        name:        d.name        || '—',
+        email:       d.email       || '—',
+        contact:     d.contact     || '—',
+        totalOrders: d.totalOrders || '0',
+        lastOrder:   d.lastOrder   || 'None',
+        lastFile:    d.lastFile    || 'None',
+        status:      d.status      || 'Active',
+        address:     d.address     || 'No address provided'
+    };
+}
+
+function filterTable() {
+    const q = searchInput.value.toLowerCase();
+    const s = statusFilter.value;
+    document.querySelectorAll('#tableBody tr').forEach(row => {
+        const matchQ = !q || row.innerText.toLowerCase().includes(q);
+        const matchS = !s || row.dataset.status === s;
+        row.style.display = matchQ && matchS ? '' : 'none';
+    });
+}
 
 function toggleMenu(btn) {
-  var panel  = document.getElementById('actionPanel');
-  var row    = btn.closest('tr');
+    const row = btn.closest('tr');
 
-  // clicking same button closes it
-  if (activeRow === row && panel.classList.contains('show')) {
-    closeActionPanel();
-    return;
-  }
+    if (activeRow === row && actionPanel.classList.contains('show')) {
+        closeActionPanel();
+        return;
+    }
 
-  activeRow = row;
-  var status = row.dataset.status;
+    activeRow = row;
+    const status = row.dataset.status;
 
-  //  suspend or activate button 
-  var suspendBtn = status === 'Suspended'
-    ? '<button onclick="panelActivate()"><i class="fas fa-user-check"></i> Activate User</button>'
-    : '<button onclick="panelSuspend()"><i class="fas fa-user-slash"></i> Suspend User</button>';
+    const suspendBtn = status === 'Suspended'
+        ? `<button onclick="panelActivate()"><i class="fas fa-user-check"></i> Activate Customer</button>`
+        : `<button onclick="panelSuspend()"><i class="fas fa-user-slash"></i> Suspend Customer</button>`;
 
-  panel.innerHTML =
-    '<div class="ap-header">Actions</div>' +
-    '<button onclick="panelViewDetails()"><i class="fas fa-eye"></i> View Details</button>' +
-    suspendBtn +
-    '<div class="ap-divider"></div>' +
-    '<button class="danger" onclick="panelDelete()"><i class="fas fa-trash"></i> Delete User</button>';
+    actionPanel.innerHTML = `
+        <div class="ap-header">Actions</div>
+        <button onclick="panelViewDetails()"><i class="fas fa-eye"></i> View Details</button>
+        ${suspendBtn}
+        <div class="ap-divider"></div>
+        <button class="danger" onclick="panelDelete()"><i class="fas fa-trash"></i> Delete Customer</button>
+    `;
 
-  // position beside the button
-  var rect = btn.getBoundingClientRect();
-  var left = rect.left - 208;
-  if (left < 8) left = rect.right + 8;
-  panel.style.top  = rect.top + 'px';
-  panel.style.left = left + 'px';
-  panel.classList.add('show');
+    const rect = btn.getBoundingClientRect();
+    let left = rect.left - 208;
+    if (left < 8) left = rect.right + 8;
+    actionPanel.style.top = rect.top + 'px';
+    actionPanel.style.left = left + 'px';
+    actionPanel.classList.add('show');
 }
 
 function closeActionPanel() {
-  document.getElementById('actionPanel').classList.remove('show');
-  activeRow = null;
+    actionPanel.classList.remove('show');
+    activeRow = null;
 }
 
-//  panel actions 
-// MODAL CONTROL
-async function viewUserDetails(target) {
-  // 1. Capture the row context immediately
-  const row = target.tagName === 'TR' ? target : target.closest('tr');
-  if (!row) return;
+function openOverlay(id) {
+    const o = document.getElementById(id);
+    if (!o) return;
+    o.style.display = 'flex';
+    o.classList.add('show');
+}
 
-  // 2. Extract data BEFORE closing any panels
-  const user = getFullUserData(row);
+function closeOverlay(id) {
+    const o = document.getElementById(id);
+    if (!o) return;
+    o.classList.remove('show');
+    o.style.display = 'none';
+}
 
-  // 3. Clear transient UI elements
-  closeActionPanel(); 
-  
-  const dropdown = target.closest && target.closest('.action-dropdown');
-  if (dropdown) dropdown.classList.remove('open');
-  
-  const actionWrap = target.closest && target.closest('.action-wrap');
-  if (actionWrap) {
-    const dots = actionWrap.querySelector('.btn-action-dots');
-    if (dots) dots.classList.remove('active');
-  }
+// ===============================
+// ACTION HANDLERS
+// ===============================
 
-  // 4. Update placeholders using new class structure
-  const set = (sel, val) => {
-    const el = document.querySelector(sel);
-    if (el) el.textContent = val;
-  };
+// ACTION HANDLER
+function viewUserDetails(target) {
+    const row = target.tagName === 'TR' ? target : target.closest('tr');
+    if (!row) return;
 
-  set('.m-user-id',      user.id);
-  set('.m-name',         user.name);
-  set('.m-total-orders', user.totalOrders);
-  set('.m-email',        user.email);
-  set('.m-contact',      user.contact);
-  set('.m-last-order',   user.lastOrder);
+    const user = getFullUserData(row);
+    closeActionPanel(); 
+    
+    const dropdown = target.closest && target.closest('.action-dropdown');
+    if (dropdown) dropdown.classList.remove('open');
+    
+    const actionWrap = target.closest && target.closest('.action-wrap');
+    if (actionWrap) {
+        const dots = actionWrap.querySelector('.btn-action-dots');
+        if (dots) dots.classList.remove('active');
+    }
 
-  // 5. Specialized status badge update
-  const statusEl = document.querySelector('.m-status');
-  if (statusEl) {
-    statusEl.textContent = user.status;
-    statusEl.className   = `badge m-status badge-${user.status.toLowerCase()}`;
-  }
+    const set = (sel, val) => {
+        const el = document.querySelector(sel);
+        if (el) el.textContent = val;
+    };
 
-  // 6. Final display
-  openOverlay('modalOverlay');
+    set('.m-user-id',      user.id);
+    set('.m-name',         user.name);
+    set('.m-total-orders', user.totalOrders);
+    set('.m-email',        user.email);
+    set('.m-contact',      user.contact);
+    set('.m-last-order-date', user.lastOrder);
+    set('.m-last-file',    user.lastFile);
+
+    const statusEl = document.querySelector('.m-status');
+    if (statusEl) {
+        statusEl.textContent = user.status;
+        statusEl.className   = `badge m-status badge-${user.status.toLowerCase()}`;
+    }
+
+    openOverlay('modalOverlay');
 }
 
 // ACTION HANDLER
 function panelViewDetails() {
-  if (!activeRow) return;
-  viewUserDetails(activeRow);
+    if (!activeRow) return;
+    viewUserDetails(activeRow);
 }
 
 // ACTION HANDLER
 function suspendUser(btn) {
-  activeRow = btn.closest('tr');
-  if (!activeRow) return;
-  var d = activeRow.dataset;
-  
-  // Close dropdown
-  btn.closest('.action-dropdown').classList.remove('open');
-  btn.closest('.action-wrap').querySelector('.btn-action-dots').classList.remove('active');
-  
-  var name = activeRow.dataset.name || 'this user';
-  rowToSuspend = activeRow;
-  closeActionPanel();
-  document.getElementById('suspendMsg').textContent = 'Are you sure you want to suspend ' + name + '? They will no longer be able to access the system.';
-  openOverlay('suspendOverlay');
+    activeRow = btn.closest('tr');
+    if (!activeRow) return;
+    
+    btn.closest('.action-dropdown').classList.remove('open');
+    btn.closest('.action-wrap').querySelector('.btn-action-dots').classList.remove('active');
+    
+    const name = activeRow.dataset.name || 'this user';
+    rowToSuspend = activeRow;
+    closeActionPanel();
+    document.getElementById('suspendMsg').textContent = `Are you sure you want to suspend ${name}? They will no longer be able to access the system.`;
+    openOverlay('suspendOverlay');
 }
 
 // ACTION HANDLER
 function deleteUser(btn) {
-  activeRow = btn.closest('tr');
-  if (!activeRow) return;
-  var d = activeRow.dataset;
-  
-  // Close dropdown
-  btn.closest('.action-dropdown').classList.remove('open');
-  btn.closest('.action-wrap').querySelector('.btn-action-dots').classList.remove('active');
-  
-  var name = activeRow.dataset.name || 'this user';
-  rowToDelete = activeRow;
-  closeActionPanel();
-  document.getElementById('deleteMsg').textContent = 'Are you sure you want to delete ' + name + '? This action cannot be undone.';
-  openOverlay('deleteOverlay');
+    activeRow = btn.closest('tr');
+    if (!activeRow) return;
+    
+    btn.closest('.action-dropdown').classList.remove('open');
+    btn.closest('.action-wrap').querySelector('.btn-action-dots').classList.remove('active');
+    
+    const name = activeRow.dataset.name || 'this user';
+    rowToDelete = activeRow;
+    closeActionPanel();
+    document.getElementById('deleteMsg').textContent = `Are you sure you want to delete ${name}? This action cannot be undone.`;
+    openOverlay('deleteOverlay');
 }
 
 // ACTION HANDLER
 function panelSuspend() {
-  if (!activeRow) return;
-  var name = activeRow.dataset.name || 'this user';
-  rowToSuspend = activeRow;
-  closeActionPanel();
-  document.getElementById('suspendMsg').textContent = 'Are you sure you want to suspend ' + name + '? They will no longer be able to access the system.';
-  openOverlay('suspendOverlay');
+    if (!activeRow) return;
+    const name = activeRow.dataset.name || 'this user';
+    rowToSuspend = activeRow;
+    closeActionPanel();
+    document.getElementById('suspendMsg').textContent = `Are you sure you want to suspend ${name}? They will no longer be able to access the system.`;
+    openOverlay('suspendOverlay');
 }
 
 // ACTION HANDLER
 function panelActivate() {
-  if (!activeRow) return;
-  var row   = activeRow;
-  var name  = row.dataset.name || '';
-  closeActionPanel();
-  
-  // BACKEND INTEGRATION POINT
-  // Endpoint: /api/admin/users
-  // Method: PATCH
-  var badge = row.querySelector('.badge');
-  badge.textContent  = 'Active';
-  badge.className    = 'badge badge-active';
-  row.dataset.status = 'Active';
-  showToast('User ' + name + ' has been activated');
+    if (!activeRow) return;
+    const row = activeRow;
+    const name = row.dataset.name || '';
+    closeActionPanel();
+    
+    // BACKEND INTEGRATION POINT
+    const badge = row.querySelector('.badge');
+    badge.textContent = 'Active';
+    badge.className = 'badge badge-active';
+    row.dataset.status = 'Active';
+    showToast(`Customer ${name} has been activated`);
 }
 
 // ACTION HANDLER
 function panelDelete() {
-  if (!activeRow) return;
-  var name = activeRow.dataset.name || 'this user';
-  rowToDelete = activeRow;
-  closeActionPanel();
-  document.getElementById('deleteMsg').textContent = 'Are you sure you want to delete ' + name + '? This action cannot be undone.';
-  openOverlay('deleteOverlay');
+    if (!activeRow) return;
+    const name = activeRow.dataset.name || 'this user';
+    rowToDelete = activeRow;
+    closeActionPanel();
+    document.getElementById('deleteMsg').textContent = `Are you sure you want to delete ${name}? This action cannot be undone.`;
+    openOverlay('deleteOverlay');
 }
 
-//  confirm buttons 
-document.getElementById('btnConfirmDelete').addEventListener('click', function() {
-  // BACKEND INTEGRATION POINT
-  // Endpoint: /api/admin/users
-  // Method: DELETE
-  if (rowToDelete) rowToDelete.remove();
-  closeDeleteModal();
-});
-
-document.getElementById('btnConfirmSuspend').addEventListener('click', function() {
-  // BACKEND INTEGRATION POINT
-  // Endpoint: /api/admin/users
-  // Method: PATCH
-  if (rowToSuspend) {
-    var badge = rowToSuspend.querySelector('.badge');
-    badge.textContent        = 'Suspended';
-    badge.className          = 'badge badge-suspended';
-    rowToSuspend.dataset.status = 'Suspended';
-  }
-  closeSuspendModal();
-});
-
-//  modal overlays
-// MODAL CONTROL
-function closeModal() {
-  closeOverlay('modalOverlay');
+// ACTION HANDLER
+function handleConfirmDelete() {
+    // BACKEND INTEGRATION POINT
+    if (rowToDelete) {
+        const name = rowToDelete.dataset.name || 'Customer';
+        rowToDelete.remove();
+        showToast('Customer Deleted', `${name} has been removed from the system.`, 'danger');
+    }
+    closeDeleteModal();
 }
 
-// MODAL CONTROL
-function closeDeleteModal() {
-  closeOverlay('deleteOverlay');
-  rowToDelete = null;
-}
-
-// MODAL CONTROL
-function closeSuspendModal() {
-  closeOverlay('suspendOverlay');
-  rowToSuspend = null;
-}
-
-// MODAL CONTROL
-function openOverlay(id) {
-  var o = document.getElementById(id);
-  o.style.display = 'flex';
-  o.classList.add('show');
-}
-
-// MODAL CONTROL
-function closeOverlay(id) {
-  var o = document.getElementById(id);
-  o.classList.remove('show');
-  o.style.display = 'none';
-}
-
-//  toast 
-// GLOBAL FUNCTION (SHARED ACROSS MODULES)
-// IFRAME COMMUNICATION BRIDGE
-// Use window.parent.* for shared logic
-function showToast(title, message = '', type = 'success') {
-  if (window.parent && window.parent !== window && typeof window.parent.showGlobalToast === 'function') {
-      window.parent.showGlobalToast(title, message, type);
-  } else {
-      console.log('[Toast Fallback]', title, message);
-  }
-}
-window.showGlobalToast = window.showToast = showToast;
-
-//  filter and export 
-function filterTable() {
-  var q = document.getElementById('searchInput').value.toLowerCase();
-  var s = document.getElementById('statusFilter').value;
-  document.querySelectorAll('#tableBody tr').forEach(function(row) {
-    var matchQ = !q || row.innerText.toLowerCase().includes(q);
-    var matchS = !s || row.dataset.status === s;
-    row.style.display = matchQ && matchS ? '' : 'none';
-  });
-}
-
-// BACKEND INTEGRATION POINT
-function getFullUserData(row) {
-  const d = row.dataset;
-  return {
-    id:          d.userId      || '—',
-    name:        d.name        || '—',
-    email:       d.email       || '—',
-    contact:     d.contact     || '—',
-    totalOrders: d.totalOrders || '0',
-    lastOrder:   d.lastOrder   || 'None',
-    status:      d.status      || 'Active',
-    address:     d.address     || 'No address provided'
-  };
+// ACTION HANDLER
+function handleConfirmSuspend() {
+    // BACKEND INTEGRATION POINT
+    if (rowToSuspend) {
+        const name = rowToSuspend.dataset.name || 'Customer';
+        const badge = rowToSuspend.querySelector('.badge');
+        badge.textContent = 'Suspended';
+        badge.className = 'badge badge-suspended';
+        rowToSuspend.dataset.status = 'Suspended';
+        showToast('Customer Suspended', `${name} can no longer access the system.`, 'warning');
+    }
+    closeSuspendModal();
 }
 
 // ACTION HANDLER
 function exportCSV() {
-  var rows = Array.from(document.querySelectorAll('#tableBody tr'))
-    .filter(function(r) { return r.style.display !== 'none'; });
-  if (!rows.length) { alert('No users to export.'); return; }
+    const rows = Array.from(document.querySelectorAll('#tableBody tr'))
+        .filter(r => r.style.display !== 'none');
+    if (!rows.length) { 
+        showToast('No data to export', 'Try adjusting your filters.', 'info'); 
+        return; 
+    }
 
-  // BACKEND INTEGRATION POINT
-  // ACTION HANDLER
-  const exportData = rows.map(row => getFullUserData(row));
+    const exportData = rows.map(row => getFullUserData(row));
+    const headers = ['Customer ID', 'Name', 'Email', 'Contact Number', 'Total Orders', 'Last Order Date', 'Last Ordered File', 'Status', 'Address'];
+    
+    const data = exportData.map(user => {
+        return [
+            user.id, user.name, user.email, user.contact, user.totalOrders,
+            user.lastOrder, user.lastFile, user.status, user.address
+        ].map(val => `"${String(val).replace(/"/g, '""')}"`).join(',');
+    });
 
-  const headers = ['User ID', 'Name', 'Email', 'Contact Number', 'Total Orders', 'Last Order', 'Status', 'Address'];
-  
-  const data = exportData.map(user => {
-    return [
-      user.id,
-      user.name,
-      user.email,
-      user.contact,
-      user.totalOrders,
-      user.lastOrder,
-      user.status,
-      user.address
-    ].map(val => '"' + String(val).replace(/"/g, '""') + '"').join(',');
-  });
-
-  var blob = new Blob([[headers.join(',')].concat(data).join('\n')], { type: 'text/csv' });
-  var a    = document.createElement('a');
-  a.href   = URL.createObjectURL(blob);
-  a.download = 'users_export_' + new Date().toISOString().split('T')[0] + '.csv';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+    const blob = new Blob([[headers.join(',')].concat(data).join('\n')], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `PRNT_Customer_Management_${new Date().toISOString().split('T')[0]}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showToast('Export Successful', 'Customer list has been downloaded.', 'success');
 }
 
-// helper logic (obsolete but kept for other uses if any, currently unused in modal)
-function field(label, val) {
-  if (!val || val === 'undefined') val = '—';
-  return '<div class="detail-card"><div class="detail-label">' + label + '</div><div class="detail-value">' + val + '</div></div>';
+// ACTION HANDLER
+function closeModal() { closeOverlay('modalOverlay'); }
+
+// ACTION HANDLER
+function closeDeleteModal() {
+    closeOverlay('deleteOverlay');
+    rowToDelete = null;
 }
 
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { closeModal(); closeDeleteModal(); closeSuspendModal(); closeActionPanel(); }
+// ACTION HANDLER
+function closeSuspendModal() {
+    closeOverlay('suspendOverlay');
+    rowToSuspend = null;
+}
+
+// ===============================
+// NAVIGATION
+// ===============================
+// NAVIGATION
+
+// ===============================
+// BACKEND INTEGRATION POINTS
+// ===============================
+/*
+BACKEND INTEGRATION POINT
+- GET Users: /api/admin/users
+- DELETE User: /api/admin/users/{id}
+- PATCH User Status: /api/admin/users/{id}
+*/
+
+// ===============================
+// INITIALIZATION
+// ===============================
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("PRNT User Management Module Loaded");
+    
+    searchInput = document.getElementById('searchInput');
+    statusFilter = document.getElementById('statusFilter');
+    tableBody = document.getElementById('tableBody');
+    actionPanel = document.getElementById('actionPanel');
+    modalOverlay = document.getElementById('modalOverlay');
+    deleteOverlay = document.getElementById('deleteOverlay');
+    suspendOverlay = document.getElementById('suspendOverlay');
+    toast = document.getElementById('toast');
+    toastMsg = document.getElementById('toastMsg');
+
+    setupEventListeners();
 });
+
+// GLOBAL EXPOSURE FOR INLINE HTML HANDLERS
+window.toggleMenu = toggleMenu;
+window.panelViewDetails = panelViewDetails;
+window.panelSuspend = panelSuspend;
+window.panelActivate = panelActivate;
+window.panelDelete = panelDelete;
+window.closeModal = closeModal;
+window.closeDeleteModal = closeDeleteModal;
+window.closeSuspendModal = closeSuspendModal;
+window.filterTable = filterTable;
+window.exportCSV = exportCSV;
+window.suspendUser = suspendUser;
+window.deleteUser = deleteUser;
+window.viewUserDetails = viewUserDetails;
