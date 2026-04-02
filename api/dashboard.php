@@ -47,4 +47,13 @@ if (isset($_POST['action'])) {
         }
         exit;
     }
+
+    if ($_POST['action'] == 'setReceipt') {
+        $_SESSION['receiptToShow'] = $_POST['id'];
+        echo json_encode([
+            'status' => 'success',
+            'message' => 'success'
+        ]);
+        exit;
+    }
 }

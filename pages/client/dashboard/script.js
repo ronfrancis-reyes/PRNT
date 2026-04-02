@@ -30,7 +30,7 @@ function displayOrders(orders) {
 		</div>
 		<div style="display:flex; flex-direction:column; align-items:flex-end; gap:1rem;">
 			<span class="order-status-pill ${designStatus(order.status)}">${order.status}</span>
-			<button class="btn btn-outline" style="padding:0.6rem 1.25rem; font-size:0.85rem;" onclick="viewReceipt('${order.id}')">View Details</button>
+			<button class="btn btn-outline" style="padding:0.6rem 1.25rem; font-size:0.85rem;" onclick="viewReceipt(${order.order_id})">View Details</button>
 		</div>
     </div>`);
 			getItems(order.order_id);
@@ -87,4 +87,16 @@ function designStatus(status) {
 	} else if (status == "For pickup" || status == "For delivery") {
 		return "status-ready";
 	}
+}
+
+function viewReceipt(orderId) {
+	$.ajax({
+		//ipapasa ung orderId sa $_SESSION['receiptToShow'] para makita ng receipt.js
+		type: "POST",
+		url: API,
+		data: "action=setReceipt&id=" + orderId,
+		success: function (response) {
+			window.location.href = "../receipt/";
+		},
+	});
 }

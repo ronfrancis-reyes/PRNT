@@ -75,12 +75,10 @@ body {
 .navbar-spacer {
 	height: var(--navbar-h);
 	width: 100%;
-	pointer-events: none;
 }
 .footer-spacer {
 	height: var(--footer-h);
 	width: 100%;
-	pointer-events: none;
 }
 
 /* ── LAYOUT ──────────────────────────────────────────────────────────────── */
@@ -118,7 +116,6 @@ body {
 	overflow: hidden;
 	border: 1px solid var(--border);
 	position: relative;
-	opacity: 0;
 }
 
 .receipt-card.receipt-visible {

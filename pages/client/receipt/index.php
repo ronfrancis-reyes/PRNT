@@ -20,16 +20,16 @@ if (!isset($_SESSION['user'])) {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <!-- PAGE STYLES -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="../../../components/Navbar/Navbar.css" />
     <link rel="stylesheet" href="../../../components/Footer/Footer.css" />
     <link rel="stylesheet" href="../../../global/global.css" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div class="navbar-spacer" aria-hidden="true">
-            <!--Navbar-->
+
+    <!--Navbar-->
     <!--Hindi pwede ung nasa components kasi ../../ lang yon, dapat ../../../ kaya need pa irevise tong design para di maulit-->
     <div class="mobile-menu-overlay" id="mobileOverlay"></div>
     <div class="mobile-menu" id="mobileMenu">
@@ -67,7 +67,7 @@ if (!isset($_SESSION['user'])) {
                     <i class="fas fa-shopping-cart"></i> Order Now
                 </a>
                 <div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
-                    <div style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
+                    <div style="width:38px;height:38px;border-radius:50%; background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
                         id="navAvatar"><?php
                                         $fullname = explode(' ', $_SESSION['username']);
                                         $initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
@@ -80,12 +80,13 @@ if (!isset($_SESSION['user'])) {
             </div>
         </div>
     </nav>
-    </div>
+    <!-- End of Navbar -->
+
 
     <!-- ===== MAIN WRAPPER ===== -->
     <main class="main-wrapper">
         <div class="page-content">
-            <div class="receipt-card" id="receiptCard">
+            <div class="receipt-card animate-slide" id="receiptCard">
 
                 <!-- WATERMARK -->
                 <div class="receipt-watermark" aria-hidden="true">PRNT</div>
@@ -111,31 +112,8 @@ if (!isset($_SESSION['user'])) {
                             <div class="badge-icon"><i class="fas fa-info"></i></div>
                             PERSONAL &amp; LOGISTICS
                         </div>
-                        <div class="info-grid card-box">
-                            <div class="info-item">
-                                <label>CUSTOMER</label>
-                                <span id="custName">Juan Dela Cruz</span>
-                            </div>
-                            <div class="info-item">
-                                <label>PHONE NUMBER</label>
-                                <span id="custPhone">0912-345-6789</span>
-                            </div>
-                            <div class="info-item">
-                                <label>RECEIVING METHOD</label>
-                                <span id="recvMethod">—</span>
-                            </div>
-                            <div class="info-item">
-                                <label>LOCATION</label>
-                                <span id="recvLoc">—</span>
-                            </div>
-                            <div class="info-item">
-                                <label>PAYMENT METHOD</label>
-                                <span id="payMethod">—</span>
-                            </div>
-                            <div class="info-item">
-                                <label>ORDER DATE</label>
-                                <span id="orderDate2">—</span>
-                            </div>
+                        <div class="info-grid card-box" id="orderInfo">
+                            <!-- order details -->
                         </div>
                     </div>
 
@@ -181,38 +159,19 @@ if (!isset($_SESSION['user'])) {
                         <button class="btn btn-outline" onclick="window.print()">
                             <i class="fas fa-print"></i> Export Receipt
                         </button>
-                        <a href="../tracking/index.php" class="btn btn-primary" style="text-decoration: none;">
-                            Track Order Status
+                        <a href="../dashboard/" class="btn btn-primary" style="text-decoration: none;">
+                            Back to dashboard<i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
-
                 </div><!-- /.receipt-body -->
             </div><!-- /.receipt-card -->
         </div>
     </main>
-    
     <div class="footer-spacer" aria-hidden="true"></div>
 
-    <!-- ===== CONFIRMATION MODAL ===== -->
-    <div class="modal-overlay" id="confirmModal" aria-hidden="true" style="display:none;">
-        <div class="modal-content">
-            <div style="font-size: 3.5rem; color: var(--primary); margin-bottom: 1rem;">
-                <i class="fas fa-question-circle"></i>
-            </div>
-            <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 0.75rem; color: var(--text-dark);">Confirm Order</h3>
-            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2rem; line-height: 1.5;">
-                Are you sure you want to place this order?
-            </p>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
-                <button class="btn btn-outline" style="width:100%; justify-content:center;" onclick="closeConfirmModal()">Cancel</button>
-                <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="executeConfirmOrder()">Confirm</button>
-            </div>
-        </div>
-    </div>
-
     <!-- ===== SCRIPTS ===== -->
+    <script src="https://code.jquery.com/jquery-4.0.0.js"
+        integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
-
 </body>
-
 </html>
