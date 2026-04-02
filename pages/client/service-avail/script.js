@@ -456,6 +456,7 @@ function placeOrder() {
 
 			if (reply.status == "success") {
 				alert(reply.message);
+				window.location.reload();
 			}
 		},
 	});
