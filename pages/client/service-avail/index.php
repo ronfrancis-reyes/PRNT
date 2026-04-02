@@ -91,18 +91,18 @@ if (!isset($_SESSION['user'])) {
                 <i class="fas fa-shopping-cart" style="color:var(--primary);margin-right:1rem;"></i> Place an Order
             </h2>
 
-            <div class="order-flow" style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;">
+            <div class="grid-2-col">
                 <!-- 1. Upload Section -->
-                <div class="card flow-step animate-fade">
+                <div class="order-panel flow-step animate-fade">
                     <h3><span class="step-num">1</span> Upload Files</h3>
                     <input type="file" id="fileInput" multiple style="display:none;" onchange="handleFileUpload(event)" accept="application/pdf,image/*">
-                    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-area" id="uploadZone" onclick="document.getElementById('fileInput').click()">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <h4>Click or drag files here</h4>
                         <p>PDF, JPG, PNG (Max 50MB)</p>
                     </div>
 
-                    <div class="file-library" style="margin-top: 2rem;">
+                    <div class="library-container" style="margin-top: 2rem;">
                         <div style="display:flex;justify-content:space-between;align-items:center; margin-bottom: 1rem;">
                             <h4 style="font-size: 1rem;">Your Library</h4>
                             <span style="font-size:0.8rem;color:var(--primary);cursor:pointer;font-weight:600;"
@@ -115,11 +115,12 @@ if (!isset($_SESSION['user'])) {
                 </div>
 
                 <!-- 2. Configuration Section -->
-                <div class="card flow-step animate-slide" id="configStep">
+                <div class="order-panel flow-step animate-slide" id="configStep">
                     <h3><span class="step-num">2</span> Configure Service</h3>
+                    
                     <div id="filePreview"
                         style="display:none;margin-bottom:1.5rem;padding:1.25rem;background:var(--secondary);border-radius:var(--radius);border:1px solid var(--primary-light);">
-                        <div style="display:flex;align-items:center;gap:1rem;">
+                        <div class="select-wrapper" style="display:flex;align-items:center;gap:1rem;">
                             <i class="fas fa-file-pdf" style="font-size:2rem;color:var(--primary);"></i>
                             <div>
                                 <!-- container for file info -->
@@ -130,17 +131,18 @@ if (!isset($_SESSION['user'])) {
                         </div>
                     </div>
 
-                    <div class="form-group" style="margin-bottom:1.25rem;">
+                    <div class="form-group select-wrapper" style="margin-bottom:1.25rem;">
                         <label for="serviceFormat"
                             style="display:block;margin-bottom:0.5rem;font-weight:600;font-size:0.9rem;">Service / Format</label>
                         <select id="serviceFormat" onchange="getSizes(this.value)"
                             style="width:100%;padding:0.85rem;border:1px solid var(--border);border-radius:var(--radius);outline:none;background:white;">
                             <option value="">Select a service...</option>
                         </select>
+                        
                     </div>
 
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.25rem;">
-                        <div class="form-group">
+                    <div class="form-grid">
+                        <div class="form-group select-wrapper">
                             <label for="colorType" style="display:block;margin-bottom:0.5rem;font-weight:600;font-size:0.9rem;">Color
                                 Type</label>
                             <select id="colorType"
@@ -148,7 +150,7 @@ if (!isset($_SESSION['user'])) {
                                 onchange="calculateEstimatedPrice()">
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group select-wrapper">
                             <label for="paperSize" style="display:block;margin-bottom:0.5rem;font-weight:600;font-size:0.9rem;">Paper
                                 Size</label>
                             <select id="paperSize" onchange="showCustomSizeInput(this); calculateEstimatedPrice()"
@@ -163,15 +165,15 @@ if (!isset($_SESSION['user'])) {
                     <div class="form-group" style="margin-bottom:1.5rem;">
                         <label for="copies"
                             style="display:block;margin-bottom:0.5rem;font-weight:600;font-size:0.9rem;">Copies</label>
-                        <input type="number" id="copies" min="1" value="1" onchange="calculateEstimatedPrice()"
+                        <input class="number-input-wrapper" type="number" id="copies" min="1" value="1" onchange="calculateEstimatedPrice()"
                             style="width:100%;padding:0.85rem;border:1px solid var(--border);border-radius:var(--radius);outline:none;background:white;">
                     </div>
 
-                    <div
-                        style="display:flex; justify-content:space-between; align-items:center; background:var(--background); padding:1.25rem; border-radius:var(--radius); border-left:4px solid var(--primary);">
-                        <div><span style="font-weight:700; color:var(--text-dark);">Estimated Price</span><br><small
+                    <div class="price-strip"
+                        >
+                        <div class="price-info"><strong>Estimated Price</strong><br><small
                                 style="color:var(--text-muted);">per item</small></div>
-                        <div style="font-size:1.5rem; font-weight:800; color:var(--primary);" id="priceDisplay">₱----</div>
+                        <div style="font-size:1.5rem; font-weight:800; color:var(--primary);" id="priceDisplay">₱0.00</div>
                     </div>
 
                     <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:2rem; padding:1.25rem;"
@@ -183,30 +185,33 @@ if (!isset($_SESSION['user'])) {
 
             <!-- 3. Cart & Checkout Section -->
             <div class="card animate-fade" id="cartSection" style="display:none; margin-top:2rem; padding:3rem;">
-                <h3 style="margin-bottom:2rem; font-size:1.5rem; display:flex; align-items:center; gap:0.75rem;">
-                    <i class="fas fa-list" style="color:var(--primary);"></i> Order Summary
-                </h3>
-                <table style="width:100%; border-collapse:collapse; margin-bottom:3rem;">
-                    <thead style="background:var(--background); text-align:left;">
-                        <tr>
-                            <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">File
-                            </th>
-                            <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Service
-                            </th>
-                            <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Details
-                            </th>
-                            <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Copies
-                            </th>
-                            <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Amount
-                            </th>
-                            <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Actions
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="cartBody">
-                        <!--container of cart items-->
-                    </tbody>
-                </table>
+                <div class="order-panel summary-panel">
+                    <h3 style="margin-bottom:2rem; font-size:1.5rem; display:flex; align-items:center; gap:0.75rem;">
+                        <i class="fas fa-list" style="color:var(--primary);"></i> Order Summary
+                    </h3>
+                    <table style="width:100%; border-collapse:collapse; margin-bottom:3rem;">
+                        <thead style="background:var(--background); text-align:left;">
+                            <tr>
+                                <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">File
+                                </th>
+                                <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Service
+                                </th>
+                                <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Details
+                                </th>
+                                <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Copies
+                                </th>
+                                <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Amount
+                                </th>
+                                <th style="padding:1.25rem; color:var(--text-muted); font-size:0.85rem; text-transform:uppercase;">Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartBody">
+                            <!--container of cart items-->
+                        </tbody>
+                    </table>
+                </div>
+
 
                 <div
                     style="display:grid; grid-template-columns: 1.5fr 1fr; gap:4rem; border-top:1px solid var(--border); padding-top:3rem;">
