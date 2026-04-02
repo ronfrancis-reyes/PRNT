@@ -398,9 +398,9 @@ function removeFromCart(cartIndex) {
 function selectReceiving(receivingChoice) {
 	selectedReceiving = receivingChoice;
 	document
-		.querySelectorAll(".radio-option")
-		.forEach((el) => el.classList.remove("selected"));
-	document.getElementById(`opt-${receivingChoice}`)?.classList.add("selected");
+		.querySelectorAll(".opt-card")
+		.forEach((el) => el.classList.remove("active"));
+	document.getElementById(`opt-${receivingChoice}`)?.classList.add("active");
 	const locBlock = document.getElementById("deliveryLocationBlock");
 	const feeRow = document.getElementById("feeLabelRow");
 	if (locBlock) {
@@ -414,7 +414,7 @@ function selectReceiving(receivingChoice) {
 
 function updateTotals() {
 	const subtotal = cart.reduce((sum, item) => sum + (item.amount || 0), 0);
-	const delivery = selectedReceiving === "delivery" ? 10 : 0;
+	const delivery = selectedReceiving === "Delivery" ? 10 : 0;
 	const total = subtotal + delivery;
 
 	$("#subtotal").text(`₱${subtotal.toFixed(2)}`);
@@ -457,6 +457,7 @@ function placeOrder() {
 			if (reply.status == "success") {
 				alert(reply.message);
 				window.location.reload();
+				window.location.href = "../receipt/";
 			}
 		},
 	});

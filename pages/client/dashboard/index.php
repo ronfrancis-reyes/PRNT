@@ -63,9 +63,15 @@ if (!isset($_SESSION['user'])) {
 				<li><a href="../../about/">About</a></li>
 				<li><a href="../../works/">Work</a></li>
 				<li><a href="../../service/">Services</a></li>
-				<li><a href="../contact/">Contact</a></li>
+				<li><a href="../../contact/">Contact</a></li>
 			</ul>
 			<div class="flex align-center" style="gap: 1rem">
+				<a
+                    class="btn btn-primary"
+                    id="orderNowBtn"
+                    style="opacity: 0; cursor:default;">
+                    <i class="fas fa-shopping-cart"></i> Order Now
+                </a>
 				<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
 					<div
 						style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
