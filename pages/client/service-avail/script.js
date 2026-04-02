@@ -2,7 +2,7 @@ const API = "../../../api/service-avail.php";
 
 let currentFiles = [];
 let selectedFileId = null; // to keep track of which file is selected for configuration (not the actual file id in the database, just a random id for the frontend)
-let selectedReceiving = "pickup";
+let selectedReceiving = "Pick-up";
 let cart = [];
 let pageCount = 0;
 
@@ -23,26 +23,27 @@ function handleFileUpload(e) {
 			reader.onloadend = function () {
 				pageCount =
 					(reader.result.match(/\/Type[\s]*\/Page[^s]/g) || []).length || 1;
-
-				currentFiles.push({
+				const newFile = {
 					id: "FILE-" + Math.random().toString(36).substr(2, 6).toUpperCase(),
 					name: file.name,
 					size: (file.size / (1024 * 1024)).toFixed(2) + " MB",
 					pageCount: pageCount,
 					rawFile: file,
-				});
-
+				};
+				currentFiles.push(newFile);
+				selectFileForConfig(newFile.id);
 				renderFiles();
 			};
 		} else {
-			currentFiles.push({
+			const newFile = {
 				id: "FILE-" + Math.random().toString(36).substr(2, 6).toUpperCase(),
 				name: file.name,
 				size: (file.size / (1024 * 1024)).toFixed(2) + " MB",
 				pageCount: pageCount,
 				rawFile: file,
-			});
-
+			};
+			currentFiles.push(newFile);
+			selectFileForConfig(newFile.id);
 			renderFiles();
 		}
 	}
@@ -311,6 +312,8 @@ function addToCart() {
 		fileName: file.name,
 		fileSize: file.size,
 
+		pageCount: file.pageCount,
+
 		service: $("#serviceFormat option:selected").text(),
 		service_id: formatEl.val(),
 
@@ -322,6 +325,8 @@ function addToCart() {
 
 		copies: parseInt(copiesEl.val()),
 		amount: parseFloat(priceEl.text().replace("₱", "")),
+
+		file: file.rawFile,
 	};
 
 	cart.push(item);
@@ -400,10 +405,10 @@ function selectReceiving(receivingChoice) {
 	const feeRow = document.getElementById("feeLabelRow");
 	if (locBlock) {
 		getLocations();
-		locBlock.style.display = receivingChoice === "delivery" ? "block" : "none";
+		locBlock.style.display = receivingChoice === "Delivery" ? "block" : "none";
 	}
 	if (feeRow)
-		feeRow.style.display = receivingChoice === "delivery" ? "flex" : "none";
+		feeRow.style.display = receivingChoice === "Delivery" ? "flex" : "none";
 	updateTotals();
 }
 
@@ -415,4 +420,43 @@ function updateTotals() {
 	$("#subtotal").text(`₱${subtotal.toFixed(2)}`);
 	$("#deliveryFee").text(`₱${delivery.toFixed(2)}`);
 	$("#totalAmount").text(`₱${total.toFixed(2)}`);
+}
+
+function placeOrder() {
+	let formData = new FormData(); //for file uploading in the api
+	let address =
+		selectedReceiving == "Pick-up" ? null : $("#deliveryLocation").val();
+	let payload = {
+		address_id: address,
+		delivery_option: selectedReceiving,
+		total_price: parseFloat($("#totalAmount").text().replace("₱", "")),
+		payment_id: $("#paymentMethod").val(),
+		note: $("#orderNotes").val(),
+		items: cart.map((item) => ({
+			...item,
+			file: null, //hindi kasi nas-stringify ung file sa JSON.stringify(payload) kay null muna then ibabalik nalang
+		})),
+	};
+
+	formData.append("action", "store");
+	formData.append("payload", JSON.stringify(payload));
+
+	cart.forEach((item, index) => {
+		formData.append(`file_${index}`, item.file); //file_index ung ilalagay sa php para pwedeng iloop
+	});
+
+	$.ajax({
+		type: "POST",
+		url: API,
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (response) {
+			let reply = JSON.parse(response);
+
+			if (reply.status == "success") {
+				alert(reply.message);
+			}
+		},
+	});
 }

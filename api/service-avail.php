@@ -31,7 +31,7 @@ if (isset($_GET['action'])) {
             $result = $sql->get_result();
             $data = [];
 
-            while($row = $result->fetch_assoc()) {
+            while ($row = $result->fetch_assoc()) {
                 $data[] = $row;
             }
             echo json_encode([
@@ -52,7 +52,7 @@ if (isset($_GET['action'])) {
         $id = $_GET['id'];
         $sql = $conn->prepare("SELECT size_id, size, price FROM sizes WHERE service_id = ?");
         $sql->bind_param("i", $id);
-        
+
         if ($sql->execute()) {
             $result = $sql->get_result();
             $data = [];
@@ -127,10 +127,35 @@ if (isset($_GET['action'])) {
 if (isset($_POST['action'])) {
     if ($_POST['action'] == 'store') {
         $payload = json_decode($_POST['payload']);
-        $sql = $conn->prepare('INSERT INTO orders (account_id, service_id, file_id, time_placed, format, delivery_option, address, copies, note, total_price) VALUES (?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?)');
-        $sql->bind_param("iiisssisd", $_SESSION['user'], $payload->service_id, $payload->file_id, $payload->format, $payload->deliveryOption, $payload->deliveryAddress, $payload->copies, $payload->note, $payload->total_price);
+
+        $sql = $conn->prepare('INSERT INTO orders (account_id, address_id, delivery_option, total_price, payment_id, note) VALUES (?, ?, ?, ?, ?, ?)');
+        $sql->bind_param('iisdis', $_SESSION['user'], $payload->address_id, $payload->delivery_option, $payload->total_price, $payload->payment_id, $payload->note);
 
         if ($sql->execute()) {
+            $order_id = $conn->insert_id;
+
+            foreach ($payload->items as $index => $item) {
+                if (!isset($_FILES['file_' . $index])) {
+                    continue; // skip missing files
+                }
+                $uploadDir = __DIR__ . "/../uploads/";
+                $file = $_FILES['file_' . $index];
+                $fileName = $_SESSION['user'] . "_" . time() . "_" . basename($file['name']);
+                $targetFile = $uploadDir . $fileName; //para mapunta sa server ung file (server path)
+                $webPath = "/uploads/" . $fileName; //para pag id-download na ng admin (webpath)
+
+                move_uploaded_file($file['tmp_name'], $targetFile);
+                $fileSql = $conn->prepare("INSERT INTO files (file_name, pages, file_path) VALUES (?, ?, ?)");
+                $fileSql->bind_param("sis", $file['name'], $item->pageCount, $webPath);
+                $fileSql->execute();
+
+                $file_id = $conn->insert_id;
+
+                $itemSql = $conn->prepare("INSERT INTO orderitems (order_id, file_id, service_id, copies, price) VALUES (?, ?, ?, ?, ?)");
+                $itemSql->bind_param("iiiid", $order_id, $file_id, $item->service_id, $item->copies, $item->amount);
+                $itemSql->execute();
+            }
+
             echo json_encode([
                 "status" => "success",
                 "message" => "Order placed successfully"
@@ -139,44 +164,9 @@ if (isset($_POST['action'])) {
         } else {
             echo json_encode([
                 "status" => "error",
-                "message" => "failed"
+                "message" => "Order failed"
             ]);
         }
-        exit;
-    }
-
-    $uploadDir = __DIR__ . "/../uploads/";
-
-    if (isset($_FILES['file'])) {
-        $file = $_FILES['file'];
-        $filename = $_SESSION['user'] . "_" . time() . "_" . basename($file['name']); // avoid collisions
-        $targetFile = $uploadDir . $filename; //para mapunta sa server ung file (server path)
-        $webPath = "/PRNT/uploads/" . $filename; //para pag id-download na ng admin (webpath)
-        if (move_uploaded_file($file['tmp_name'], $targetFile)) {
-            $sql = $conn->prepare("INSERT INTO files (file_name, pages, filepath) VALUES (?, ?, ?)");
-            $sql->bind_param("sis", $file['name'], $_POST['pageCount'], $webPath);
-            $sql->execute();
-
-            $file_id = $conn->insert_id;
-
-            echo json_encode([
-                "status" => "success",
-                "path" => $targetFile,
-                "file_id" => $file_id
-            ]);
-            exit;
-        } else {
-            echo json_encode([
-                "status" => "error",
-                "message" => "Failed to move uploaded file."
-            ]);
-            exit;
-        }
-    } else {
-        echo json_encode([
-            "status" => "error",
-            "message" => "No file uploaded."
-        ]);
         exit;
     }
 }

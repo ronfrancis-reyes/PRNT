@@ -26,7 +26,7 @@ if (isset($_POST['action'])) {
     }
     if ($_POST['action'] == 'getItems') {
         $order_id = $_POST['order_id'];
-        $sql = $conn->prepare("SELECT s.service_name, f.file_name FROM orderitems oi JOIN services s ON oi.service_id = s.service_id JOIN files f ON oi.file_id = f.file_id WHERE oi.order_id = ?");
+        $sql = $conn->prepare("SELECT s.service_name, f.file_name, f.file_path FROM orderitems oi JOIN services s ON oi.service_id = s.service_id JOIN files f ON oi.file_id = f.file_id WHERE oi.order_id = ?");
         $sql->bind_param('i', $order_id);
         if ($sql->execute()) {
             $result = $sql->get_result();

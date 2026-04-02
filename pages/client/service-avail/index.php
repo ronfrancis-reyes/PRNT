@@ -99,7 +99,7 @@ if (!isset($_SESSION['user'])) {
                     <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
                         <i class="fas fa-cloud-upload-alt"></i>
                         <h4>Click or drag files here</h4>
-                        <p>PDF, DOCX, JPG, PNG (Max 50MB)</p>
+                        <p>PDF, JPG, PNG (Max 50MB)</p>
                     </div>
 
                     <div class="file-library" style="margin-top: 2rem;">
@@ -213,13 +213,13 @@ if (!isset($_SESSION['user'])) {
                     <div>
                         <h4 style="margin-bottom:1.5rem;">Logistics & Payment</h4>
                         <div class="radio-group" style="display:flex; gap:1.5rem; margin-bottom:2rem;">
-                            <div class="radio-option selected" id="opt-pickup" onclick="selectReceiving('pickup')"
+                            <div class="radio-option selected" id="opt-pickup" onclick="selectReceiving('Pick-up')"
                                 style="flex:1; padding:1.5rem; border:2px solid var(--border); border-radius:var(--radius); cursor:pointer; text-align:center; transition:var(--transition);">
                                 <i class="fas fa-store" style="font-size:2rem; margin-bottom:0.75rem; color:var(--primary);"></i>
                                 <div style="font-weight:700;">Pick-up</div>
                                 <div style="font-size:0.85rem; color:var(--text-muted);">Free</div>
                             </div>
-                            <div class="radio-option" id="opt-delivery" onclick="selectReceiving('delivery')"
+                            <div class="radio-option" id="opt-delivery" onclick="selectReceiving('Delivery')"
                                 style="flex:1; padding:1.5rem; border:2px solid var(--border); border-radius:var(--radius); cursor:pointer; text-align:center; transition:var(--transition);">
                                 <i class="fas fa-truck" style="font-size:2rem; margin-bottom:0.75rem; color:var(--primary);"></i>
                                 <div style="font-weight:700;">Delivery</div>
@@ -269,8 +269,8 @@ if (!isset($_SESSION['user'])) {
                                 <span>Total</span><span id="totalAmount">₱0.00</span>
                             </div>
                         </div>
-                        <button class="btn btn-primary" onclick="redirectToReceipt()"
-                            style="width:100%; padding:1.25rem; font-size:1.25rem; margin-top:2rem;">Continue <i
+                        <button class="btn btn-primary" onclick="placeOrder();"
+                            style="width:100%; padding:1.25rem; font-size:1.25rem; margin-top:2rem;">Place Order<i
                                 class="fas fa-arrow-right" style="margin-left:0.75rem;"></i></button>
                     </div>
                 </div>
