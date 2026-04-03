@@ -2,7 +2,7 @@
 include "../../../api/config.php";
 if(!isset($_SESSION['user'])) {
 header("Location: /PRNT/pages/login/");
-} else if ($_SESSION['user'] != 1) {
+} else if ($_SESSION['role'] == "Customer") {
 header("Location: /PRNT/pages/client/service-avail/");
 }
 ?>

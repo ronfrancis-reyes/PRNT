@@ -57,7 +57,7 @@ function showPass() {
 }
 
 function checkAccountType(email) {
-	if (email == "admin1@admin.com") {
+	if (email.includes("@prnt.com")) {
 		window.location.href = "../../pages/admin/dashboard/";
 	} else {
 		window.location.href = "../../pages/client/dashboard/";

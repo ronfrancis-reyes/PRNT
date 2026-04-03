@@ -12,7 +12,15 @@ include '../../api/config.php';
 	<a href="../works/">Work</a>
 	<a href="../service/">Services</a>
 	<a href="../contact/">Contact</a>
-	<a href="../client/dashboard/">Order Now</a>
+	<a href="../client/dashboard/"><?php if (isset($_SESSION['user'])) {
+											if ($_SESSION['role'] == "Admin") {
+												echo "Dashboard";
+											} else {
+												echo '<i class="fas fa-shopping-cart"></i> Order Now';
+											}
+										} else {
+											echo '<i class="fas fa-shopping-cart"></i> Order Now';
+										} ?></a>
 	<!--initials ni user ang ipapakita pag naka login, if hindi then login button-->
 	<?php if (isset($_SESSION['user'])): ?>
 		<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
@@ -32,10 +40,6 @@ include '../../api/config.php';
 			id="loginBtn">Login</a>
 	<?php endif; ?>
 </div>
-<div
-	class="mobile-menu-overlay"
-	id="mobileOverlay"
-	onclick="toggleMobileMenu()"></div>
 
 <nav class="navbar" id="navbar">
 	<div class="container flex align-center justify-between" style="width: 100%">
@@ -52,7 +56,16 @@ include '../../api/config.php';
 				href="../client/dashboard/"
 				class="btn btn-primary"
 				id="orderNowBtn">
-				<i class="fas fa-shopping-cart"></i> Order Now
+				<?php if (isset($_SESSION['user'])) {
+						if ($_SESSION['role'] == "Admin") {
+							echo "Dashboard";
+						} else {
+							echo '<i class="fas fa-shopping-cart"></i> Order Now';
+						}
+					} else {
+						echo '<i class="fas fa-shopping-cart"></i> Order Now';
+					}
+				?>
 			</a>
 			<!--initials ni user ang ipapakita pag naka login, if hindi then login button-->
 			<?php if (isset($_SESSION['user'])): ?>

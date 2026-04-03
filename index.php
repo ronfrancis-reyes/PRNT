@@ -1,3 +1,6 @@
+<?php
+include "./api/config.php"
+?>
 <!doctype html>
 <html lang="en">
 
@@ -43,8 +46,32 @@
 		<a href="./pages/works/">Work</a>
 		<a href="./pages/service/">Services</a>
 		<a href="./pages/contact/">Contact</a>
-		<a href="./pages/client/dashboard/">Order Now</a>
-		<a href="#" onclick="showAuthModal('login')">Login</a>
+		<a href="./pages/client/dashboard/"><?php if (isset($_SESSION['user'])) {
+														if ($_SESSION['role'] == "Admin") {
+															echo "Dashboard";
+														} else {
+															echo '<i class="fas fa-shopping-cart"></i> Order Now';
+														}
+													} else {
+														echo '<i class="fas fa-shopping-cart"></i> Order Now';
+													} ?></a>
+			<?php if (isset($_SESSION['user'])): ?>
+			<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
+				<div
+					style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
+					id="navAvatar">
+					<?php
+					$fullname = explode(' ', $_SESSION['username']);
+					$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+					echo $initials;
+					?></div>
+			</div>
+		<?php else: ?>
+			<a
+				onclick="showAuthModal('login')"
+				class="btn btn-outline"
+				id="loginBtn">Login</a>
+		<?php endif; ?>
 	</div>
 
 	<nav class="navbar" id="navbar">
@@ -62,12 +89,34 @@
 					href="./pages/client/dashboard/"
 					class="btn btn-primary"
 					id="orderNowBtn">
-					<i class="fas fa-shopping-cart"></i> Order Now
+					<?php if (isset($_SESSION['user'])) {
+							if ($_SESSION['role'] == "Admin") {
+								echo "Dashboard";
+							} else {
+								echo '<i class="fas fa-shopping-cart"></i> Order Now';
+							}
+						} else {
+							echo '<i class="fas fa-shopping-cart"></i> Order Now';
+						}
+					?>
 				</a>
-				<a
-					class="btn btn-outline"
-					id="loginBtn"
-					onclick="showAuthModal('login')">Login</a>
+				<?php if (isset($_SESSION['user'])): ?>
+					<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
+						<div
+							style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
+							id="navAvatar"><?php
+											$fullname = explode(' ', $_SESSION['username']);
+											$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+											echo $initials;
+											?></div>
+					</div>
+				<?php else: ?>
+					<a
+						onclick="showAuthModal('login')"
+						class="btn btn-outline"
+						id="loginBtn">Login</a>
+				<?php endif; ?>
+
 				<button class="mobile-menu-btn" onclick="toggleMobileMenu()">
 					<i class="fas fa-bars"></i>
 				</button>
@@ -188,7 +237,7 @@
 					<ul>
 						<li><a href="./">Home</a></li>
 						<li><a href="./pages/about/">About</a></li>
-          				<li><a href="./pages/works/">Works</a></li>
+						<li><a href="./pages/works/">Works</a></li>
 						<li><a href="./pages/service/">Services</a></li>
 						<li><a href="./pages/contact/">Contact</a></li>
 					</ul>
