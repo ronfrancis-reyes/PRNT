@@ -1,16 +1,216 @@
-/* Registration Page Specific Styles */
-.auth-page {
-  background: linear-gradient(135deg, var(--secondary), #FFF7E6);
-  min-height: 100vh;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+/* Main Background */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: url('../../assets/img/bg-cubes.jpg') no-repeat center center fixed;
+    background-size: cover;
 }
 
-.auth-card {
-  background: white;
-  border-radius: 20px !important;
-  box-shadow: 0 10px 40px rgba(238,77,45,0.1) !important;
+/* Dark Overlay for Readability */
+.registration-wrapper {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5); 
+    padding: 20px;
+    position: relative;
+    z-index: 2;
 }
 
-.auth-card input:focus {
-  border-color: var(--primary) !important;
-  box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1) !important;
+/* Back Link (Top Left of screen) */
+.back-link {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    z-index: 10;
+}
+
+/* The Main Container - 850x550 */
+.glass-card {
+    display: flex;
+    flex-direction: row; 
+    width: 100%;
+    max-width: 850px; 
+    height: 550px;     
+    border-radius: 50px; 
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* LEFT SIDE: CLEAR GLASS PANEL */
+.welcome-side {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    text-align: center;
+    position: relative; 
+    
+    /* Transition for sliding movement */
+    transition: transform 0.65s ease-in-out;
+}
+
+/* THE LOGO FIX */
+.prnt-logo {
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    height: 35px; 
+    width: auto;
+}
+
+.middle-group h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.middle-group p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-bottom: 40px;
+    line-height: 1.4;
+}
+
+/* Sign In Pill Button */
+.btn-signin {
+    background-color: white;
+    color: #ff8c00;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 50px;
+    font-weight: 800;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.btn-signin:hover {
+    transform: scale(1.05);
+    background-color: #f0f0f0;
+}
+
+/* RIGHT SIDE: REGISTRATION FORM */
+.form-side {
+    flex: 1;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px 60px !important;
+    
+    /* Transition for sliding and fading movement */
+    transition: transform 0.65s ease-in-out, opacity 0.4s ease-in-out;
+}
+
+.title {
+    color: #ff8c00;
+    font-weight: 750;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+/* Input Styling */
+.custom-input {
+    border: 2px solid #ff8c00 !important;
+    border-radius: 15px !important;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.custom-input input {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent;
+    width: 100%;
+    outline: none;
+}
+
+/* Primary Action Button */
+.join-btn {
+    background: #ff8c00;
+    color: white;
+    font-weight: 750;
+    border: none;
+    border-radius: 15px;
+    padding: 12px;
+    width: 100%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.join-btn:hover {
+    background: #e67e00;
+    transform: translateY(-2px);
+}
+
+/* Footer Link (Bottom Right) */
+.home-footer-link {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* --- REVERSED SLIDING TRANSITION LOGIC --- */
+
+/* Glass panel (on the left) slides further LEFT */
+.glass-card.active .welcome-side {
+    transform: translateX(-100%);
+}
+
+/* Form side (on the right) slides further RIGHT */
+.glass-card.active .form-side {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+/* Responsive Mobile Layout */
+@media (max-width: 768px) {
+    .glass-card {
+        flex-direction: column;
+        height: auto;
+        border-radius: 30px;
+    }
+    .form-side, .welcome-side {
+        flex: none;
+        width: 100%;
+        padding: 40px 30px !important;
+    }
+    .prnt-logo {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin-bottom: 20px;
+    }
+}
+
+/* Entrance Animation */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
