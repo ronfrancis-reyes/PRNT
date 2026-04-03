@@ -1,130 +1,373 @@
-.services-body {
-	padding: 0px 50px;
-	padding-top: 170px;
-	padding-bottom: 80px;
+/* Pages Container */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }
 
-.services-title {
-	display: flex;
-	align-items: center;
-	gap: 7px;
-	align-content: center;
+/* ─── HERO ─── */
+.service-hero {
+    position: relative;
+    background: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.88)),
+                url('../../assets/img/img33.jpg') center center / cover no-repeat;
+    color: white;
+    padding: 120px 0 80px;
 }
 
-.circle {
-	border-radius: 100%;
-	background-color: rgb(255, 68, 0);
-	opacity: 1;
-	aspect-ratio: 1;
-	height: 10px;
-	flex: none;
-	width: 10px;
+.service-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(255,68,0,0.1) 0%, transparent 55%);
+    pointer-events: none;
 }
 
-.prnt-eng {
-	font-size: 70px;
-	font-weight: bold;
-	color: black;
+.service-hero-card {
+    background: rgba(255,255,255,0.05) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1) !important;
 }
 
-.prnt-eng2 {
-	font-size: 23px;
-	font-weight: bold;
-	color: grey;
+.min-vh-section {
+    min-height: 70vh;
 }
 
-.prnt-eng-wrapper {
-	display: flex;
-	place-content: flex-end space-between;
-	align-items: flex-end;
-	gap: 200px;
-	padding-top: 150px;
-	margin: 0;
+/* ─── BUTTONS ─── */
+.btn-service-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    background: transparent;
+    transition: all 0.3s ease;
 }
 
-.mid-catchwords {
-	display: flex;
-	align-items: flex-end;
-	place-content: flex-end space-between;
-	padding: 10px;
-	font-size: 25px;
-	color: rgb(244, 60, 0);
-	font-weight: bold;
+.btn-service-outline:hover {
+    border-color: var(--prnt-orange);
+    color: var(--prnt-orange);
+    background: rgba(255,68,0,0.05);
 }
 
-.card-img {
-	width: 100%;
-	height: 100%;
-	object-fit: fill;
+/* ─── HERO BADGE ─── */
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 68, 0, 0.1);
+    padding: 8px 16px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 68, 0, 0.2);
 }
 
-.card-overlay {
-	height: 150px;
-	width: 300px;
-	position: absolute;
-	top: -20px;
-	right: 20px;
-	z-index: 10;
-	width: 200px;
+.badge-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--prnt-orange);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--prnt-orange);
 }
 
-.accordion-button {
-	font-size: 50px !important;
-	font-weight: bold !important;
-	align-items: center;
-	color: black !important;
-	gap: 100px !important;
+.badge-text {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--prnt-orange);
 }
 
-.accordion-header {
-	color: black;
+/* ─── PRICING SECTION BG ─── */
+.pricing-section-bg {
+    background: #fdfdfd;
+    position: relative;
+    z-index: 1;
+}
+.pricing-section-bg::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at 0% 0%, rgba(255,68,0,0.03) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(255,68,0,0.04) 0%, transparent 40%);
+    z-index: -1;
 }
 
-.image-container {
-	display: flex;
-	align-items: flex-end;
-	background: url("/PRNT/assets/img/img14.jpg");
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
-	align-self: center;
-	padding: 1.5% 2%;
-	height: 800px;
-	width: 1320px;
-	margin-bottom: 2%;
-	border-radius: 4%;
+/* ─── SERVICE CARDS ─── */
+.glass-service-card-modern {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.06) !important;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    transition: var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
-.inner-card-text {
-	font-weight: 700;
-	font-size: 18px;
-	margin-bottom: 13%;
-	margin-top: 5%;
+.glass-service-card-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--prnt-orange);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.card-link {
-	text-decoration: none;
-	color: #f43c00;
-	font-weight: 600;
-	transition: 0.15s;
+.glass-service-card-modern:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255,68,0,0.2) !important;
+    box-shadow: 0 24px 48px rgba(255, 68, 0, 0.08);
 }
 
-.card-logo {
-	display: block;
-	height: auto;
-	object-fit: cover;
-	width: 40px !important;
+.glass-service-card-modern:hover::before {
+    opacity: 1;
 }
 
-.accordion-item {
-	border-bottom: 1px solid #222;
-	background-color: transparent;
-	border-radius: 4px;
-	margin-bottom: 15px;
-	background-color: white !important;
-	padding: 0 20px;
+.service-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    background: rgba(255,68,0,0.08);
+    color: var(--prnt-orange);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin-bottom: 24px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.glass-service-card-modern:hover .service-icon-wrapper {
+    background: var(--prnt-orange);
+    color: white;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 10px 20px rgba(255,68,0,0.2);
+}
+
+.highlight-border {
+    border: 2px solid var(--prnt-orange) !important;
+    box-shadow: 0 10px 30px rgba(255, 68, 0, 0.08);
+}
+
+.popular-badge {
+    position: absolute;
+    top: 24px;
+    right: -40px;
+    background: var(--prnt-orange);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 40px;
+    transform: rotate(45deg);
+    box-shadow: 0 4px 10px rgba(255,68,0,0.3);
+    z-index: 2;
+}
+
+.price-tag {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--prnt-orange);
+    background: rgba(255,68,0,0.08);
+    padding: 8px 18px;
+    border-radius: 100px;
+    white-space: nowrap;
+    border: 1px solid rgba(255,68,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.glass-service-card-modern:hover .price-tag {
+    background: var(--prnt-orange);
+    color: white;
+}
+
+/* ─── PACKAGE LIST ─── */
+.package-list-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-grow: 1;
+}
+
+.package-item-modern {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 18px;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1px solid rgba(0,0,0,0.04);
+    transition: var(--transition-smooth);
+}
+
+.package-item-modern:hover {
+    background: #ffffff;
+    border-color: rgba(255,68,0,0.2);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transform: translateX(6px);
+}
+
+.package-item-modern span:last-child {
+    color: var(--prnt-orange);
+    font-weight: 800;
+    background: rgba(255,68,0,0.05);
+    padding: 4px 10px;
+    border-radius: 8px;
+}
+
+.card-cta-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 700;
+    color: var(--prnt-orange);
+    background: rgba(255,68,0,0.05);
+    border: 1px solid rgba(255,68,0,0.1);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+.card-cta-btn:hover {
+    background: var(--prnt-orange);
+    color: white;
+    box-shadow: 0 8px 20px rgba(255,68,0,0.2);
+}
+
+/* ─── SHOWCASE IMAGES ─── */
+.showcase-img-wrapper {
+    overflow: hidden;
+    border-radius: 1rem;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+}
+
+.showcase-img-wrapper img {
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    display: block;
+}
+
+.showcase-img-wrapper:hover img {
+    transform: scale(1.04);
+}
+
+/* ─── STAT BOXES (Section 3) ─── */
+.service-stat-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ─── FAQ SECTION ─── */
 .faq-section {
-	margin-bottom: 10rem;
+    background-color: #111;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.faq-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+}
+
+.faq-item:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    color: rgba(255,255,255,0.85);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    gap: 1.5rem;
+    transition: color 0.3s ease;
+}
+
+.faq-question:hover {
+    color: var(--prnt-white);
+}
+
+.faq-item.open .faq-question {
+    color: var(--prnt-white);
+}
+
+.faq-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.7rem;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-item.open .faq-icon {
+    background: var(--prnt-orange);
+    border-color: var(--prnt-orange);
+    color: white;
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.faq-answer p {
+    padding: 0 0 22px 0;
+    margin: 0;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.95rem;
+    line-height: 1.75;
+}
+
+/* ─── ICON ─── */
+.feature-icon-sm {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 991px) {
+    .display-3 { font-size: 2.8rem; }
+    .display-5 { font-size: 2.2rem; }
+    .min-vh-section { min-height: auto; }
 }

@@ -1,62 +1,66 @@
-<nav class="navbar navbar-expand-lg">
-	<div class="container container-fluid navbar-container-custom">
-		<a class="navbar-brand" href="./index.html"
-			><img src="/PRNT/assets/img/logo.png" alt="logo" class="nav-logo-custom"
-		/></a>
-		<button
-			class="navbar-toggler"
-			type="button"
-			data-bs-toggle="collapse"
-			data-bs-target="#navbarNavDropdown"
-			aria-controls="navbarNavDropdown"
-			aria-expanded="false"
-			aria-label="Toggle navigation"
-		>
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div
-			class="collapse navbar-collapse navbar-collapse-custom"
-			id="navbarNavDropdown"
-		>
-			<ul class="navbar-nav mx-auto">
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$isLoggedIn = isset($_SESSION['user_logged_in']) && $_SESSION['user_logged_in'] === true;
+$base_path = '/wst/PRNT';
+?>
+<nav class="navbar navbar-expand-lg fixed-top prnt-nav-glass">
+	<div class="container-fluid px-3 px-md-4">
+		<!-- Brand Logo at Absolute Left -->
+		<a class="navbar-brand me-auto me-lg-0" href="<?php echo $base_path; ?>/index.php">
+			<img src="<?php echo $base_path; ?>/assets/img/logo.png" alt="PRNT logo" class="nav-logo-compact" />
+		</a>
+
+        <!-- Mobile Actions (Avatar + Toggler) visible only on small screens -->
+        <div class="d-flex align-items-center gap-2 d-lg-none ms-auto">
+            <?php if ($isLoggedIn): ?>
+                <a href="<?php echo $base_path; ?>/pages/client/profile/index.php" class="avatar-nav-link d-flex align-items-center justify-content-center" aria-label="Profile" style="line-height: 1;">
+                    <img src="https://ui-avatars.com/api/?name=User&background=ff4400&color=fff" alt="Profile" class="nav-avatar-img rounded-circle" style="width: 34px; height: 34px; object-fit: cover;">
+                </a>
+            <?php endif; ?>
+            <!-- Toggler for Mobile -->
+            <button class="navbar-toggler prnt-toggler-sm border-0 shadow-none px-2" type="button" data-bs-toggle="collapse" data-bs-target="#navContent" aria-controls="navContent" aria-expanded="false" aria-label="Toggle navigation">
+                <div class="prnt-hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+
+		<div class="collapse navbar-collapse" id="navContent">
+			<!-- Links Centered -->
+			<ul class="navbar-nav mx-auto prnt-nav-links">
 				<li class="nav-item">
-					<a
-						class="nav-link nav-link-custom px-4 my-1 fs-5"
-						href="/PRNT/index.html"
-						>Home</a
-					>
+					<a class="nav-link" href="<?php echo $base_path; ?>/index.php">Home</a>
 				</li>
 				<li class="nav-item">
-					<a
-						class="nav-link nav-link-custom px-4 my-1 fs-5"
-						href="/PRNT/pages/works/"
-						>Work</a
-					>
+					<a class="nav-link" href="<?php echo $base_path; ?>/pages/about/">About</a>
 				</li>
 				<li class="nav-item">
-					<a
-						class="nav-link nav-link-custom px-4 my-1 fs-5"
-						href="/PRNT/pages/about/"
-						>About</a
-					>
+					<a class="nav-link" href="<?php echo $base_path; ?>/pages/works/">Work</a>
 				</li>
 				<li class="nav-item">
-					<a
-						class="nav-link nav-link-custom px-4 my-1 fs-5"
-						href="/PRNT/pages/service/"
-						>Service</a
-					>
+					<a class="nav-link" href="<?php echo $base_path; ?>/pages/service/">Service</a>
 				</li>
 				<li class="nav-item">
-					<a
-						class="nav-link nav-link-custom px-4 my-1 fs-5"
-						href="/PRNT/pages/contact/"
-						>Contact</a
-					>
+					<a class="nav-link" href="<?php echo $base_path; ?>/pages/contact/">Contact</a>
 				</li>
 			</ul>
-			<div class="d-flex nav-login-custom">
-				<a class="btn login-custom" href="/PRNT/pages/login/">LOG IN</a>
+
+			<!-- Actions at Absolute Right -->
+			<div class="d-flex align-items-center gap-2 gap-md-3 ms-auto ms-lg-0 prnt-nav-actions">
+				<?php if ($isLoggedIn): ?>
+					<a class="btn btn-prnt-glass-glow btn-print" href="<?php echo $base_path; ?>/pages/client/order/index.php">PRINT NOW</a>
+					<a href="<?php echo $base_path; ?>/pages/client/profile/index.php" class="avatar-nav-link d-none d-lg-flex" aria-label="Profile">
+						<!-- We use a placeholder image; replace with real avatar path later -->
+						<img src="https://ui-avatars.com/api/?name=User&background=ff4400&color=fff" alt="Profile" class="nav-avatar-img">
+					</a>
+				<?php else: ?>
+					<a class="btn btn-prnt-glass-glow btn-print" href="<?php echo $base_path; ?>/pages/account/index.php">PRINT NOW</a>
+					<a class="btn btn-prnt-glass-glow btn-login" href="<?php echo $base_path; ?>/pages/account/index.php">LOG IN</a>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>

@@ -1,0 +1,68 @@
+<!-- ==========================================================================
+     SECTION: ADMIN HEADER (TOPBAR)
+     ========================================================================== -->
+<header class="admin-header">
+    <div class="header-left">
+        <button class="menu-toggle" id="menuToggle" onclick="window.toggleAdminSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h1 class="page-title">Dashboard</h1>
+    </div>
+    
+    <div class="header-tools">
+        <div class="notification-wrapper">
+            <button class="action-btn notification-bell" id="ntToggle" onclick="window.toggleDropdown('ntDropdown')" aria-label="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="nt-badge" id="ntBadge" style="display:none;">0</span>
+            </button>
+
+            <!-- ==========================================================================
+                 SECTION: NOTIFICATION DROPDOWN (Premium Dark)
+                 ========================================================================== -->
+            <div class="notification-dropdown" id="ntDropdown">
+                <div class="dropdown-header">
+                    <div class="nt-header-title-group">
+                        <span class="nt-header-title">Notifications</span>
+                        <span class="nt-count-label" id="ntCountLabel"></span>
+                    </div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <button class="btn-mark-all" onclick="window.markAllNotificationsAsRead && window.markAllNotificationsAsRead()">Mark all read</button>
+                        <button class="btn-mark-all" style="color:#6b7280;" onclick="window.clearAllNotifications && window.clearAllNotifications()">Clear all</button>
+                    </div>
+                </div>
+
+                <!-- Dynamic list rendered by script.js -->
+                <div class="nt-list" id="ntList">
+                    <!-- Populated by initNotifications() in script.js -->
+                </div>
+
+
+            </div>
+        </div>
+        
+        <!-- ==========================================================================
+             SECTION: PROFILE MENU & DROPDOWN
+             ========================================================================== -->
+        <div class="profile-menu">
+            <button class="profile-trigger" onclick="window.toggleDropdown('profileDropdown')">
+                <span class="avatar-sm user-avatar" data-user-initials>Y</span>
+            </button>
+            <div class="profile-dropdown dropdown-panel" id="profileDropdown">
+                <div class="dropdown-header">
+                    <center>Admin Account</center>
+                </div>
+                <div class="dp-header-info" style="padding: 12px 20px; display: flex; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                    <span class="dp-avatar avatar-sm" style="margin-right: 12px;" data-user-initials>Y</span>
+                    <div class="dp-info">
+                        <h6 class="dp-name" style="margin: 0; font-size: 0.9rem; color: #fff;" data-user-name>Yance</h6>
+                        <p class="dp-email" style="margin: 0; font-size: 0.75rem; color: rgba(255, 255, 255, 0.5);" data-user-email>yancenathanc@gmail.com</p>
+                    </div>
+                </div>
+                <a href="/wst/PRNT/pages/home/index.php" class="dp-item"><i class="fas fa-home"></i> Back to Site</a>
+                <a href="#" data-section="user-profile" data-folder="user profile" class="dp-item"><i class="fas fa-user"></i> Admin Profile</a>
+                <hr class="dp-divider">
+                <a href="/wst/PRNT/pages/account/" class="dp-item" style="color: var(--primary-orange, #FF6B00);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </div>
+</header>

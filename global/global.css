@@ -1,12 +1,109 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+:root {
+    --prnt-orange: #ff4400;
+    --prnt-orange-hover: #e63e00;
+    --prnt-black: #0a0a0a;
+    --prnt-dark: #121212;
+    --prnt-white: #ffffff;
+    --prnt-gray: #f8f9fa;
+    --prnt-text-muted: rgba(0, 0, 0, 0.6);
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
 * {
-	margin: 0;
-	padding: 0;
-	font-family: "Geist";
-	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    box-sizing: border-box;
 }
 
 body {
-	padding-top: 8vh;
+    padding-top: 80px;
+    background-color: var(--prnt-white);
+    color: var(--prnt-black);
+    overflow-x: hidden;
+}
+
+/* --- UTILITIES --- */
+.text-orange { color: var(--prnt-orange) !important; }
+.bg-orange { background-color: var(--prnt-orange) !important; }
+.bg-black { background-color: var(--prnt-black) !important; }
+.bg-white { background-color: var(--prnt-white) !important; }
+
+.section-padding {
+    padding: 100px 0;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    transition: var(--transition-smooth);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 68, 0, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* --- REVEAL ANIMATIONS --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- BUTTONS --- */
+.btn-prnt-primary {
+    background-color: var(--prnt-orange);
+    color: white;
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition-smooth);
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-prnt-primary:hover {
+    background-color: var(--prnt-orange-hover);
+    box-shadow: 0 10px 20px rgba(255, 68, 0, 0.2);
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-prnt-outline {
+    background-color: transparent;
+    color: var(--prnt-black);
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition-smooth);
+    border: 2px solid var(--glass-border);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-prnt-outline:hover {
+    border-color: var(--prnt-orange);
+    background-color: rgba(255, 68, 0, 0.05);
+    color: var(--prnt-orange);
 }

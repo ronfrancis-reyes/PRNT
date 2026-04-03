@@ -1,74 +1,273 @@
-.footer-custom {
-	background-color: #121212;
-	padding: 1rem 0.5rem;
+/* Footer v6 (Deep Orange) — High-Impact Branding, Neon-Flare CTA */
+@import url('https://fonts.googleapis.com/css2?family=Squada+One&display=swap');
+
+:root {
+	--prnt-primary: #ff4400;
+	--prnt-primary-hover: #ff5511;
+	--prnt-primary-glow: rgba(255, 68, 0, 0.4);
+	--prnt-dark-blue: #1A1D26;
+	--prnt-light: #FFFFFF;
+	--prnt-gray: #8ba2bd;
+	--prnt-border-light: rgba(255, 255, 255, 0.1);
 }
 
-.footer-cardbody-custom {
-	background-color: #ff4400;
-	border-radius: 1rem;
-	padding: 1rem 1rem;
-	color: #eee9e3;
+.prnt-footer {
+    background-color: #000000; /* Updated: Solid Black */
+    color: var(--prnt-light);
+    padding: 3.5rem 0 2rem; /* Updated: Tighter Spacing */
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--prnt-border-light);
 }
 
-.row-custom {
-	margin: 0;
-	padding-top: 0;
+/* Left Branding: Concentrated PRNT Orange + Animated Shimmer */
+.branding-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.address-custom {
-	background-color: #f24101;
-	font-size: clamp(1rem, 1vw, 2rem);
-	padding-top: 1rem;
-	border-radius: 1rem;
+.footer-huge-brand {
+    font-family: 'Squada One', sans-serif;
+    font-size: clamp(8rem, 25vw, 15rem); /* Updated: Hero Scale */
+    font-weight: 400;
+    
+    /* Concentrated PRNT Orange Gradient with "Laser-Shining" Reflection */
+    background: linear-gradient(110deg, 
+        var(--prnt-primary) 40%, 
+        #fff 49%, 
+        #fff 51%, 
+        var(--prnt-primary) 60%
+    );
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: laserShine 4.5s linear infinite;
+    
+    line-height: 0.75;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+    user-select: none;
+    margin-bottom: 0.5rem;
+    text-align: left;
+    margin-left: -0.04em;
+    
+    opacity: 0.7; /* Increased Visibility */
+    transform: scaleY(1.15) perspective(1000px);
+    transform-origin: bottom left;
+    
+    filter: drop-shadow(0 0 12px rgba(255, 107, 0, 0.2));
 }
 
-.links-custom {
-	display: flex;
-	flex-direction: column;
+@keyframes laserShine {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.footer-meta-left {
+    padding-left: 0;
+    text-align: left;
+}
+
+.footer-copyright {
+    display: block;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #DBDBDB; /* Updated: Off-white for better hierarchy */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.footer-tagline {
+    font-size: 0.9rem;
+    color: var(--prnt-gray);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+}
+
+/* Content Columns: Stable Functional Areas */
+.footer-title {
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.footer-title::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: var(--prnt-primary);
+}
+
+.contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact-item {
+    margin-bottom: 2.5rem;
+}
+
+.contact-label {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.65);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
 }
 
 .footer-links {
-	text-decoration: none;
-	margin-bottom: 0.75rem;
-	font-size: clamp(1rem, 1vw, 2rem);
-	font-weight: 500;
-	width: 100%;
-	color: #eee9e3;
-}
-.footer-links:hover {
-	text-decoration: underline;
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
 }
 
-.terms-custom {
-	font-size: clamp(1rem, 1vw, 2rem);
+.footer-nav-link {
+    color: var(--prnt-gray);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
-.daydate-custom {
-	margin-top: auto;
-	margin-bottom: auto;
-	font-size: clamp(1rem, 1vw, 3rem);
+.footer-nav-link::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    width: 4px;
+    height: 0;
+    background-color: var(--prnt-primary);
+    box-shadow: 0 0 15px var(--prnt-primary-glow);
+    transition: all 0.3s ease;
 }
 
-.time-custom {
-	font-weight: 500;
-	font-size: clamp(1rem, 2vw, 4rem);
+.footer-nav-link:hover {
+    color: #fff;
+    padding-left: 14px;
 }
 
-.daydate-text-custom {
-	background-color: #f24101;
-	padding: 2rem 1.5rem;
-	border-radius: 1rem;
+.footer-nav-link:hover::before {
+    height: 100%;
 }
 
-@media (max-width: 515px) {
-	.row1-custom,
-	.row-divider-custom {
-		display: none;
-	}
-	.daydate-custom {
-		font-size: clamp(0.7rem, 0.7vw, 3rem);
-	}
-	.time-custom {
-		font-size: clamp(0.7rem, 0.7vw, 3rem);
-	}
+/* Schedule Module (Stable) */
+.hours-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px solid rgba(255, 107, 0, 0.4);
+    backdrop-filter: blur(14px);
+    border-radius: 16px;
+    padding: 1.5rem 1.8rem;
+    transition: all 0.4s ease;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.hours-card:hover { transform: translateY(-4px); border-color: var(--prnt-primary); }
+
+.hours-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.days {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+}
+
+.time {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+}
+
+.hours-badge {
+    display: inline-block;
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    margin-top: 8px;
+}
+
+/* Ultra-Premium "Neon-Flare" CTA */
+.btn-prnt-footer-v4 {
+    display: inline-block;
+    position: relative;
+    background: var(--prnt-primary);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 1.05rem;
+    padding: 0.85rem 2.8rem;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+    overflow: hidden; /* For Laser Sweep */
+    box-shadow: 0 8px 25px rgba(255, 107, 0, 0.3);
+}
+
+.btn-prnt-footer-v4::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to right, 
+        rgba(255,255,255,0) 0%, 
+        rgba(255,255,255,0.4) 50%, 
+        rgba(255,255,255,0) 100%
+    );
+    transform: skewX(-25deg);
+    transition: none;
+}
+
+.btn-prnt-footer-v4:hover {
+    transform: translateY(-5px) scale(1.06);
+    background-color: var(--prnt-primary-hover);
+    box-shadow: 0 20px 45px var(--prnt-primary-glow);
+    color: #fff !important;
+}
+
+.btn-prnt-footer-v4:hover::after {
+    left: 150%;
+    transition: all 0.65s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (max-width: 992px) {
+    .prnt-footer { padding: 4rem 1.5rem 3rem; }
+    .footer-huge-brand { font-size: 8rem; }
+}
+
+@media (max-width: 576px) {
+    .footer-huge-brand { font-size: 4.5rem; }
 }
