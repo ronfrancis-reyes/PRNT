@@ -30,44 +30,59 @@ function getDetails(orderId) {
 }
 
 function showReceipt(order, items) {
-	$("#orderId").html(`
-      Order Receipt: ORD-${order.order_id}
+	$("#orderId").text(`
+        Order Receipt: ORD-${order.order_id}
     `);
+	$("#orderStatus").text(`Status: ${order.status}`);
 	$("#orderInfo").html(`
-      <div class="info-item">
-          <label>CUSTOMER</label>
-          <span id="custName">${order.name}</span>
-      </div>
-      <div class="info-item">
-          <label>PHONE NUMBER</label>
-          <span id="custPhone">${order.contact_number}</span>
-      </div>
-      <div class="info-item">
-          <label>RECEIVING METHOD</label>
-          <span id="recvMethod">${order.delivery_option}</span>
-      </div>
-      <div class="info-item">
-          <label>LOCATION</label>
-          <span id="recvLoc">${order.building}</span>
-      </div>
-      <div class="info-item">
-          <label>PAYMENT METHOD</label>
-          <span id="payMethod">${order.payment_type}</span>
-      </div>
-      <div class="info-item">
-          <label>ORDER DATE</label>
-          <span id="orderDate2">${order.date_placed}</span>
-      </div>
+        <div class="info-item">
+            <label>CUSTOMER</label>
+            <span id="custName">${order.name}</span>
+        </div>
+        <div class="info-item">
+            <label>PHONE NUMBER</label>
+            <span id="custPhone">${order.contact_number}</span>
+        </div>
+        <div class="info-item">
+            <label>RECEIVING METHOD</label>
+            <span id="recvMethod">${order.delivery_option}</span>
+        </div>
+        <div class="info-item">
+            <label>LOCATION</label>
+            <span id="recvLoc">${order.building}</span>
+        </div>
+        <div class="info-item">
+            <label>PAYMENT METHOD</label>
+            <span id="payMethod">${order.payment_type}</span>
+        </div>
+        <div class="info-item">
+            <label>ORDER DATE</label>
+            <span id="orderDate2">${order.date_placed}</span>
+        </div>
     `);
+	if (order.building == null) {
+		$("#recvLoc").text(`---`);
+	}
+	if (order.note !== "") {
+		$("#orderNotes").text(`${order.note}`);
+	}
+
 	items.forEach((item) => {
 		$("#itemList").append(`
-      <div class="item-row">
+    <div class="item-row">
         <div class="item-main">
-          <div class="item-name">${item.file_name}</div>
-          <div class="item-meta">${item.service_name} &middot; ${item.color_type} &middot; ${item.copies}</div>
+            <div class="item-name">${item.file_name}</div>
+            <div class="item-meta">${item.service_name} &middot; ${item.color_type} &middot; ${item.copies}</div>
         </div>
         <div class="item-amount">P${item.price}</div>
-      </div>
+    </div>
     `);
 	});
+	if (order.delivery_option !== "Pick-up") {
+		$("#subtotalVal").text(`₱${(order.total_price - 10).toFixed(2)}`);
+		$("#deliveryVal").text(`₱10.00`);
+	} else {
+		$("#subtotalVal").text(`₱${order.total_price}`);
+	}
+	$("#totalVal").text(`₱${order.total_price}`);
 }

@@ -96,9 +96,9 @@ if (!isset($_SESSION['user'])) {
                     <div class="success-icon">
                         <i class="fas fa-check"></i>
                     </div>
-                    <h1 id="orderId">Order Receipt: ORD-XXXXXX</h1>
+                    <h1 id="orderId"></h1>
                     <div class="header-meta">
-                        <span id="orderStatus">Status: Pending</span>
+                        <span id="orderStatus"></span>
                     </div>
                     <div class="zigzag"></div>
                 </div>
@@ -141,27 +141,28 @@ if (!isset($_SESSION['user'])) {
                     <div class="total-card">
                         <div class="total-row">
                             <span>Subtotal</span>
-                            <span id="subtotalVal">P0.00</span>
+                            <span id="subtotalVal">₱0.00</span>
                         </div>
                         <div class="total-row">
                             <span>Delivery Fee</span>
-                            <span id="deliveryVal">P0.00</span>
+                            <span id="deliveryVal">₱0.00</span>
                         </div>
                         <div class="divider-line"></div>
                         <div class="grand-total">
                             <span>Total Amount</span>
-                            <span id="totalVal">P0.00</span>
+                            <span id="totalVal">₱0.00</span>
                         </div>
                     </div>
 
                     <!-- BUTTONS -->
                     <div class="action-buttons">
-                        <button class="btn btn-outline" onclick="window.print()">
-                            <i class="fas fa-print"></i> Export Receipt
-                        </button>
-                        <a href="../dashboard/" class="btn btn-primary" style="text-decoration: none;">
+                        <a href="../dashboard/" class="btn btn-outline" style="text-decoration: none;">
                             Back to dashboard<i class="fas fa-arrow-right"></i>
                         </a>
+                        <button class="btn btn-primary" onclick="window.print()">
+                            <i class="fas fa-print"></i> Export Receipt
+                        </button>
+
                     </div>
                 </div><!-- /.receipt-body -->
             </div><!-- /.receipt-card -->

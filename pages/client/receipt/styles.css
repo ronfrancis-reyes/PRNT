@@ -585,8 +585,8 @@ body {
    Hides buttons and UI elements when exporting/printing the receipt
    ─────────────────────────────────────────────────────────────────────────── */
 @media print {
-	.navbar-spacer,
-	.footer-spacer,
+	.navbar,
+	.footer,
 	.action-buttons,
 	.receipt-watermark {
 		display: none !important;

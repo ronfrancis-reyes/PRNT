@@ -10,12 +10,16 @@ if (isset($_GET)) {
     if ($_GET['action'] == 'getOrder') {
         $id = $_GET['id'];
 
-        $sql = $conn->prepare('SELECT o.order_id, a.name, a.contact_number, o.date_placed, ad.building, o.status, o.delivery_option, o.total_price, p.payment_type, o.note FROM orders o JOIN accounts a ON o.account_id = a.account_id JOIN addresses ad ON o.address_id = ad.address_id JOIN payments p ON o.payment_id = p.payment_id WHERE o.order_id = ?;');
+        $sql = $conn->prepare('SELECT o.order_id, a.name, a.contact_number, o.date_placed, ad.building, o.status, o.delivery_option, o.total_price, p.payment_type, o.note FROM `orders` o
+                                LEFT JOIN accounts a ON a.account_id = o.account_id
+                                LEFT JOIN addresses ad ON ad.address_id = o.address_id
+                                LEFT JOIN payments p ON o.payment_id = p.payment_id
+                                WHERE o.order_id = ?;');
         $sql->bind_param("i", $id);
 
         if ($sql->execute()) {
             $result = $sql->get_result();
-            $details[]= $result->fetch_assoc();
+            $details = $result->fetch_assoc();
 
             $itemSql = $conn->prepare("SELECT * FROM orderitems oi JOIN services s ON oi.service_id = s.service_id JOIN files f ON oi.file_id = f.file_id JOIN color c ON oi.color_id = c.color_id WHERE oi.order_id = ?");
             $itemSql->bind_param('i', $id);
