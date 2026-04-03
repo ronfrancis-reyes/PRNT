@@ -117,7 +117,7 @@ function handleFormatChange() {
 function showCustomSizeInput(select) {
 	const selectedText = select.options[select.selectedIndex].text;
 	if (selectedText.includes("Custom")) {
-		$("#customSizeInput").show();
+		$("#customSizeWrapper").show();
 		$("#customSizeInput").html(`                                
 			<input type="number" id="customLengthInput" onchange="calculateEstimatedPrice()" min="1" placeholder="Length in"
                 style="flex:1; padding:0.85rem; border:1px solid var(--border); border-radius:var(--radius); background:white;">
@@ -126,7 +126,7 @@ function showCustomSizeInput(select) {
 				style="flex:1; padding:0.85rem; border:1px solid var(--border); border-radius:var(--radius); background:white;">
 			`);
 	} else {
-		$("#customSizeInput").hide();
+		$("#customSizeWrapper").hide();
 	}
 }
 

@@ -155,8 +155,10 @@ if (!isset($_SESSION['user'])) {
                                     style="width:100%;padding:0.85rem;border:1px solid var(--border);border-radius:var(--radius);outline:none;background:white;">
                                     <option value="">Select service first</option>
                                 </select>
-                                <div id="customSizeInput"
-                                    style="display:none; margin-top:0.5rem; width:100%; display:flex; align-items:center; gap:0.5rem;">
+                                <div id="customSizeWrapper" style="display: none;">
+                                    <div id="customSizeInput"
+                                        style="margin-top:0.5rem; width:100%; display:flex; align-items:center; gap:0.5rem;">
+                                    </div>
                                 </div>
                             </div>
                         </div>
