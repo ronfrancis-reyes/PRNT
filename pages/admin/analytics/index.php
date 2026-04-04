@@ -1,65 +1,130 @@
 <?php
-include "../../../api/config.php";
-if(!isset($_SESSION['user'])) {
-header("Location: /PRNT/pages/login/");
-} else if ($_SESSION['user'] != 1) {
-header("Location: /PRNT/pages/client/service-avail/");
-}
+/**
+ * Analytics Module - PRNT Admin
+ * 
+ * Performance insights, user growth tracking, and service delivery metrics.
+ * Designed to be loaded via Iframe within the modern Admin Shell.
+ */
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"
-			rel="stylesheet"
-		/>
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-			crossorigin="anonymous"
-		/>
-		<!--Tab Logo-->
-		<link rel="icon" href="/PRNT/assets/img/PRNT_logo.png" type="image/png" />
-		<!--Logo Library -->
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-		/>
-		<link rel="stylesheet" href="styles.css" />
-		<link rel="stylesheet" href="../../global/global.css" />
-		<title>PRNT - ANALYTICS</title>
-	</head>
-	<body>
-		<!-- start of body-->
-		<main>
-			<section class="page">
-				<div class="container py-5">
-					<div class="row min-vh-100 align-items-center justify-content-center text-center">
-						<div class="col-12">
-							<small class="justify-content-center"><span class="dot"></span>ADMIN</small>
-							<h1 class="display-1 fw-bold">ANALYTICS</h1>
-							<p class="text-secondary mt-3">Welcome to the Analytics page.</p>
-						</div>
-					</div>
-				</div>
-			</section>
-		</main>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRNT - Analytics</title>
 
-		<script type="module" src="script.js"></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-			crossorigin="anonymous"
-		></script>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-			integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-			crossorigin="anonymous"
-		></script>
-	</body>
+    <!-- UI Core -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../../../global/variables.css?v=1.5">
+    <link rel="stylesheet" href="index.css?v=1.5">
+
+    <!-- Charting & Export Engines -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+</head>
+<body class="analytics-body">
+
+    <div class="analytics-wrapper">
+
+
+        <!-- ─── MODULE HEADER & FILTERS ─── -->
+        <div class="module-header">
+            <div class="header-info">
+                <div class="header-title">PERFORMANCE METRICS</div>
+                <h2 class="header-subtitle" id="analyticsPeriodTitle">Monthly Overview</h2>
+            </div>
+            <div class="header-actions">
+                <div class="control-group">
+                    <button class="btn-filter" data-period="daily">Day</button>
+                    <button class="btn-filter active" data-period="monthly">Month</button>
+                    <button class="btn-filter" data-period="yearly">Year</button>
+                </div>
+                <button class="btn-export" id="btnExportAnalytics"><i class="fas fa-download"></i> Export</button>
+            </div>
+        </div>
+
+        <!-- ─── KPI SUMMARY ROW ─── -->
+        <div class="analytics-grid-top">
+            <div class="ani-card">
+                <div class="ani-card-label" id="label-orders">TOTAL ORDERS</div>
+                <div class="ani-card-main">
+                    <span class="ani-value" id="val-orders">0</span>
+                    <div class="ani-trend" id="trend-orders">0%</div>
+                </div>
+                <div class="ani-comparison" id="comp-orders">vs last month</div>
+            </div>
+
+            <div class="ani-card">
+                <div class="ani-card-label" id="label-revenue">TOTAL REVENUE</div>
+                <div class="ani-card-main">
+                    <span class="ani-value" id="val-revenue">₱ 0</span>
+                    <div class="ani-trend" id="trend-revenue">0%</div>
+                </div>
+                <div class="ani-comparison" id="comp-revenue">vs last month</div>
+            </div>
+
+            <div class="ani-card">
+                <div class="ani-card-label" id="label-customers">TOTAL CUSTOMERS</div>
+                <div class="ani-card-main">
+                    <span class="ani-value" id="val-customers">0</span>
+                    <div class="ani-trend" id="trend-customers">0%</div>
+                </div>
+                <div class="ani-comparison" id="comp-customers">vs last month</div>
+            </div>
+        </div>
+
+        <!-- ─── CHARTS & INSIGHTS ─── -->
+        <div class="analytics-grid-main">
+            
+            <!-- Revenue & Services Distribution (Grouped Histogram) -->
+            <div class="ani-chart-card lg-span">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-chart-column icon"></i> REVENUE & SERVICES DISTRIBUTION</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Customer Growth (Histogram) -->
+            <div class="ani-chart-card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-users icon"></i> CUSTOMER GROWTH</h3>
+                </div>
+                <div class="card-body">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Top Services Performance -->
+            <div class="ani-table-card full-span">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-trophy icon"></i> TOP SERVICES PERFORMANCE</h3>
+                </div>
+                <div class="card-body pb-0">
+                    <table class="ani-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>SERVICE NAME</th>
+                                <th>FORMAT / CATEGORY</th>
+                                <th class="text-center">UNITS SOLD</th>
+                                <th class="text-right">REVENUE</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topServicesTableBody">
+                            <!-- Populated dynamically via index.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Logic Engine -->
+    <script src="index.js?v=1.5"></script>
+</body>
 </html>

@@ -66,16 +66,17 @@ include '../../api/config.php';
 					?>
 				</a>
 				<?php if (isset($_SESSION['user'])): ?>
-					<a href="../user-profile/"
-						class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
-						<div
-							style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
-							id="navAvatar"><?php
-											$fullname = explode(' ', $_SESSION['username']);
-											$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
-											echo $initials;
-											?></div>
-					</a>
+					<?php if ($_SESSION['role'] == 'Customer'): ?>
+						<a href="../pages/user-profile/" class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
+							<div
+								style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
+								id="navAvatar"><?php
+												$fullname = explode(' ', $_SESSION['username']);
+												$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+												echo $initials;
+												?></div>
+						</a>
+						<?php endif; ?>
 				<?php else: ?>
 					<a
 						onclick="showAuthModal('login')"

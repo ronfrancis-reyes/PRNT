@@ -18,8 +18,9 @@
 /* Global Styles */
 body { 
     font-family: 'Inter', -apple-system, sans-serif; 
-    background-color: var(--bg-dark-main) !important; 
+    background-color: transparent !important; 
     color: #ffffff;
+    padding: 0.5rem 1rem;
 }
 
 .text-orange { color: var(--prnt-orange) !important; }
@@ -40,7 +41,7 @@ body {
 }
 
 .fa-edit.text-muted:hover { color: var(--prnt-orange) !important; }
-.fa-trash.text-danger:hover { color: #ff4444 !important; }
+.fa-trash.text-danger:hover { color: #FF6B00 !important; }
 
 
 /* Service Cards */
@@ -79,6 +80,33 @@ body {
 .btn-orange:hover {
     background-color: var(--prnt-orange-hover);
     color: white;
+}
+
+/* Modal Header Close Button - Standardized Path */
+.btn-modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted-light);
+    font-size: 1.1rem;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.btn-modal-close:hover {
+    color: #FF6B00;
+    background: rgba(255, 255, 255, 0.05);
+    transform: rotate(90deg);
+}
+
+.btn-modal-close:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 /* Custom Inputs & Modals */

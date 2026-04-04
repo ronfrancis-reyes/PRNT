@@ -1,0 +1,225 @@
+/* ==========================================================================
+   SECTION: PREMIUM GLASSMORPHISM DROPDOWN SYSTEM
+   ========================================================================== */
+
+:root {
+	--dropdown-bg: #161922;
+	--dropdown-border: rgba(255, 255, 255, 0.1);
+	--dropdown-blur: 0px;
+	--dropdown-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+	--dropdown-text: #a0aec0;
+	--dropdown-hover-bg: rgba(255, 107, 0, 0.1);
+	--primary-orange: #ff6b00;
+}
+
+.notification-dropdown,
+.profile-dropdown {
+	position: absolute;
+	right: 0;
+	top: 60px;
+	z-index: 1000;
+	background: var(--dropdown-bg);
+	border: 1px solid var(--dropdown-border);
+	border-radius: 12px;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+	display: none; /* Controlled by .is-visible */
+	overflow: hidden;
+	min-width: 220px;
+	opacity: 0;
+	transform: translateY(-10px);
+	transition:
+		opacity 0.3s ease,
+		transform 0.3s ease;
+}
+
+.notification-dropdown.is-visible,
+.profile-dropdown.is-visible {
+	display: block;
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Notification specific layout handled in topbar.css */
+
+/* Link and Item Styling */
+.dropdown-link,
+.dropdown-item {
+	display: flex;
+	align-items: center;
+	padding: 12px 20px;
+	color: var(--dropdown-text);
+	text-decoration: none; /* No default blue underlines */
+	transition: 0.3s;
+	font-size: 0.9rem;
+	cursor: pointer;
+	border: none;
+	background: transparent;
+	width: 100%;
+	text-align: left;
+}
+
+.dropdown-link:hover,
+.dropdown-item:hover {
+	background: var(--dropdown-hover-bg);
+	color: var(--primary-orange);
+}
+
+.dropdown-link i,
+.dropdown-item i {
+	margin-right: 12px;
+	width: 16px;
+	text-align: center;
+}
+
+/* Divider Styling */
+.dropdown-divider {
+	height: 1px;
+	background: var(--dropdown-border);
+	margin: 4px 0;
+	border: none;
+}
+
+/* Header/Footer Sections */
+.dropdown-header {
+	padding: 12px 20px;
+	border-bottom: 1px solid var(--dropdown-border);
+	font-weight: 600;
+	font-size: 0.85rem;
+	color: #fff;
+}
+
+.dropdown-footer {
+	padding: 10px 20px;
+	border-top: 1px solid var(--dropdown-border);
+	text-align: center;
+	background: rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-footer .view-all-link {
+	color: var(--primary-orange);
+	text-decoration: none;
+	font-size: 0.8rem;
+	font-weight: 600;
+	transition: 0.2s;
+}
+
+.dropdown-footer .view-all-link:hover {
+	text-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
+}
+
+/* ==========================================================================
+   SECTION: NOTIFICATION CATEGORIZATION & STATES
+   ========================================================================== */
+/* Handled in topbar.css for refined premium UI */
+
+.nt-item {
+	display: flex;
+	padding: 14px 20px;
+	gap: 12px;
+	border-bottom: 1px solid var(--dropdown-border);
+	transition: 0.2s;
+	cursor: pointer;
+	position: relative;
+}
+
+.nt-item:hover {
+	background: rgba(255, 255, 255, 0.03);
+}
+
+.nt-item.unread::before {
+	content: "";
+	position: absolute;
+	left: 8px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 6px;
+	height: 6px;
+	background: var(--primary-orange);
+	border-radius: 50%;
+}
+
+.nt-icon {
+	width: 36px;
+	height: 36px;
+	border-radius: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	font-size: 0.9rem;
+}
+
+.nt-icon-order {
+	background: rgba(255, 107, 0, 0.15);
+	color: var(--primary-orange);
+}
+.nt-icon-alert {
+	background: rgba(239, 68, 68, 0.15);
+	color: var(--error);
+}
+.nt-icon-update {
+	background: rgba(16, 185, 129, 0.15);
+	color: var(--success);
+}
+
+.nt-content {
+	flex: 1;
+}
+
+.nt-content h6 {
+	margin: 0 0 2px 0;
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #fff;
+}
+
+.nt-content p {
+	margin: 0;
+	font-size: 0.75rem;
+	color: var(--dropdown-text);
+	line-height: 1.4;
+}
+
+.nt-time {
+	font-size: 0.65rem;
+	color: var(--text-muted);
+	margin-top: 4px;
+	display: block;
+}
+
+.nt-category-header {
+	padding: 10px 20px 6px;
+	font-size: 0.7rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	color: var(--text-muted);
+	background: rgba(255, 255, 255, 0.02);
+}
+
+.nt-item.read {
+	opacity: 0.6;
+}
+
+.dropdown-header-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.btn-mark-all {
+	background: transparent;
+	border: none;
+	color: var(--primary-orange);
+	font-size: 0.7rem;
+	font-weight: 600;
+	cursor: pointer;
+	padding: 4px 8px;
+	border-radius: 4px;
+	transition: 0.2s;
+}
+
+.btn-mark-all:hover {
+	background: rgba(255, 107, 0, 0.1);
+	text-decoration: underline;
+}

@@ -3,7 +3,7 @@ include "../../../api/config.php";
 if (!isset($_SESSION['user'])) {
 	header("Location: ../../../index.php");
 } else if ($_SESSION['role'] == 'Admin') {
-	header("Location: ../../admin/dashboard/");
+	header("Location: ../../admin/");
 }
 ?>
 <!doctype html>

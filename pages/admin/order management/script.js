@@ -1,343 +1,430 @@
-const API = "../../../api/order-management.php";
+// ==========================================================================
+// 1. SAMPLE DATA
+// ==========================================================================
+const SAMPLE_DATA = {
+  orders: []
+};
 
-// close dropdowns when clicking outside
-document.addEventListener("click", function (e) {
-	if (!e.target.closest(".action-wrap"))
-		document.querySelectorAll(".dropdown.show").forEach(function (d) {
-			d.classList.remove("show");
-		});
+// ==========================================================================
+// 2. STATE MANAGEMENT
+// ==========================================================================
+const state = {
+  activeRow:    null,
+  rowToDelete:  null
+};
+
+// ==========================================================================
+// 3. DOM REFERENCES
+// ==========================================================================
+const dom = {
+  tableBody:     document.getElementById('tableBody'),
+  actionPanel:   document.getElementById('actionPanel'),
+  modalOverlay:  document.getElementById('modalOverlay'),
+  modalBody:     document.getElementById('modalBody'),
+  deleteOverlay: document.getElementById('deleteOverlay'),
+  deleteMsg:     document.getElementById('deleteMsg'),
+  btnConfirmDelete: document.getElementById('btnConfirmDelete'),
+  searchInput:   document.getElementById('searchInput'),
+  statusFilter:  document.getElementById('statusFilter')
+};
+
+// ==========================================================================
+// 4. EVENT LISTENERS
+// ==========================================================================
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.btn-actions') && !e.target.closest('#actionPanel')) {
+    closeActionPanel();
+  }
 });
 
-// toggle three-dot dropdown
-function toggleMenu(btn) {
-	var dd = btn.nextElementSibling;
-	var isOpen = dd.classList.contains("show");
-	document.querySelectorAll(".dropdown.show").forEach(function (d) {
-		d.classList.remove("show");
-	});
-	if (!isOpen) dd.classList.add("show");
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { 
+    closeModal(); 
+    closeDeleteModal(); 
+    closeActionPanel(); 
+  }
+});
+
+if (dom.btnConfirmDelete) {
+  dom.btnConfirmDelete.addEventListener('click', () => {
+    handleConfirmDelete();
+  });
 }
 
-// view details modal
-function viewDetails(btn) {
-	btn.closest(".dropdown").classList.remove("show");
-	var tr = btn.closest("tr");
-	if (!tr) return;
-	var d = tr.dataset;
-	var addressLabel = d.receiving === "Pick-up" ? "pick-up location" : "address";
+// ==========================================================================
+// 5. CORE FUNCTIONS
+// ==========================================================================
+function renderTable() {
+  if (!dom.tableBody) return;
+  const data = SAMPLE_DATA.orders;
 
-	var html =
-		// section: user details
-		'<div class="m-section-title"><i class="bi bi-person"></i> User Details</div>' +
-		row3(
-			field("customer", d.customer),
-			field("email", d.email),
-			field("phone", d.phone),
-		) +
-		'<div class="m-card m-full"><div class="m-label">' +
-		addressLabel +
-		'</div><div class="m-val">' +
-		(d.address || "—") +
-		"</div></div>" +
-		// section: order details
-		'<div class="m-section-title"><i class="bi bi-receipt"></i> Order Details</div>' +
-		row2(field("order id", d.orderId), field("date", d.date)) +
-		row2(field("service", d.service), field("file", d.file)) +
-		row2(field("print type", d.printType), field("paper size", d.paperSize)) +
-		row2(field("copies", d.copies), field("receiving", d.receiving)) +
-		'<div class="m-notes"><div class="m-label">additional notes</div><div class="m-val italic">' +
-		(d.notes || "None") +
-		"</div></div>" +
-		'<div class="m-total"><div><div class="m-label">total amount</div><div class="m-amount">' +
-		(d.amount || "—") +
-		"</div></div>" +
-		'<span class="badge badge-' +
-		(d.status || "").toLowerCase() +
-		'">' +
-		(d.status || "") +
-		"</span></div>";
+  if (!data || data.length === 0) {
+    dom.tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:3rem; color:var(--text-muted);"><i class="fas fa-inbox" style="font-size:2rem; margin-bottom:1rem; opacity:0.5;"></i><br>No active orders found</td></tr>`;
+    return;
+  }
 
-	document.getElementById("modalBody").innerHTML = html;
-	var overlay = document.getElementById("modalOverlay");
-	overlay.style.display = "flex";
-	overlay.classList.add("show");
+  dom.tableBody.innerHTML = data.map(order => {
+    const totalAmount = order.items.reduce((sum, item) => sum + item.price, 0);
+    const dateObj = new Date(order.date);
+    const formattedDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+    const formattedTime = dateObj.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+    return `
+      <tr class="order-row" 
+          data-order-id="${order.orderId}" 
+          data-status="${order.status}"
+          data-customer="${order.customer}"
+          data-email="${order.email}"
+          data-phone="${order.phone}"
+          data-date="${formattedDate}"
+          data-time="${formattedTime}"
+          data-receiving="${order.receiving}"
+          data-address="${order.address}"
+          data-notes="${order.notes || 'None'}"
+          data-amount="₱${(totalAmount + (order.receiving === 'Delivery' ? 50 : 0)).toFixed(2)}">
+        <td class="order-id">${order.orderId}</td>
+        <td>${order.customer}</td>
+        <td>
+          <div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;">
+            <span style="font-weight: 500;">${formattedDate}</span>
+            <span style="font-size:0.75rem; color:var(--muted);">${formattedTime}</span>
+          </div>
+        </td>
+        <td class="amount">₱${(totalAmount + (order.receiving === 'Delivery' ? 50 : 0)).toFixed(2)}</td>
+        <td>${order.receiving}</td>
+        <td><span class="badge badge-${order.status.toLowerCase()}">${order.status}</span></td>
+        <td>
+          <div class="action-wrap">
+            <button class="btn-actions" onclick="toggleMenu(this)">
+              <i class="fas fa-ellipsis-vertical"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function closeActionPanel() {
+  if (dom.actionPanel) dom.actionPanel.classList.remove('show');
+  state.activeRow = null;
+}
+
+function showToast(title, message = '', type = 'success') {
+  if (window.parent && window.parent !== window && typeof window.parent.showGlobalToast === 'function') {
+    window.parent.showGlobalToast(title, message, type);
+  } else {
+    console.log('[Toast Fallback]', title, message);
+  }
+}
+
+function syncSidebarBadge() {
+  const activeOrders = Array.from(document.querySelectorAll('tr.order-row')).filter(row => {
+    const s = row.dataset.status;
+    return s === 'Pending' || s === 'Processing' || s === 'Receiving';
+  }).length;
+  
+  if (window.parent && typeof window.parent.updateSidebarBadge === 'function') {
+    window.parent.updateSidebarBadge('orders', activeOrders);
+  }
+}
+
+function filterTable() {
+  const q = dom.searchInput.value.toLowerCase();
+  const s = dom.statusFilter.value;
+  document.querySelectorAll('#tableBody tr').forEach(row => {
+    const matchQ = !q || row.innerText.toLowerCase().includes(q);
+    const matchS = !s || row.dataset.status === s;
+    row.style.display = (matchQ && matchS) ? '' : 'none';
+  });
+}
+
+function startPolling() {
+  console.debug("[PRNT] Action disabled (no backend) - Polling bypassed");
+}
+
+// ==========================================================================
+// 6. ACTION HANDLERS
+// ==========================================================================
+function toggleMenu(btn) {
+  const panel = dom.actionPanel;
+  const row   = btn.closest('tr');
+
+  if (state.activeRow === row && panel.classList.contains('show')) {
+    closeActionPanel();
+    return;
+  }
+
+  state.activeRow = row;
+
+  panel.innerHTML =
+    '<div class="ap-header">Actions</div>' +
+    '<button onclick="panelViewDetails()"><i class="fas fa-eye"></i> View Details</button>' +
+    '<button onclick="downloadOrderFiles(\'' + row.dataset.orderId + '\')"><i class="fas fa-print"></i> Print File(s)</button>' +
+    '<div class="ap-divider"></div>' +
+    '<button onclick="panelSetStatus(\'Completed\')"><i class="fas fa-check-circle"></i> Mark as Completed</button>' +
+    '<button onclick="panelSetStatus(\'Receiving\')"><i class="fas fa-truck"></i> Mark as Receiving</button>' +
+    '<button onclick="panelSetStatus(\'Processing\')"><i class="fas fa-gear"></i> Mark as Processing</button>' +
+    '<div class="ap-divider"></div>' +
+    '<button class="danger" onclick="panelDelete()"><i class="fas fa-trash-can"></i> Delete this Order</button>';
+
+  const rect = btn.getBoundingClientRect();
+  let left = rect.left - 208; 
+  if (left < 8) left = rect.right + 8; 
+  panel.style.top  = rect.top + 'px';
+  panel.style.left = left + 'px';
+  panel.classList.add('show');
+}
+
+function panelViewDetails() {
+  if (!state.activeRow) return;
+  const orderId = state.activeRow.dataset.orderId;
+  const order = SAMPLE_DATA.orders.find(o => o.orderId === orderId);
+  if (!order) return;
+  
+  closeActionPanel();
+
+  const itemsHtml = order.items.map(item => `
+    <div class="item-row-dark">
+      <div class="item-details-dark">
+        <span class="item-file-dark">${item.file}</span>
+        <span class="item-meta-dark">${item.service} • ${item.printType} • ${item.paperSize} • ${item.pages}p × ${item.copies}c</span>
+      </div>
+      <div class="item-row-right">
+        <div class="item-price-dark">₱${item.price.toFixed(2)}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const subtotal = order.items.reduce((sum, item) => sum + item.price, 0);
+  const deliveryFee = order.receiving === 'Delivery' ? 50.00 : 0.00;
+  const totalAmount = subtotal + deliveryFee;
+
+  const dateObj = new Date(order.date);
+  const fullDateTime = dateObj.toLocaleDateString('en-US') + ', ' + dateObj.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+  const html = `
+    <div class="receipt-wrapper-dark">
+      <div class="receipt-header-dark">
+        <div class="receipt-actions">
+           <button class="print-btn" onclick="printReceipt()" title="Export/Print Receipt"><i class="fas fa-print"></i></button>
+        </div>
+        <div class="success-icon"><i class="fas fa-check"></i></div>
+        <h1>Order Receipt: ${order.orderId}</h1>
+        <div class="header-meta">
+          <span class="badge badge-${order.status.toLowerCase()}">${order.status}</span>
+        </div>
+        <div class="zigzag"></div>
+      </div>
+
+      <div class="receipt-body-dark">
+        <div class="info-section-dark">
+          <div class="section-label-dark"><i class="fas fa-info-circle"></i> Personal & Logistics</div>
+          <div class="info-grid-dark">
+            <div class="info-item-dark"><label>Customer</label><span>${order.customer}</span></div>
+            <div class="info-item-dark"><label>Phone Number</label><span>${order.phone || 'N/A'}</span></div>
+            <div class="info-item-dark"><label>Receiving Method</label><span>${order.receiving}</span></div>
+            <div class="info-item-dark"><label>Location</label><span>${order.address}</span></div>
+            <div class="info-item-dark"><label>Payment Method</label><span>Cash on Pick-up/Delivery</span></div>
+            <div class="info-item-dark"><label>Order Date</label><span>${fullDateTime}</span></div>
+          </div>
+        </div>
+
+        <div class="info-section-dark">
+          <div class="section-label-dark"><i class="fas fa-print"></i> Order Summary</div>
+          <div class="item-list-dark">
+            ${itemsHtml}
+          </div>
+        </div>
+
+        <div class="info-section-dark">
+          <div class="section-label-dark"><i class="fas fa-sticky-note"></i> Additional Notes</div>
+          <div class="card-box" style="font-size: 13px; color: var(--text);">${order.notes || 'No additional notes.'}</div>
+        </div>
+
+        <div class="total-card-dark">
+          <div class="total-row-dark"><span>Subtotal</span><span>₱${subtotal.toFixed(2)}</span></div>
+          <div class="total-row-dark"><span>Delivery Fee</span><span>₱${deliveryFee.toFixed(2)}</span></div>
+          <div class="total-row-dark grand-total">
+            <span>Total Amount</span>
+            <span>₱${totalAmount.toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  dom.modalBody.innerHTML = html;
+  dom.modalOverlay.style.display = 'flex';
+  dom.modalOverlay.classList.add('show');
+}
+
+function downloadOrderFiles(orderId) {
+  const order = SAMPLE_DATA.orders.find(o => o.orderId === orderId);
+  if (!order || !order.items) return;
+  
+  closeActionPanel();
+  
+  order.items.forEach((item, index) => {
+    setTimeout(() => {
+      const a = document.createElement('a');
+      a.href = `../../uploads/${item.file}`;
+      a.download = item.file;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }, index * 200);
+  });
+  
+  showToast('Print command started for ' + order.items.length + ' file(s)');
+}
+
+function printReceipt() {
+  window.print();
+}
+
+function panelSetStatus(status) {
+  if (!state.activeRow) return;
+  const orderId = state.activeRow.dataset.orderId;
+  const order = SAMPLE_DATA.orders.find(o => o.orderId === orderId);
+  if (order) {
+    order.status = status;
+    renderTable();
+  }
+  closeActionPanel();
+  
+  showToast('Order ' + orderId + ' status updated to "' + status + '"');
+  syncSidebarBadge();
+}
+
+function panelDelete() {
+  if (!state.activeRow) return;
+  const tr      = state.activeRow;
+  const orderId = tr.dataset.orderId || 'this order';
+  state.rowToDelete = tr;
+  closeActionPanel();
+  dom.deleteMsg.textContent = 'Are you sure you want to delete order ' + orderId + '? This action cannot be undone.';
+  dom.btnConfirmDelete.style.display = '';
+  openDeleteModal();
+}
+
+function handleConfirmDelete() {
+  if (state.rowToDelete) {
+    const orderId = state.rowToDelete.dataset.orderId;
+    SAMPLE_DATA.orders = SAMPLE_DATA.orders.filter(o => o.orderId !== orderId);
+  } else {
+    SAMPLE_DATA.orders = SAMPLE_DATA.orders.filter(o => o.status !== 'Completed');
+  }
+  renderTable();
+  syncSidebarBadge();
+  closeDeleteModal();
 }
 
 function closeModal() {
-	var overlay = document.getElementById("modalOverlay");
-	overlay.classList.remove("show");
-	overlay.style.display = "none";
-}
-
-// delete single order modal
-var rowToDelete = null;
-
-function confirmDelete(btn) {
-	btn.closest(".dropdown").classList.remove("show");
-	rowToDelete = btn.closest("tr");
-	var orderId = rowToDelete.dataset.orderId || "this order";
-	document.getElementById("deleteMsg").textContent =
-		"Are you sure you want to delete order " +
-		orderId +
-		"? This action cannot be undone.";
-	openDeleteModal();
-}
-
-// delete completed orders modal
-function confirmDeleteCompleted() {
-	var rows = Array.from(document.querySelectorAll("#tableBody tr")).filter(
-		function (r) {
-			return r.dataset.status === "Completed";
-		},
-	);
-
-	if (!rows.length) {
-		// no completed orders — show modal as info instead
-		document.getElementById("deleteMsg").textContent =
-			"There are no completed orders to delete.";
-		document.getElementById("btnConfirmDelete").style.display = "none";
-		openDeleteModal();
-		return;
-	}
-
-	rowToDelete = null;
-	document.getElementById("deleteMsg").textContent =
-		"Are you sure you want to delete all " +
-		rows.length +
-		" completed order(s)? This action cannot be undone.";
-	document.getElementById("btnConfirmDelete").style.display = "";
-	openDeleteModal();
+  dom.modalOverlay.classList.remove('show');
+  dom.modalOverlay.style.display = 'none';
 }
 
 function openDeleteModal() {
-	var overlay = document.getElementById("deleteOverlay");
-	overlay.style.display = "flex";
-	overlay.classList.add("show");
+  dom.deleteOverlay.style.display = 'flex';
+  dom.deleteOverlay.classList.add('show');
 }
 
 function closeDeleteModal() {
-	var overlay = document.getElementById("deleteOverlay");
-	overlay.classList.remove("show");
-	overlay.style.display = "none";
-	// reset button visibility in case it was hidden
-	document.getElementById("btnConfirmDelete").style.display = "";
-	rowToDelete = null;
+  dom.deleteOverlay.classList.remove('show');
+  dom.deleteOverlay.style.display = 'none';
+  dom.btnConfirmDelete.style.display = '';
+  state.rowToDelete = null;
 }
 
-document
-	.getElementById("btnConfirmDelete")
-	.addEventListener("click", function () {
-		if (rowToDelete) {
-			rowToDelete.remove();
-		} else {
-			Array.from(document.querySelectorAll("#tableBody tr"))
-				.filter(function (r) {
-					return r.dataset.status === "Completed";
-				})
-				.forEach(function (r) {
-					r.remove();
-				});
-		}
-		closeDeleteModal();
-	});
-
-// status update and toast notification
-function setStatus(btn, status) {
-	var tr = btn.closest("tr");
-	var badge = tr.cells[7].querySelector(".badge");
-	badge.textContent = status;
-	badge.className = "badge badge-" + status.toLowerCase();
-	tr.dataset.status = status;
-	btn.closest(".dropdown").classList.remove("show");
-	if (status === "Out for delivery" || status === "For pickup") {
-		showToast("Order " + tr.dataset.orderId + ' status updated to "Completed"');
-	}
-	updatedStatus(tr.dataset.orderId, status);
+function confirmDeleteCompleted() {
+  const rows = Array.from(document.querySelectorAll('#tableBody tr'))
+    .filter(r => r.dataset.status === 'Completed');
+  
+  if (!rows.length) {
+    dom.deleteMsg.textContent = 'There are no completed orders to delete.';
+    dom.btnConfirmDelete.style.display = 'none';
+    openDeleteModal();
+    return;
+  }
+  
+  state.rowToDelete = null;
+  dom.deleteMsg.textContent = 'Are you sure you want to delete all ' + rows.length + ' completed order(s)? This action cannot be undone.';
+  dom.btnConfirmDelete.style.display = '';
+  openDeleteModal();
 }
 
-function showToast(msg) {
-	var toast = document.getElementById("toast");
-	document.getElementById("toastMsg").textContent = msg;
-	toast.classList.add("show");
-	setTimeout(function () {
-		toast.classList.remove("show");
-	}, 3500);
-}
-
-// filter table
-function filterTable() {
-	var q = document.getElementById("searchInput").value.toLowerCase();
-	var s = document.getElementById("statusFilter").value;
-	document.querySelectorAll("#tableBody tr").forEach(function (row) {
-		var matchQ = !q || row.innerText.toLowerCase().includes(q);
-		var matchS = !s || row.dataset.status === s;
-		row.style.display = matchQ && matchS ? "" : "none";
-	});
-}
-
-// export csv
 function exportCSV() {
-	var rows = Array.from(document.querySelectorAll("#tableBody tr")).filter(
-		function (r) {
-			return r.style.display !== "none";
-		},
-	);
-	if (!rows.length) return;
-	var headers = [
-		"Order ID",
-		"Customer",
-		"Time",
-		"Service",
-		"File",
-		"Amount",
-		"Option",
-		"Status",
-	];
-	var csv = [headers.join(",")]
-		.concat(
-			rows.map(function (r) {
-				return Array.from(r.cells)
-					.slice(0, 8)
-					.map(function (td) {
-						return '"' + td.innerText.trim() + '"';
-					})
-					.join(",");
-			}),
-		)
-		.join("\n");
-	var a = document.createElement("a");
-	a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
-	a.download = "orders.csv";
-	document.body.appendChild(a);
-	a.click();
-	document.body.removeChild(a);
+  const data = SAMPLE_DATA.orders;
+  if (!data.length) return;
+  
+  const headers = ['Order ID', 'Customer Name', 'Date', 'Time', 'Service/s', 'File/s', 'Receiving Option', 'Amount', 'Status'];
+  
+  const csvData = [headers.join(',')].concat(
+    data.map(order => {
+      const dateObj = new Date(order.date);
+      const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+      const timeStr = dateObj.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      const servicesStr = order.items.map(i => i.service).join('; ');
+      const filesStr = order.items.map(i => i.file).join('; ');
+      const totalAmount = order.items.reduce((sum, item) => sum + item.price, 0) + (order.receiving === 'Delivery' ? 50 : 0);
+      
+      return [
+        order.orderId, 
+        order.customer, 
+        dateStr, 
+        timeStr, 
+        servicesStr, 
+        filesStr, 
+        order.receiving, 
+        '₱' + totalAmount.toFixed(2), 
+        order.status
+      ].map(val => '"' + String(val).replace(/"/g, '""') + '"').join(',');
+    })
+  ).join('\n');
+  
+  const a = document.createElement('a');
+  const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
+  a.href = URL.createObjectURL(blob);
+  a.download = 'PRNT_Orders_' + new Date().toISOString().split('T')[0] + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
-// helpers
-function field(label, val) {
-	if (!val || val === "undefined") val = "—";
-	return (
-		'<div class="m-card"><div class="m-label">' +
-		label +
-		'</div><div class="m-val">' +
-		val +
-		"</div></div>"
-	);
+// ==========================================================================
+// 7. NAVIGATION
+// ==========================================================================
+// Module-specific navigation logic goes here
+
+// ==========================================================================
+// 8. BACKEND INTEGRATION
+// ==========================================================================
+// BACKEND INTEGRATION DISABLED
+function getFullOrderData(orderId) {
+  console.debug("[PRNT] API disabled");
+  return Promise.resolve(null);
 }
 
-function row2(a, b) {
-	return '<div class="m-grid2">' + a + b + "</div>";
-}
-function row3(a, b, c) {
-	return '<div class="m-grid3">' + a + b + c + "</div>";
-}
-
-// close modals on escape
-document.addEventListener("keydown", function (e) {
-	if (e.key === "Escape") {
-		closeModal();
-		closeDeleteModal();
-	}
+// ==========================================================================
+// 9. INITIALIZATION
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  renderTable();
+  syncSidebarBadge();
+  startPolling();
 });
 
-$(document).ready(function () {
-	showOrders();
-});
-
-function showOrders() {
-	$.ajax({
-		type: "POST",
-		url: API,
-		data: "action=get",
-		success: function (response) {
-			let data = JSON.parse(response);
-			let table = $("#tableBody");
-
-			if (data.status != "error") {
-				data.forEach((orders) => {
-					let statusButtons = "";
-					let badge = "";
-
-					if (orders.status !== "Reviewing") {
-						statusButtons += `<button onclick="setStatus(this,'Reviewing')">
-							<i class="bi bi-gear"></i> Mark as Reviewing
-						</button>`;
-					}
-					if (orders.status == "Reviewing") {
-						badge += `<td><span class="badge badge-pending">${orders.status}</span></td>`;
-					}
-
-					if (orders.status !== "Printing") {
-						statusButtons += `<button onclick="setStatus(this,'Printing')">
-							<i class="bi bi-gear"></i> Mark as Printing
-						</button>`;
-					}
-					if (orders.status == "Printing") {
-						badge += `<td><span class="badge badge-processing">${orders.status}</span></td>`;
-					}
-
-					if (orders.status !== "Out for delivery") {
-						statusButtons += `<button onclick="setStatus(this,'Out for delivery')">
-							<i class="bi bi-check-circle"></i> Out for Delivery
-						</button>`;
-					}
-					if (orders.status == "Out for delivery") {
-						badge += `<td><span class="badge badge-completed">${orders.status}</span></td>`;
-					}
-
-					if (orders.status !== "For pickup") {
-						statusButtons += `<button onclick="setStatus(this,'For pickup')">
-							<i class="bi bi-check-circle"></i> For Pickup
-						</button>`;
-					}
-					if (orders.status == "For pickup") {
-						badge += `<td><span class="badge badge-completed">${orders.status}</span></td>`;
-					}
-
-					if (orders.status !== "Rejected") {
-						statusButtons += `<button onclick="setStatus(this,'Rejected')"><i class="bi bi-x-circle"></i> Mark as Rejected</button>`;
-					}
-					if (orders.status == "Rejected") {
-						badge += `<td><span class="badge badge-rejected">${orders.status}</span></td>`;
-					}
-					table.append(
-						`<tr data-order-id="${orders.order_id}" data-date="${orders.time_placed}" data-customer="${orders.name}" data-email="${orders.email}" data-phone="${orders.contact_number}" data-service="${orders.service_name}" data-file="${orders.file_name}" data-print-type="NA" data-paper-size="${orders.format}" data-copies="${orders.copies}" data-receiving="${orders.delivery_option}" data-address="${orders.address}" data-notes="${orders.note}" data-amount="${orders.total_price}" data-status="${orders.status}">
-							<td class="order-id">${orders.order_id}</td>
-							<td>${orders.name}</td>
-							<td>${orders.time_placed}</td>
-							<td>${orders.service_name}</td>
-							<td><span class="file-cell"><i class="bi bi-file-earmark-text"></i><a href="${orders.filepath}">${orders.file_name}</a></span></td>
-							<td class="amount">₱${orders.total_price}</td>
-							<td>${orders.delivery_option}</td>
-							${badge}
-							<td><div class="action-wrap">
-								<button class="btn-actions" onclick="toggleMenu(this)"><i class="bi bi-three-dots-vertical"></i></button>
-								<div class="dropdown">
-								<button onclick="viewDetails(this)"><i class="bi bi-eye"></i> View Details</button>
-								${statusButtons}
-								<hr/>
-								<button class="danger" onclick="confirmDelete(this)"><i class="bi bi-trash3"></i> Delete this Order</button>
-								</div>
-							</div></td>
-						</tr>`,
-					);
-				});
-			}
-		},
-	});
-}
-
-function updatedStatus(id, status) {
-	$.ajax({
-		type: "POST",
-		url: API,
-		data: "action=update&id=" + id + "&status=" + status,
-		success: function (response) {
-			let reply = JSON.parse(response);
-			location.reload();
-		},
-		error: function () {},
-	});
-}
-
-function actionButtons(status) {}
+// GLOBAL EXPOSURE
+window.showGlobalToast = window.showToast = showToast;
+window.panelViewDetails = panelViewDetails;
+window.downloadOrderFiles = downloadOrderFiles;
+window.printReceipt = printReceipt;
+window.panelSetStatus = panelSetStatus;
+window.panelDelete = panelDelete;
+window.confirmDeleteCompleted = confirmDeleteCompleted;
+window.exportCSV = exportCSV;
+window.filterTable = filterTable;
+window.closeModal = closeModal;
+window.closeDeleteModal = closeDeleteModal;
+window.toggleMenu = toggleMenu;

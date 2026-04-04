@@ -64,7 +64,7 @@ if (isset($_POST['action'])) {
             }
         } else {
             echo json_encode([
-                    'status' => 'error',
+                    'status' => 'failed',
                     'message' => 'Incorrect password'
             ]);
             exit;

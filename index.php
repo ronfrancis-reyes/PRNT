@@ -46,15 +46,15 @@ include "./api/config.php"
 		<a href="./pages/service/">Services</a>
 		<a href="./pages/contact/">Contact</a>
 		<a href="./pages/client/dashboard/"><?php if (isset($_SESSION['user'])) {
-														if ($_SESSION['role'] == "Admin") {
-															echo "Dashboard";
-														} else {
-															echo '<i class="fas fa-shopping-cart"></i> Order Now';
-														}
-													} else {
-														echo '<i class="fas fa-shopping-cart"></i> Order Now';
-													} ?></a>
-			<?php if (isset($_SESSION['user'])): ?>
+												if ($_SESSION['role'] == "Admin") {
+													echo "Dashboard";
+												} else {
+													echo '<i class="fas fa-shopping-cart"></i> Order Now';
+												}
+											} else {
+												echo '<i class="fas fa-shopping-cart"></i> Order Now';
+											} ?></a>
+		<?php if (isset($_SESSION['user'])): ?>
 			<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
 				<div
 					style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
@@ -89,37 +89,38 @@ include "./api/config.php"
 					class="btn btn-primary"
 					id="orderNowBtn">
 					<?php if (isset($_SESSION['user'])) {
-							if ($_SESSION['role'] == "Admin") {
-								echo "Dashboard";
-							} else {
-								echo '<i class="fas fa-shopping-cart"></i> Order Now';
-							}
+						if ($_SESSION['role'] == "Admin") {
+							echo "Dashboard";
 						} else {
 							echo '<i class="fas fa-shopping-cart"></i> Order Now';
 						}
+					} else {
+						echo '<i class="fas fa-shopping-cart"></i> Order Now';
+					}
 					?>
 				</a>
 				<?php if (isset($_SESSION['user'])): ?>
-					<a href="./pages/user-profile/"
-						class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
-						<div
-							style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
-							id="navAvatar"><?php
-											$fullname = explode(' ', $_SESSION['username']);
-											$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
-											echo $initials;
-											?></div>
-					</a>
-				<?php else: ?>
-					<a
-						onclick="showAuthModal('login')"
-						class="btn btn-outline"
-						id="loginBtn">Login</a>
-				<?php endif; ?>
+					<?php if ($_SESSION['role'] == 'Customer'): ?>
+						<a href="./pages/user-profile/" class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
+							<div
+								style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
+								id="navAvatar"><?php
+												$fullname = explode(' ', $_SESSION['username']);
+												$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+												echo $initials;
+												?></div>
+						</a>
+						<?php endif; ?>
+					<?php else: ?>
+						<a
+							onclick="showAuthModal('login')"
+							class="btn btn-outline"
+							id="loginBtn">Login</a>
+					<?php endif; ?>
 
-				<button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-					<i class="fas fa-bars"></i>
-				</button>
+					<button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+						<i class="fas fa-bars"></i>
+					</button>
 			</div>
 		</div>
 	</nav>
