@@ -5,53 +5,10 @@
 
 'use strict';
 
-// ── SAMPLE DATA (FRONTEND TESTING ONLY) ──────────────────────────────────────
-// BACKEND INTEGRATION POINT — Replace with API: /api/pricing
-
-const PRICING = {
-  photo:        { bw: 20.0, color: 20.0 },
-  id_photo:     { bw: 50.0, color: 50.0 },
-  document:     { bw: 5.0,  color: 7.0  },
-  large_format: { bw: 25.0, color: 25.0 },
-  brochure:     { bw: 8.0,  color: 15.0 }
-};
-
-const FORMAT_SIZES = {
-  photo: [
-    { value: '2r', label: '2R (2.5" x 3.5")' },
-    { value: '3r', label: '3R (3.5" x 5")'   },
-    { value: '4r', label: '4R (4" x 6")'     },
-    { value: '5r', label: '5R (5" x 7")'     },
-    { value: 'a4', label: 'A4 (8" x 11")'    }
-  ],
-  id_photo: [
-    { value: 'pkg_a', label: 'Package A: 1x1 (12 pcs)' },
-    { value: 'pkg_b', label: 'Package B: 2x2 (6 pcs)'  },
-    { value: 'pkg_c', label: 'Package C: 1x1 (8) + 2x2 (4)' },
-    { value: 'pkg_d', label: 'Package D: Passport Size (6 pcs)' }
-  ],
-  document: [
-    { value: 'short', label: 'Short (8.5×11)' },
-    { value: 'long',  label: 'Long (8.5×13)'  },
-    { value: 'a4',    label: 'A4'              }
-  ],
-  large_format: [
-    { value: 'tarp',   label: 'Tarpaulin (Standard)'    },
-    { value: 'poster', label: 'Matte / Glossy Posters'  },
-    { value: 'vinyl',  label: 'Custom Vinyl Banners'    }
-  ],
-  brochure: [
-    { value: 'a4_bifold',  label: 'A4 (Bi-fold)'  },
-    { value: 'a4_trifold', label: 'A4 (Tri-fold)' }
-  ]
-};
-
-const SIZE_MULTIPLIER = {
-  '4x6': 1.0, '5x7': 1.5, '8x10': 2.5,
-  short:  1.0, long: 1.2,  a4:     1.1,
-  a4_sheet: 1.0, per_pc: 0.2
-};
-
+// ── STATIC UI FALLBACK (NO STORAGE / NO BACKEND) ─────────────────────────────
+const PRICING = {};
+const FORMAT_SIZES = {};
+const SIZE_MULTIPLIER = {};
 const DELIVERY_FEE = 50.0;
 
 // ── STATE MANAGEMENT ──────────────────────────────────────────────────────────
@@ -522,9 +479,8 @@ function closeCheckoutModal() {
   document.getElementById('checkoutModal').style.display = 'none';
 }
 
-// ── BACKEND INTEGRATION POINT ─────────────────────────────────────────────────
-// Replace with: POST /api/orders/create
-
+// ── NAVIGATION (NO BACKEND) ─────────────────────────────────────────────────
+// ACTION DISABLED — BACKEND REMOVED
 function executeCheckout() {
   state.paymentMethod    = document.getElementById('paymentMethod')?.value || '';
   state.additionalNotes  = document.getElementById('additionalNotes')?.value || '';
@@ -536,32 +492,15 @@ function executeCheckout() {
   window.location.href = '../receipt/index.php';
 }
 
-// ── BACKEND INTEGRATION POINT ─────────────────────────────────────────────────
-// Replace localStorage with: POST /api/orders/draft
-
+// ── UI STATE (STORAGE REMOVED) ─────────────────────────────────────────────────
+// ACTION DISABLED — STORAGE REMOVED
 function saveDraft() {
-  try {
-    localStorage.setItem('prnt_order_draft', JSON.stringify(state));
-  } catch (e) {
-    console.warn('Draft save failed:', e);
-  }
+  console.debug('[PRNT] Action disabled (no backend) - Storage save logic bypassed');
 }
 
 function loadDraft() {
-  try {
-    const saved = localStorage.getItem('prnt_order_draft');
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      if (parsed && typeof parsed === 'object') {
-        state = { ...state, ...parsed };
-        renderFileList();
-        renderCart();
-        updateCheckoutUI();
-      }
-    }
-  } catch (e) {
-    console.error('Error loading draft:', e);
-  }
+  console.debug('[PRNT] Action disabled (no backend) - Storage load logic bypassed');
+  return null;
 }
 
 // ── UI UTILITIES ──────────────────────────────────────────────────────────────

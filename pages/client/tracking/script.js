@@ -5,17 +5,9 @@
 
 'use strict';
 
-// ── SAMPLE DATA (FRONTEND TESTING ONLY) ──────────────────────────────────────
-// BACKEND INTEGRATION POINT — Replace with: GET /api/orders/:id/status
-
+// ── STATIC UI FALLBACK (NO BACKEND) ─────────────────────────────
 const STATUS_STEPS = ['pending', 'processing', 'delivering', 'completed'];
-
-const SAMPLE_TIMESTAMPS = {
-  pending:    '10:33 AM',
-  processing: '10:45 AM',
-  delivering: '11:15 AM',
-  completed:  '11:40 AM'
-};
+const SAMPLE_TIMESTAMPS = {};
 
 // ── STATE MANAGEMENT ──────────────────────────────────────────────────────────
 
@@ -158,7 +150,7 @@ function animateValue(obj, start, end, duration, suffix = '') {
 
 // ── ACTION HANDLERS ───────────────────────────────────────────────────────────
 
-// BACKEND INTEGRATION POINT — Replace with: GET /api/orders/:id/status (polling or websocket)
+// ACTION DISABLED — BACKEND REMOVED
 function handleRefresh() {
   const icon = ELEMENTS.refreshIcon();
   if (icon) {
@@ -167,8 +159,8 @@ function handleRefresh() {
     icon.classList.add('spinning');
   }
 
+  console.debug('[PRNT] Action disabled (no backend) - Refresh logic bypassed');
   setTimeout(() => {
-    renderTracking();
     showToast('Status up to date', 'info');
   }, 600);
 }
@@ -179,17 +171,19 @@ function viewReceipt() {
   window.location.href = '../receipt/index.php?view=confirmed';
 }
 
-// ── BACKEND INTEGRATION POINT ─────────────────────────────────────────────────
-// Replace localStorage read with: GET /api/orders/active
-
+// ── UI STATE (STORAGE REMOVED) ─────────────────────────────────────────────────
+// ACTION DISABLED — STORAGE REMOVED
 function renderTracking() {
-  const saved = localStorage.getItem('prnt_order_confirmed');
-  if (!saved) {
-    showToast('No active order found. Redirecting...', 'error');
-    setTimeout(() => { window.location.href = '../order/index.php'; }, 2000);
-    return;
-  }
-  const order = JSON.parse(saved);
+  console.debug("[PRNT] Action disabled (no backend) - Storage load logic bypassed");
+
+  // STATIC UI FALLBACK
+  const order = {
+    orderId: "Awaiting backend connection",
+    status: "Pending",
+    cart: [],
+    total: 0
+  };
+
   populateTracking(order);
 }
 

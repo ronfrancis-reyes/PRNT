@@ -43,59 +43,7 @@
                 </tr>
             </thead>
             <tbody id="tableBody">
-                <!-- Sample Rows (Backend Integration Point) -->
-                <tr data-user-id="USR-001" data-name="John Smith" data-email="john.smith@email.com" data-contact="0917-123-4567" data-address="Activity Center" data-total-orders="45" data-last-order="2026-03-24" data-last-file="event_flyer_v2.pdf" data-status="Active">
-                    <td class="user-id">USR-001</td>
-                    <td><div class="user-name-cell">John Smith</div></td>
-                    <td class="email">john.smith@email.com</td>
-                    <td>0917-123-4567</td>
-                    <td class="user-order-id">45</td>
-                    <td><span class="badge badge-active">Active</span></td>
-                    <td>
-                        <div class="action-wrap">
-                            <button class="btn-actions" onclick="toggleMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr data-user-id="US-201-11" data-name="Andrei De Jesus" data-email="andrei@email.com" data-contact="+63 921 567 8901" data-address="Dasmariñas, Cavite" data-total-orders="12" data-last-order="2026-03-28" data-last-file="thesis_final_print.docx" data-status="Active">
-                    <td class="user-id">US-201-11</td>
-                    <td><div class="user-name-cell">Andrei De Jesus</div></td>
-                    <td class="email">andrei@email.com</td>
-                    <td>+63 921 567 8901</td>
-                    <td class="user-order-id">12</td>
-                    <td><span class="badge badge-active">Active</span></td>
-                    <td>
-                        <div class="action-wrap">
-                            <button class="btn-actions" onclick="toggleMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr data-user-id="US-102-12" data-name="Princess Magtalas" data-email="princess@email.com" data-contact="+63 034 321 0987" data-address="Tagaytay City, Cavite" data-total-orders="8" data-last-order="2026-03-20" data-last-file="org_shirt_design.png" data-status="Suspended">
-                    <td class="user-id">US-102-12</td>
-                    <td><div class="user-name-cell">Princess Magtalas</div></td>
-                    <td class="email">princess@email.com</td>
-                    <td>+63 034 321 0987</td>
-                    <td class="user-order-id">8</td>
-                    <td><span class="badge badge-suspended">Suspended</span></td>
-                    <td>
-                        <div class="action-wrap">
-                            <button class="btn-actions" onclick="toggleMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr data-user-id="USR-004" data-name="Sarah Johnson" data-email="sarah.j@email.com" data-contact="0921-555-8899" data-address="Makati City" data-total-orders="32" data-last-order="2026-04-01" data-last-file="annual_report_2025.pdf" data-status="Active">
-                    <td class="user-id">USR-004</td>
-                    <td><div class="user-name-cell">Sarah Johnson</div></td>
-                    <td class="email">sarah.j@email.com</td>
-                    <td>0921-555-8899</td>
-                    <td class="user-order-id">32</td>
-                    <td><span class="badge badge-active">Active</span></td>
-                    <td>
-                        <div class="action-wrap">
-                            <button class="btn-actions" onclick="toggleMenu(this)"><i class="fas fa-ellipsis-v"></i></button>
-                        </div>
-                    </td>
-                </tr>
+                <!-- Data rendered via JavaScript (Empty in Safe-Mode) -->
             </tbody>
         </table>
     </div>
@@ -186,4 +134,4 @@
 
     <script src="script.js?v=2"></script>
 </body>
-</html>
+</html>

@@ -2,155 +2,7 @@
 // 1. SAMPLE DATA
 // ==========================================================================
 const SAMPLE_DATA = {
-  orders: [
-    {
-      orderId: "ORD-1234",
-      customer: "John Smith",
-      email: "john.smith@email.com",
-      phone: "0917-123-4567",
-      date: "2026-03-24T10:30:00",
-      receiving: "Delivery",
-      address: "Activity Center",
-      notes: "Please use glossy finish.",
-      status: "Completed",
-      items: [
-        { service: "Business Cards", file: "business_card.pdf", printType: "Colored", paperSize: "A4", copies: 50, pages: 1, price: 45.00 }
-      ]
-    },
-    {
-      orderId: "ORD-1235",
-      customer: "Sarah Johnson",
-      email: "sarah.j@email.com",
-      phone: "0928-123-4567",
-      date: "2026-03-24T11:15:00",
-      receiving: "Pick-up",
-      address: "E-Library",
-      notes: "Double sided printing please.",
-      status: "Processing",
-      items: [
-        { service: "Flyers (A4)", file: "flyer_design.pdf", printType: "Colored", paperSize: "A4", copies: 100, pages: 2, price: 60.00 },
-        { service: "Document Print", file: "report_v1.pdf", printType: "B&W", paperSize: "Letter", copies: 1, pages: 20, price: 60.00 }
-      ]
-    },
-    {
-      orderId: "ORD-1236",
-      customer: "Mike Brown",
-      email: "mike.brown@email.com",
-      phone: "0939-123-4567",
-      date: "2026-03-24T12:45:00",
-      receiving: "Delivery",
-      address: "Pimentel Hall",
-      notes: "None",
-      status: "Pending",
-      items: [
-        { service: "Posters (A2)", file: "poster.pdf", printType: "Colored", paperSize: "A2", copies: 10, pages: 1, price: 85.00 }
-      ]
-    },
-    {
-      orderId: "ORD-1237",
-      customer: "Emma Davis",
-      email: "emma.d@email.com",
-      phone: "0950-123-4567",
-      date: "2026-03-24T01:20:00",
-      receiving: "Pick-up",
-      address: "CoED",
-      notes: "Tri-fold layout.",
-      status: "Completed",
-      items: [
-        { service: "Brochures", file: "brochure_v2.pdf", printType: "Colored", paperSize: "A4", copies: 200, pages: 2, price: 200.00 }
-      ]
-    },
-    {
-      orderId: "ORD-1238",
-      customer: "James Wilson",
-      email: "james.w@email.com",
-      phone: "0961-123-4567",
-      date: "2026-03-24T02:10:00",
-      receiving: "Delivery",
-      address: "Carpio Hall",
-      notes: "Please use tarpaulin material.",
-      status: "Processing",
-      items: [
-        { service: "Banners", file: "event_banner.pdf", printType: "Colored", paperSize: "A1", copies: 5, pages: 1, price: 350.00 }
-      ]
-    },
-    {
-      orderId: "ORD-1239",
-      customer: "Maria Clara",
-      email: "m.clara@email.com",
-      phone: "0972-123-4567",
-      date: "2026-03-25T09:00:00",
-      receiving: "Pick-up",
-      address: "BSU Hub",
-      notes: "Fragile items.",
-      status: "Pending",
-      items: [
-        { service: "Photo Print", file: "portrait.jpg", printType: "Colored", paperSize: "4x6", copies: 10, pages: 1, price: 100.00 },
-        { service: "ID Print", file: "id_photo.png", printType: "Colored", paperSize: "2x2", copies: 4, pages: 1, price: 50.00 },
-        { service: "Document Print", file: "application_form.pdf", printType: "B&W", paperSize: "Short", copies: 1, pages: 1, price: 5.00 }
-      ]
-    },
-    {
-      orderId: "ORD-1240",
-      customer: "Juan Dela Cruz",
-      email: "juan.dc@email.com",
-      phone: "0912-345-6789",
-      date: "2026-04-02T16:32:48",
-      receiving: "Delivery",
-      address: "Activity Center",
-      notes: "Cash on delivery.",
-      status: "Receiving",
-      items: [
-        { service: "Poster Print", file: "poster_design.pdf", printType: "Colored", paperSize: "A3", copies: 1, pages: 1, price: 110.00 },
-        { service: "Photo Print", file: "family_photo.jpg", printType: "Colored", paperSize: "8x10", copies: 2, pages: 1, price: 150.00 }
-      ]
-    },
-    {
-      orderId: "ORD-1241",
-      customer: "Pedro Penduko",
-      email: "pedro.p@email.com",
-      phone: "0983-123-4567",
-      date: "2026-04-01T14:20:00",
-      receiving: "Pick-up",
-      address: "Gate 1",
-      notes: "None",
-      status: "Completed",
-      items: [
-        { service: "Sticker Print", file: "stickers.png", printType: "Colored", paperSize: "A4", copies: 5, pages: 1, price: 75.00 }
-      ]
-    },
-    {
-      orderId: "ORD-1242",
-      customer: "Leonor Rivera",
-      email: "leonor.r@email.com",
-      phone: "0994-123-4567",
-      date: "2026-03-31T11:00:00",
-      receiving: "Delivery",
-      address: "Gate 2",
-      notes: "Please call upon arrival.",
-      status: "Processing",
-      items: [
-        { service: "Document Print", file: "thesis_final.pdf", printType: "B&W", paperSize: "A4", copies: 3, pages: 150, price: 450.00 },
-        { service: "Document Print", file: "thesis_abstract.pdf", printType: "B&W", paperSize: "A4", copies: 10, pages: 2, price: 20.00 },
-        { service: "Photo Print", file: "group_photo.jpg", printType: "Colored", paperSize: "A4", copies: 1, pages: 1, price: 35.00 },
-        { service: "Sticker Print", file: "logo.png", printType: "Colored", paperSize: "A4", copies: 2, pages: 1, price: 30.00 }
-      ]
-    },
-    {
-      orderId: "ORD-1243",
-      customer: "Jose Rizal",
-      email: "jose.rizal@email.com",
-      phone: "0999-999-9999",
-      date: "2026-04-02T10:00:00",
-      receiving: "Pick-up",
-      address: "BSU Hub",
-      notes: "Noli Me Tangere print.",
-      status: "Pending",
-      items: [
-        { service: "Document Print", file: "manuscript.pdf", printType: "Colored", paperSize: "A4", copies: 1, pages: 300, price: 600.00 }
-      ]
-    }
-  ]
+  orders: []
 };
 
 // ==========================================================================
@@ -205,6 +57,11 @@ if (dom.btnConfirmDelete) {
 function renderTable() {
   if (!dom.tableBody) return;
   const data = SAMPLE_DATA.orders;
+
+  if (!data || data.length === 0) {
+    dom.tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:3rem; color:var(--text-muted);"><i class="fas fa-inbox" style="font-size:2rem; margin-bottom:1rem; opacity:0.5;"></i><br>No active orders found</td></tr>`;
+    return;
+  }
 
   dom.tableBody.innerHTML = data.map(order => {
     const totalAmount = order.items.reduce((sum, item) => sum + item.price, 0);
@@ -283,9 +140,7 @@ function filterTable() {
 }
 
 function startPolling() {
-  setInterval(() => {
-    console.log("Polling for new orders...");
-  }, 30000);
+  console.debug("[PRNT] Action disabled (no backend) - Polling bypassed");
 }
 
 // ==========================================================================
@@ -545,11 +400,10 @@ function exportCSV() {
 // ==========================================================================
 // 8. BACKEND INTEGRATION
 // ==========================================================================
-// BACKEND INTEGRATION POINT
-// For real integration, replace SAMPLE_DATA references with Fetch API calls.
+// BACKEND INTEGRATION DISABLED
 function getFullOrderData(orderId) {
-  const order = SAMPLE_DATA.orders.find(o => o.orderId === orderId);
-  return order || {};
+  console.debug("[PRNT] API disabled");
+  return Promise.resolve(null);
 }
 
 // ==========================================================================

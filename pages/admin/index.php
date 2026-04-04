@@ -98,9 +98,9 @@ $compPath = "../../components/";
                             </div>
                             <div class="stat-content">
                                 <h4 class="stat-title">Today's Orders</h4>
-                                <div class="stat-value" id="kpi-today-orders">48</div><!-- DB: $todayOrders -->
+                                <div class="stat-value" id="kpi-today-orders">0</div><!-- DB: $todayOrders -->
                                 <div class="trend-up" id="kpi-today-orders-trend">
-                                    <i class="fas fa-arrow-up"></i> 12% vs yesterday
+                                    <i class="fas fa-arrow-up"></i> 0% vs yesterday
                                 </div><!-- DB: computed trend -->
                             </div>
                         </div>
@@ -111,9 +111,9 @@ $compPath = "../../components/";
                             </div>
                             <div class="stat-content">
                                 <h4 class="stat-title">Pending Orders</h4>
-                                <div class="stat-value" id="kpi-pending-orders">14</div><!-- DB: $pendingOrders -->
+                                <div class="stat-value" id="kpi-pending-orders">0</div><!-- DB: $pendingOrders -->
                                 <div class="trend-down" id="kpi-pending-orders-trend">
-                                    <i class="fas fa-arrow-down"></i> 3% vs yesterday
+                                    <i class="fas fa-arrow-down"></i> 0% vs yesterday
                                 </div>
                             </div>
                         </div>
@@ -124,9 +124,9 @@ $compPath = "../../components/";
                             </div>
                             <div class="stat-content">
                                 <h4 class="stat-title">Today's Revenue</h4>
-                                <div class="stat-value" id="kpi-count-revenue">₱ 8,640</div><!-- DB: $todayRevenue -->
+                                <div class="stat-value" id="kpi-count-revenue">₱ 0</div><!-- DB: $todayRevenue -->
                                 <div class="trend-up" id="kpi-today-revenue-trend">
-                                    <i class="fas fa-arrow-up"></i> 5% vs yesterday
+                                    <i class="fas fa-arrow-up"></i> 0% vs yesterday
                                 </div>
                             </div>
                         </div>

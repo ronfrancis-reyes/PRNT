@@ -3,19 +3,9 @@
 // ===============================
 // SAMPLE DATA
 // BACKEND INTEGRATION POINT
+// STATIC UI FALLBACK (NO BACKEND)
 const SAMPLE_DATA = {
-    messages: [
-        { id: "1234", status: "unread", name: "John Smith", contact: "0917-123-4567", email: "john.smith@email.com", subject: "Issue with my recent print job (ORD-1234)", message: "Hello, I received my order ORD-1234 yesterday but the colors look washed out compared to the file I submitted. Could you please look into this? I need this resolved before Friday as it is for an event.", date: "Mar 24, 2026", time: "10:30 AM" },
-        { id: "1235", status: "read", name: "Sarah Johnson", contact: "0921-555-8899", email: "sarah.j@email.com", subject: "Inquiry about bulk tarpaulin discount", message: "Hi, we are planning a company event and need around 50 tarpaulins printed (4x8 ft each). Do you offer bulk pricing or discounts for large orders? We would also like to know the lead time for this quantity.", date: "Mar 23, 2026", time: "11:15 AM" },
-        { id: "1236", status: "read", name: "Mike Brown", contact: "0934-222-1111", email: "mike.b@email.com", subject: "Do you accept rush orders for tomorrow?", message: "Good afternoon! I need 100 copies of a 2-page document printed in colored, both sides. Can this be done by tomorrow morning? Please let me know ASAP so I can place the order today.", date: "Mar 21, 2026", time: "12:45 PM" },
-        { id: "1237", status: "unread", name: "Lena Cruz", contact: "0915-777-6655", email: "lena.cruz@email.com", subject: "Request for wedding invitation samples", message: "Hi! I am getting married in June and would like to inquire about your wedding invitation packages. Do you have sample designs we can choose from? Also, what paper stock do you recommend for a premium feel?", date: "Mar 20, 2026", time: "01:20 PM" },
-        { id: "1238", status: "read", name: "Carlos Dela Cruz", contact: "0908-444-3322", email: "carlos.dc@email.com", subject: "Lost receipt for order ORD-1190", message: "Good day! I misplaced the receipt for my order ORD-1190 placed last week. Could you send me a copy via email? My email on file is carlos.dc@email.com. Thank you very much.", date: "Mar 18, 2026", time: "02:10 PM" },
-        { id: "1239", status: "unread", name: "Jennifer Lim", contact: "0945-888-9900", email: "jenn.lim@email.com", subject: "Type of photopaper for portraits", message: "Hello! I am planning to print high-resolution portraits. Do you offer satin or luster finish photopaper? I want something that doesn't reflect too much light under gallery spotlight.", date: "Mar 17, 2026", time: "09:45 AM" },
-        { id: "1240", status: "read", name: "Roberto Gomez", contact: "0919-666-3311", email: "rob.gomez@email.com", subject: "Vinyl sticker printing duration", message: "Hi PRNT! If I order 500 pieces of 2x2 inch round vinyl stickers today, when is the earliest I can pick them up? Are they machine-cut or manually cut?", date: "Mar 16, 2026", time: "03:30 PM" },
-        { id: "1241", status: "unread", name: "Maria Santos", contact: "0927-111-2233", email: "maria.santos@email.com", subject: "Hardbound thesis binding quote", message: "Good morning. I would like to ask for a price quote for hardbound thesis binding with gold foil stamping on the cover. We have 5 copies with approximately 150 pages each.", date: "Mar 15, 2026", time: "11:20 AM" },
-        { id: "1242", status: "read", name: "Kevin Tan", contact: "0932-444-5566", email: "kevin.tan@email.com", subject: "Business card layout service", message: "Do you offer layout services for business cards? I have the logo and info but no design yet. If so, how much is the additional fee for the layout?", date: "Mar 14, 2026", time: "04:50 PM" },
-        { id: "1243", status: "unread", name: "Ana Reyes", contact: "0916-222-3344", email: "ana.reyes@email.com", subject: "Document scanning to PDF", message: "Hi! Do you offer high-volume document scanning? I have around 200 pages of handwritten notes that I need to digitize into a single PDF file. Thank you.", date: "Mar 13, 2026", time: "01:15 PM" }
-    ]
+    messages: []
 };
 
 // ===============================
@@ -360,9 +350,7 @@ function syncSidebarBadge() {
 }
 
 function startPolling() {
-    setInterval(() => {
-        console.log("Polling for new customer messages...");
-    }, 30000); 
+    console.debug('[PRNT] Action disabled (no backend) - Polling bypassed');
 }
 
 // ===============================

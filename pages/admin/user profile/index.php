@@ -176,7 +176,7 @@
                                 </div>
                                 <div>
                                     <p class="activity-stat-lbl">Total Orders</p>
-                                    <p class="activity-stat-val" id="statOrders">1,248</p>
+                                    <p class="activity-stat-val" id="statOrders">0</p>
                                 </div>
                             </div>
                             <div class="activity-stat">
@@ -185,7 +185,7 @@
                                 </div>
                                 <div>
                                     <p class="activity-stat-lbl">Revenue</p>
-                                    <p class="activity-stat-val" id="statRevenue">₱ 124,580</p>
+                                    <p class="activity-stat-val" id="statRevenue">₱ 0</p>
                                 </div>
                             </div>
                             <div class="activity-stat">
@@ -194,7 +194,7 @@
                                 </div>
                                 <div>
                                     <p class="activity-stat-lbl">Active Days</p>
-                                    <p class="activity-stat-val" id="statDays">285</p>
+                                    <p class="activity-stat-val" id="statDays">0</p>
                                 </div>
                             </div>
                             <div class="activity-stat">
@@ -203,7 +203,7 @@
                                 </div>
                                 <div>
                                     <p class="activity-stat-lbl">Last Active</p>
-                                    <p class="activity-stat-val" id="statActivity">2m ago</p>
+                                    <p class="activity-stat-val" id="statActivity">—</p>
                                 </div>
                             </div>
                         </div>

@@ -54,11 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginEmail = document.getElementById("login-email");
     const rememberMe = document.getElementById("remember-me");
     if(loginEmail && rememberMe) {
-        const storedEmail = localStorage.getItem("prnt_email");
-        if(storedEmail) {
-            loginEmail.value = storedEmail;
-            rememberMe.checked = true;
-        }
+        console.debug("[PRNT] Action disabled (no storage) - Remember Me bypassed");
     }
 
     // === Login Form Validation ===
@@ -90,21 +86,15 @@ document.addEventListener("DOMContentLoaded", () => {
         signinForm.addEventListener("submit", (e) => {
             e.preventDefault();
             
-            // Remember me persist
-            if(rememberMe && rememberMe.checked) {
-                localStorage.setItem("prnt_email", loginEmail.value.trim());
-            } else {
-                localStorage.removeItem("prnt_email");
-            }
+            // ACTION DISABLED — STORAGE REMOVED
+            console.debug("[PRNT] Action disabled (no storage) - Remember Me save bypassed");
 
             if (loginEmail.value.trim() === testEmail && loginPassInput.value.trim() === testPassword) {
                 loginError.style.color = "#4caf50"; 
                 loginError.textContent = "Welcome back to PRNT! Redirecting...";
-                fetch('index.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: 'action=login'
-                }).then(() => {
+                // ACTION DISABLED — BACKEND REMOVED
+                console.debug("[PRNT] API disabled");
+                Promise.resolve(null).then(() => {
                     setTimeout(() => {
                         window.location.href = "../../index.php";
                     }, 1500);
@@ -271,11 +261,9 @@ document.addEventListener("DOMContentLoaded", () => {
             regError.style.color = "#4caf50";
             regError.textContent = "Account Created Successfully! Redirecting...";
             regBtn.disabled = true;
-            fetch('index.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: 'action=register'
-            }).then(() => {
+            // ACTION DISABLED — BACKEND REMOVED
+            console.debug("[PRNT] API disabled");
+            Promise.resolve(null).then(() => {
                 setTimeout(() => {
                     window.location.href = "../../index.php";
                 }, 1500);

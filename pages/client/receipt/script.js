@@ -142,22 +142,11 @@ function closeConfirmModal() {
   if (modal) modal.style.display = 'none';
 }
 
-// ── BACKEND INTEGRATION POINT ─────────────────────────────────────────────────
-// Replace localStorage write with: POST /api/orders/confirm
-
+// ── UI STATE (STORAGE REMOVED) ─────────────────────────────────────────────────
+// ACTION DISABLED — STORAGE REMOVED
 function executeConfirmOrder() {
   closeConfirmModal();
-
-  const saved = localStorage.getItem('prnt_order_draft');
-  if (!saved) return;
-
-  const order    = JSON.parse(saved);
-  order.status   = 'Pending';
-  order.progress = 0;
-
-  localStorage.setItem('prnt_order_confirmed', JSON.stringify(order));
-  localStorage.removeItem('prnt_order_draft');
-
+  console.debug("[PRNT] Action disabled (no backend) - Storage order confirm bypassed");
   showToast('Order confirmed! Redirecting to tracking...', 'info');
   setTimeout(() => { window.location.href = '../tracking/index.php'; }, 1500);
 }
@@ -168,25 +157,24 @@ function goBack() {
   window.location.href = '../order/index.php';
 }
 
-// ── BACKEND INTEGRATION POINT ─────────────────────────────────────────────────
-// Replace localStorage read with: GET /api/orders/draft or GET /api/orders/:id
-
+// ── UI STATE (STORAGE REMOVED) ─────────────────────────────────────────────────
+// ACTION DISABLED — STORAGE REMOVED
 function renderReceipt() {
+  console.debug("[PRNT] Action disabled (no backend) - Storage record fetch bypassed");
   const urlParams     = new URLSearchParams(window.location.search);
   const viewConfirmed = urlParams.get('view') === 'confirmed';
 
-  let saved = localStorage.getItem('prnt_order_draft');
-  if (viewConfirmed || !saved) {
-    saved = localStorage.getItem('prnt_order_confirmed');
-  }
+  // STATIC UI FALLBACK
+  const order = {
+    orderId: "Awaiting backend connection",
+    status: "Pending",
+    cart: [],
+    subtotal: 0,
+    deliveryFee: 0,
+    total: 0,
+    receivingOption: 'pick-up'
+  };
 
-  if (!saved) {
-    showToast('No order record found.', 'error');
-    setTimeout(() => { window.location.href = '../order/index.php'; }, 2000);
-    return;
-  }
-
-  const order = JSON.parse(saved);
   populateReceipt(order, viewConfirmed);
 }
 

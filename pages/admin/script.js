@@ -32,29 +32,22 @@ window.ApiService = {
 
 // SAMPLE DATA (FRONTEND TESTING ONLY)
 // BACKEND INTEGRATION POINT — Replace with: GET /api/admin/dashboard
+// STATIC UI FALLBACK (NO BACKEND)
 const SAMPLE_DATA = {
-    notifications: [
-        { id: 'nt-1', type: 'order',   customer: 'John Smith',   service: 'Document Printing',         time: '45 mins ago', read: false, readAt: null },
-        { id: 'nt-3', type: 'message', customer: 'Sarah Johnson', service: 'Inquiry about bulk discount', time: '1 hr ago',   read: true,  readAt: Date.now() },
-        { id: 'nt-4', type: 'order',   customer: 'Mike Brown',   service: 'Poster Printing (A2)',       time: '2 hrs ago',  read: false, readAt: null }
-    ],
-    newNotifications: [
-        { type: 'order',   customer: 'Emma Davis',   service: 'ordered Business Cards' },
-        { type: 'order',   customer: 'James Wilson', service: 'ordered Tarp Printing' },
-        { type: 'message', customer: 'Jane Smith',   service: 'sent a new contact message' }
-    ],
+    notifications: [],
+    newNotifications: [],
     dashboard: {
-        todayOrders:   48,
-        pendingOrders: 7, // REFACTORED: Matches active orders in order management mock dataset
-        todayRevenue:  8640,
+        todayOrders:   0,
+        pendingOrders: 0, 
+        todayRevenue:  0,
         services: [
-            { name: "Calling Cards", orders: 14 },
-            { name: "Banner Print",  orders: 9  },
-            { name: "Booklets",      orders: 7  },
-            { name: "Photo Print",   orders: 6  },
-            { name: "Document",      orders: 5  },
-            { name: "Tarp Print",    orders: 4  },
-            { name: "ID Print",      orders: 3  }
+            { name: "Calling Cards", orders: 0 },
+            { name: "Banner Print",  orders: 0  },
+            { name: "Booklets",      orders: 0  },
+            { name: "Photo Print",   orders: 0  },
+            { name: "Document",      orders: 0  },
+            { name: "Tarp Print",    orders: 0  },
+            { name: "ID Print",      orders: 0  }
         ]
     }
 };
@@ -106,8 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // BACKEND INTEGRATION POINT — Replace with: GET /api/admin/metrics
-    window.updateSidebarBadge('orders', SAMPLE_DATA.dashboard.pendingOrders || 7);
-    window.updateSidebarBadge('reports', 5);
+    window.updateSidebarBadge('orders', 0);
+    window.updateSidebarBadge('reports', 0);
 
     // ── Selectors used across multiple sections ───────────────────────────────
     const navLinks       = document.querySelectorAll('[data-section]');
@@ -590,20 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ── Sample Data for Notifications (Backend Ready) ────────────
     function fetchNotifications() {
-        // BACKEND INTEGRATION POINT
-        // Endpoint: /api/admin/notifications
-        // Method: GET
-        if (Math.random() < 0.5) {
-            const pick = SAMPLE_DATA.newNotifications[Math.floor(Math.random() * SAMPLE_DATA.newNotifications.length)];
-            window.pushGlobalNotification({
-                id:       'nt-sim-' + (++_nextId),
-                type:     pick.type,
-                customer: pick.customer,
-                service:  pick.service,
-                time:     'just now',
-                read:     false,
-            });
-        }
+        console.debug('[PRNT] Action disabled (no backend) - Notification pull bypassed');
     }
 
     // Poll every 10 seconds (simulation).
@@ -631,13 +611,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 : initials;
         });
 
-        const existing = JSON.parse(localStorage.getItem('prnt_admin_user') || '{}');
-        localStorage.setItem('prnt_admin_user', JSON.stringify({ ...existing, ...data }));
+        // ACTION DISABLED — STORAGE REMOVED
+        console.debug('[PRNT] Action disabled (no storage) - Global user info persistence bypassed');
     };
 
     // Initialize standard uniform avatar state across the DOM
     // Prioritize localStorage to ensure the change "stays still" after navigation/refresh
-    const savedUser = JSON.parse(localStorage.getItem('prnt_admin_user') || '{}');
+    // ACTION DISABLED — STORAGE REMOVED
+    const savedUser = {};
     const user = {
         name:   savedUser.name  || "Admin User",
         email:  savedUser.email || "admin@prnt.com",
@@ -799,38 +780,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * to demonstrate live system behavior.
      */
     function simulateRealTimeUpdate() {
-        // Randomly adjust orders (±0-2)
-        const orderDiff = Math.floor(Math.random() * 3) - 1; 
-        const oldOrders = dashboardData.todayOrders;
-        dashboardData.todayOrders = Math.max(0, dashboardData.todayOrders + orderDiff);
-
-        // Randomly adjust revenue proportional to orders (avg ₱180 per order)
-        const revDiff = orderDiff * 180 + (Math.floor(Math.random() * 50) - 25);
-        const oldRev = dashboardData.todayRevenue;
-        dashboardData.todayRevenue = Math.max(0, dashboardData.todayRevenue + revDiff);
-
-        // Update KPIs with animation
-        if (orderDiff !== 0) {
-            animateValue('kpi-count-orders', oldOrders, dashboardData.todayOrders, 1000);
-            animateValue('kpi-count-revenue', oldRev, dashboardData.todayRevenue, 1000, '₱ ');
-            
-            // Pulse the card icons to signal the update
-            document.querySelectorAll('.stat-card[data-kpi="today-orders"] .stat-icon, .stat-card[data-kpi="today-revenue"] .stat-icon')
-                .forEach(icon => {
-                    icon.style.transform = 'scale(1.2)';
-                    setTimeout(() => icon.style.transform = '', 400);
-                });
-        }
-
-        // Randomly update a service's order count for the chart
-        const randService = Math.floor(Math.random() * dashboardData.services.length);
-        dashboardData.services[randService].orders += Math.max(0, orderDiff);
-
-        // Non-destructively refresh the chart
-        if (ordersPerServiceChart) {
-            ordersPerServiceChart.data.datasets[0].data = dashboardData.services.map(s => s.orders);
-            ordersPerServiceChart.update('active');
-        }
+        console.debug('[PRNT] Action disabled (no backend) - Realtime dashboard dashboard metrics bypassed');
     }
 
     // Interval: 15–30 seconds logic (using 20s as standard)
@@ -970,11 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ============================================================
     // SECTION: RESTORE PERSISTED USER STATE
     // ============================================================
-    try {
-        const saved = localStorage.getItem('prnt_admin_user');
-        if (saved) window.updateGlobalUserInfo(JSON.parse(saved));
-    } catch (e) {
-        console.error('[PRNT] Failed to restore user state:', e);
-    }
+    // ACTION DISABLED — STORAGE REMOVED
+    console.debug('[PRNT] Action disabled (no storage) - User state retrieval bypassed');
 
 }); // end DOMContentLoaded

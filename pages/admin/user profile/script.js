@@ -8,12 +8,8 @@ const profileData = {
     location: 'Bulacan, Philippines',
 };
 
-const activityData = [
-    { text: 'Processed order',          highlight: 'ORD-1234',        time: '2 minutes ago',   type: 'active' },
-    { text: 'Updated service pricing',  highlight: 'Business Cards',   time: '1 hour ago',      type: 'active' },
-    { text: 'Reviewed message from',    highlight: 'John Smith',       time: '3 hours ago',     type: 'muted'  },
-    { text: 'Logged in from',           highlight: 'Bulacan, PH',      time: 'Yesterday, 9am',  type: 'muted'  },
-];
+// STATIC UI FALLBACK (NO BACKEND)
+const activityData = [];
 
 const statsData = {
     orders:   '1,248',
@@ -393,7 +389,8 @@ function handleAvatarChange(e) {
 // 9. INITIALIZATION
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
-    const savedUser = JSON.parse(localStorage.getItem('prnt_admin_user') || '{}');
+    // ACTION DISABLED — STORAGE REMOVED
+    const savedUser = {};
     const name  = savedUser.name  || profileData.name;
     const email = savedUser.email || profileData.email;
     const avatar = savedUser.avatar || "";

@@ -35,85 +35,9 @@ const ProfileApp = {
         this.updateIdentityDisplay();
     },
 
-    // SAMPLE DATA (FRONTEND TESTING ONLY)
-    // BACKEND INTEGRATION POINT — Replace with: GET /api/orders?userId=:id
+    // STATIC UI FALLBACK (NO BACKEND)
     generateMockOrders() {
-        const services    = ['Document Print', 'Photo Print', 'Sticker Print', 'ID Print', 'Poster Print'];
-        const types       = ['Black & White', 'Colored'];
-        const sizes       = ['A4', 'Letter', '4x6 Photo Paper', '8x10', 'A3'];
-        const locations   = ['BSU Hub', 'Activity Center', 'Gate 1', 'Gate 2'];
-        const statusesActive = ['Pending', 'Processing', 'Receiving'];
-
-        let db = [];
-
-        for (let i = 1; i <= 10; i++) {
-            let numItems = Math.floor(Math.random() * 3) + 2;
-            let items = [];
-            let totalAmount = 0;
-            for (let j = 0; j < numItems; j++) {
-                let amount = Math.floor(Math.random() * 150) + 20;
-                totalAmount += amount;
-                items.push({
-                    service:   services[Math.floor(Math.random() * services.length)],
-                    file:      `Project_Part${i}_v${j}.pdf`,
-                    price:     amount,
-                    printType: types[Math.floor(Math.random() * types.length)],
-                    paperSize: sizes[Math.floor(Math.random() * sizes.length)],
-                    pages:     Math.floor(Math.random() * 50) + 1,
-                    copies:    Math.floor(Math.random() * 5) + 1
-                });
-            }
-            const fakeDate = new Date();
-            fakeDate.setDate(fakeDate.getDate() - Math.floor(Math.random() * 5));
-            fakeDate.setHours(9 + Math.floor(Math.random() * 8), Math.floor(Math.random() * 60));
-
-            db.push({
-                id:            `ORD-80${i.toString().padStart(2, '0')}`,
-                date:          fakeDate.toISOString(),
-                status:        statusesActive[Math.floor(Math.random() * statusesActive.length)],
-                amount:        totalAmount,
-                receiving:     Math.random() > 0.5 ? 'Pick-up' : 'Delivery',
-                location:      locations[Math.floor(Math.random() * locations.length)],
-                paymentMethod: i % 2 === 0 ? 'Digital Payment (GCash)' : 'Cash on Pick-up/Delivery',
-                notes:         Math.random() > 0.5 ? 'Please handle with care.' : '',
-                items:         items
-            });
-        }
-
-        for (let i = 1; i <= 10; i++) {
-            let numItems = Math.floor(Math.random() * 3) + 2;
-            let items = [];
-            let totalAmount = 0;
-            for (let j = 0; j < numItems; j++) {
-                let amount = Math.floor(Math.random() * 100) + 15;
-                totalAmount += amount;
-                items.push({
-                    service:   services[Math.floor(Math.random() * services.length)],
-                    file:      `History_Print_${i}_${j}.png`,
-                    price:     amount,
-                    printType: types[Math.floor(Math.random() * types.length)],
-                    paperSize: sizes[Math.floor(Math.random() * sizes.length)],
-                    pages:     Math.floor(Math.random() * 10) + 1,
-                    copies:    Math.floor(Math.random() * 3) + 1
-                });
-            }
-            const fakeDate = new Date();
-            fakeDate.setDate(fakeDate.getDate() - (Math.floor(Math.random() * 30) + 10));
-            fakeDate.setHours(8 + Math.floor(Math.random() * 10), Math.floor(Math.random() * 60));
-
-            db.push({
-                id:       `ORD-70${i.toString().padStart(2, '0')}`,
-                date:     fakeDate.toISOString(),
-                status:   'Completed',
-                amount:   totalAmount,
-                receiving: Math.random() > 0.5 ? 'Pick-up' : 'Delivery',
-                location: locations[Math.floor(Math.random() * locations.length)],
-                notes:    '',
-                items:    items
-            });
-        }
-
-        this.state.orders = db;
+        this.state.orders = [];
     },
 
     updateIdentityDisplay() {
@@ -395,65 +319,17 @@ const ProfileApp = {
         document.getElementById('logoutModal').style.display = 'none';
     },
 
-    // ── BACKEND INTEGRATION POINT ─────────────────────────────────────────────
-    // Replace with: POST /api/auth/logout + session_destroy()
+    // ACTION DISABLED — BACKEND REMOVED
     executeLogout() {
-        this.showToast('Logging out...', 'info');
-        setTimeout(() => {
-            window.location.href = '../../account/index.php';
-        }, 1000);
+        console.debug('[PRNT] Action disabled (no backend) - Logout logical flow bypassed');
+        this.showToast('Logging out... (Simulation)', 'info');
     },
 
-    // ── BACKEND INTEGRATION POINT ─────────────────────────────────────────────
-    // Replace with: POST /api/orders/reorder { orderId }
+    // ACTION DISABLED — STORAGE REMOVED
     executeReorder(orderId) {
-        const order = this.state.orders.find(o => o.id === orderId);
-        if (!order) return;
-
-        const reorderState = {
-            files:           [],
-            cart:            [],
-            receivingOption: order.receiving === 'Pick-up' ? 'pick-up' : 'delivery',
-            deliveryLocation: order.location || '',
-            paymentMethod:   order.paymentMethod || 'Cash on Pick-up/Delivery',
-            additionalNotes: order.notes || '',
-            subtotal:        Number(order.amount),
-            deliveryFee:     0,
-            total:           Number(order.amount)
-        };
-
-        order.items.forEach((item, index) => {
-            const fileId = `reorder-${Date.now()}-${index}`;
-
-            reorderState.files.push({
-                id:   fileId,
-                name: item.file,
-                size: 'Reordered File',
-                type: 'application/pdf'
-            });
-
-            reorderState.cart.push({
-                id:       Date.now() + Math.random(),
-                fileId:   fileId,
-                fileName: item.file,
-                service:  item.service,
-                format:   `${item.printType} • ${item.paperSize}`,
-                type:     item.printType === 'Colored' ? 'color' : 'bw',
-                size:     item.paperSize,
-                pages:    item.pages,
-                copies:   item.copies,
-                amount:   item.price
-            });
-        });
-
-        try {
-            localStorage.setItem('prnt_order_draft', JSON.stringify(reorderState));
-            this.closeReorderModal();
-            window.location.href = '../order/index.php#summaryPanel';
-        } catch (e) {
-            console.error('Reorder failed:', e);
-            this.showToast('Failed to initiate reorder.', 'error');
-        }
+        console.debug('[PRNT] Action disabled (no storage) - Reorder logical flow bypassed');
+        this.showToast('Reorder disabled (No Storage Mode).', 'error');
+        this.closeReorderModal();
     },
 
     // ── EVENT LISTENERS ───────────────────────────────────────────────────────

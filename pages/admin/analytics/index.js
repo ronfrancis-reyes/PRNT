@@ -14,83 +14,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // BACKEND INTEGRATION POINT
     // Endpoint: /api/admin/analytics
     // Method: GET
+    // STATIC UI FALLBACK (NO BACKEND)
+    const emptyStruct = {
+        title: "Waiting for Backend",
+        kpis: {
+            orders:    { val: "0", trend: "0%", up: true, comp: "No Data" },
+            revenue:   { val: "₱ 0", trend: "0%", up: true, comp: "No Data" },
+            customers: { val: "0", trend: "0%", up: true, comp: "No Data" }
+        },
+        servicesChart: { labels: [], orders: [], revenue: [] },
+        growth: { labels: [], data: [] },
+        servicesTable: []
+    };
+
     const SAMPLE_DATA = {
-        daily: {
-            title: "Daily Overview",
-            kpis: {
-                orders:    { val: "42",    trend: "+12%", up: true, comp: "vs yesterday" },
-                revenue:   { val: "₱ 8,640", trend: "+5%",  up: true, comp: "vs yesterday" },
-                customers: { val: "18",    trend: "+2%",  up: true, comp: "vs yesterday" }
-            },
-            servicesChart: {
-                labels: ['Calling Cards', 'Banner Print', 'Booklets', 'Photo Print', 'Doc Print'],
-                orders: [15, 8, 12, 4, 3],
-                revenue: [1200, 3200, 3600, 440, 200]
-            },
-            growth: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                data: [3, 1, 4, 0, 5, 2]
-            },
-            servicesTable: [
-                { rank: '01', name: 'Booklets',      cat: 'Full Color', units: '12', rev: '₱ 3,600' },
-                { rank: '02', name: 'Banner Print',  cat: 'Digital',    units: '8',  rev: '₱ 3,200' },
-                { rank: '03', name: 'Calling Cards', cat: 'Standard',   units: '15', rev: '₱ 1,200' },
-                { rank: '04', name: 'Photo Print',   cat: 'Glossy',     units: '4',  rev: '₱ 440' },
-                { rank: '05', name: 'Doc Print',     cat: 'Standard',   units: '3',  rev: '₱ 200' },
-                { rank: '06', name: 'ID Photo',      cat: 'Passport',   units: '2',  rev: '₱ 100' }
-            ]
-        },
-        monthly: {
-            title: "Monthly Overview",
-            kpis: {
-                orders:    { val: "1,402",  trend: "+12.5%", up: true,  comp: "vs last month" },
-                revenue:   { val: "₱ 72,000", trend: "+8.2%",  up: true,  comp: "vs last month" },
-                customers: { val: "203",    trend: "-3.1%",  up: false, comp: "vs last month" }
-            },
-            servicesChart: {
-                labels: ['Calling Cards', 'Banner Print', 'Binding', 'Tarp Print', 'Posters'],
-                orders: [710, 450, 210, 20, 12],
-                revenue: [12500, 28400, 8400, 18000, 4700]
-            },
-            growth: {
-                labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-                data: [350, 420, 510, 680]
-            },
-            servicesTable: [
-                { rank: '01', name: 'Banner Print',   cat: 'Digital',  units: '450', rev: '₱ 28,400' },
-                { rank: '02', name: 'Tarp Print',     cat: 'Format',   units: '20',  rev: '₱ 18,000' },
-                { rank: '03', name: 'Calling Cards',  cat: 'Standard', units: '710', rev: '₱ 12,500' },
-                { rank: '04', name: 'Binding',        cat: 'Coil',     units: '210', rev: '₱ 8,400' },
-                { rank: '05', name: 'Posters',        cat: 'Matte',    units: '12',  rev: '₱ 4,700' },
-                { rank: '06', name: 'ID Cards',       cat: 'PVC',      units: '45',  rev: '₱ 2,250' },
-                { rank: '07', name: 'Flyers',         cat: 'Standard', units: '120', rev: '₱ 1,800' }
-            ]
-        },
-        yearly: {
-            title: "Yearly Overview",
-            kpis: {
-                orders:    { val: "15,204", trend: "+18%", up: true, comp: "vs last year" },
-                revenue:   { val: "₱ 842,000", trend: "+24%", up: true, comp: "vs last year" },
-                customers: { val: "1,840", trend: "+45%", up: true, comp: "vs last year" }
-            },
-            servicesChart: {
-                labels: ['Tarp Print', 'Calling Cards', 'Booklets', 'Binding', 'Others'],
-                orders: [2400, 8200, 1500, 2100, 1004],
-                revenue: [142000, 84000, 72000, 68000, 476000]
-            },
-            growth: {
-                labels: ["2021","2022","2023","2024","2025"],
-                data: [150, 250, 350, 420, 680]
-            },
-            servicesTable: [
-                { rank: '01', name: 'Tarp Print',    cat: 'Large Format', units: '2.4k', rev: '₱ 142k' },
-                { rank: '02', name: 'Calling Cards', cat: 'Digital',      units: '8.2k', rev: '₱ 84k' },
-                { rank: '03', name: 'Booklets',      cat: 'Full Color',   units: '1.5k', rev: '₱ 72k' },
-                { rank: '04', name: 'Binding',       cat: 'Plastic',      units: '2.1k', rev: '₱ 68k' },
-                { rank: '05', name: 'Stickers',      cat: 'Vinyl',        units: '5.4k', rev: '₱ 52k' },
-                { rank: '06', name: 'Invitations',   cat: 'Premium',      units: '1.2k', rev: '₱ 48k' }
-            ]
-        }
+        daily:   emptyStruct,
+        monthly: emptyStruct,
+        yearly:  emptyStruct
     };
 
     let currentActivePeriod = 'monthly';

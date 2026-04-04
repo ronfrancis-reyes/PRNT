@@ -19,55 +19,7 @@
                 </div>
 
                 <div class="row g-4" id="servicesContainer">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="service-card shadow-sm h-100">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div>
-                                    <h5 class="fw-bold mb-0 service-name text-white">Business Cards</h5>
-                                    <p class="text-muted small service-format">Standard (3.5" x 2")</p>
-                                </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input switch-green" type="checkbox" checked>
-                                </div>
-                            </div>
-                            <div class="price-section my-4">
-                                <h3 class="fw-bold mb-0 text-orange service-price">$45.00</h3>
-                                <p class="text-muted small">per unit</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <span class="status-pill available">Available</span>
-                                <div class="actions">
-                                    <i class="fas fa-edit text-muted me-3 pointer" data-bs-toggle="modal" data-bs-target="#editServiceModal" onclick="prepareEdit(this)"></i>
-                                    <i class="fas fa-trash text-danger pointer" data-bs-toggle="modal" data-bs-target="#deleteServiceModal" onclick="prepareDelete(this)"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-lg-4">
-                        <div class="service-card shadow-sm h-100">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <div>
-                                    <h5 class="fw-bold mb-0 service-name text-white">Flyers</h5>
-                                    <p class="text-muted small service-format">A4 (8.27" x 11.69")</p>
-                                </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input switch-green" type="checkbox" checked>
-                                </div>
-                            </div>
-                            <div class="price-section my-4">
-                                <h3 class="fw-bold mb-0 text-orange service-price">$120.00</h3>
-                                <p class="text-muted small">per unit</p>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center mt-auto">
-                                <span class="status-pill available">Available</span>
-                                <div class="actions">
-                                    <i class="fas fa-edit text-muted me-3 pointer" data-bs-toggle="modal" data-bs-target="#editServiceModal" onclick="prepareEdit(this)"></i>
-                                    <i class="fas fa-trash text-danger pointer" data-bs-toggle="modal" data-bs-target="#deleteServiceModal" onclick="prepareDelete(this)"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Services rendered dynamically. Empty in Safe-Mode. -->
                 </div>
             </div>
         </div>

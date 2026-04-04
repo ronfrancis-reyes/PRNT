@@ -49,8 +49,8 @@
             <div class="ani-card">
                 <div class="ani-card-label" id="label-orders">TOTAL ORDERS</div>
                 <div class="ani-card-main">
-                    <span class="ani-value" id="val-orders">1,402</span>
-                    <div class="ani-trend trend-up" id="trend-orders"><i class="fas fa-caret-up"></i> +12.5%</div>
+                    <span class="ani-value" id="val-orders">0</span>
+                    <div class="ani-trend" id="trend-orders">0%</div>
                 </div>
                 <div class="ani-comparison" id="comp-orders">vs last month</div>
             </div>
@@ -58,8 +58,8 @@
             <div class="ani-card">
                 <div class="ani-card-label" id="label-revenue">TOTAL REVENUE</div>
                 <div class="ani-card-main">
-                    <span class="ani-value" id="val-revenue">₱ 72,000</span>
-                    <div class="ani-trend trend-up" id="trend-revenue"><i class="fas fa-caret-up"></i> +8.2%</div>
+                    <span class="ani-value" id="val-revenue">₱ 0</span>
+                    <div class="ani-trend" id="trend-revenue">0%</div>
                 </div>
                 <div class="ani-comparison" id="comp-revenue">vs last month</div>
             </div>
@@ -67,8 +67,8 @@
             <div class="ani-card">
                 <div class="ani-card-label" id="label-customers">TOTAL CUSTOMERS</div>
                 <div class="ani-card-main">
-                    <span class="ani-value" id="val-customers">203</span>
-                    <div class="ani-trend trend-down" id="trend-customers"><i class="fas fa-caret-down"></i> -3.1%</div>
+                    <span class="ani-value" id="val-customers">0</span>
+                    <div class="ani-trend" id="trend-customers">0%</div>
                 </div>
                 <div class="ani-comparison" id="comp-customers">vs last month</div>
             </div>
