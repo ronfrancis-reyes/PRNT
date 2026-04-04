@@ -52,16 +52,20 @@ SECTION: ADMIN HEADER (TOPBAR)
                     <center>Admin Account</center>
                 </div>
                 <div class="dp-header-info" style="padding: 12px 20px; display: flex; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                    <span class="dp-avatar avatar-sm" style="margin-right: 12px;" data-user-initials>Y</span>
+                    <span class="dp-avatar avatar-sm" style="margin-right: 12px;" data-user-initials> <?php
+				$fullname = explode(' ', $_SESSION['username']);
+				$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+				echo $initials;
+            ?></span>
                     <div class="dp-info">
-                        <h6 class="dp-name" style="margin: 0; font-size: 0.9rem; color: #fff;" data-user-name>Yance</h6>
-                        <p class="dp-email" style="margin: 0; font-size: 0.75rem; color: rgba(255, 255, 255, 0.5);" data-user-email>yancenathanc@gmail.com</p>
+                        <h6 class="dp-name" style="margin: 0; font-size: 0.9rem; color: #fff;" data-user-name><?php echo $_SESSION['username'] ?></h6>
+                        <p class="dp-email" style="margin: 0; font-size: 0.75rem; color: rgba(255, 255, 255, 0.5);" data-user-email><?php echo $_SESSION['email'] ?></p>
                     </div>
                 </div>
                 <a href="../../index.php" class="dp-item"><i class="fas fa-home"></i> Back to Site</a>
                 <a href="#" data-section="user-profile" data-folder="user profile" class="dp-item"><i class="fas fa-user"></i> Admin Profile</a>
                 <hr class="dp-divider">
-                <a href="/wst/PRNT/pages/account/" class="dp-item" style="color: var(--primary-orange, #FF6B00);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                <a class="dp-item" style="color: var(--primary-orange, #FF6B00); cursor:pointer" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </div>
         </div>
     </div>

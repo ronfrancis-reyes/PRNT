@@ -1,10 +1,10 @@
 <?php
-/**
- * Analytics Module - PRNT Admin
- * 
- * Performance insights, user growth tracking, and service delivery metrics.
- * Designed to be loaded via Iframe within the modern Admin Shell.
- */
+include "../../../api/config.php";
+if (!isset($_SESSION['user'])) {
+	header("Location: ../../index.php");
+} else if ($_SESSION['role'] == 'Customer') {
+	header("Location: ../../client/dashboard/index.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,8 +15,8 @@
 
     <!-- UI Core -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../../../global/variables.css?v=1.5">
-    <link rel="stylesheet" href="index.css?v=1.5">
+    <link rel="stylesheet" href="../../../global/variables.css">
+    <link rel="stylesheet" href="styles.css">
 
     <!-- Charting & Export Engines -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -125,6 +125,6 @@
     </div>
 
     <!-- Logic Engine -->
-    <script src="index.js?v=1.5"></script>
+    <script src="script.js"></script>
 </body>
 </html>

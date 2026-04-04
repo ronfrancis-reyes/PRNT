@@ -2,10 +2,10 @@
 // 1. SAMPLE DATA
 // ==========================================================================
 const profileData = {
-	name: "Yance Nathan",
-	email: "yancenathanc@gmail.com",
-	phone: "+63 (900) 123-4567",
-	location: "Bulacan, Philippines",
+	name: window.UserInfo.username,
+	email: window.UserInfo.email,
+	phone: window.UserInfo.contact_number,
+	date_created: window.UserInfo.date_created,
 };
 
 // STATIC UI FALLBACK (NO BACKEND)
@@ -38,11 +38,9 @@ const dom = {
 	profileDisplayName: document.getElementById("profileDisplayName"),
 	infoEmail: document.getElementById("infoEmail"),
 	infoPhone: document.getElementById("infoPhone"),
-	infoLocation: document.getElementById("infoLocation"),
 	fieldName: document.getElementById("fieldName"),
 	fieldEmail: document.getElementById("fieldEmail"),
 	fieldPhone: document.getElementById("fieldPhone"),
-	fieldLocation: document.getElementById("fieldLocation"),
 	pwToggle: document.getElementById("pwToggle"),
 	passwordPanel: document.getElementById("passwordPanel"),
 	cancelPwBtn: document.getElementById("cancelPwBtn"),
@@ -181,9 +179,6 @@ function syncSidebar(avatarUrl = null) {
 	const phone = dom.fieldPhone
 		? dom.fieldPhone.value.trim()
 		: profileData.phone;
-	const location = dom.fieldLocation
-		? dom.fieldLocation.value.trim()
-		: profileData.location;
 
 	const initials = name
 		.split(" ")
@@ -195,7 +190,6 @@ function syncSidebar(avatarUrl = null) {
 	if (dom.profileDisplayName) dom.profileDisplayName.textContent = name;
 	if (dom.infoEmail) dom.infoEmail.textContent = email;
 	if (dom.infoPhone) dom.infoPhone.textContent = phone;
-	if (dom.infoLocation) dom.infoLocation.textContent = location;
 
 	if (
 		window.parent &&
@@ -337,7 +331,6 @@ function enterEdit() {
 		name: dom.fieldName ? dom.fieldName.value : "",
 		email: dom.fieldEmail ? dom.fieldEmail.value : "",
 		phone: dom.fieldPhone ? dom.fieldPhone.value : "",
-		location: dom.fieldLocation ? dom.fieldLocation.value : "",
 	};
 	dom.editInputs.forEach((i) => {
 		i.disabled = false;
@@ -353,8 +346,6 @@ function exitEdit(save) {
 		if (dom.fieldName) dom.fieldName.value = state.snapshot.name || "";
 		if (dom.fieldEmail) dom.fieldEmail.value = state.snapshot.email || "";
 		if (dom.fieldPhone) dom.fieldPhone.value = state.snapshot.phone || "";
-		if (dom.fieldLocation)
-			dom.fieldLocation.value = state.snapshot.location || "";
 	}
 	dom.editInputs.forEach((i) => {
 		i.disabled = true;
@@ -368,36 +359,62 @@ function exitEdit(save) {
 function saveProfile() {
 	const name = dom.fieldName ? dom.fieldName.value.trim() : "";
 	const email = dom.fieldEmail ? dom.fieldEmail.value.trim() : "";
+	const contact_number = dom.fieldPhone ? dom.fieldPhone.value.trim() : "";
 
 	if (!name) {
 		showToast("Validation Error", "Full name cannot be empty.", "danger");
 		if (dom.fieldName) dom.fieldName.focus();
 		return;
 	}
-	if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+	if (email && !/^[^\s@]+@prnt\.com$/.test(email)) {
 		showToast(
 			"Validation Error",
-			"Please enter a valid email address.",
+			"Please enter a valid PRNT email address.",
 			"danger",
 		);
 		if (dom.fieldEmail) dom.fieldEmail.focus();
 		return;
 	}
+	if (!/^09\d{9}$/.test(contact_number)) {
+		showToast(
+			"Validation Error",
+			"Please enter a valid contact number.",
+			"danger",
+		);
+		if (dom.fieldPhone) dom.fieldPhone.focus();
+		return;
+	}
 
-	if (dom.fieldName) profileData.name = name;
-	if (dom.fieldEmail) profileData.email = email;
-	if (dom.fieldPhone)
-		profileData.phone = dom.fieldPhone
-			? dom.fieldPhone.value.trim()
-			: profileData.phone;
-	if (dom.fieldLocation)
-		profileData.location = dom.fieldLocation
-			? dom.fieldLocation.value.trim()
-			: profileData.location;
+	let payload = {
+		name: name,
+		email: email,
+		contact_number: contact_number,
+	};
+	$.ajax({
+		type: "POST",
+		url: "../../../api/user-profile.php",
+		data: "action=updateUserInfo&payload=" + JSON.stringify(payload),
+		success: function (response) {
+			let reply = JSON.parse(response);
+			if (reply.status == "success") {
+				if (dom.fieldName) profileData.name = name;
+				if (dom.fieldEmail) profileData.email = email;
+				if (dom.fieldPhone)
+					profileData.phone = dom.fieldPhone
+						? dom.fieldPhone.value.trim()
+						: profileData.phone;
 
-	exitEdit(true);
-	syncSidebar();
-	showToast("Profile Updated", "Your information has been saved.", "success");
+				exitEdit(true);
+				syncSidebar();
+				showToast(
+					"Profile Updated",
+					"Your information has been saved.",
+					"success",
+				);
+			}
+		},
+	});
 }
 
 function handlePasswordSubmit() {
@@ -496,7 +513,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	if (dom.fieldName) dom.fieldName.value = name;
 	if (dom.fieldEmail) dom.fieldEmail.value = email;
 	if (dom.fieldPhone) dom.fieldPhone.value = profileData.phone;
-	if (dom.fieldLocation) dom.fieldLocation.value = profileData.location;
 
 	if (dom.profileAvatar) {
 		if (avatar) {

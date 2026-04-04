@@ -57,8 +57,8 @@ if (!isset($_SESSION['user'])) {
                 <div class="dashboard-grid">
 
                     <!-- ── KPI CARDS ──────────────────────────────
-                         DB: Replace hardcoded values with PHP echoes.
-                         e.g. 
+                        DB: Replace hardcoded values with PHP echoes.
+                        e.g. 
                     ─────────────────────────────────────────────── -->
                     <div class="stat-grid">
 
@@ -132,9 +132,9 @@ if (!isset($_SESSION['user'])) {
 
 
             <!-- ══ DYNAMIC SECTION ═══════════════════════════════
-                 All non-dashboard modules (orders, analytics, etc.)
-                 are loaded here as iframes via script.js routing.
-                 Do NOT place content here directly.
+                All non-dashboard modules (orders, analytics, etc.)
+                are loaded here as iframes via script.js routing.
+                Do NOT place content here directly.
             ════════════════════════════════════════════════════ -->
             <section class="admin-section" id="sec-dynamic" style="display:none; padding:0; background:transparent;">
                 <div id="dynamic-content"></div>
@@ -154,7 +154,18 @@ if (!isset($_SESSION['user'])) {
 
 <!-- ══ GLOBAL TOAST CONTAINER ══════════════════════════════ -->
 <div id="toastContainer" aria-live="polite"></div>
+<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+
+<script>
+	window.UserInfo = {
+		username: "<?= $_SESSION['username'] ?>",
+		email: "<?= $_SESSION['email'] ?>",
+        contact_number: "<?= $_SESSION['contact_number']  ?> ",
+        date_created: "<?= $_SESSION['date_created']  ?> "
+	};
+</script>
 
 <script src="script.js"></script>
+
 </body>
 </html>

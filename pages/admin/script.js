@@ -664,7 +664,12 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Initialize standard uniform avatar state across the DOM
 	// Prioritize localStorage to ensure the change "stays still" after navigation/refresh
 	// ACTION DISABLED — STORAGE REMOVED
-	const savedUser = {};
+	const savedUser = {
+		name: window.UserInfo.username,
+		email: window.UserInfo.email,
+		contact_number: window.UserInfo.contact_number,
+		date_created: window.UserInfo.date_created,
+	};
 	const user = {
 		name: savedUser.name || "Admin User",
 		email: savedUser.email || "admin@prnt.com",
@@ -996,3 +1001,14 @@ document.addEventListener("DOMContentLoaded", () => {
 		"[PRNT] Action disabled (no storage) - User state retrieval bypassed",
 	);
 }); // end DOMContentLoaded
+
+function logout() {
+	$.ajax({
+		type: "POST",
+		url: "../../api/user-profile.php",
+		data: "action=logout",
+		success: function (response) {
+			window.location.href = "../../";
+		},
+	});
+}

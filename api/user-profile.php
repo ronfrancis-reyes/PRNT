@@ -6,6 +6,8 @@ if (isset($_POST['action'])) {
         unset($_SESSION['user']);
         unset($_SESSION['email']);
         unset($_SESSION['username']);
+        unset($_SESSION['contact_number']);
+        unset($_SESSION['date_created']);
         unset($_SESSION['role']);
         session_destroy();
         exit;
@@ -14,8 +16,13 @@ if (isset($_POST['action'])) {
     if ($_POST['action'] == "updateUserInfo") {
         $payload = json_decode($_POST['payload']);
 
-        $sql = $conn->prepare('UPDATE accounts SET name = ?, contact_number = ? WHERE account_id = ?');
-        $sql->bind_param("ssi", $payload->name, $payload->contact_number, $_SESSION['user']);
+        if ($_SESSION['role'] == 'Customer') {
+            $sql = $conn->prepare('UPDATE accounts SET name = ?, contact_number = ? WHERE account_id = ?');
+            $sql->bind_param("ssi", $payload->name, $payload->contact_number, $_SESSION['user']);
+        } else {
+            $sql = $conn->prepare('UPDATE accounts SET name = ?, email = ?, contact_number = ? WHERE account_id = ?');
+            $sql->bind_param("sssi", $payload->name, $payload->email, $payload->contact_number, $_SESSION['user']);
+        }
 
         if ($sql->execute()) {
             $_SESSION['username'] = $payload->name;
@@ -52,7 +59,7 @@ if (isset($_POST['action'])) {
             if ($sql->execute()) {
                 echo json_encode([
                     'status' => 'success',
-                    'message' => 'Password updated successfully'
+                    'message' => 'Your password has been changed.'
                 ]);
                 exit;
             } else {

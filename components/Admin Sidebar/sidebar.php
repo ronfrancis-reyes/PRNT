@@ -5,7 +5,7 @@
 
     <!-- Brand Header -->
     <div class="sidebar-header">
-        <a href="#" class="logo">
+        <a href="./" class="logo">
             <img src="../../assets/img/PRNT_logo.png" alt="PRNT Logo" class="logo-img">
             <span class="logo-text sb-label">PRNT</span>
         </a>
@@ -63,10 +63,16 @@
     </nav>
 
     <!-- Profile Footer -->
-    <div class="sidebar-profile" data-section="user-profile" data-folder="../../pages/admin/user profile" data-title="Admin Profile">
-        <div class="profile-avatar-sm" data-user-initials>Y</div>
+    <div class="sidebar-profile" data-section="user-profile" data-folder="../../pages/admin/user profile" data-title="Admin Profile" style="cursor: pointer;">
+        <div class="profile-avatar-sm" data-user-initials>
+            <?php
+				$fullname = explode(' ', $_SESSION['username']);
+				$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+				echo $initials;
+            ?>
+        </div>
         <div class="profile-info sb-label">
-            <span data-user-name>Yance</span>
+            <span data-user-name><?php echo $_SESSION['username']; ?></span>
             <small>Administrator</small>
         </div>
         <button class="sidebar-logout sb-label" onclick="logout()" title="Logout">

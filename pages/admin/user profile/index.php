@@ -1,3 +1,12 @@
+<?php
+include "../../../api/config.php";
+if (!isset($_SESSION['user'])) {
+	header("Location: ../../index.php");
+} else if ($_SESSION['role'] == 'Customer') {
+	header("Location: ../../client/dashboard/index.php");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +32,13 @@
 
                         <div class="avatar-container" id="avatarContainer">
                             <div class="profile-avatar" id="profileAvatar" data-user-initials>
-                                <span id="profileInitials">YN</span>
+                                <span id="profileInitials">
+                                    <?php
+                                        $fullname = explode(' ', $_SESSION['username']);
+                                        $initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+                                        echo $initials;
+                                    ?>
+                                </span>
                             </div>
                             <div class="avatar-overlay">
                                 <i class="fas fa-camera"></i>
@@ -32,21 +47,17 @@
                             <input type="file" id="avatarInput" accept="image/*" style="display: none;">
                         </div>
 
-                        <h4 class="profile-name" id="profileDisplayName">Yance Nathan</h4>
+                        <h4 class="profile-name" id="profileDisplayName"><?php echo $_SESSION['username'] ?></h4>
                         <span class="profile-role-badge">Administrator</span>
 
                         <div class="profile-info-list">
                             <div class="profile-info-row">
                                 <i class="far fa-envelope"></i>
-                                <span id="infoEmail">yancenathanc@gmail.com</span>
+                                <span id="infoEmail"><?php echo $_SESSION['email'] ?></span>
                             </div>
                             <div class="profile-info-row">
                                 <i class="fas fa-phone"></i>
                                 <span id="infoPhone">+63 (900) 123-4567</span>
-                            </div>
-                            <div class="profile-info-row">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span id="infoLocation">Bulacan, Philippines</span>
                             </div>
                             <div class="profile-info-row">
                                 <i class="far fa-calendar-alt"></i>
@@ -78,19 +89,15 @@
                         <div class="profile-form-grid">
                             <div class="profile-form-group">
                                 <label class="profile-label">Full Name</label>
-                                <input type="text"  class="profile-input edit-input" id="fieldName"     value="Yance Nathan"           disabled>
+                                <input type="text"  class="profile-input edit-input" id="fieldName"     value="<?php echo $_SESSION['username'] ?>"           disabled>
                             </div>
                             <div class="profile-form-group">
                                 <label class="profile-label">Email</label>
-                                <input type="email" class="profile-input edit-input" id="fieldEmail"    value="yancenathanc@gmail.com" disabled>
+                                <input type="email" class="profile-input edit-input" id="fieldEmail"    value="<?php echo $_SESSION['email'] ?>" disabled>
                             </div>
                             <div class="profile-form-group">
                                 <label class="profile-label">Phone</label>
-                                <input type="text"  class="profile-input edit-input" id="fieldPhone"    value="+63 (900) 123-4567"     disabled>
-                            </div>
-                            <div class="profile-form-group">
-                                <label class="profile-label">Location</label>
-                                <input type="text"  class="profile-input edit-input" id="fieldLocation" value="Bulacan, Philippines"   disabled>
+                                <input type="text"  class="profile-input edit-input" id="fieldPhone"    value="<?php echo $_SESSION['contact_number'] ?>"     disabled>
                             </div>
                         </div>
                     </div>
@@ -218,6 +225,14 @@
             </div>
 </div>
 <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+<script>
+	window.UserInfo = {
+		username: "<?= $_SESSION['username'] ?>",
+		email: "<?= $_SESSION['email'] ?>",
+        contact_number: "<?= $_SESSION['contact_number']  ?> ",
+        date_created: "<?= $_SESSION['date_created']  ?> "
+	};
+</script>
 <script src="script.js"></script>
 
 </body>

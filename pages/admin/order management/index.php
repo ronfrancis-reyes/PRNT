@@ -1,3 +1,11 @@
+<?php
+include "../../../api/config.php";
+if (!isset($_SESSION['user'])) {
+	header("Location: ../../index.php");
+} else if ($_SESSION['role'] == 'Customer') {
+	header("Location: ../../client/dashboard/index.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,4 +102,4 @@
 
     <script src="script.js?v=2"></script>
 </body>
-</html>
+</html>

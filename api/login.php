@@ -16,6 +16,8 @@ if(isset($_POST['action'])){
                 $_SESSION['user'] = $account['account_id'];
                 $_SESSION['email'] = $account['email'];
                 $_SESSION['username'] = $account['name'];
+                $_SESSION['contact_number'] = $account['contact_number'];
+                $_SESSION['date_created'] = $account['date_created'];
                 $_SESSION['role'] = $account['role'];
                 echo json_encode([
                     "status" => "success",
