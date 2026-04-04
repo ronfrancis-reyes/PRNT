@@ -29,58 +29,61 @@ if (!isset($_SESSION['user'])) {
 
 <body>
 
-    <!--Navbar-->
-    <!--Hindi pwede ung nasa components kasi ../../ lang yon, dapat ../../../ kaya need pa irevise tong design para di maulit-->
-    <div class="mobile-menu-overlay" id="mobileOverlay"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        <button class="close-menu" onclick="toggleMobileMenu()">
-            <i class="fas fa-times"></i>
-        </button>
-        <a href="../../../index.php">Home</a>
-        <a href="../../about/">About</a>
-        <a href="../../works/">Work</a>
-        <a href="../../service/">Services</a>
-        <a href="../../contact/">Contact</a>
-        <a href="../../client/service-avail/">Order Now</a>
-        <div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
-            <div style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
-                id="navAvatar"><?php
-                                $fullname = explode(' ', $_SESSION['username']);
-                                $initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
-                                echo $initials;
-                                ?></div>
-        </div>
-    </div>
+    	<!--Navbar-->
+	<!--Hindi pwede ung nasa components kasi ../../ lang yon, dapat ../../../ kaya need pa irevise tong design para di maulit-->
+	<div class="mobile-menu" id="mobileMenu">
+		<button class="close-menu" onclick="toggleMobileMenu()">
+			<i class="fas fa-times"></i>
+		</button>
+		<a href="../../../index.php">Home</a>
+		<a href="../../about/">About</a>
+		<a href="../../works/">Work</a>
+		<a href="../../service/">Services</a>
+		<a href="../../contact/">Contact</a>
+		<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
+			<a href="../../user-profile/"
+				style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
+				id="navAvatar"><?php
+								$fullname = explode(' ', $_SESSION['username']);
+								$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+								echo $initials;
+								?></a>
+		</div>
+	</div>
 
-    <nav class="navbar" id="navbar">
-        <div class="container flex align-center justify-between" style="width: 100%">
-            <a href="../../../index.php" class="logo"> <i class="fas fa-print"></i> PRNT </a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="../../../index.php">Home</a></li>
-                <li><a href="../../about/">About</a></li>
-                <li><a href="../../works/">Work</a></li>
-                <li><a href="../../service/">Services</a></li>
-                <li><a href="../../contact/">Contact</a></li>
-            </ul>
-            <div class="flex align-center" style="gap: 1rem">
-                <a class="btn btn-primary" id="orderNowBtn" style="opacity: 0; cursor:default;">
+	<nav class="navbar" id="navbar">
+		<div class="container flex align-center justify-between" style="width: 100%">
+			<a href="../../../index.php" class="logo"> <i class="fas fa-print"></i> PRNT </a>
+			<ul class="nav-links" id="navLinks">
+				<li><a href="../../../index.php">Home</a></li>
+				<li><a href="../../about/">About</a></li>
+				<li><a href="../../works/">Work</a></li>
+				<li><a href="../../service/">Services</a></li>
+				<li><a href="../../contact/">Contact</a></li>
+			</ul>
+			<div class="flex align-center" style="gap: 1rem">
+				<a
+                    class="btn btn-primary"
+                    id="orderNowBtn"
+                    style="opacity: 0; cursor:default;">
                     <i class="fas fa-shopping-cart"></i> Order Now
                 </a>
-                <div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
-                    <div style="width:38px;height:38px;border-radius:50%; background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
-                        id="navAvatar"><?php
-                                        $fullname = explode(' ', $_SESSION['username']);
-                                        $initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
-                                        echo $initials;
-                                        ?></div>
-                </div>
-                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-    <!-- End of Navbar -->
+				<a href="../../user-profile/" class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
+					<div
+						style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
+						id="navAvatar"><?php
+										$fullname = explode(' ', $_SESSION['username']);
+										$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
+										echo $initials;
+										?></div>
+				</a>
+				<button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+					<i class="fas fa-bars"></i>
+				</button>
+			</div>
+		</div>
+	</nav>
+	<!-- End of Navbar -->
 
 
     <!-- ===== MAIN WRAPPER ===== -->
@@ -168,7 +171,47 @@ if (!isset($_SESSION['user'])) {
             </div><!-- /.receipt-card -->
         </div>
     </main>
-    <div class="footer-spacer" aria-hidden="true"></div>
+    <!-- footer -->
+	<footer class="footer" id="mainFooter">
+		<div class="container">
+			<div class="footer-grid">
+				<div class="footer-col">
+					<h4><i class="fas fa-print" style="margin-right:0.5rem;"></i> PRNT</h4>
+					<p>Your trusted online printing partner. Quality prints delivered fast to BulSU students and the local community.</p>
+				</div>
+				<div class="footer-col">
+					<h4>Quick Links</h4>
+					<ul>
+						<li><a href="../../../index.php">Home</a></li>
+						<li><a href="../../about/">About</a></li>
+						<li><a href="../../works/">Works</a></li>
+						<li><a href="../../service/">Services</a></li>
+						<li><a href="../../contact/">Contact</a></li>
+					</ul>
+				</div>
+				<div class="footer-col">
+					<h4>Services</h4>
+					<ul>
+						<li><a href="../../service/">Document Printing</a></li>
+						<li><a href="../../service/">Photo Printing</a></li>
+						<li><a href="../../service/">Tarpaulin Printing</a></li>
+						<li><a href="../../service/">Booklet Binding</a></li>
+					</ul>
+				</div>
+				<div class="footer-col">
+					<h4>Contact</h4>
+					<ul>
+						<li><a href="../../contact/"><i class="fas fa-envelope" style="width:16px;"></i> prnt@bulsu.edu.ph</a></li>
+						<li><a href="../../contact/"><i class="fas fa-phone" style="width:16px;"></i> +63 912 345 6789</a></li>
+						<li><a href="../../contact/"><i class="fas fa-map-marker-alt" style="width:16px;"></i> Malolos, Bulacan</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="footer-bottom">
+				<p>© 2026 PRNT — All rights reserved. Built with ❤️ for BulSU.</p>
+			</div>
+		</div>
+	</footer>
 
     <!-- ===== SCRIPTS ===== -->
     <script src="https://code.jquery.com/jquery-4.0.0.js"

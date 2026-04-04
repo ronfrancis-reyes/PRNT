@@ -36,7 +36,6 @@ include "./api/config.php"
 	<!-- ===== MOBILE MENU OVERLAY ===== -->
 
 	<!-- ===== NAVBAR ===== -->
-	<div class="mobile-menu-overlay" id="mobileOverlay"></div>
 	<div class="mobile-menu" id="mobileMenu">
 		<button class="close-menu" onclick="toggleMobileMenu()">
 			<i class="fas fa-times"></i>
@@ -101,7 +100,8 @@ include "./api/config.php"
 					?>
 				</a>
 				<?php if (isset($_SESSION['user'])): ?>
-					<div class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
+					<a href="./pages/user-profile/"
+						class="user-nav-profile" id="userNavProfile" style="cursor:pointer;">
 						<div
 							style="width:38px;height:38px;border-radius:50%;background:white;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:700;"
 							id="navAvatar"><?php
@@ -109,7 +109,7 @@ include "./api/config.php"
 											$initials = strtoupper($fullname[0][0] . ($fullname[1][0] ?? ''));
 											echo $initials;
 											?></div>
-					</div>
+					</a>
 				<?php else: ?>
 					<a
 						onclick="showAuthModal('login')"
