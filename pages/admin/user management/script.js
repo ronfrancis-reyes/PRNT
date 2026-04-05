@@ -3,9 +3,6 @@
 // ===============================
 // SAMPLE DATA
 // BACKEND INTEGRATION POINT
-const SAMPLE_DATA = {
-	users: [], // Initial mock data populated via HTML data attributes
-};
 
 // ===============================
 // STATE MANAGEMENT
@@ -29,27 +26,102 @@ let toast;
 let toastMsg;
 
 // ===============================
+// INITIALIZATION
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+	console.log("PRNT User Management Module Loaded");
+
+	searchInput = document.getElementById("searchInput");
+	statusFilter = document.getElementById("statusFilter");
+	tableBody = document.getElementById("tableBody");
+	actionPanel = document.getElementById("actionPanel");
+	modalOverlay = document.getElementById("modalOverlay");
+	deleteOverlay = document.getElementById("deleteOverlay");
+	suspendOverlay = document.getElementById("suspendOverlay");
+	toast = document.getElementById("toast");
+	toastMsg = document.getElementById("toastMsg");
+
+	setupEventListeners();
+	getUsers();
+});
+
+// ===============================
 // EVENT LISTENERS
 // ===============================
+let users = [];
+
+const API = "../../../api/admin/user-management.php";
+function getUsers() {
+	$.ajax({
+		type: "POST",
+		url: API,
+		data: "action=getUsers",
+		success: function (response) {
+			let reply = JSON.parse(response);
+			users = reply.users;
+			renderUsers(users);
+		},
+	});
+}
+
+function renderUsers(users) {
+	let html = "";
+
+	users.forEach((user) => {
+		html += `<tr data-user-id="${user.account_id}" 
+                    data-name="${user.name}" 
+                    data-status="${user.status}" 
+                    data-email="${user.email}" 
+                    data-contact="${user.contact_number}" 
+                    data-total-orders="${user.total_orders}" 
+                    data-last-order="${user.last_order_date}" 
+                    data-last-file="${user.latest_order}" 
+                    
+                    <!-- 1. Customer ID (Orange Styling) -->
+                    <td class="user-id">USR-${user.account_id}</td>
+                    
+                    <!-- 2. Customer Name -->
+                    <td>${user.name}</td>
+                    
+                    <!-- 3. Email (Subtle Gray Styling) -->
+                    <td class="email">${user.email}</td>
+                    
+                    <!-- 4. Contact Number -->
+                    <td>${user.contact_number}</td>
+                    
+                    <!-- 5. Order Count (Centered) -->
+                    <td class="text-center">${user.total_orders}</td>
+                    
+                    <!-- 6. Status Badge (Pill Design) -->
+                    <td><span class="badge badge-${user.status.toLowerCase()}">${user.status}</span></td>
+                    
+                    <!-- 7. Action Button (The Dots) -->
+                    <td>
+                        <div class="action-wrap">
+                            <button class="btn-action-dots" onclick="toggleMenu(this)">
+                                <i class="fas fa-ellipsis-vertical"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>`;
+	});
+
+	$("#tableBody").html(html);
+}
+
 function setupEventListeners() {
 	// Action Dropdown Toggle
 	document.addEventListener("click", (e) => {
-		const dotBtn = e.target.closest(".btn-action-dots");
-		if (dotBtn) {
-			e.stopPropagation();
-			const dropdown = dotBtn.nextElementSibling;
+		document.addEventListener("click", (e) => {
+			const dotBtn = e.target.closest(".btn-action-dots");
 
-			document.querySelectorAll(".action-dropdown.open").forEach((d) => {
-				if (d !== dropdown) d.classList.remove("open");
-			});
-
-			dotBtn.classList.toggle("active");
-			dropdown.classList.toggle("open");
-			return;
-		}
-		document
-			.querySelectorAll(".action-dropdown.open")
-			.forEach((d) => d.classList.remove("open"));
+			if (dotBtn) {
+				e.stopPropagation();
+				toggleMenu(dotBtn);
+				return;
+			}
+			closeActionPanel();
+		});
 	});
 
 	// Action Panel Close
@@ -187,9 +259,6 @@ function viewUserDetails(target) {
 	const user = getFullUserData(row);
 	closeActionPanel();
 
-	const dropdown = target.closest && target.closest(".action-dropdown");
-	if (dropdown) dropdown.classList.remove("open");
-
 	const actionWrap = target.closest && target.closest(".action-wrap");
 	if (actionWrap) {
 		const dots = actionWrap.querySelector(".btn-action-dots");
@@ -201,7 +270,7 @@ function viewUserDetails(target) {
 		if (el) el.textContent = val;
 	};
 
-	set(".m-user-id", user.id);
+	set(".m-user-id", "USR-" + user.id);
 	set(".m-name", user.name);
 	set(".m-total-orders", user.totalOrders);
 	set(".m-email", user.email);
@@ -229,7 +298,6 @@ function suspendUser(btn) {
 	activeRow = btn.closest("tr");
 	if (!activeRow) return;
 
-	btn.closest(".action-dropdown").classList.remove("open");
 	btn
 		.closest(".action-wrap")
 		.querySelector(".btn-action-dots")
@@ -281,11 +349,18 @@ function panelActivate() {
 	closeActionPanel();
 
 	// BACKEND INTEGRATION POINT
-	const badge = row.querySelector(".badge");
-	badge.textContent = "Active";
-	badge.className = "badge badge-active";
-	row.dataset.status = "Active";
-	showToast(`Customer ${name} has been activated`);
+	$.ajax({
+		type: "POST",
+		url: API,
+		data: "action=update&id=" + row.dataset.userId + "&status=" + "Active",
+		success: function (response) {
+			const badge = row.querySelector(".badge");
+			badge.textContent = "Active";
+			badge.className = "badge badge-active";
+			row.dataset.status = "Active";
+			showToast(`Customer ${name} has been activated`);
+		},
+	});
 }
 
 // ACTION HANDLER
@@ -305,11 +380,18 @@ function handleConfirmDelete() {
 	if (rowToDelete) {
 		const name = rowToDelete.dataset.name || "Customer";
 		rowToDelete.remove();
-		showToast(
-			"Customer Deleted",
-			`${name} has been removed from the system.`,
-			"danger",
-		);
+		$.ajax({
+			type: "POST",
+			url: API,
+			data: "action=drop&id=" + rowToDelete.dataset.userId,
+			success: function (response) {
+				showToast(
+					"Customer Deleted",
+					`${name} has been removed from the system.`,
+					"danger",
+				);
+			},
+		});
 	}
 	closeDeleteModal();
 }
@@ -323,11 +405,23 @@ function handleConfirmSuspend() {
 		badge.textContent = "Suspended";
 		badge.className = "badge badge-suspended";
 		rowToSuspend.dataset.status = "Suspended";
-		showToast(
-			"Customer Suspended",
-			`${name} can no longer access the system.`,
-			"warning",
-		);
+
+		$.ajax({
+			type: "POST",
+			url: API,
+			data:
+				"action=update&id=" +
+				rowToSuspend.dataset.userId +
+				"&status=" +
+				"Suspended",
+			success: function (response) {
+				showToast(
+					"Customer Suspended",
+					`${name} can no longer access the system.`,
+					"warning",
+				);
+			},
+		});
 	}
 	closeSuspendModal();
 }
@@ -418,25 +512,6 @@ BACKEND INTEGRATION POINT
 - DELETE User: /api/admin/users/{id}
 - PATCH User Status: /api/admin/users/{id}
 */
-
-// ===============================
-// INITIALIZATION
-// ===============================
-document.addEventListener("DOMContentLoaded", () => {
-	console.log("PRNT User Management Module Loaded");
-
-	searchInput = document.getElementById("searchInput");
-	statusFilter = document.getElementById("statusFilter");
-	tableBody = document.getElementById("tableBody");
-	actionPanel = document.getElementById("actionPanel");
-	modalOverlay = document.getElementById("modalOverlay");
-	deleteOverlay = document.getElementById("deleteOverlay");
-	suspendOverlay = document.getElementById("suspendOverlay");
-	toast = document.getElementById("toast");
-	toastMsg = document.getElementById("toastMsg");
-
-	setupEventListeners();
-});
 
 // GLOBAL EXPOSURE FOR INLINE HTML HANDLERS
 window.toggleMenu = toggleMenu;
