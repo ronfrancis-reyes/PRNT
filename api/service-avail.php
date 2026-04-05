@@ -151,8 +151,8 @@ if (isset($_POST['action'])) {
 
                 $file_id = $conn->insert_id;
 
-                $itemSql = $conn->prepare("INSERT INTO orderitems (order_id, file_id, service_id, color_id, copies, price) VALUES (?, ?, ?, ?, ?, ?)");
-                $itemSql->bind_param("iiiiid", $order_id, $file_id, $item->service_id, $item->color_id, $item->copies, $item->amount);
+                $itemSql = $conn->prepare("INSERT INTO orderitems (order_id, file_id, service_id, size_id, color_id, copies, price) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $itemSql->bind_param("iiiiiid", $order_id, $file_id, $item->service_id, $item->size_id, $item->color_id, $item->copies, $item->amount);
                 $itemSql->execute();
 
                 $_SESSION['receiptToShow'] = $order_id; //para alam ng receipt kung anong resibo ang id-display, kasi need magamit ung receipt ng 2 pages (dashboard and service avail)

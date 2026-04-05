@@ -16,7 +16,7 @@ if (!isset($_SESSION['user'])) {
     <!-- UI Core -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="styles.css?v=3"/>
+    <link rel="stylesheet" href="styles.css"/>
 </head>
 <body class="module-body">
 
@@ -60,7 +60,7 @@ if (!isset($_SESSION['user'])) {
                 </tr>
             </thead>
             <tbody id="tableBody">
-                <!-- Data rendered via JavaScript -->
+                
             </tbody>
         </table>
     </div>
@@ -100,6 +100,7 @@ if (!isset($_SESSION['user'])) {
         <span id="toastMsg"></span>
     </div>
 
-    <script src="script.js?v=2"></script>
+	<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
 </html>

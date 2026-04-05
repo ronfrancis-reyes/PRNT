@@ -15,8 +15,8 @@ if (!isset($_SESSION['user'])) {
     
     <!-- UI Core -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../../../global/variables.css?v=4">
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link rel="stylesheet" href="../../../global/admin/variables.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="module-body">
 
@@ -140,6 +140,6 @@ if (!isset($_SESSION['user'])) {
         <span id="toastMsg"></span>
     </div>
 
-    <script src="script.js?v=2"></script>
+    <script src="script.js"></script>
 </body>
 </html>

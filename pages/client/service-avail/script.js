@@ -297,6 +297,16 @@ function addToCart() {
 	const copiesEl = $("#copies");
 	const priceEl = $("#priceDisplay");
 
+	// Safely get custom size values only if the inputs exist
+	const customLengthEl = $("#customLengthInput");
+	const customHeightEl = $("#customHeightInput");
+
+	const customLength = customLengthEl.length ? customLengthEl.val().trim() : "";
+	const customHeight = customHeightEl.length ? customHeightEl.val().trim() : "";
+
+	const customSize =
+		customLength && customHeight ? `${customLength}x${customHeight}` : null;
+
 	if (!formatEl.val()) {
 		alert("Please select a service type.");
 		return;
@@ -305,7 +315,6 @@ function addToCart() {
 		alert("Select paper size.");
 		return;
 	}
-
 	const item = {
 		id: "ITEM-" + Math.random().toString(36).substr(2, 6).toUpperCase(), //id only for cart
 
@@ -327,6 +336,8 @@ function addToCart() {
 		amount: parseFloat(priceEl.text().replace("₱", "")),
 
 		file: file.rawFile,
+
+		customSize: customSize,
 	};
 
 	cart.push(item);
@@ -426,12 +437,20 @@ function placeOrder() {
 	let formData = new FormData(); //for file uploading in the api
 	let address =
 		selectedReceiving == "Pick-up" ? null : $("#deliveryLocation").val();
+	// Start with whatever note the user typed
+	let note = $("#orderNotes").val() || "";
+	// Append custom sizes for items that have it
+	cart.forEach((item) => {
+		if (item.customSize) {
+			note += `\n${item.fileName} - Custom Size: ${item.customSize}`;
+		}
+	});
 	let payload = {
 		address_id: address,
 		delivery_option: selectedReceiving,
 		total_price: parseFloat($("#totalAmount").text().replace("₱", "")),
 		payment_id: $("#paymentMethod").val(),
-		note: $("#orderNotes").val(),
+		note: note,
 		items: cart.map((item) => ({
 			...item,
 			file: null, //hindi kasi nas-stringify ung file sa JSON.stringify(payload) kay null muna then ibabalik nalang
