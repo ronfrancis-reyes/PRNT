@@ -30,19 +30,18 @@ if (!isset($_SESSION['user'])) {
         <!-- Status Filter -->
         <select id="statusFilter" class="filter-select" onchange="filterTable()">
             <option value="">All Status</option>
-            <option value="Pending">Pending</option>
-            <option value="Processing">Processing</option>
-            <option value="Receiving">Receiving</option>
+            <option value="Reviewing">Reviewing</option>
+            <option value="For pickup">For Pickup</option>
+            <option value="Printing">Printing</option>
+            <option value="For delivery">For Delivery</option>
             <option value="Completed">Completed</option>
+            <option value="Rejected">Rejected</option>
         </select>
         
         <button class="btn-export" onclick="exportCSV()">
             <i class="fas fa-download"></i> Export
         </button>
         
-        <button class="btn-delete-completed" onclick="confirmDeleteCompleted()">
-            <i class="fas fa-trash-can"></i> Delete Completed
-        </button>
     </div>
 
     <!-- Data Table -->

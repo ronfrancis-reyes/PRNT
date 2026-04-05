@@ -35,7 +35,7 @@
         <a href="#" data-section="orders" data-folder="../../pages/admin/order management" data-title="Order Management">
             <i class="fas fa-shopping-bag nav-icon"></i>
             <span class="sb-label">Orders</span>
-            <span class="sidebar-badge" id="pendingOrdersBadge">0</span>
+            <span class="sidebar-badge" id="pendingOrdersBadge"></span>
         </a>
 
         <!-- Services -->
