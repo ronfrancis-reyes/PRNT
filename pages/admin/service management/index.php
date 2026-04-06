@@ -45,21 +45,26 @@ if (!isset($_SESSION['user'])) {
                     <form id="addServiceForm">
                         <div class="mb-3">
                             <label class="small text-muted">Service Name</label>
-                            <input type="text" class="form-control" placeholder="Service Name" required>
+                            <input type="text" name="service_name" class="form-control" placeholder="Service Name" required>
                         </div>
-                        <div class="mb-3">
-                            <label class="small text-muted">Format Type</label>
-                            <input type="text" class="form-control" placeholder="e.g. A4" required>
+
+                        <div id="formatContainer">
                         </div>
-                        <div class="mb-3">
-                            <label class="small text-muted">Price</label>
-                            <input type="text" class="form-control" placeholder="$0.00" required>
-                        </div>
+
+                        <button type="button" id="addFormatBtn" class="btn btn btn-orange mb-3 fw-bold" onclick="addFormat()">
+                            + Add Format
+                        </button>
+
                         <div class="form-check mb-4 mt-3">
                             <input class="form-check-input custom-check" type="checkbox" id="addAvailCheck" checked>
-                            <label class="form-check-label small fw-medium" for="addAvailCheck">Available for orders</label>
+                            <label class="form-check-label small fw-medium" for="addAvailCheck">
+                                Available for orders
+                            </label>
                         </div>
-                        <button type="submit" class="btn btn-orange w-100 py-2 fw-bold">Add Service</button>
+
+                        <button type="submit" class="btn btn-orange w-100 py-2 fw-bold">
+                            Add Service
+                        </button>
                     </form>
                 </div>
             </div>
@@ -81,20 +86,22 @@ if (!isset($_SESSION['user'])) {
                             <label class="small text-muted mb-1">Service Name</label>
                             <input type="text" id="editName" class="form-control" required>
                         </div>
-                        <div class="mb-3">
-                            <label class="small text-muted mb-1">Format Type</label>
-                            <input type="text" id="editFormat" class="form-control" required>
+                            <label class="small text-muted mb-1">Format</label>
+                            <label class="small text-muted mb-1"> and Pricing:</label>
+                        <div class="mb-3" id="editFormatContainer">
+
+                            <!-- Format rows will be injected here dynamically -->
                         </div>
-                        <div class="mb-3">
-                            <label class="small text-muted mb-1">Price</label>
-                            <input type="text" id="editPrice" class="form-control" required>
-                        </div>
+                        <!-- Add format button -->
+                        <button type="button" id="addEditFormatRow" class="btn btn-orange mb-3 fw-bold">
+                            + Add Format
+                        </button>
                         <div class="form-check mb-4 mt-3">
                             <input class="form-check-input custom-check" type="checkbox" id="editAvailCheck">
                             <label class="form-check-label small fw-medium" for="editAvailCheck">Available for orders</label>
                         </div>
                         <div class="d-flex gap-2">
-                            <button type="button" class="btn btn-secondary flex-grow-1 py-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary flex-grow-1 py-2" data-bs-dismiss="modal" onclick="cancel()">Cancel</button>
                             <button type="submit" class="btn btn-orange flex-grow-1 py-2 fw-bold">Update Service</button>
                         </div>
                     </form>
@@ -125,6 +132,8 @@ if (!isset($_SESSION['user'])) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+
     <script src="script.js"></script>
 </body>
 </html>
