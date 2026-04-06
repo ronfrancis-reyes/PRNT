@@ -51,10 +51,11 @@ if (!isset($_SESSION['user'])) {
                         <div id="formatContainer">
                         </div>
 
-                        <button type="button" id="addFormatBtn" class="btn btn btn-orange mb-3 fw-bold" onclick="addFormat()">
-                            + Add Format
-                        </button>
-
+                        <div class="d-flex justify-content-between align-items-center gap-2">
+                        </div>
+                            <button type="button" id="addFormatBtn" class="btn btn btn-orange mb-3 fw-bold" onclick="addFormat()">
+                                + Add Format
+                            </button>
                         <div class="form-check mb-4 mt-3">
                             <input class="form-check-input custom-check" type="checkbox" id="addAvailCheck" checked>
                             <label class="form-check-label small fw-medium" for="addAvailCheck">

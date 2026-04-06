@@ -202,94 +202,82 @@ document.addEventListener("DOMContentLoaded", function () {
 		.addEventListener("submit", function (e) {
 			e.preventDefault();
 
-			const name = this.querySelector('[name="service_name"]').value;
+			const form = this;
+
+			const name = form.querySelector('[name="service_name"]').value.trim();
 			const isChecked = document.getElementById("addAvailCheck").checked;
 
-			// get all formats & prices
-			const formats = this.querySelectorAll('[name="formats[]"]');
-			const prices = this.querySelectorAll('[name="prices[]"]');
+			const formats = form.querySelectorAll('[name="formats[]"]');
+			const prices = form.querySelectorAll('[name="prices[]"]');
 
-			let formatPriceHTML = "";
 			let formatData = [];
 
-			formats.forEach((formatInput, index) => {
-				const format = formatInput.value;
-				const price = prices[index].value;
+			// ❌ Validation: must have at least 1 format
+			if (formats.length === 0) {
+				alert("Please add at least one format.");
+				return;
+			}
 
-				// store for edit
-				formatData.push({ format, price });
+			for (let i = 0; i < formats.length; i++) {
+				const format = formats[i].value.trim();
+				const price = prices[i].value.trim();
 
-				// display UI (FORMAT : PRICE)
-				formatPriceHTML += `
-                <div class="d-flex justify-content-between small mb-1">
-                    <span class="text-muted">${format}:</span>
-                    <span class="fw-bold text-orange">₱ ${price}</span>
-                </div>
-            `;
+				// ❌ empty format
+				if (format === "") {
+					alert("Format cannot be empty.");
+					formats[i].focus();
+					return;
+				}
+
+				// ❌ empty price
+				if (price === "") {
+					alert("Price cannot be empty.");
+					prices[i].focus();
+					return;
+				}
+
+				// ❌ not a number
+				if (isNaN(price)) {
+					alert("Price must be a valid number.");
+					prices[i].focus();
+					return;
+				}
+
+				// ❌ negative price
+				if (parseFloat(price) < 0) {
+					alert("Price cannot be negative.");
+					prices[i].focus();
+					return;
+				}
+
+				formatData.push({
+					format,
+					price: parseFloat(price),
+				});
+			}
+
+			let payload = {
+				service_name: name,
+				available: isChecked ? "TRUE" : "FALSE",
+				formats: formatData,
+			};
+
+			$.ajax({
+				type: "POST",
+				url: API,
+				data: "action=store&payload=" + JSON.stringify(payload),
+				success: function (response) {
+					bootstrap.Modal.getInstance(
+						document.getElementById("addServiceModal"),
+					).hide();
+
+					form.reset();
+					getServices();
+				},
+				error: function (err) {
+					console.error("ADD ERROR:", err);
+				},
 			});
-
-			const newCardHTML = `
-        <div class="col-md-6 col-lg-4">
-            <div class="service-card shadow-sm h-100"
-                data-name='${name}'
-            	data-formats='${JSON.stringify(formatData)}'
-                data-available='${isChecked}'>
-
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <div>
-                        <h5 class="fw-bold mb-0 service-name">${name}</h5>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input switch-green" type="checkbox" ${isChecked ? "checked" : ""}>
-                    </div>
-                </div>
-
-                <div class="price-section my-4">
-                    <p class="text-muted small">per unit</p>
-                    ${formatPriceHTML}
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mt-auto">
-                    <span class="status-pill ${isChecked ? "available" : "unavailable"}">
-                        ${isChecked ? "Available" : "Unavailable"}
-                    </span>
-                    <div class="actions">
-                        <i class="fas fa-edit text-muted me-3 pointer"
-                        data-bs-toggle="modal"
-                        data-bs-target="#editServiceModal"
-                        onclick="prepareEdit(this)"></i>
-
-                        <i class="fas fa-trash text-danger pointer"
-                        data-bs-toggle="modal"
-                        data-bs-target="#deleteServiceModal"
-                        onclick="prepareDelete(this)"></i>
-                    </div>
-                </div>
-            </div>
-        </div>`;
-
-			document
-				.getElementById("servicesContainer")
-				.insertAdjacentHTML("beforeend", newCardHTML);
-
-			// close modal
-			bootstrap.Modal.getInstance(
-				document.getElementById("addServiceModal"),
-			).hide();
-
-			// reset form
-			this.reset();
-
-			// reset formats UI to 1 row
-			document.getElementById("formatContainer").innerHTML = `
-            <div class="format-group mb-3">
-                <div class="d-flex gap-2">
-                    <input type="text" name="formats[]" class="form-control" placeholder="e.g. A4" required>
-                    <input type="text" name="prices[]" class="form-control" placeholder="$0.00" required>
-                    <button type="button" class="btn btn-danger remove-format">X</button>
-                </div>
-            </div>
-        `;
 		});
 	// ACTION HANDLER
 	// UPDATE LOGIC
@@ -402,12 +390,28 @@ document.addEventListener("DOMContentLoaded", function () {
 			// BACKEND INTEGRATION POINT
 			// Endpoint: /api/admin/services
 			// Method: PATCH
-			const card = e.target.closest(".service-card");
+			const card = e.target.closest("[data-id]");
+			const serviceId = card.dataset.id;
+
+			const isChecked = e.target.checked;
+			const available = isChecked ? "TRUE" : "FALSE";
+
 			const pill = card.querySelector(".status-pill");
-			pill.textContent = e.target.checked ? "Available" : "Unavailable";
-			pill.className = e.target.checked
+
+			// update UI immediately
+			pill.textContent = isChecked ? "Available" : "Unavailable";
+			pill.className = isChecked
 				? "status-pill available"
 				: "status-pill unavailable";
+
+			$.ajax({
+				type: "POST",
+				url: API,
+				data: "action=updateStatus&id=" + serviceId + "&available=" + available,
+				success: function (response) {
+					console.log("TOGGLE RESPONSE:", response);
+				},
+			});
 		}
 	});
 });

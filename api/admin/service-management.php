@@ -124,21 +124,63 @@ if ($_POST['action'] == 'update') {
     }
 
     if ($_POST['action'] == 'store') {
-        $payload = json_decode($_POST['payload']);
+        $payload = json_decode($_POST['payload'], true);
 
-        $sql = $conn->prepare('INSERT INTO services(service_name, price) VALUES (?, ?)');
-        $sql->bind_param('sd', $payload->service_name, $payload->price);
+        $service_name = $payload['service_name'];
+        $available = $payload['available'];
+        $formats = $payload['formats'];
 
-        if ($sql->execute()) {
+        // insert service
+        $stmt = $conn->prepare('INSERT INTO services(service_name, available) VALUES (?, ?)');
+        $stmt->bind_param('ss', $service_name, $available);
+
+        if ($stmt->execute()) {
+            $service_id = $stmt->insert_id;
+
+            foreach ($formats as $format) {
+                $size = $format['format']; // match your JS
+                $price = $format['price'];
+
+                $stmt2 = $conn->prepare("INSERT INTO sizes (service_id, size, price) VALUES (?, ?, ?)");
+                $stmt2->bind_param("isd", $service_id, $size, $price);
+                $stmt2->execute();
+            }
+
             echo json_encode([
                 "status" => "success",
-                "message" => "service added successfully"
+                "message" => "service added successfully",
+                "service_id" => $service_id
+            ]);
+
+        } else {
+            echo json_encode([
+                "status" => "error",
+                "message" => $stmt->error
+            ]);
+        }
+
+        exit;
+    }
+
+    if ($_POST['action'] == 'updateStatus') {
+        $serviceId = $_POST['id'] ?? null;
+        $available = $_POST['available'];
+
+        $stmt = $conn->prepare("UPDATE services SET available = ? WHERE service_id = ?");
+        $stmt->bind_param("si", $available, $serviceId);
+
+        if ($stmt->execute()) {
+            echo json_encode([
+                "status" => "success",
+                "available" => $available
             ]);
         } else {
             echo json_encode([
                 "status" => "error",
-                "message" => "query failed"
+                "message" => $stmt->error
             ]);
         }
+
+        exit;
     }
 }
