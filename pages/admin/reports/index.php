@@ -16,7 +16,7 @@ if (!isset($_SESSION['user'])) {
     <!-- UI Core -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="styles.css?v=2.5">
+    <link rel="stylesheet" href="styles.css">
 
     <!-- PDF Export Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -63,13 +63,48 @@ if (!isset($_SESSION['user'])) {
                             <th class="col-msg-id">Message ID</th>
                             <th class="col-customer">Customer Name</th>
                             <th class="col-date">Date & Time</th>
-                            <th class="col-message">Message</th>
+                            <th class="col-message">Subject</th>
                             <th class="col-status">Status</th>
                             <th class="col-actions">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
                         <!-- Rows injected by script.js -->
+                         <!-- THE TEMPLATE ROW (MESSAGES) -->
+                        <tr class="msg-row unread" 
+                            data-id="101" 
+                            data-status="unread" 
+                            data-name="Maria Clara" 
+                            data-contact="09112223333" 
+                            data-email="maria@bulsu.edu.ph" 
+                            data-message="I would like to ask about the delivery fee for bulk orders." 
+                            data-date="Oct 05, 2024" 
+                            data-time="10:30 AM">
+                            
+                            <!-- 1. Message ID -->
+                            <td class="msg-id">MSG-101</td>
+                            
+                            <!-- 2. Customer Name -->
+                            <td>Maria Clara</td>
+                            
+                            <!-- 3. Date & Time -->
+                            <td class="text-center">Oct 05, 2024</td>
+                            
+                            <!-- 4. Message Snippet -->
+                            <td class="message-snippet fw-600">I would like to ask about the...</td>
+                            
+                            <!-- 5. Status Badge -->
+                            <td><span class="badge badge-unread">Unread</span></td>
+                            
+                            <!-- 6. Action Button -->
+                            <td>
+                                <div class="action-wrap">
+                                    <button class="btn-actions">
+                                        <i class="fas fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -82,6 +117,7 @@ if (!isset($_SESSION['user'])) {
         </div>
     </div>
 
-    <script src="script.js?v=2.5"></script>
+    <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
 </html>

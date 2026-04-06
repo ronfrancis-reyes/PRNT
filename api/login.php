@@ -19,9 +19,16 @@ if(isset($_POST['action'])){
                 $_SESSION['contact_number'] = $account['contact_number'];
                 $_SESSION['date_created'] = $account['date_created'];
                 $_SESSION['role'] = $account['role'];
+
+                if ($_SESSION['role'] == "Customer") {
+                    $link = "../client/dashboard/";
+                } else {
+                    $link = "../admin/";
+                }
                 echo json_encode([
                     "status" => "success",
-                    "message" => "Logged In!"
+                    "message" => "Logged In!",
+                    "link" => $link
                 ]);
             }else{
                 echo json_encode([

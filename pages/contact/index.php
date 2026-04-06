@@ -70,7 +70,7 @@
 					</div>
 				</div>
 				<div class="contact-form card reveal">
-					<form onsubmit="handleContactSubmit(event)">
+					<form id="contact-form">
 						<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
 							<div class="form-group">
 								<label for="cName">Your Name</label>

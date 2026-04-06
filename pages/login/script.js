@@ -25,7 +25,7 @@ function login() {
 		success: function (response) {
 			let respo = JSON.parse(response);
 			if (respo.status == "success") {
-				checkAccountType($("#emailInput").val());
+				window.location.href = respo.link;
 			} else {
 				alert(respo.message);
 			}
@@ -54,12 +54,4 @@ function showPass() {
 			passwordInput.type = "password";
 		}
 	});
-}
-
-function checkAccountType(email) {
-	if (email.includes("@prnt.com")) {
-		window.location.href = "../../pages/admin/dashboard/";
-	} else {
-		window.location.href = "../../pages/client/dashboard/";
-	}
 }
