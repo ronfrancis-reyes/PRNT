@@ -15,7 +15,7 @@ if (!isset($_SESSION['user'])) {
 
     <!-- UI Core -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../../../global/variables.css">
+    <link rel="stylesheet" href="../../../../global/admin/variables.css">
     <link rel="stylesheet" href="styles.css">
 
     <!-- Charting & Export Engines -->

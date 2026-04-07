@@ -75,19 +75,6 @@ if (!isset($_SESSION['user'])) {
                             </div>
                         </div>
 
-                        <div class="stat-card" data-kpi="pending-orders">
-                            <div class="stat-icon orange-glow">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="stat-content">
-                                <h4 class="stat-title">Pending Orders</h4>
-                                <div class="stat-value" id="kpi-pending-orders">0</div><!-- DB: $pendingOrders -->
-                                <div class="trend-down" id="kpi-pending-orders-trend">
-                                    <i class="fas fa-arrow-down"></i> 0% vs yesterday
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="stat-card" data-kpi="today-revenue">
                             <div class="stat-icon orange-glow">
                                 <i class="fas fa-coins"></i>
@@ -97,6 +84,19 @@ if (!isset($_SESSION['user'])) {
                                 <div class="stat-value" id="kpi-count-revenue">₱ 0</div><!-- DB: $todayRevenue -->
                                 <div class="trend-up" id="kpi-today-revenue-trend">
                                     <i class="fas fa-arrow-up"></i> 0% vs yesterday
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="stat-card" data-kpi="pending-orders">
+                            <div class="stat-icon orange-glow">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-title">Pending Orders</h4>
+                                <div class="stat-value" id="kpi-pending-orders">0</div><!-- DB: $pendingOrders -->
+                                <div class="trend-down" id="kpi-pending-orders-trend">
                                 </div>
                             </div>
                         </div>
@@ -112,7 +112,7 @@ if (!isset($_SESSION['user'])) {
                     <div class="card-shell overview-card">
                         <div class="card-header">
                             <div class="card-title-group">
-                                <h3 class="card-title">Today's Orders by Service</h3>
+                                <h3 class="card-title">Today's Order Items by Service</h3>
                                 <span class="card-subtitle" id="ordersChartDate"></span>
                             </div>
                             <div class="card-header-actions">

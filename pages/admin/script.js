@@ -18,6 +18,8 @@
 // SAMPLE DATA (FRONTEND TESTING ONLY)
 // BACKEND INTEGRATION POINT — Replace with: GET /api/admin/dashboard
 // STATIC UI FALLBACK (NO BACKEND)
+const API = "../../api/admin/dashboard.php";
+
 const SAMPLE_DATA = {
 	notifications: [],
 	newNotifications: [],
@@ -26,16 +28,18 @@ const SAMPLE_DATA = {
 		pendingOrders: 0,
 		todayRevenue: 0,
 		services: [
-			{ name: "Calling Cards", orders: 0 },
-			{ name: "Banner Print", orders: 0 },
-			{ name: "Booklets", orders: 0 },
-			{ name: "Photo Print", orders: 0 },
-			{ name: "Document", orders: 0 },
-			{ name: "Tarp Print", orders: 0 },
-			{ name: "ID Print", orders: 0 },
+			{ name: "Calling Cards", orders: 10 },
+			{ name: "Banner Print", orders: 40 },
+			{ name: "Booklets", orders: 10 },
+			{ name: "Photo Print", orders: 10 },
+			{ name: "Document", orders: 10 },
+			{ name: "Tarp Print", orders: 10 },
+			{ name: "ID Print", orders: 10 },
 		],
 	},
 };
+
+function getServicesAndCount(params) {}
 
 // ── GLOBAL STATE ────────────────────────────────────────────────────────────
 let currentSection = "dashboard";
@@ -55,6 +59,9 @@ window.toggleAdminSidebar = function () {
 	if (overlay) overlay.classList.toggle("active");
 };
 
+function updateOrderBadge(pendingOrderCount) {
+	$("#pendingOrdersBadge").text(`${pendingOrderCount}`);
+}
 // ── INITIALISE ON DOM READY ─────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
 	// ── Set today's date label on the orders-by-service chart ────────────────
@@ -806,32 +813,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	// BACKEND INTEGRATION POINT
 	// Endpoint: /api/admin/dashboard
 	// Method: GET
+
 	const dashboardData = JSON.parse(JSON.stringify(SAMPLE_DATA.dashboard));
-
-	/**
-	 * animateValue — Increments/decrements a number element with a smooth "roll-up" effect.
-	 * @param {string} id - The element ID to update.
-	 * @param {number} start - Beginning value.
-	 * @param {number} end - Target value.
-	 * @param {number} duration - Animation duration in ms.
-	 * @param {string} prefix - Optional prefix (e.g., "₱ ").
-	 */
-	function animateValue(id, start, end, duration = 800, prefix = "") {
-		const obj = document.getElementById(id);
-		if (!obj) return;
-
-		let startTimestamp = null;
-		const step = (timestamp) => {
-			if (!startTimestamp) startTimestamp = timestamp;
-			const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-			const value = Math.floor(progress * (end - start) + start);
-			obj.textContent = prefix + value.toLocaleString();
-			if (progress < 1) {
-				window.requestAnimationFrame(step);
-			}
-		};
-		window.requestAnimationFrame(step);
-	}
 
 	/**
 	 * simulateRealTimeUpdate — Periodically fluctuates dashboard metrics
@@ -978,21 +961,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// ── INIT ALL CHARTS ─────────────────────────────────────────────────────
 	initOrdersPerServiceChart();
-
-	// ── INITIAL KPI ANIMATION ───────────────────────────────────────────────
-	// Roll-up counters from zero to initial values
-	setTimeout(() => {
-		animateValue("kpi-count-orders", 0, dashboardData.todayOrders, 1000);
-		animateValue("kpi-count-pending", 0, dashboardData.pendingOrders, 1000);
-		animateValue(
-			"kpi-count-revenue",
-			0,
-			dashboardData.todayRevenue,
-			1000,
-			"₱ ",
-		);
-	}, 200);
-
 	// ============================================================
 	// SECTION: RESTORE PERSISTED USER STATE
 	// ============================================================
@@ -1011,4 +979,78 @@ function logout() {
 			window.location.href = "../../";
 		},
 	});
+}
+$(document).ready(function () {
+	function updateDashboard() {
+		$.ajax({
+			type: "GET",
+			url: API,
+			data: "action=getOrdersCount",
+			success: function (response) {
+				let reply = JSON.parse(response);
+
+				if (reply.status == "success") {
+					SAMPLE_DATA.dashboard.todayOrders = reply.totalOrders;
+					SAMPLE_DATA.dashboard.pendingOrders = reply.pendingOrders;
+					SAMPLE_DATA.dashboard.todayRevenue = reply.totalRevenue;
+
+					animateValue(
+						"kpi-today-orders",
+						0,
+						SAMPLE_DATA.dashboard.todayOrders,
+						100,
+					);
+					animateValue(
+						"kpi-count-revenue",
+						0,
+						SAMPLE_DATA.dashboard.todayRevenue,
+						300,
+						"₱ ",
+					);
+					animateValue(
+						"kpi-pending-orders",
+						0,
+						SAMPLE_DATA.dashboard.pendingOrders,
+						300,
+					);
+				} else {
+					console.log(reply.message);
+				}
+			},
+			error: function (xhr, status, error) {
+				console.log("AJAX error:", error);
+			},
+		});
+	}
+
+	// Initial load
+	updateDashboard();
+
+	// Refresh 10s
+	setInterval(updateDashboard, 10000);
+});
+
+/**
+ * animateValue — Increments/decrements a number element with a smooth "roll-up" effect.
+ * @param {string} id - The element ID to update.
+ * @param {number} start - Beginning value.
+ * @param {number} end - Target value.
+ * @param {number} duration - Animation duration in ms.
+ * @param {string} prefix - Optional prefix (e.g., "₱ ").
+ */
+function animateValue(id, start, end, duration = 300, prefix = "") {
+	const obj = document.getElementById(id);
+	if (!obj) return;
+
+	let startTimestamp = null;
+	const step = (timestamp) => {
+		if (!startTimestamp) startTimestamp = timestamp;
+		const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+		const value = Math.floor(progress * (end - start) + start);
+		obj.textContent = prefix + value.toLocaleString();
+		if (progress < 1) {
+			window.requestAnimationFrame(step);
+		}
+	};
+	window.requestAnimationFrame(step);
 }
