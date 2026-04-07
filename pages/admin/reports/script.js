@@ -203,7 +203,6 @@ function closeAllDropdowns() {
 
 function buildViewModal(row) {
 	const name = row.dataset.name || "—";
-	const contact = row.dataset.contact || "—";
 	const email = row.dataset.email || "—";
 	const message = row.dataset.message || "—";
 	const date = row.dataset.date || "—";
@@ -273,8 +272,8 @@ function buildDeleteModal(row) {
 }
 
 function markRowAsRead(row) {
-	row.dataset.status = "read";
-	row.classList.remove("unread");
+	row.dataset.status = "READ";
+	row.classList.remove("UNREAD");
 	const badge = row.querySelector(".badge");
 	if (badge) {
 		badge.className = "badge badge-read";
@@ -282,12 +281,13 @@ function markRowAsRead(row) {
 	}
 	const subject = row.querySelector(".col-subject");
 	if (subject) subject.classList.remove("fw-600");
-	syncSidebarBadge();
+
+	updateStatus(row.dataset.id, row.dataset.status);
 }
 
 function markRowAsUnread(row) {
-	row.dataset.status = "unread";
-	row.classList.add("unread");
+	row.dataset.status = "UNREAD";
+	row.classList.add("UNREAD");
 	const badge = row.querySelector(".badge");
 	if (badge) {
 		badge.className = "badge badge-unread";
@@ -295,7 +295,20 @@ function markRowAsUnread(row) {
 	}
 	const subject = row.querySelector(".col-subject");
 	if (subject) subject.classList.add("fw-600");
-	syncSidebarBadge();
+
+	updateStatus(row.dataset.id, row.dataset.status);
+}
+
+function updateStatus(id, status) {
+	$.ajax({
+		type: "POST",
+		url: API,
+		data: "action=update&id=" + id + "&status=" + status,
+		dataType: "dataType",
+		success: function (response) {
+			syncSidebarBadge();
+		},
+	});
 }
 
 function getMessages() {
@@ -306,7 +319,6 @@ function getMessages() {
 		success: function (response) {
 			let reply = JSON.parse(response);
 			messages = reply.messages;
-			console.log(reply.messages);
 			renderTable(messages);
 		},
 	});
@@ -391,7 +403,7 @@ function handleActionClicks(e) {
 			(_openDropdown ? _openDropdown.wrap.closest("tr.msg-row") : null);
 		if (!row) return;
 		closeAllDropdowns();
-		if (row.dataset.status === "unread") markRowAsRead(row);
+		if (row.dataset.status === "UNREAD") markRowAsRead(row);
 		openModal(buildViewModal(row));
 		return;
 	}
@@ -423,9 +435,9 @@ function handleMarkRead(element) {
 		element.closest("tr.msg-row") ||
 		(_openDropdown ? _openDropdown.wrap.closest("tr.msg-row") : null);
 	if (!row) return;
-	if (row.dataset.status !== "read") {
+	if (row.dataset.status !== "READ") {
 		markRowAsRead(row);
-		showToast("Marked as Read", "", "success");
+		showToast(`MSG-${row.dataset.id} Marked as Read`, "", "success");
 	}
 	closeAllDropdowns();
 }
@@ -436,9 +448,9 @@ function handleMarkUnread(element) {
 		element.closest("tr.msg-row") ||
 		(_openDropdown ? _openDropdown.wrap.closest("tr.msg-row") : null);
 	if (!row) return;
-	if (row.dataset.status !== "unread") {
+	if (row.dataset.status !== "UNREAD") {
 		markRowAsUnread(row);
-		showToast("Marked as Unread", "", "info");
+		showToast(`MSG-${row.dataset.id} Marked as Unread`, "", "info");
 	}
 	closeAllDropdowns();
 }
@@ -449,18 +461,25 @@ function deleteRow(row) {
 	row.style.transition = "opacity 0.3s ease, transform 0.3s ease";
 	row.style.opacity = "0";
 	row.style.transform = "translateX(20px)";
-	setTimeout(() => {
-		row.remove();
-		applyFilters();
-		syncSidebarBadge();
-	}, 320);
-	showToast("Message Deleted", "The message has been removed.", "danger");
+	$.ajax({
+		type: "POST",
+		url: API,
+		data: "action=drop&id=" + row.dataset.id,
+		success: function (response) {
+			setTimeout(() => {
+				row.remove();
+				applyFilters();
+				syncSidebarBadge();
+			}, 320);
+			showToast(`Message Deleted`, "The message has been removed.", "danger");
+		},
+	});
 }
 
 // ACTION HANDLER
 function handleDeleteSelected() {
 	const readRows = getAllRows().filter(
-		(r) => r.style.display !== "none" && r.dataset.status === "read",
+		(r) => r.style.display !== "none" && r.dataset.status === "READ",
 	);
 
 	if (readRows.length === 0) {
