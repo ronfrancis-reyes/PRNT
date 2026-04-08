@@ -21,11 +21,11 @@ if (isset($_POST['action'])) {
                                     )
                                     LIMIT 1
                                 ), 'No orders yet') AS latest_order,
-                                COALESCE((
+                                COALESCE(DATE_FORMAT((
                                     SELECT MAX(o2.date_placed)
                                     FROM orders o2
                                     WHERE o2.account_id = a.account_id
-                                ), 'No orders yet') AS last_order_date,
+                                ), '%b %d, %Y'), 'No orders yet') AS last_order_date,
                                 (
                                     SELECT COUNT(*)
                                     FROM orders o3

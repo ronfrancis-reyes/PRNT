@@ -8,7 +8,7 @@ if (isset($_POST['action'])) {
             $sql = $conn->prepare("SELECT order_id, date_placed, total_price, status FROM orders WHERE account_id = ?");
             $sql->bind_param('i', $id);
         } else {
-            $sql = $conn->prepare("SELECT o.order_id, a.name, a.contact_number, o.date_placed, o.total_price, o.delivery_option, o.status, o.note FROM orders o JOIN accounts a ON o.account_id = a.account_id ORDER BY o.order_id DESC");
+            $sql = $conn->prepare("SELECT o.order_id, a.name, a.contact_number, DATE_FORMAT(o.date_placed, '%b %d, %Y') AS date, DATE_FORMAT(o.date_placed, '%h:%i %p') AS time , o.total_price, o.delivery_option, o.status, o.note FROM orders o JOIN accounts a ON o.account_id = a.account_id ORDER BY o.order_id DESC");
         }
 
         if ($sql->execute()) {

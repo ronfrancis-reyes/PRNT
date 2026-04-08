@@ -75,8 +75,8 @@ function renderTable(data) {
                     data-customer="${order.name}"
                     data-email="${order.email}"
                     data-phone="${order.contact_number}"
-                    data-date="${order.date_placed}"
-                    data-time="${order.date_placed}"
+                    data-date="${order.date}"
+                    data-time="${order.time}"
                     data-receiving="${order.delivery_option}"
                     data-address="${order.address}"
                     data-notes="${order.notes || "None"}"
@@ -85,8 +85,8 @@ function renderTable(data) {
                     <td>${order.name}</td>
                     <td>
                     <div style="display:flex; flex-direction:column; align-items:center; line-height:1.2;">
-                        <span style="font-weight: 500;">${order.date_placed}</span>
-                        <span style="font-size:0.75rem; color:var(--muted);">${order.date_placed}</span>
+                        <span style="font-weight: 500;">${order.date}</span>
+                        <span style="font-size:0.75rem; color:var(--muted);">${order.time}</span>
                     </div>
                     </td>
                     <td class="amount">₱${order.total_price}</td>
@@ -273,7 +273,7 @@ function panelViewDetails(id) {
 				<div class="info-item-dark"><label>Receiving Method</label><span>${order.delivery_option}</span></div>
 				<div class="info-item-dark"><label>Location</label><span>${order.address || "---"}</span></div>
 				<div class="info-item-dark"><label>Payment Method</label><span>Cash</span></div>
-				<div class="info-item-dark"><label>Order Date</label><span>${order.date_placed}</span></div>
+				<div class="info-item-dark"><label>Order Date</label><span>${order.date} ${order.time}</span></div>
 			</div>
 			</div>
 
