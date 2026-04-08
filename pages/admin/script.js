@@ -39,8 +39,8 @@ const SAMPLE_DATA = {
 	},
 };
 
-function getServicesAndCount(params) {}
-
+// ── CHART 1: Today's Orders by Service (Neon Glow Horizontal Bar) ─────
+let ordersPerServiceChart = null;
 // ── GLOBAL STATE ────────────────────────────────────────────────────────────
 let currentSection = "dashboard";
 let currentFolder = "dashboard";
@@ -663,9 +663,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 
 		// ACTION DISABLED — STORAGE REMOVED
-		console.debug(
-			"[PRNT] Action disabled (no storage) - Global user info persistence bypassed",
-		);
 	};
 
 	// Initialize standard uniform avatar state across the DOM
@@ -802,7 +799,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			// BACKEND INTEGRATION POINT
 			// Endpoint: /api/admin/orders
 			// Method: GET
-			simulateRealTimeUpdate();
+			getServicesAndCount();
 			showToast("Refreshed", "Today's dashboard data updated.", "info");
 		});
 
@@ -814,21 +811,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Endpoint: /api/admin/dashboard
 	// Method: GET
 
-	const dashboardData = JSON.parse(JSON.stringify(SAMPLE_DATA.dashboard));
-
-	/**
-	 * simulateRealTimeUpdate — Periodically fluctuates dashboard metrics
-	 * to demonstrate live system behavior.
-	 */
-	function simulateRealTimeUpdate() {
-		console.debug(
-			"[PRNT] Action disabled (no backend) - Realtime dashboard dashboard metrics bypassed",
-		);
-	}
-
-	// Interval: 15–30 seconds logic (using 20s as standard)
-	setInterval(simulateRealTimeUpdate, 20000);
-
 	// Chart.js shared tooltip style
 	const TOOLTIP_DEFAULTS = {
 		backgroundColor: "#1e2333",
@@ -839,9 +821,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		padding: 11,
 		cornerRadius: 10,
 	};
-
-	// ── CHART 1: Today's Orders by Service (Neon Glow Horizontal Bar) ─────
-	let ordersPerServiceChart = null;
 
 	const NeonGlowPlugin = {
 		id: "neonGlow",
@@ -884,10 +863,21 @@ document.addEventListener("DOMContentLoaded", () => {
 		},
 	};
 
-	function initOrdersPerServiceChart() {
+	function initOrdersPerServiceChart(dashboardData) {
 		const canvas = document.getElementById("ordersPerServiceChart");
 		if (!canvas) return;
-		const ctx = canvas.getContext("2d");
+
+		// If chart already exists, update its data instead of rebuilding
+		if (ordersPerServiceChart) {
+			ordersPerServiceChart.data.labels = dashboardData.services.map(
+				(s) => s.name,
+			);
+			ordersPerServiceChart.data.datasets[0].data = dashboardData.services.map(
+				(s) => s.orders,
+			);
+			ordersPerServiceChart.update();
+			return; // ← exit early, no need to re-instantiate
+		}
 
 		ordersPerServiceChart = new Chart(canvas, {
 			type: "bar",
@@ -931,18 +921,23 @@ document.addEventListener("DOMContentLoaded", () => {
 						align: "right",
 						offset: 16,
 						font: { weight: "700", size: 11, family: "monospace" },
-						formatter: (v) => (v > 0 ? v + " ord" : ""),
+						formatter: (v) => (v > 0 ? v + " orders" : ""),
 					},
 					tooltip: {
 						...TOOLTIP_DEFAULTS,
-						callbacks: { label: (ctx) => `  ${ctx.parsed.x} orders today` },
+						callbacks: {
+							label: (ctx) => `  ${ctx.parsed.x} orders today`,
+						},
 					},
 				},
 				scales: {
 					x: {
 						display: true,
 						beginAtZero: true,
-						grid: { color: "rgba(255, 255, 255, 0.05)", drawBorder: false },
+						grid: {
+							color: "rgba(255, 255, 255, 0.05)",
+							drawBorder: false,
+						},
 						ticks: { color: "#6b7280", font: { size: 10 } },
 					},
 					y: {
@@ -958,9 +953,41 @@ document.addEventListener("DOMContentLoaded", () => {
 			},
 		});
 	}
+	function getServicesAndCount() {
+		$.ajax({
+			type: "GET",
+			url: API,
+			data: "action=getServices",
+			success: function (response) {
+				let reply = JSON.parse(response);
+				if (reply.status == "success" && Array.isArray(reply.data)) {
+					SAMPLE_DATA.dashboard.services = [];
+					reply.data.forEach((data) => {
+						SAMPLE_DATA.dashboard.services.push({
+							name: data.service_name,
+							orders: data.orderCount,
+						});
+					});
 
-	// ── INIT ALL CHARTS ─────────────────────────────────────────────────────
-	initOrdersPerServiceChart();
+					const dashboardData = JSON.parse(
+						JSON.stringify(SAMPLE_DATA.dashboard),
+					);
+
+					/**
+					 * simulateRealTimeUpdate — Periodically fluctuates dashboard metrics
+					 * to demonstrate live system behavior.
+					 */
+
+					// ── INIT ALL CHARTS ─────────────────────────────────────────────────────
+					initOrdersPerServiceChart(dashboardData);
+				}
+			},
+		});
+	}
+
+	getServicesAndCount();
+
+	setInterval(getServicesAndCount, 10000);
 	// ============================================================
 	// SECTION: RESTORE PERSISTED USER STATE
 	// ============================================================
@@ -990,9 +1017,9 @@ $(document).ready(function () {
 				let reply = JSON.parse(response);
 
 				if (reply.status == "success") {
-					SAMPLE_DATA.dashboard.todayOrders = reply.totalOrders;
+					SAMPLE_DATA.dashboard.todayOrders = reply.totalOrdersToday;
 					SAMPLE_DATA.dashboard.pendingOrders = reply.pendingOrders;
-					SAMPLE_DATA.dashboard.todayRevenue = reply.totalRevenue;
+					SAMPLE_DATA.dashboard.todayRevenue = reply.totalRevenueToday;
 
 					animateValue(
 						"kpi-today-orders",
@@ -1013,6 +1040,36 @@ $(document).ready(function () {
 						SAMPLE_DATA.dashboard.pendingOrders,
 						300,
 					);
+
+					let todayOrder = parseInt(reply.totalOrdersToday);
+					let yesterdayOrder = parseInt(reply.totalOrdersYesterday);
+
+					if (todayOrder > yesterdayOrder) {
+						$("#kpi-today-orders-trend").html(
+							`<i class="fas fa-arrow-up"></i> ${computeTrend(todayOrder, yesterdayOrder)}% vs yesterday`,
+						);
+						$("#kpi-today-orders-trend").attr("class", "trend-up");
+					} else {
+						$("#kpi-today-orders-trend").html(
+							`<i class="fas fa-arrow-down"></i> ${computeTrend(todayOrder, yesterdayOrder)}% vs yesterday`,
+						);
+						$("#kpi-today-orders-trend").attr("class", "trend-down");
+					}
+
+					let todayRevenue = parseFloat(reply.totalRevenueToday);
+					let yesterdayRevenue = parseFloat(reply.totalRevenueYesterday);
+
+					if (todayRevenue > yesterdayRevenue) {
+						$("#kpi-today-revenue-trend").html(
+							`<i class="fas fa-arrow-up"></i> ${computeTrend(todayRevenue, yesterdayRevenue)}% vs yesterday`,
+						);
+						$("#kpi-today-revenue-trend").attr("class", "trend-up");
+					} else {
+						$("#kpi-today-revenue-trend").html(
+							`<i class="fas fa-arrow-down"></i> ${computeTrend(todayRevenue, yesterdayRevenue)}% vs yesterday`,
+						);
+						$("#kpi-today-revenue-trend").attr("class", "trend-down");
+					}
 				} else {
 					console.log(reply.message);
 				}
@@ -1053,4 +1110,14 @@ function animateValue(id, start, end, duration = 300, prefix = "") {
 		}
 	};
 	window.requestAnimationFrame(step);
+}
+
+function computeTrend(today, yesterday) {
+	let trend = ((today - yesterday) / yesterday) * 100;
+
+	if (trend < 0) {
+		return trend.toFixed(2) / -1;
+	} else {
+		return trend.toFixed(2);
+	}
 }

@@ -94,7 +94,7 @@ if (!isset($_SESSION['user'])) {
                                 <i class="fas fa-clock"></i>
                             </div>
                             <div class="stat-content">
-                                <h4 class="stat-title">Pending Orders</h4>
+                                <h4 class="stat-title">Total Pending Orders</h4>
                                 <div class="stat-value" id="kpi-pending-orders">0</div><!-- DB: $pendingOrders -->
                                 <div class="trend-down" id="kpi-pending-orders-trend">
                                 </div>
@@ -105,9 +105,9 @@ if (!isset($_SESSION['user'])) {
 
 
                     <!-- ── TODAY'S ORDERS BY SERVICE (Bar Chart) ──
-                         Shows today's order count per service type.
-                         DB: Replace SAMPLE_ORDERS_BY_SERVICE in script.js
-                             with data from your orders API/query.
+                        Shows today's order count per service type.
+                        DB: Replace SAMPLE_ORDERS_BY_SERVICE in script.js
+                        with data from your orders API/query.
                     ─────────────────────────────────────────────── -->
                     <div class="card-shell overview-card">
                         <div class="card-header">

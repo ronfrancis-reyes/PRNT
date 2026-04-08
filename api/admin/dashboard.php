@@ -3,12 +3,20 @@ include "../config.php";
 
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'getOrdersCount') {
-        $sql = $conn->prepare("SELECT COUNT(*) AS total_orders FROM orders WHERE date_placed >= CURDATE() AND date_placed < CURDATE() + INTERVAL 1 DAY");
+        $sql = $conn->prepare("SELECT
+                                    SUM(CASE WHEN date_placed >= CURDATE() AND date_placed < CURDATE() + INTERVAL 1 DAY THEN 1 ELSE 0 END) AS total_orders_today,
+                                    SUM(CASE WHEN date_placed >= CURDATE() - INTERVAL 1 DAY AND date_placed < CURDATE() THEN 1 ELSE 0 END) AS total_orders_yesterday
+                                FROM orders;");
         if ($sql->execute()) {
             $result = $sql->get_result();
             $total_order = $result->fetch_assoc();
 
-            $sql = $conn->prepare("SELECT SUM(total_price) AS total_revenue FROM orders WHERE date_placed >= CURDATE() AND date_placed < CURDATE() + INTERVAL 1 DAY AND status = 'Completed'");
+            $sql = $conn->prepare("SELECT
+                                        SUM(CASE WHEN date_placed >= CURDATE() AND date_placed < CURDATE() + INTERVAL 1 DAY
+                                                AND status = 'Completed' THEN total_price ELSE 0 END) AS total_revenue_today,
+                                        SUM(CASE WHEN date_placed >= CURDATE() - INTERVAL 1 DAY AND date_placed < CURDATE()
+                                                AND status = 'Completed' THEN total_price ELSE 0 END) AS total_revenue_yesterday
+                                    FROM orders;");
             $sql->execute();
             $result = $sql->get_result();
             $total_revenue = $result->fetch_assoc();
@@ -21,8 +29,10 @@ if (isset($_GET['action'])) {
             echo json_encode([
                 'status' => 'success',
                 'message' => 'today order count retrieved',
-                'totalOrders' => $total_order['total_orders'],
-                'totalRevenue' => $total_revenue['total_revenue'],
+                'totalOrdersToday' => $total_order['total_orders_today'],
+                'totalOrdersYesterday' => $total_order['total_orders_yesterday'],
+                'totalRevenueToday' => $total_revenue['total_revenue_today'],
+                'totalRevenueYesterday' => $total_revenue['total_revenue_yesterday'],
                 'pendingOrders' => $pending_orders['pending_orders']
             ]);
             exit;
@@ -33,5 +43,36 @@ if (isset($_GET['action'])) {
             ]);
             exit;
         }
+    }
+
+    if ($_GET['action'] == 'getServices') {
+        $sql = $conn->prepare("SELECT s.service_name, COUNT(o.order_id) AS orderCount FROM services s LEFT JOIN orderitems oi  ON s.service_id = oi.service_id LEFT JOIN orders o 
+                    ON o.order_id = oi.order_id
+                    AND o.date_placed >= CURDATE()
+                    AND o.date_placed < CURDATE() + INTERVAL 1 DAY
+                GROUP BY s.service_name;");
+        
+        if ($sql->execute()) {
+            $result = $sql->get_result();
+            $data = [];
+
+            while ($row = $result->fetch_assoc()) {
+                $data [] = $row;
+            }
+
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'order count by service retrieved',
+                'data' => $data
+            ]);
+            exit;
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'query failed',
+            ]);
+            exit;
+        }
+
     }
 }
