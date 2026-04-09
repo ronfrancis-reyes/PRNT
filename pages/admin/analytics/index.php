@@ -108,7 +108,7 @@ if (!isset($_SESSION['user'])) {
                             <tr>
                                 <th>#</th>
                                 <th>SERVICE NAME</th>
-                                <th>FORMAT / CATEGORY</th>
+                                <th>FORMAT</th>
                                 <th class="text-center">UNITS SOLD</th>
                                 <th class="text-right">REVENUE</th>
                             </tr>
@@ -125,6 +125,7 @@ if (!isset($_SESSION['user'])) {
     </div>
 
     <!-- Logic Engine -->
+    <script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
     <script src="script.js"></script>
 </body>
 </html>

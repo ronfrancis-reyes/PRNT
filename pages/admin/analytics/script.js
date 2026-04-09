@@ -4,6 +4,54 @@
  * Data-driven engine handling real-time switching between
  * Daily, Monthly, and Yearly performance metrics.
  */
+const API = "../../../../api/admin/analytics.php";
+
+let emptyStruct = {
+	monthly: {
+		title: "MONTHLY",
+		kpis: {
+			orders: { val: "0", trend: "0%", up: true, comp: "No Data" },
+			revenue: { val: "₱ 0", trend: "0%", up: true, comp: "No Data" },
+			customers: { val: "0", trend: "0%", up: true, comp: "No Data" },
+		},
+		servicesChart: { labels: [], orders: [], revenue: [] },
+		growth: { labels: [], data: [] },
+		servicesTable: [],
+	},
+	daily: {
+		title: "DAILY",
+		kpis: {
+			orders: { val: "0", trend: "0%", up: true, comp: "No Data" },
+			revenue: { val: "₱ 0", trend: "0%", up: true, comp: "No Data" },
+			customers: { val: "0", trend: "0%", up: true, comp: "No Data" },
+		},
+		servicesChart: { labels: [], orders: [], revenue: [] },
+		growth: { labels: [], data: [] },
+		servicesTable: [],
+	},
+
+	yearly: {
+		title: "YEARLY",
+		kpis: {
+			orders: { val: "0", trend: "0%", up: true, comp: "No Data" },
+			revenue: { val: "₱ 0", trend: "0%", up: true, comp: "No Data" },
+			customers: { val: "0", trend: "0%", up: true, comp: "No Data" },
+		},
+		servicesChart: { labels: [], orders: [], revenue: [] },
+		growth: { labels: [], data: [] },
+		servicesTable: [],
+	},
+};
+
+function computeTrend(today, yesterday) {
+	let trend = ((today - yesterday) / yesterday) * 100;
+
+	if (trend < 0) {
+		return trend.toFixed(2) / -1 + "%";
+	} else {
+		return trend.toFixed(2) + "%";
+	}
+}
 
 document.addEventListener("DOMContentLoaded", () => {
 	// ==========================================================================
@@ -14,26 +62,230 @@ document.addEventListener("DOMContentLoaded", () => {
 	// Endpoint: /api/admin/analytics
 	// Method: GET
 	// STATIC UI FALLBACK (NO BACKEND)
-
-	const emptyStruct = {
-		title: "Waiting for Backend",
-		kpis: {
-			orders: { val: "0", trend: "0%", up: true, comp: "No Data" },
-			revenue: { val: "₱ 0", trend: "0%", up: true, comp: "No Data" },
-			customers: { val: "0", trend: "0%", up: true, comp: "No Data" },
-		},
-		servicesChart: { labels: [], orders: [], revenue: [] },
-		growth: { labels: [], data: [] },
-		servicesTable: [],
-	};
-
-	const SAMPLE_DATA = {
-		daily: emptyStruct,
-		monthly: emptyStruct,
-		yearly: emptyStruct,
-	};
-
 	let currentActivePeriod = "monthly";
+
+	function getDataDaily() {
+		$.ajax({
+			type: "GET",
+			url: API,
+			data: "action=getDataDaily",
+			success: function (response) {
+				let reply = JSON.parse(response);
+
+				emptyStruct.daily.kpis = {
+					orders: {
+						val: reply.data.totalOrdersToday,
+						trend: computeTrend(
+							reply.data.totalOrdersToday,
+							reply.data.totalOrdersYesterday,
+						),
+						up:
+							parseInt(reply.data.totalOrdersToday) >=
+							parseInt(reply.data.totalOrdersYesterday),
+						comp: "vs Yesterday",
+					},
+					revenue: {
+						val: "₱ " + reply.data.totalRevenueToday,
+						trend: computeTrend(
+							reply.data.totalRevenueToday,
+							reply.data.totalRevenueYesterday,
+						),
+						up:
+							parseInt(reply.data.totalRevenueToday) >=
+							parseInt(reply.data.totalRevenueYesterday),
+						comp: "vs Yesterday",
+					},
+					customers: {
+						val: reply.data.totalCustomerToday,
+						trend: computeTrend(
+							reply.data.totalCustomerToday,
+							reply.data.totalCustomerYesterday,
+						),
+						up:
+							parseInt(reply.data.totalCustomerToday) >=
+							parseInt(reply.data.totalCustomerYesterday),
+						comp: "vs Yesterday",
+					},
+				};
+
+				reply.services.forEach((service) => {
+					emptyStruct.daily.servicesChart.labels.push(service.service_name);
+					emptyStruct.daily.servicesChart.orders.push(service.orderCount);
+					emptyStruct.daily.servicesChart.revenue.push(service.revenue);
+				});
+
+				emptyStruct.daily.growth = {
+					labels: ["Yesterday", "Today"],
+					data: [
+						reply.data.totalCustomerYesterday,
+						reply.data.totalCustomerToday,
+					],
+				};
+
+				reply.topPerforming.forEach((top) => {
+					emptyStruct.daily.servicesTable.push({
+						name: top.service_name,
+						cat: top.size,
+						units: top.order_count,
+						rev: top.total_revenue,
+					});
+				});
+
+				updateDashboard("daily");
+			},
+		});
+	}
+
+	function getDataMonthly() {
+		$.ajax({
+			type: "GET",
+			url: API,
+			data: "action=getDataMonthly",
+			success: function (response) {
+				let reply = JSON.parse(response);
+
+				emptyStruct.monthly.kpis = {
+					orders: {
+						val: reply.data.totalOrdersMonth,
+						trend: computeTrend(
+							reply.data.totalOrdersMonth,
+							reply.data.totalOrdersLastMonth,
+						),
+						up:
+							parseInt(reply.data.totalOrdersMonth) >=
+							parseInt(reply.data.totalOrdersLastMonth),
+						comp: "vs Last Month",
+					},
+					revenue: {
+						val: "₱ " + reply.data.totalRevenueMonth,
+						trend: computeTrend(
+							reply.data.totalRevenueMonth,
+							reply.data.totalRevenueLastMonth,
+						),
+						up:
+							parseInt(reply.data.totalRevenueMonth) >=
+							parseInt(reply.data.totalRevenueLastMonth),
+						comp: "vs Last Month",
+					},
+					customers: {
+						val: reply.data.totalCustomerMonth,
+						trend: computeTrend(
+							reply.data.totalCustomerMonth,
+							reply.data.totalCustomerLastMonth,
+						),
+						up:
+							parseInt(reply.data.totalCustomerMonth) >=
+							parseInt(reply.data.totalCustomerLastMonth),
+						comp: "vs Last Month",
+					},
+				};
+
+				reply.services.forEach((service) => {
+					emptyStruct.monthly.servicesChart.labels.push(service.service_name);
+					emptyStruct.monthly.servicesChart.orders.push(service.orderCount);
+					emptyStruct.monthly.servicesChart.revenue.push(service.revenue);
+				});
+
+				emptyStruct.monthly.growth = {
+					labels: ["Last Month", "This Month"],
+					data: [
+						reply.data.totalCustomerLastMonth,
+						reply.data.totalCustomerMonth,
+					],
+				};
+
+				reply.topPerforming.forEach((top) => {
+					emptyStruct.monthly.servicesTable.push({
+						name: top.service_name,
+						cat: top.size,
+						units: top.order_count,
+						rev: top.total_revenue,
+					});
+				});
+				updateDashboard("monthly");
+			},
+		});
+	}
+
+	function getDataYearly() {
+		$.ajax({
+			type: "GET",
+			url: API,
+			data: "action=getDataYearly",
+			success: function (response) {
+				let reply = JSON.parse(response);
+
+				emptyStruct.yearly.kpis = {
+					orders: {
+						val: reply.data.totalOrdersYear,
+						trend: computeTrend(
+							reply.data.totalOrdersYear,
+							reply.data.totalOrdersLastYear,
+						),
+						up:
+							parseInt(reply.data.totalOrdersYear) >=
+							parseInt(reply.data.totalOrdersLastYear),
+						comp: "vs Last Year",
+					},
+					revenue: {
+						val: "₱ " + reply.data.totalRevenueYear,
+						trend: computeTrend(
+							reply.data.totalRevenueYear,
+							reply.data.totalRevenueLastYear,
+						),
+						up:
+							parseInt(reply.data.totalRevenueYear) >=
+							parseInt(reply.data.totalRevenueLastYear),
+						comp: "vs Last Year",
+					},
+					customers: {
+						val: reply.data.totalCustomerYear,
+						trend: computeTrend(
+							reply.data.totalCustomerYear,
+							reply.data.totalCustomerLastYear,
+						),
+						up:
+							parseInt(reply.data.totalCustomerYear) >=
+							parseInt(reply.data.totalCustomerLastYear),
+						comp: "vs Last Year",
+					},
+				};
+				reply.services.forEach((service) => {
+					emptyStruct.yearly.servicesChart.labels.push(service.service_name);
+					emptyStruct.yearly.servicesChart.orders.push(service.orderCount);
+					emptyStruct.yearly.servicesChart.revenue.push(service.revenue);
+				});
+
+				emptyStruct.yearly.growth = {
+					labels: ["Last Year", "This Year"],
+					data: [
+						reply.data.totalCustomerLastYear,
+						reply.data.totalCustomerYear,
+					],
+				};
+
+				reply.topPerforming.forEach((top) => {
+					emptyStruct.yearly.servicesTable.push({
+						name: top.service_name,
+						cat: top.size,
+						units: top.order_count,
+						rev: top.total_revenue,
+					});
+				});
+				updateDashboard("yearly");
+			},
+		});
+	}
+
+	getDataMonthly();
+	getDataDaily();
+	getDataYearly();
+
+	let SAMPLE_DATA = {
+		daily: emptyStruct.daily,
+		monthly: emptyStruct.monthly,
+		yearly: emptyStruct.yearly,
+	};
 
 	// ==========================================================================
 	// SECTION: CHART INITIALIZATION
@@ -240,17 +492,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		// BACKEND INTEGRATION POINT
 		// Endpoint: /api/admin/analytics
 		// Server should handle sorting & limiting
-		const sortedServices = [...data.servicesTable]
-			.sort((a, b) => {
-				const parseRev = (str) => {
-					if (!str) return 0;
-					let num = parseFloat(str.replace(/[^\d.-]/g, ""));
-					if (str.toLowerCase().includes("k")) num *= 1000;
-					return num;
-				};
-				return parseRev(b.rev) - parseRev(a.rev);
-			})
-			.slice(0, 5);
+		const sortedServices = [...data.servicesTable];
 
 		tableBody.innerHTML = sortedServices
 			.map(
@@ -262,13 +504,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         <div class="service-icon orange"><i class="fas fa-cube"></i></div>
                         <div class="service-info">
                             <div class="service-name">${s.name}</div>
-                            <div class="service-sub">${s.cat} Service</div>
                         </div>
                     </div>
                 </td>
                 <td><span class="format-badge">${s.cat}</span></td>
                 <td class="text-center units">${s.units}</td>
-                <td class="text-right revenue">${s.rev}</td>
+                <td class="text-right revenue">₱ ${s.rev}</td>
             </tr>
         `,
 			)

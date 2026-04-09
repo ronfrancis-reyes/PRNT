@@ -921,7 +921,7 @@ document.addEventListener("DOMContentLoaded", () => {
 						align: "right",
 						offset: 16,
 						font: { weight: "700", size: 11, family: "monospace" },
-						formatter: (v) => (v > 0 ? v + " orders" : ""),
+						formatter: (v) => (v > 0 ? v + " items" : ""),
 					},
 					tooltip: {
 						...TOOLTIP_DEFAULTS,
@@ -992,9 +992,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	// SECTION: RESTORE PERSISTED USER STATE
 	// ============================================================
 	// ACTION DISABLED — STORAGE REMOVED
-	console.debug(
-		"[PRNT] Action disabled (no storage) - User state retrieval bypassed",
-	);
 }); // end DOMContentLoaded
 
 function logout() {
