@@ -1067,6 +1067,8 @@ $(document).ready(function () {
 						);
 						$("#kpi-today-revenue-trend").attr("class", "trend-down");
 					}
+					getToReviewOrdersCount();
+					getTotalActiveUsers();
 				} else {
 					console.log(reply.message);
 				}
@@ -1117,4 +1119,61 @@ function computeTrend(today, yesterday) {
 	} else {
 		return trend.toFixed(2);
 	}
+}
+
+function getToReviewOrdersCount(){
+	$.ajax({
+		type: "GET",
+		url: API,
+		data: "action=getToReviewOrdersCount",
+		success: function (response) {
+			let reply = JSON.parse(response);
+
+			if (reply.status == "success") {
+				let count = reply.ordersToReview;
+				let changeValue = $("#kpi-toreview-orders");
+				changeValue.text(count);
+				animateValue(
+						"kpi-toreview-orders",
+						0,
+						count,
+						300,
+					);
+			} else {
+				console.log(reply.message);
+			}
+		},
+		error: function (error) {
+			alert("An error occurred while fetching orders to review.");
+			console.log("AJAX error:", error);
+		},
+	});
+}
+
+function getTotalActiveUsers(){
+	$.ajax({
+		type: "GET",
+		url: API,
+		data: "action=getTotalActiveUsers",
+		success: function (response) {
+			let reply = JSON.parse(response);	
+			if (reply.status == "success") {
+				let count = reply.activeUsers;
+				let changeValue = $("#kpi-active-users");
+				changeValue.text(count);
+				animateValue(
+						"kpi-active-users",
+						0,
+						count,
+						300,
+					);
+			} else {
+				console.log(reply.message);
+			}
+		},
+		error: function (error) {
+			alert("An error occurred while fetching total active users.");
+			console.log("AJAX error:", error);
+		}
+	});
 }

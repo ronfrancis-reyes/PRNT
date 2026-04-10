@@ -75,4 +75,46 @@ if (isset($_GET['action'])) {
         }
 
     }
+
+    if($_GET['action'] == 'getToReviewOrdersCount') {
+        $sql = $conn->prepare("SELECT COUNT(*) AS orders_to_review FROM orders WHERE status = 'Reviewing'");
+        if ($sql->execute()) {
+            $result = $sql->get_result();
+            $orders_to_review = $result->fetch_assoc();
+
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'orders to review count retrieved',
+                'ordersToReview' => $orders_to_review['orders_to_review']
+            ]);
+            exit;
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'query failed',
+            ]);
+            exit;
+        }
+    }
+
+    if($_GET['action'] == 'getTotalActiveUsers') {
+        $sql = $conn->prepare("SELECT COUNT(*) AS active_users FROM accounts WHERE role='Customer' AND status='Active'");
+        if ($sql->execute()) {
+            $result = $sql->get_result();
+            $active_users = $result->fetch_assoc();
+
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'active users count retrieved',
+                'activeUsers' => $active_users['active_users']
+            ]);
+            exit;
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'query failed',
+            ]);
+            exit;
+        }
+    }
 }

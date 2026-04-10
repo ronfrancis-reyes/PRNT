@@ -94,9 +94,33 @@ if (!isset($_SESSION['user'])) {
                                 <i class="fas fa-clock"></i>
                             </div>
                             <div class="stat-content">
-                                <h4 class="stat-title">Total Pending Orders</h4>
+                                <h4 class="stat-title">Currently Printing Orders</h4>
                                 <div class="stat-value" id="kpi-pending-orders">0</div><!-- DB: $pendingOrders -->
                                 <div class="trend-down" id="kpi-pending-orders-trend">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card" data-kpi="toreview-orders">
+                            <div class="stat-icon orange-glow">
+                                <i class="fas fa-file-lines"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-title">Orders To Review</h4>
+                                <div class="stat-value" id="kpi-toreview-orders">0</div><!-- DB: $ordersToReview -->
+                                <div class="trend-down" id="kpi-toreview-orders-trend">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card" data-kpi="active-users">
+                            <div class="stat-icon orange-glow">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-title">Total Active Users</h4>
+                                <div class="stat-value" id="kpi-active-users">0</div><!-- DB: $activeUsers -->
+                                <div class="trend-down" id="kpi-active-users-trend">
                                 </div>
                             </div>
                         </div>
