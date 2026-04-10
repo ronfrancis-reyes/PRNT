@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
+
+:root {
+	/* UI/UX NOTE: Main Brand Orange for actions and active states */
+	--prnt-primary: #ff4400;
+	--prnt-primary-hover: #ff5511;
+	--prnt-primary-glow: rgba(255, 68, 0, 0.4);
+
+	/* UI/UX NOTE: Deep background for high-contrast dark mode */
+	--bg-dark: #0f1117;
+
+	/* UI/UX NOTE: Surface color for cards and elevated components with transparency */
+	--bg-surface: rgba(24, 28, 39, 0.7);
+
+	/* UI/UX NOTE: Sidebar and Topbar background with transparency for glassmorphism */
+	--bg-glass: rgba(15, 17, 23, 0.85);
+
+	/* UI/UX NOTE: High readability text */
+	--text-main: #e8eaf0;
+
+	/* UI/UX NOTE: Subtle text for labels and secondary info */
+	--text-muted: #6b7280;
+
+	/* UI/UX NOTE: UI boundaries and card separators */
+	--border-subtle: rgba(255, 255, 255, 0.05);
+
+	/* UI/UX NOTE: Success/Error Branding */
+	--success: #10b981;
+	--error: #ef4444;
+
+	/* UI/UX NOTE: Premium Glass-Card Shadow */
+	--shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+	/* UI/UX NOTE: Standardized Font Family */
+	--font-main: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* Global Font Override */
+* {
+	font-family: var(--font-main);
+}
+
+/* ==========================================================================
+   SECTION: PREMIUM UI UTILITIES
+   ========================================================================== */
+.orange-glow {
+	box-shadow: 0 0 20px rgba(255, 68, 0, 0.4) !important;
+}
+
+.glass-card {
+	background: rgba(255, 255, 255, 0.03) !important;
+	backdrop-filter: blur(10px) !important;
+	-webkit-backdrop-filter: blur(10px) !important;
+	border: 1px solid rgba(255, 255, 255, 0.05) !important;
+	box-shadow: var(--shadow-premium) !important;
+}

@@ -1,12 +1,513 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+/* ==========================================================================
+   MAIN CORE STYLES (LEGACY)
+   ========================================================================== */
 
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css");
+
+:root {
+	/* Core Palette (Orange & Dark Theme) */
+	--primary: #ff6b00;
+	--primary-light: #ff8e4d;
+	--primary-dark: #e65a00;
+	--accent: #ffd93d;
+	--accent-soft: #fff9e6;
+	--success: #198754;
+	--danger: #dc3545;
+	--warning: #f59e0b;
+
+	/* Text Colors */
+	--text-dark: #1a1a1a;
+	--text-body: #333333;
+	--text-muted: #666666;
+	--text-light: #999999;
+
+	/* Backgrounds */
+	--background: #ffffff;
+	--surface: #f8f9fa;
+	--border: #e5e7eb;
+	--border-light: #f3f4f6;
+
+	/* UI Tokens */
+	--radius: 12px;
+	--radius-sm: 8px;
+	--radius-lg: 20px;
+	--nav-height: 80px;
+	--shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+	--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+	--shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.12);
+	--transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   BASE TAGS
+   -------------------------------------------------------------------------- */
 * {
 	margin: 0;
 	padding: 0;
-	font-family: "Geist";
 	box-sizing: border-box;
 }
 
 body {
-	padding-top: 8vh;
+	font-family: "Outfit", sans-serif;
+	background-color: var(--background);
+	color: var(--text-body);
+	line-height: 1.6;
+	overflow-x: hidden;
+	padding-top: var(--nav-height); /* Prevent navbar overlap */
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	transition: var(--transition);
+}
+
+button {
+	font-family: inherit;
+	cursor: pointer;
+	border: none;
+	background: none;
+	transition: var(--transition);
+}
+
+ul {
+	list-style: none;
+}
+
+/* --------------------------------------------------------------------------
+   UTILITY CLASSES (Compact formatting)
+   -------------------------------------------------------------------------- */
+.container {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 0 2rem;
+}
+
+.flex {
+	display: flex;
+}
+
+.align-center {
+	align-items: center;
+}
+
+.justify-between {
+	justify-content: space-between;
+}
+
+.grid {
+	display: grid;
+}
+
+.gap-1 {
+	gap: 1rem;
+}
+
+.gap-2 {
+	gap: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   COMPONENTS
+   -------------------------------------------------------------------------- */
+.btn {
+	padding: 0.75rem 1.5rem;
+	border-radius: var(--radius);
+	font-weight: 600;
+	font-size: 0.95rem;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.btn-primary {
+	background-color: var(--primary);
+	color: white;
+	border: 2px solid var(--primary);
+}
+
+.btn-primary:hover {
+	background-color: transparent;
+	color: var(--primary);
+	border-color: (var(--primary));
+	transform: translateY(-3px);
+	box-shadow: 0 8px 20px rgba(255, 107, 0, 0.2);
+}
+
+.btn-primary:active {
+	color: var(--primary-dark) !important;
+	background-color: transparent !important;
+	border-color: var(--primary) !important;
+	transform: translateY(-1px) scale(0.98);
+}
+
+.btn-outline {
+	border: 2px solid var(--primary);
+	color: var(--primary);
+	background: transparent;
+}
+
+.btn-outline:hover {
+	background-color: var(--primary);
+	color: white;
+	transform: translateY(-3px);
+}
+
+/* Interactive Cards */
+.card {
+	background-color: var(--surface);
+	border-radius: var(--radius);
+	padding: 1.5rem;
+	border: 1px solid var(--border);
+	box-shadow: var(--shadow-sm);
+	transition: var(--transition);
+	position: relative;
+	overflow: hidden;
+}
+
+.card:hover {
+	box-shadow:
+		var(--shadow-lg),
+		0 0 20px rgba(238, 77, 45, 0.1);
+	transform: translateY(-6px) scale(1.02);
+	border-color: var(--primary-light);
+}
+
+.card::after {
+	content: "";
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: radial-gradient(
+		circle,
+		rgba(255, 255, 255, 0.1) 0%,
+		transparent 70%
+	);
+	opacity: 0;
+	transition: opacity 0.5s ease;
+	pointer-events: none;
+}
+
+.card:hover::after {
+	opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   ANIMATIONS
+   -------------------------------------------------------------------------- */
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slideUp {
+	from {
+		transform: translateY(30px);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes neonPulse {
+	0% {
+		box-shadow: 0 0 5px rgba(238, 77, 45, 0.2);
+	}
+
+	50% {
+		box-shadow: 0 0 20px rgba(238, 77, 45, 0.6);
+	}
+
+	100% {
+		box-shadow: 0 0 5px rgba(238, 77, 45, 0.2);
+	}
+}
+
+@keyframes float {
+	0% {
+		transform: translateY(0px);
+	}
+
+	50% {
+		transform: translateY(-10px);
+	}
+
+	100% {
+		transform: translateY(0px);
+	}
+}
+
+.animate-fade {
+	animation: fadeIn 0.8s ease-out;
+}
+
+.animate-slide {
+	animation: slideUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.animate-float {
+	animation: float 4s ease-in-out infinite;
+}
+
+.neon-glow:hover {
+	animation: neonPulse 1.5s infinite;
+}
+
+.logo i {
+	animation: float 3s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   NAVIGATION (Glassmorphism & High-Fi)
+   -------------------------------------------------------------------------- */
+
+/* --------------------------------------------------------------------------
+   HERO SECTION (Light & Minimal)
+   -------------------------------------------------------------------------- */
+.hero {
+	padding: 10rem 0 6rem;
+	text-align: center;
+	background:
+		radial-gradient(circle at top right, var(--accent-soft), transparent),
+		radial-gradient(circle at bottom left, rgba(79, 70, 229, 0.05), transparent);
+	overflow: hidden;
+}
+
+.hero h1 {
+	font-size: 4rem;
+	font-weight: 850;
+	margin-bottom: 1.5rem;
+	color: var(--text-dark);
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+}
+
+.hero h1 span {
+	background: linear-gradient(135deg, var(--primary), var(--primary-light));
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.hero p {
+	font-size: 1.35rem;
+	color: var(--text-body);
+	max-width: 700px;
+	margin: 0 auto 3rem;
+	font-weight: 450;
+}
+
+.hero .btn-primary {
+	padding: 1rem 2.5rem;
+	font-size: 1.1rem;
+}
+
+.hero .btn-outline {
+	border-color: var(--border);
+	color: var(--text-dark);
+	padding: 1rem 2.5rem;
+	font-size: 1.1rem;
+}
+
+.hero .btn-outline:hover {
+	background: white;
+	border-color: var(--primary);
+	color: var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE OVERRIDES
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+	.nav-links {
+		display: none;
+	}
+
+	.hero h1 {
+		font-size: 2.5rem;
+	}
+
+	.container {
+		padding: 0 1rem;
+	}
+}
+
+.modal-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(4px);
+	z-index: 2000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	visibility: hidden;
+	transition: var(--transition);
+}
+
+.modal-overlay.active {
+	opacity: 1;
+	visibility: visible;
+	z-index: 10000;
+}
+
+.modal {
+	background: var(--surface);
+	border-radius: 12px;
+	padding: 2.5rem;
+	width: 90%;
+	max-width: 500px;
+	transform: translateY(20px) scale(0.97);
+	transition: var(--transition);
+	height: fit-content;
+}
+
+.modal-overlay.active .modal {
+	transform: translateY(0) scale(1);
+}
+
+.modal-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1.5rem;
+}
+
+.modal-header h3 {
+	font-size: 1.25rem;
+	color: var(--text-dark);
+}
+
+.modal-close {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.2rem;
+	color: var(--text-muted);
+}
+
+.modal-close:hover {
+	background: var(--background);
+	color: var(--text-dark);
+}
+.form-group {
+	margin-bottom: 1.25rem;
+}
+
+.form-group label {
+	font-weight: 500;
+	font-size: 0.9rem;
+	display: block;
+	margin-bottom: 0.4rem;
+	color: var(--text-dark);
+}
+
+.form-group select,
+.form-group input {
+	width: 100%;
+	padding: 0.8rem 1rem;
+	border: 1.5px solid var(--border);
+	border-radius: var(--radius);
+	font-family: inherit;
+	font-size: 0.95rem;
+	transition: var(--transition);
+	background: var(--surface);
+}
+
+.form-group select:focus,
+.form-group input:focus {
+	outline: none;
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1);
+}
+
+.auth-page {
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(135deg, var(--secondary), #fff7e6);
+}
+
+.auth-card {
+	background: var(--surface);
+	border-radius: 20px;
+	padding: 3rem;
+	width: 100%;
+	max-width: 440px;
+	box-shadow: var(--shadow-lg);
+}
+
+.auth-card h2 {
+	font-size: 1.8rem;
+	text-align: center;
+	margin-bottom: 0.25rem;
+	color: var(--text-dark);
+}
+
+.auth-card .subtitle {
+	text-align: center;
+	color: var(--text-muted);
+	margin-bottom: 2rem;
+}
+
+.auth-card .form-group {
+	margin-bottom: 1.25rem;
+}
+
+.auth-card .form-group label {
+	font-weight: 500;
+	font-size: 0.9rem;
+	margin-bottom: 0.4rem;
+	display: block;
+}
+
+.auth-card .form-group input {
+	width: 100%;
+	padding: 0.85rem 1rem;
+	border: 1.5px solid var(--border);
+	border-radius: var(--radius);
+	font-family: inherit;
+	font-size: 0.95rem;
+	transition: var(--transition);
+}
+
+.auth-card .form-group input:focus {
+	border-color: var(--primary);
+	box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1);
+	outline: none;
+}
+
+.auth-card .btn-primary {
+	width: 100%;
+	padding: 1rem;
+	font-size: 1rem;
+	justify-content: center;
+}
+
+.auth-footer {
+	text-align: center;
+	margin-top: 1.5rem;
+	color: var(--text-muted);
+	font-size: 0.9rem;
+}
+
+.auth-footer a {
+	color: var(--primary);
+	font-weight: 600;
 }

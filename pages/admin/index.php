@@ -1,0 +1,195 @@
+<?php
+include "../../api/config.php";
+if (!isset($_SESSION['user'])) {
+	header("Location: ../../index.php");
+} else if ($_SESSION['role'] == 'Customer') {
+	header("Location: ../client/dashboard/index.php");
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRNT Admin — Dashboard</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../../global/admin/variables.css">
+    <link rel="stylesheet" href="../../global/admin/modals.css">
+    <link rel="stylesheet" href="../../global/admin/dropdowns.css">
+    <link rel="stylesheet" href="../../components/Admin%20Sidebar/sidebar.css">
+    <link rel="stylesheet" href="../../components/Admin%20Topbar/topbar.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+</head>
+<body>
+
+<div class="admin-wrapper">
+
+    <!-- ══ SIDEBAR ══════════════════════════════════════════
+         Shared component. Navigation driven by data-section
+         and data-folder attributes; handled in script.js.
+    ════════════════════════════════════════════════════════ -->
+    <div class="sidebar-placeholder" id="sidebar-slot">
+        <?php
+        include "../../components/Admin Sidebar/sidebar.php"
+        ?>
+    </div>
+
+    <main class="admin-main">
+
+        <!-- ══ TOPBAR ═════════════════════════════════════════
+             Shared component. Contains page title, notifications,
+             and profile dropdown.
+        ════════════════════════════════════════════════════════ -->
+        <div class="topbar-placeholder" id="topbar-slot">
+            <?php
+            include "../../components/Admin Topbar/topbar.php"
+            ?>
+        </div>
+
+        <div class="admin-body" id="view-container">
+
+            <!-- ══ DASHBOARD SECTION (built-in, not iframed) ═════ -->
+            <section class="admin-section active" id="sec-dashboard">
+                <div class="dashboard-grid">
+
+                    <!-- ── KPI CARDS ──────────────────────────────
+                        DB: Replace hardcoded values with PHP echoes.
+                        e.g. 
+                    ─────────────────────────────────────────────── -->
+                    <div class="stat-grid">
+
+                        <div class="stat-card" data-kpi="today-orders">
+                            <div class="stat-icon orange-glow">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-title">Today's Orders</h4>
+                                <div class="stat-value" id="kpi-today-orders">0</div><!-- DB: $todayOrders -->
+                                <div class="trend-up" id="kpi-today-orders-trend">
+                                    <i class="fas fa-arrow-up"></i> 0% vs yesterday
+                                </div><!-- DB: computed trend -->
+                            </div>
+                        </div>
+
+                        <div class="stat-card" data-kpi="today-revenue">
+                            <div class="stat-icon orange-glow">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-title">Today's Revenue</h4>
+                                <div class="stat-value" id="kpi-count-revenue">₱ 0</div><!-- DB: $todayRevenue -->
+                                <div class="trend-up" id="kpi-today-revenue-trend">
+                                    <i class="fas fa-arrow-up"></i> 0% vs yesterday
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="stat-card" data-kpi="pending-orders">
+                            <div class="stat-icon orange-glow">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-title">Currently Printing Orders</h4>
+                                <div class="stat-value" id="kpi-pending-orders">0</div><!-- DB: $pendingOrders -->
+                                <div class="trend-down" id="kpi-pending-orders-trend">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card" data-kpi="toreview-orders">
+                            <div class="stat-icon orange-glow">
+                                <i class="fas fa-file-lines"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-title">Orders To Review</h4>
+                                <div class="stat-value" id="kpi-toreview-orders">0</div><!-- DB: $ordersToReview -->
+                                <div class="trend-down" id="kpi-toreview-orders-trend">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stat-card" data-kpi="active-users">
+                            <div class="stat-icon orange-glow">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-title">Total Active Users</h4>
+                                <div class="stat-value" id="kpi-active-users">0</div><!-- DB: $activeUsers -->
+                                <div class="trend-down" id="kpi-active-users-trend">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!-- /stat-grid -->
+
+
+                    <!-- ── TODAY'S ORDERS BY SERVICE (Bar Chart) ──
+                        Shows today's order count per service type.
+                        DB: Replace SAMPLE_ORDERS_BY_SERVICE in script.js
+                        with data from your orders API/query.
+                    ─────────────────────────────────────────────── -->
+                    <div class="card-shell overview-card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <h3 class="card-title">Today's Order Items by Service</h3>
+                                <span class="card-subtitle" id="ordersChartDate"></span>
+                            </div>
+                            <div class="card-header-actions">
+                                <span class="live-badge"><span class="live-dot"></span> Live</span>
+                                <button class="btn-icon-sm" id="refreshOrdersChart" title="Refresh data">
+                                    <i class="fas fa-rotate-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="ordersPerServiceChart" style="min-height:320px;"></canvas>
+                        </div>
+                    </div>
+
+                </div><!-- /dashboard-grid -->
+            </section><!-- /sec-dashboard -->
+
+
+            <!-- ══ DYNAMIC SECTION ═══════════════════════════════
+                All non-dashboard modules (orders, analytics, etc.)
+                are loaded here as iframes via script.js routing.
+                Do NOT place content here directly.
+            ════════════════════════════════════════════════════ -->
+            <section class="admin-section" id="sec-dynamic" style="display:none; padding:0; background:transparent;">
+                <div id="dynamic-content"></div>
+            </section>
+
+        </div><!-- /admin-body -->
+    </main>
+</div><!-- /admin-wrapper -->
+
+
+<!-- ══ GLOBAL MODAL — content injected by openModal() ══════ -->
+<div id="modalOverlay" class="modal-overlay" onclick="window.closeModal && window.closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+<!-- ══ GLOBAL TOAST CONTAINER ══════════════════════════════ -->
+<div id="toastContainer" aria-live="polite"></div>
+<script src="https://code.jquery.com/jquery-4.0.0.js" integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+
+<script>
+	window.UserInfo = {
+		username: "<?= $_SESSION['username'] ?>",
+		email: "<?= $_SESSION['email'] ?>",
+        contact_number: "<?= $_SESSION['contact_number']  ?> ",
+        date_created: "<?= $_SESSION['date_created']  ?> "
+	};
+</script>
+
+<script src="script.js"></script>
+
+</body>
+</html>
