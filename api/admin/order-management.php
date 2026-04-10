@@ -37,4 +37,19 @@ if (isset($_POST['action'])) {
         exit;
 
     }
+
+    if ($_POST['action'] == 'archive') {
+        $sql = $conn->prepare("CALL archiveCompletedOrders();");
+        if ($sql->execute()) {
+            echo json_encode([
+                "status" => "success",
+                "message" => "Completed orders archived successfully"
+            ]);
+        } else {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Failed to archive completed orders"
+            ]);
+        }
+    }
 }

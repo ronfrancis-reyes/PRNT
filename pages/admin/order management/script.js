@@ -370,9 +370,9 @@ function panelDelete() {
 }
 
 function handleConfirmDelete() {
-	const orderId = state.rowToDelete.dataset.orderId;
-
-	$.ajax({
+	if (state.rowToDelete) {
+		const orderId = state.rowToDelete.dataset.orderId;
+		$.ajax({
 		type: "POST",
 		url: API,
 		data: "action=drop&id=" + orderId,
@@ -381,8 +381,21 @@ function handleConfirmDelete() {
 			syncSidebarBadge();
 			showToast("Order deleted", "Order " + orderId + " was deleted", "danger");
 			closeDeleteModal();
-		},
-	});
+			},
+		});
+	} else {
+		$.ajax({
+			type: "POST",
+			url: API,
+			data: "action=archive",
+			success: function (response) {
+				getOrders();
+				syncSidebarBadge();
+				showToast("Order Archived", "all completed orders archived", "danger");
+				closeDeleteModal();
+			}
+			})
+	}
 }
 
 function closeModal() {

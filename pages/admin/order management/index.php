@@ -41,6 +41,10 @@ if (!isset($_SESSION['user'])) {
         <button class="btn-export" onclick="exportCSV()">
             <i class="fas fa-download"></i> Export
         </button>
+
+        <button class="btn-delete-completed" onclick="confirmDeleteCompleted()">
+            <i class="fas fa-trash-can"></i> Archive Completed
+        </button>
         
     </div>
 
