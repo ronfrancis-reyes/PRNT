@@ -78,7 +78,7 @@
 .mobile-menu-btn {
 	display: none;
 	font-size: 1.5rem;
-	color: white;
+	color: var(--primary);
 }
 
 .mobile-menu {
@@ -130,4 +130,35 @@
 
 .mobile-menu a:hover {
 	color: var(--primary);
+}
+.mobile-menu .btn {
+	border-color: var(--primary);
+}
+.mobile-menu .btn:hover {
+	color: white;
+}
+@media (max-width: 931px) {
+	/* Show hamburger */
+	.mobile-menu-btn {
+		display: block;
+	}
+
+	/* Hide desktop nav links */
+	.nav-links {
+		display: none;
+	}
+
+	/* Hide login button */
+	.navbar #loginBtn {
+		display: none;
+	}
+
+	.navbar #orderNowBtn {
+		display: none;
+	}
+
+	/* Optional: hide avatar too */
+	.user-nav-profile {
+		display: none;
+	}
 }

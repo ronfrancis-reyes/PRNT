@@ -360,6 +360,7 @@ ul {
 .modal-overlay.active {
 	opacity: 1;
 	visibility: visible;
+	z-index: 10000;
 }
 
 .modal {

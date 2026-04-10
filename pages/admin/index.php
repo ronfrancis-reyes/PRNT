@@ -46,7 +46,7 @@ if (!isset($_SESSION['user'])) {
         ════════════════════════════════════════════════════════ -->
         <div class="topbar-placeholder" id="topbar-slot">
             <?php
-            include "../../components/Admin Topbar/topbar.php   "
+            include "../../components/Admin Topbar/topbar.php"
             ?>
         </div>
 

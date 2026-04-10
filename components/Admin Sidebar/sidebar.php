@@ -85,4 +85,4 @@
 <!-- ==========================================================================
         SECTION: SIDEBAR OVERLAY (Mobile Focus)
         ========================================================================== -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleAdminSidebar()"></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>

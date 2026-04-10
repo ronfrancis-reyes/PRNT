@@ -46,3 +46,8 @@ document.querySelectorAll(".modal-overlay").forEach((overlay) => {
 		}
 	});
 });
+
+function toggleMobileMenu() {
+	const menu = document.getElementById("mobileMenu");
+	menu.classList.toggle("open");
+}

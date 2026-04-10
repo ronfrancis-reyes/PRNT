@@ -268,6 +268,10 @@ include "./api/config.php"
 	</footer>
 	<script src="./global/global.js"></script>
 	<script>
+		function toggleMobileMenu() {
+		const menu = document.getElementById("mobileMenu");
+		menu.classList.toggle("open");
+}
 		const email = document.getElementById("emailInput");
 		const password = document.getElementById("passInput");
 		const submitButt = document.getElementById("submitButton");

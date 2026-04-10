@@ -11,6 +11,7 @@
 }
 
 .admin-sidebar {
+	position: relative; /* ADD THIS */
 	width: var(--sidebar-mini);
 	min-width: var(--sidebar-mini);
 	background: rgba(15, 17, 23, 0.85);
@@ -21,7 +22,7 @@
 	flex-direction: column;
 	height: 100vh;
 	flex-shrink: 0;
-	overflow: hidden;
+	overflow-x: hidden;
 	transition:
 		width var(--sidebar-transition),
 		min-width var(--sidebar-transition);
@@ -305,13 +306,14 @@
 	.admin-sidebar {
 		position: fixed;
 		top: 0;
-		bottom: 0;
 		left: 0;
-		transform: translateX(-100%);
+		bottom: 0;
 		width: var(--sidebar-full) !important;
 		min-width: var(--sidebar-full) !important;
-		z-index: 2000;
-		transition: transform var(--sidebar-transition, 0.3s ease-in-out);
+		z-index: 99999 !important;
+		transform: translateX(-100%) !important;
+		transition: transform 0.3s ease !important;
+		overflow: hidden !important; /* keep content inside sidebar */
 	}
 
 	.admin-sidebar.open {
