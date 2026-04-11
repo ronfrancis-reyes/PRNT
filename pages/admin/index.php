@@ -88,7 +88,18 @@ if (!isset($_SESSION['user'])) {
                             </div>
                         </div>
 
-                        
+                        <div class="stat-card" data-kpi="toreview-orders">
+                            <div class="stat-icon orange-glow">
+                                <i class="fas fa-file-lines"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4 class="stat-title">Orders To Review</h4>
+                                <div class="stat-value" id="kpi-toreview-orders">0</div><!-- DB: $ordersToReview -->
+                                <div class="trend-down" id="kpi-toreview-orders-trend">
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="stat-card" data-kpi="pending-orders">
                             <div class="stat-icon orange-glow">
                                 <i class="fas fa-clock"></i>
@@ -101,17 +112,18 @@ if (!isset($_SESSION['user'])) {
                             </div>
                         </div>
 
-                        <div class="stat-card" data-kpi="toreview-orders">
+                        <div class="stat-card" data-kpi="completed-orders">
                             <div class="stat-icon orange-glow">
-                                <i class="fas fa-file-lines"></i>
+                                <i class="fas fa-check-circle"></i>
                             </div>
                             <div class="stat-content">
-                                <h4 class="stat-title">Orders To Review</h4>
-                                <div class="stat-value" id="kpi-toreview-orders">0</div><!-- DB: $ordersToReview -->
-                                <div class="trend-down" id="kpi-toreview-orders-trend">
+                                <h4 class="stat-title">Total Orders Completed</h4>
+                                <div class="stat-value" id="kpi-completed-orders">0</div><!-- DB: $completedOrders -->
+                                <div class="trend-down" id="kpi-completed-orders-trend">
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="stat-card" data-kpi="active-users">
                             <div class="stat-icon orange-glow">

@@ -1069,6 +1069,7 @@ $(document).ready(function () {
 					}
 					getToReviewOrdersCount();
 					getTotalActiveUsers();
+					getCompletedOrdersCount()
 				} else {
 					console.log(reply.message);
 				}
@@ -1173,6 +1174,35 @@ function getTotalActiveUsers(){
 		},
 		error: function (error) {
 			alert("An error occurred while fetching total active users.");
+			console.log("AJAX error:", error);
+		}
+	});
+}
+
+function getCompletedOrdersCount(){
+	$.ajax({
+		type: "GET",
+		url: API,
+		data: "action=getCompletedOrdersCount",
+		success: function (response) {
+			let reply = JSON.parse(response);
+
+			if (reply.status == "success") {		
+				let count = reply.completedOrders;
+				let changeValue = $("#kpi-completed-orders");
+				changeValue.text(count);
+				animateValue(
+						"kpi-completed-orders",
+						0,		
+						count,
+						300,
+					);
+			} else {
+				console.log(reply.message);
+			}
+		},
+		error: function (error) {
+			alert("An error occurred while fetching completed orders count.");
 			console.log("AJAX error:", error);
 		}
 	});

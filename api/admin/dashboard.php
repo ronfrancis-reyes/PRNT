@@ -117,4 +117,30 @@ if (isset($_GET['action'])) {
             exit;
         }
     }
+
+    if($_GET['action'] == 'getCompletedOrdersCount') {
+        $sql = $conn->prepare("SELECT COUNT(*) AS total_completed_orders
+                                FROM (
+                                    SELECT order_id FROM orders WHERE status = 'Completed'
+                                    UNION ALL
+                                    SELECT order_id FROM orders_archive WHERE status = 'Completed'
+                                ) AS combined;");
+        if ($sql->execute()) {
+            $result = $sql->get_result();
+            $completed_orders = $result->fetch_assoc();
+
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'completed orders count retrieved',
+                'completedOrders' => $completed_orders['total_completed_orders']
+            ]);
+            exit;
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'query failed',
+            ]);
+            exit;
+        }
+    }
 }
