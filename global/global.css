@@ -142,6 +142,11 @@ ul {
 	transform: translateY(-1px) scale(0.98);
 }
 
+.btn-primary:disabled {
+	background-color: var(--primary-light);
+	border-color: var(--primary-light);
+}
+
 .btn-outline {
 	border: 2px solid var(--primary);
 	color: var(--primary);
