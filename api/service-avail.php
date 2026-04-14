@@ -3,7 +3,7 @@ include "config.php";
 
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'getServices') {
-        $sql = $conn->prepare("SELECT service_id, service_name FROM services");
+        $sql = $conn->prepare("SELECT service_id, service_name FROM services where available='TRUE'");
         if ($sql->execute()) {
             $result = $sql->get_result();
             $data = [];
